@@ -1,0 +1,46 @@
+
+plugins {
+  id 'java-library'
+  id 'eclipse'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile group: 'org.swinglabs',                name: 'swing-layout',       version: '1.0.3'
+  compile group: 'org.swinglabs',                name: 'swingx',             version: '0.9.4'
+  compile group: 'com.jgoodies',                 name: 'forms',              version: '1.0.7'
+  compile group: 'com.ibm.icu',                  name: 'icu4j',              version: '4.0.1'
+  compile group: 'com.jidesoft',                 name: 'jide-oss',           version: '3.6.18'
+  compile group: 'com.jgoodies',                 name: 'looks',              version: '2.2.1'
+  compile group: 'eu.medsea.mimeutil',           name: 'mime-util',          version: '2.1.3'
+  compile group: 'com.sun.woodstock.dependlibs', name: 'jhall',              version: '2.0'
+  compile group: 'com.l2fprod.common',           name: 'l2fprod-common-fontchooser', version: '6.9.1'
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+  manifest {
+    attributes "Main-Class": "org.jmeld.Main"
+  }
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+  exclude 'META-INF/**'
+}
+
+task extractApi(type: Sync) {
+  dependsOn configurations.compile
+
+  from { 
+     configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect{ zipTree(it) }
+  }
+  into "haha"
+}
+

@@ -1,0 +1,27 @@
+final String artifactory = 'https://www.mes.support/repository'
+
+// Get the value of an environment property and if it is not set stop the execution of this build attempt.
+def getEnvironmentProperty = { propertyName, usage ->
+    def value = System.getenv(propertyName)
+    if (!value) {
+        throw new GradleException("Environment property " + propertyName + " is not set. Usage: " + usage)
+    }
+    return value;
+}
+
+repositories {
+    ivy {
+        url "${artifactory}/ESF-ivy"
+        credentials {
+            username getEnvironmentProperty('ARTIFACTORY_USERNAME', 'Read from artifactory')
+            password getEnvironmentProperty('ARTIFACTORY_PASSWORD', 'Read from artifactory')
+        }
+    }
+    maven {
+        url "${artifactory}/ESF-maven"
+        credentials {
+            username getEnvironmentProperty('ARTIFACTORY_USERNAME', 'Read from artifactory')
+            password getEnvironmentProperty('ARTIFACTORY_PASSWORD', 'Read from artifactory')
+        }
+    }
+}
