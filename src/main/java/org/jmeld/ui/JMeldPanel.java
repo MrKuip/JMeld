@@ -727,7 +727,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
         return;
       }
 
-      url = HelpSet.findHelpSet(getClass().getClassLoader(), "jmeld");
+      url = HelpSet.findHelpSet(getClass().getClassLoader(), "help/jmeld/jmeld.hs");
       helpSet = new HelpSet(getClass().getClassLoader(), url);
       viewer = new JHelpContentViewer(helpSet);
       navigatorView = helpSet.getNavigatorView("TOC");
