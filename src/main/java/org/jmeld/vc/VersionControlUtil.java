@@ -1,8 +1,8 @@
 package org.jmeld.vc;
 
-import java.io.*;
-
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VersionControlUtil
 {
@@ -41,12 +41,10 @@ public class VersionControlUtil
     if (versionControlList == null)
     {
       versionControlList = new ArrayList<VersionControlIF>();
-      versionControlList
-          .add(new org.jmeld.vc.svn.SubversionVersionControl());
-      versionControlList
-          .add(new org.jmeld.vc.hg.MercurialVersionControl());
-      versionControlList
-          .add(new org.jmeld.vc.bzr.BazaarVersionControl());
+      versionControlList.add(new org.jmeld.vc.svn.SubversionVersionControl());
+      versionControlList.add(new org.jmeld.vc.hg.MercurialVersionControl());
+      versionControlList.add(new org.jmeld.vc.bzr.BazaarVersionControl());
+      versionControlList.add(new org.jmeld.vc.git.GitVersionControl());
     }
 
     return versionControlList;
