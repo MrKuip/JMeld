@@ -767,7 +767,6 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
     content.setLayout(new BorderLayout());
     content.add(new JButton("JMeld version: " + Version.getVersion()), BorderLayout.CENTER);
 
-    // tabbedPane.addTab("About", ImageUtil.getSmallImageIcon("stock_about"),
     tabbedPane.addTab("About", Images.ABOUT.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -821,7 +820,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
 
     content = new SettingsPanel(this);
     content.setId(contentId);
-    tabbedPane.addTab("Settings", ImageUtil.getSmallImageIcon("stock_preferences"), content);
+    tabbedPane.addTab("Settings", Images.SETTINGS.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -1115,7 +1114,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
             panel = new FolderDiffPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab(panel.getTitle(), ImageUtil.getSmallImageIcon("stock_folder"), panel);
+            tabbedPane.addTab(panel.getTitle(), Images.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
@@ -1192,7 +1191,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
             panel = new VersionControlPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab("TODO: Think of title!", ImageUtil.getSmallImageIcon("stock_folder"), panel);
+            tabbedPane.addTab("TODO: Think of title!", Images.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }

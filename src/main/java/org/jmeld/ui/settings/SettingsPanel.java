@@ -4,29 +4,38 @@
  */
 package org.jmeld.ui.settings;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
-import org.jmeld.util.prefs.*;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.JMeldPanel;
+import org.jmeld.ui.StatusBar;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.ui.util.Images;
+import org.jmeld.util.conf.ConfigurationListenerIF;
+import org.jmeld.util.conf.ConfigurationManager;
+import org.jmeld.util.prefs.FileChooserPreference;
 
 /**
  *
- * @author  kees
+ * @author kees
  */
-public class SettingsPanel
-    extends SettingsPanelForm
-    implements ConfigurationListenerIF
+public class SettingsPanel extends SettingsPanelForm implements ConfigurationListenerIF
 {
-  private DefaultListModel listModel;
+  private DefaultListModel<Settings> listModel;
   private JMeldPanel mainPanel;
 
   public SettingsPanel(JMeldPanel mainPanel)
@@ -47,20 +56,18 @@ public class SettingsPanel
       settingsPanel.add(setting.getPanel(), setting.getName());
     }
 
-    initButton(saveButton, "stock_save", "Save settings");
+    initButton(saveButton, Images.SAVE, "Save settings");
     saveButton.addActionListener(getSaveAction());
 
-    initButton(saveAsButton, "stock_save-as",
-      "Save settings to a different file");
+    initButton(saveAsButton, Images.SAVE_AS, "Save settings to a different file");
     saveAsButton.addActionListener(getSaveAsAction());
 
-    initButton(reloadButton, "stock_reload",
-      "Reload settings from a different file");
+    initButton(reloadButton, Images.RELOAD, "Reload settings from a different file");
     reloadButton.addActionListener(getReloadAction());
 
     fileLabel.setText("");
 
-    listModel = new DefaultListModel();
+    listModel = new DefaultListModel<>();
     for (Settings setting : Settings.values())
     {
       listModel.addElement(setting);
@@ -71,7 +78,7 @@ public class SettingsPanel
     settingItems.addListSelectionListener(getSettingItemsAction());
   }
 
-  private void initButton(JButton button, String iconName, String toolTipText)
+  private void initButton(JButton button, Images imageIcon, String toolTipText)
   {
     ImageIcon icon;
 
@@ -79,7 +86,7 @@ public class SettingsPanel
     button.setToolTipText(toolTipText);
     button.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     button.setContentAreaFilled(false);
-    icon = ImageUtil.getSmallImageIcon(iconName);
+    icon = imageIcon.getSmallIcon();
     button.setIcon(icon);
     button.setDisabledIcon(ImageUtil.createTransparentIcon(icon));
     button.setPressedIcon(ImageUtil.createDarkerIcon(icon));
@@ -152,8 +159,7 @@ public class SettingsPanel
         {
           pref.save();
           file = chooser.getSelectedFile();
-          if (!ConfigurationManager.getInstance().reload(file,
-            getConfiguration().getClass()))
+          if (!ConfigurationManager.getInstance().reload(file, getConfiguration().getClass()))
           {
             StatusBar.getInstance().setAlarm("Failed to reload from " + file);
           }

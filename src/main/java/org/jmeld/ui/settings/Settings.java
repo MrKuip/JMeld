@@ -5,23 +5,25 @@
  */
 package org.jmeld.ui.settings;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+
+import org.jmeld.ui.util.Images;
 
 public enum Settings
 {
-  Editor("Editor", "stock_edit", new EditorSettingsPanel()),
-  Filter("Filter", "stock_standard-filter", new FilterSettingsPanel()),
-  Folder("Folder", "stock_folder", new FolderSettingsPanel());
+ Editor("Editor", Images.EDIT, new EditorSettingsPanel()),
+ Filter("Filter", Images.FILTER, new FilterSettingsPanel()),
+ Folder("Folder", Images.FOLDER, new FolderSettingsPanel());
 
   // Instance variables:
   private String name;
-  private String iconName;
+  private Images icon;
   private JPanel panel;
 
-  Settings(String name, String iconName, JPanel panel)
+  Settings(String name, Images iconName, JPanel panel)
   {
     this.name = name;
-    this.iconName = iconName;
+    this.icon = iconName;
     this.panel = panel;
   }
 
@@ -30,9 +32,9 @@ public enum Settings
     return name;
   }
 
-  String getIconName()
+  Images getIcon()
   {
-    return iconName;
+    return icon;
   }
 
   JPanel getPanel()

@@ -104,14 +104,14 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     expandAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     expandAllButton.setContentAreaFilled(false);
     expandAllButton.setText(null);
-    expandAllButton.setIcon(ImageUtil.getSmallImageIcon("stock_expand-all"));
+    expandAllButton.setIcon(Images.EXPAND_ALL.getSmallIcon());
     expandAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) expandAllButton.getIcon()));
     expandAllButton.setFocusable(false);
 
     collapseAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     collapseAllButton.setContentAreaFilled(false);
     collapseAllButton.setText(null);
-    collapseAllButton.setIcon(ImageUtil.getSmallImageIcon("stock_collapse-all"));
+    collapseAllButton.setIcon(Images.COLLAPSE_ALL.getSmallIcon());
     collapseAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) collapseAllButton.getIcon()));
     collapseAllButton.setFocusable(false);
 
@@ -204,7 +204,6 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COPY_TO_LEFT);
     action.setIcon(Images.LEFT);
-    copyToLeftButton.setIcon(Images.LEFT.getSmallIcon());
     copyToLeftButton.setAction(action);
     copyToLeftButton.setText(null);
     copyToLeftButton.setFocusable(false);

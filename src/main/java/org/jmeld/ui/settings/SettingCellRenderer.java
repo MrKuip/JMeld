@@ -1,14 +1,15 @@
 package org.jmeld.ui.settings;
 
-import org.jmeld.ui.util.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
-import java.awt.*;
-
-class SettingCellRenderer
-    extends JLabel
-    implements ListCellRenderer
+class SettingCellRenderer extends JLabel implements ListCellRenderer<Settings>
 {
   public SettingCellRenderer()
   {
@@ -23,23 +24,21 @@ class SettingCellRenderer
     setPreferredSize(new Dimension(70, 70));
   }
 
-  public Component getListCellRendererComponent(JList list, Object value,
-      int index, boolean isSelected, boolean cellHasFocus)
+  public Component getListCellRendererComponent(JList<? extends Settings> list, Settings value, int index,
+      boolean isSelected, boolean cellHasFocus)
   {
     Settings settings;
-    JPanel panel;
 
     settings = (Settings) value;
 
     setText(settings.getName());
-    setIcon(ImageUtil.getImageIcon(settings.getIconName()));
+    setIcon(settings.getIcon().getLargeIcon());
 
     if (isSelected)
     {
       setBackground(list.getSelectionBackground());
       setForeground(list.getSelectionForeground());
-    }
-    else
+    } else
     {
       setBackground(Color.white);
       setForeground(Color.black);

@@ -31,6 +31,8 @@ public enum Images
  NEW("F0224"),
  DELETE("F09E7"),
  SAVE("F0818"),
+ SAVE_AS("F0E28"),
+ RELOAD("F0453"),
  UNDO("F054C"),
  REDO("F044E"),
  HELP("F0206"),
@@ -39,13 +41,18 @@ public enum Images
  LEFT("F004D"),
  RIGHT("F0054"),
  COMPARE("F1492"),
+ EDIT("F11E8"),
+ FILTER("F0233"),
+ FOLDER("F0256"),
+ EXPAND_ALL("F1143"),
+ COLLAPSE_ALL("F1142"),
  ABOUT("F02FC");
 
   static private Map<String, ImageIcon> m_iconImageMap = new HashMap<>();
 
   public enum IconSize
   {
-   SMALL(20),
+   SMALL(24),
    LARGE(32);
 
     private final int m_size;
