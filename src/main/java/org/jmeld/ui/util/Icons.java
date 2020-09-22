@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public enum Images
+public enum Icons
 {
  NEW("F0224"),
  DELETE("F09E7"),
@@ -46,14 +46,19 @@ public enum Images
  FOLDER("F0256"),
  EXPAND_ALL("F1143"),
  COLLAPSE_ALL("F1142"),
- ABOUT("F02FC");
+ ABOUT("F02FC"),
+ FILE("F0214"),
+ FILE_OUTLINE("F0224"),
+ FILE_HIDDEN("F0613");
 
   static private Map<String, ImageIcon> m_iconImageMap = new HashMap<>();
 
   public enum IconSize
   {
+   VERY_SMALL(12),
    SMALL(24),
-   LARGE(32);
+   LARGE(32),
+   VERY_LARGE(64);
 
     private final int m_size;
 
@@ -71,7 +76,11 @@ public enum Images
   public enum IconColor
   {
    DEFAULT(new Color(0, 74, 131)),
-   RED(Color.RED);
+   WHITE(Color.WHITE),
+   BLACK(Color.BLACK),
+   RED(Color.RED),
+   BLUE(Color.BLUE),
+   YELLOW(Color.YELLOW);
 
     private Color m_color;
 
@@ -89,12 +98,12 @@ public enum Images
   private final String m_codepoint;
   private final IconColor m_color;
 
-  Images(String codepoint)
+  Icons(String codepoint)
   {
     this(codepoint, IconColor.DEFAULT);
   }
 
-  Images(String codepoint, IconColor color)
+  Icons(String codepoint, IconColor color)
   {
     m_codepoint = codepoint;
     m_color = color;

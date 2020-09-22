@@ -49,7 +49,7 @@ import org.jmeld.ui.action.MeldAction;
 import org.jmeld.ui.swing.table.JMTreeTableModel;
 import org.jmeld.ui.util.Colors;
 import org.jmeld.ui.util.ImageUtil;
-import org.jmeld.ui.util.Images;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.SwingUtil;
 import org.jmeld.util.conf.ConfigurationListenerIF;
 import org.jmeld.util.file.FolderDiff;
@@ -104,14 +104,14 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     expandAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     expandAllButton.setContentAreaFilled(false);
     expandAllButton.setText(null);
-    expandAllButton.setIcon(Images.EXPAND_ALL.getSmallIcon());
+    expandAllButton.setIcon(Icons.EXPAND_ALL.getSmallIcon());
     expandAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) expandAllButton.getIcon()));
     expandAllButton.setFocusable(false);
 
     collapseAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     collapseAllButton.setContentAreaFilled(false);
     collapseAllButton.setText(null);
-    collapseAllButton.setIcon(Images.COLLAPSE_ALL.getSmallIcon());
+    collapseAllButton.setIcon(Icons.COLLAPSE_ALL.getSmallIcon());
     collapseAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) collapseAllButton.getIcon()));
     collapseAllButton.setFocusable(false);
 
@@ -156,7 +156,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     installKey("LEFT", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON);
-    action.setIcon(Images.COMPARE);
+    action.setIcon(Icons.COMPARE);
     compareButton.setAction(action);
     compareButton.setText(null);
     compareButton.setFocusable(false);
@@ -165,7 +165,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     installKey("ENTER", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON_BACKGROUND);
-    action.setIcon(Images.COMPARE);
+    action.setIcon(Icons.COMPARE);
     installKey("alt ENTER", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_EXPAND_ALL);
@@ -175,7 +175,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     collapseAllButton.setAction(action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REFRESH);
-    action.setIcon(Images.REFRESH);
+    action.setIcon(Icons.REFRESH);
     refreshButton.setAction(action);
     refreshButton.setText(null);
     refreshButton.setFocusable(false);
@@ -183,7 +183,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     refreshButton.setDisabledIcon(action.getTransparentSmallImageIcon());
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REMOVE_RIGHT);
-    action.setIcon(Images.DELETE);
+    action.setIcon(Icons.DELETE);
     deleteRightButton.setAction(action);
     deleteRightButton.setText(null);
     deleteRightButton.setFocusable(false);
@@ -193,7 +193,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     installKey("ctrl alt KP_RIGHT", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REMOVE_LEFT);
-    action.setIcon(Images.DELETE);
+    action.setIcon(Icons.DELETE);
     deleteLeftButton.setAction(action);
     deleteLeftButton.setText(null);
     deleteLeftButton.setFocusable(false);
@@ -203,7 +203,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     installKey("ctrl alt KP_LEFT", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COPY_TO_LEFT);
-    action.setIcon(Images.LEFT);
+    action.setIcon(Icons.LEFT);
     copyToLeftButton.setAction(action);
     copyToLeftButton.setText(null);
     copyToLeftButton.setFocusable(false);
@@ -213,7 +213,7 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     installKey("alt KP_LEFT", action);
 
     action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COPY_TO_RIGHT);
-    action.setIcon(Images.RIGHT);
+    action.setIcon(Icons.RIGHT);
     copyToRightButton.setAction(action);
     copyToRightButton.setText(null);
     copyToRightButton.setFocusable(false);

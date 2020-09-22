@@ -7,20 +7,20 @@ package org.jmeld.ui.settings;
 
 import javax.swing.JPanel;
 
-import org.jmeld.ui.util.Images;
+import org.jmeld.ui.util.Icons;
 
 public enum Settings
 {
- Editor("Editor", Images.EDIT, new EditorSettingsPanel()),
- Filter("Filter", Images.FILTER, new FilterSettingsPanel()),
- Folder("Folder", Images.FOLDER, new FolderSettingsPanel());
+ Editor("Editor", Icons.EDIT, new EditorSettingsPanel()),
+ Filter("Filter", Icons.FILTER, new FilterSettingsPanel()),
+ Folder("Folder", Icons.FOLDER, new FolderSettingsPanel());
 
   // Instance variables:
   private String name;
-  private Images icon;
+  private Icons icon;
   private JPanel panel;
 
-  Settings(String name, Images iconName, JPanel panel)
+  Settings(String name, Icons iconName, JPanel panel)
   {
     this.name = name;
     this.icon = iconName;
@@ -32,7 +32,7 @@ public enum Settings
     return name;
   }
 
-  Images getIcon()
+  Icons getIcon()
   {
     return icon;
   }

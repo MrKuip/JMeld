@@ -24,7 +24,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
 import org.jmeld.ui.util.ImageUtil;
-import org.jmeld.ui.util.Images;
+import org.jmeld.ui.util.Icons;
 
 public class MeldAction extends AbstractAction
 {
@@ -78,7 +78,7 @@ public class MeldAction extends AbstractAction
     putValue(SHORT_DESCRIPTION, toolTip);
   }
 
-  public void setIcon(Images icon)
+  public void setIcon(Icons icon)
   {
     putValue(SMALL_ICON, icon.getSmallIcon());
     putValue(LARGE_ICON_KEY, icon.getLargeIcon());

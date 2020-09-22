@@ -24,7 +24,7 @@ import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.ui.util.ImageUtil;
-import org.jmeld.ui.util.Images;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.util.conf.ConfigurationListenerIF;
 import org.jmeld.util.conf.ConfigurationManager;
 import org.jmeld.util.prefs.FileChooserPreference;
@@ -56,13 +56,13 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
       settingsPanel.add(setting.getPanel(), setting.getName());
     }
 
-    initButton(saveButton, Images.SAVE, "Save settings");
+    initButton(saveButton, Icons.SAVE, "Save settings");
     saveButton.addActionListener(getSaveAction());
 
-    initButton(saveAsButton, Images.SAVE_AS, "Save settings to a different file");
+    initButton(saveAsButton, Icons.SAVE_AS, "Save settings to a different file");
     saveAsButton.addActionListener(getSaveAsAction());
 
-    initButton(reloadButton, Images.RELOAD, "Reload settings from a different file");
+    initButton(reloadButton, Icons.RELOAD, "Reload settings from a different file");
     reloadButton.addActionListener(getReloadAction());
 
     fileLabel.setText("");
@@ -78,7 +78,7 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
     settingItems.addListSelectionListener(getSettingItemsAction());
   }
 
-  private void initButton(JButton button, Images imageIcon, String toolTipText)
+  private void initButton(JButton button, Icons imageIcon, String toolTipText)
   {
     ImageIcon icon;
 

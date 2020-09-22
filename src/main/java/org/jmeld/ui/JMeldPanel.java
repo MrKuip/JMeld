@@ -58,7 +58,7 @@ import org.jmeld.ui.search.SearchCommand;
 import org.jmeld.ui.search.SearchHits;
 import org.jmeld.ui.settings.SettingsPanel;
 import org.jmeld.ui.util.ImageUtil;
-import org.jmeld.ui.util.Images;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.SwingUtil;
 import org.jmeld.ui.util.TabIcon;
 import org.jmeld.ui.util.ToolBarBuilder;
@@ -358,11 +358,11 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
     actionHandler = new ActionHandler();
 
     action = actionHandler.createAction(this, actions.NEW);
-    action.setIcon(Images.NEW);
+    action.setIcon(Icons.NEW);
     action.setToolTip("Merge 2 new files");
 
     action = actionHandler.createAction(this, actions.SAVE);
-    action.setIcon(Images.SAVE);
+    action.setIcon(Icons.SAVE);
     action.setToolTip("Save the changed files");
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
@@ -370,13 +370,13 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
     }
 
     action = actionHandler.createAction(this, actions.UNDO);
-    action.setIcon(Images.UNDO);
+    action.setIcon(Icons.UNDO);
     action.setToolTip("Undo the latest change");
     installKey("control Z", action);
     installKey("control Y", action);
 
     action = actionHandler.createAction(this, actions.REDO);
-    action.setIcon(Images.REDO);
+    action.setIcon(Icons.REDO);
     action.setToolTip("Redo the latest change");
     installKey("control R", action);
 
@@ -443,14 +443,14 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
       action = actionHandler.createAction(this, actions.HELP);
-      action.setIcon(Images.HELP);
+      action.setIcon(Icons.HELP);
       installKey("F1", action);
 
       action = actionHandler.createAction(this, actions.ABOUT);
-      action.setIcon(Images.ABOUT);
+      action.setIcon(Icons.ABOUT);
 
       action = actionHandler.createAction(this, actions.SETTINGS);
-      action.setIcon(Images.SETTINGS);
+      action.setIcon(Icons.SETTINGS);
       action.setToolTip("Settings");
 
       action = actionHandler.createAction(this, actions.EXIT);
@@ -743,7 +743,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
       /*
        * content = new HelpPanel(this);
        */
-      tabbedPane.addTab("Help", Images.HELP.getSmallIcon(), content);
+      tabbedPane.addTab("Help", Icons.HELP.getSmallIcon(), content);
       tabbedPane.setSelectedComponent(content);
     } catch (Exception ex)
     {
@@ -767,7 +767,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
     content.setLayout(new BorderLayout());
     content.add(new JButton("JMeld version: " + Version.getVersion()), BorderLayout.CENTER);
 
-    tabbedPane.addTab("About", Images.ABOUT.getSmallIcon(), content);
+    tabbedPane.addTab("About", Icons.ABOUT.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -820,7 +820,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
 
     content = new SettingsPanel(this);
     content.setId(contentId);
-    tabbedPane.addTab("Settings", Images.SETTINGS.getSmallIcon(), content);
+    tabbedPane.addTab("Settings", Icons.SETTINGS.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -997,7 +997,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
             panel = new BufferDiffPanel(JMeldPanel.this);
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
-            tabbedPane.addTab(panel.getTitle(), Images.NEW.getSmallIcon(), panel);
+            tabbedPane.addTab(panel.getTitle(), Icons.NEW.getSmallIcon(), panel);
             if (!openInBackground)
             {
               tabbedPane.setSelectedComponent(panel);
@@ -1114,7 +1114,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
             panel = new FolderDiffPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab(panel.getTitle(), Images.FOLDER.getSmallIcon(), panel);
+            tabbedPane.addTab(panel.getTitle(), Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
@@ -1191,7 +1191,7 @@ public class JMeldPanel extends JPanel implements ConfigurationListenerIF
             panel = new VersionControlPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab("TODO: Think of title!", Images.FOLDER.getSmallIcon(), panel);
+            tabbedPane.addTab("TODO: Think of title!", Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
