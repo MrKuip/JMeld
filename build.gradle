@@ -4,6 +4,8 @@ plugins {
   id 'eclipse'
 }
 
+defaultTasks 'jar'
+
 repositories {
   mavenCentral()
 }
