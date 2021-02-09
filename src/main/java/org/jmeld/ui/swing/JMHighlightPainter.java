@@ -42,7 +42,8 @@ public class JMHighlightPainter
   {
     ADDED = new JMHighlightPainter(Colors.ADDED);
     ADDED.initConfiguration();
-    ADDED_LINE = new JMHighlightPainter(Colors.ADDED, true);
+    ADDED_LINE = new JMHighlightPainter(Colors.ADDED,
+                                        true);
     ADDED_LINE.initConfiguration();
     CHANGED = new JMHighlightPainter(Colors.CHANGED);
     CHANGED.initConfiguration();
@@ -50,7 +51,8 @@ public class JMHighlightPainter
     CHANGED_LIGHTER.initConfiguration();
     DELETED = new JMHighlightPainter(Colors.DELETED);
     DELETED.initConfiguration();
-    DELETED_LINE = new JMHighlightPainter(Colors.DELETED, true);
+    DELETED_LINE = new JMHighlightPainter(Colors.DELETED,
+                                          true);
     DELETED_LINE.initConfiguration();
     SEARCH = new JMHighlightPainter(Color.yellow);
     SEARCH.initConfiguration();
@@ -63,10 +65,12 @@ public class JMHighlightPainter
 
   private JMHighlightPainter(Color color)
   {
-    this(color, false);
+    this(color,
+         false);
   }
 
-  private JMHighlightPainter(Color color, boolean line)
+  private JMHighlightPainter(Color color,
+      boolean line)
   {
     super(color);
 
@@ -77,7 +81,11 @@ public class JMHighlightPainter
   }
 
   @Override
-  public void paint(Graphics g, int p0, int p1, Shape shape, JTextComponent comp)
+  public void paint(Graphics g,
+      int p0,
+      int p1,
+      Shape shape,
+      JTextComponent comp)
   {
     Rectangle b;
     Rectangle r1;
@@ -98,7 +106,10 @@ public class JMHighlightPainter
       g.setColor(color);
       if (line)
       {
-        g.drawLine(0, r1.y, b.x + b.width, r1.y);
+        g.drawLine(0,
+                   r1.y,
+                   b.x + b.width,
+                   r1.y);
       }
       else
       {
@@ -106,7 +117,10 @@ public class JMHighlightPainter
         {
           if (r1.y == r2.y)
           {
-            g.fillRect(r1.x, r1.y, r2.x - r1.x, r1.height);
+            g.fillRect(r1.x,
+                       r1.y,
+                       r2.x - r1.x,
+                       r1.height);
           }
           else
           {
@@ -133,18 +147,24 @@ public class JMHighlightPainter
                 width = b.width - b.x;
               }
 
-              g.fillRect(x, y, width, r1.height);
+              g.fillRect(x,
+                         y,
+                         width,
+                         r1.height);
             }
           }
         }
         else
         {
           height = r2.y - r1.y;
-          if(height == 0)
+          if (height == 0)
           {
             height = r1.height;
           }
-          g.fillRect(0, r1.y, b.x + b.width, height);
+          g.fillRect(0,
+                     r1.y,
+                     b.x + b.width,
+                     height);
         }
       }
     }

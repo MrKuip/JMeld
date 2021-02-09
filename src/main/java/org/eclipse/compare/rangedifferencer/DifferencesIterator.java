@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A custom iterator to iterate over a List of <code>RangeDifferences</code>.
- * It is used internally by the <code>RangeDifferencer</code>.
+ * A custom iterator to iterate over a List of <code>RangeDifferences</code>. It is used internally by the
+ * <code>RangeDifferencer</code>.
  */
 /* package */class DifferencesIterator
 {
@@ -67,7 +67,8 @@ import java.util.List;
    * Difference iterators are used in pairs.
    * This method returns the other iterator.
    */
-  DifferencesIterator other(DifferencesIterator right, DifferencesIterator left)
+  DifferencesIterator other(DifferencesIterator right,
+      DifferencesIterator left)
   {
     if (this == right)
       return left;

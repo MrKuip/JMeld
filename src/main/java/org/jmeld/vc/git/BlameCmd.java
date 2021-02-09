@@ -19,7 +19,11 @@ public class BlameCmd
 
   public Result execute()
   {
-    super.execute("svn", "blame", "--non-interactive", "--xml", file.getPath());
+    super.execute("svn",
+                  "blame",
+                  "--non-interactive",
+                  "--xml",
+                  file.getPath());
 
     return getResult();
   }
@@ -40,9 +44,8 @@ public class BlameCmd
       {
         for (BlameIF.EntryIF entry : target.getEntryList())
         {
-          System.out.println(entry.getLineNumber() + " : "
-                             + entry.getCommit().getRevision() + " -> "
-                             + entry.getCommit().getAuthor());
+          System.out.println(entry.getLineNumber() + " : " + entry.getCommit().getRevision() + " -> "
+              + entry.getCommit().getAuthor());
         }
       }
     }

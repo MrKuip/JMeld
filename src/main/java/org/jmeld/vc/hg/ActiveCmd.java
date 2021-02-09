@@ -21,7 +21,9 @@ public class ActiveCmd
   public Result execute()
   {
     // If a root can be found than we have a mercurial working directory!
-    super.execute("hg", "root", "--noninteractive");
+    super.execute("hg",
+                  "root",
+                  "--noninteractive");
 
     return getResult();
   }

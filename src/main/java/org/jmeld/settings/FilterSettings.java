@@ -71,7 +71,8 @@ public class FilterSettings
   {
     for (Filter f : filters)
     {
-      if (ObjectUtil.equals(f.getName(), name))
+      if (ObjectUtil.equals(f.getName(),
+                            name))
       {
         return f;
       }
@@ -90,70 +91,134 @@ public class FilterSettings
     }
 
     filter = new Filter("default");
-    filter.addRule(new FilterRule("Temporary files", FilterRule.Rule.excludes,
-        "**/*~", true));
-    filter.addRule(new FilterRule("Temporary files", FilterRule.Rule.excludes,
-        "**/#*#", true));
-    filter.addRule(new FilterRule("Temporary files", FilterRule.Rule.excludes,
-        "**/.#*", true));
-    filter.addRule(new FilterRule("Temporary files", FilterRule.Rule.excludes,
-        "**/%*%", true));
-    filter.addRule(new FilterRule("Temporary files", FilterRule.Rule.excludes,
-        "**/._*", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/.svn", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/.svn/**", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/CVS", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/CVS/**", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/SCCS", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/SCCS/**", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/vssver.scc", true));
-    filter.addRule(new FilterRule("Versioncontrol", FilterRule.Rule.excludes,
-        "**/.SYNC", true));
-    filter.addRule(new FilterRule("Mac", FilterRule.Rule.excludes,
-        "**/.DS_Store", true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.jpg",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.gif",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.png",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.wav",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.mp3",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.ogg",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.xcf",
-        true));
-    filter.addRule(new FilterRule("Media", FilterRule.Rule.excludes, "**/.xpm",
-        true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.pyc", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.a", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.obj", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.o", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.so", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.la", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.lib", true));
-    filter.addRule(new FilterRule("Binaries", FilterRule.Rule.excludes,
-        "**/.dll", true));
-    filter.addRule(new FilterRule("Java", FilterRule.Rule.excludes,
-        "**/*.class", true));
-    filter.addRule(new FilterRule("Java", FilterRule.Rule.excludes, "**/*.jar",
-        true));
+    filter.addRule(new FilterRule("Temporary files",
+                                  FilterRule.Rule.excludes,
+                                  "**/*~",
+                                  true));
+    filter.addRule(new FilterRule("Temporary files",
+                                  FilterRule.Rule.excludes,
+                                  "**/#*#",
+                                  true));
+    filter.addRule(new FilterRule("Temporary files",
+                                  FilterRule.Rule.excludes,
+                                  "**/.#*",
+                                  true));
+    filter.addRule(new FilterRule("Temporary files",
+                                  FilterRule.Rule.excludes,
+                                  "**/%*%",
+                                  true));
+    filter.addRule(new FilterRule("Temporary files",
+                                  FilterRule.Rule.excludes,
+                                  "**/._*",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/.svn",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/.svn/**",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/CVS",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/CVS/**",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/SCCS",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/SCCS/**",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/vssver.scc",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/.SYNC",
+                                  true));
+    filter.addRule(new FilterRule("Mac",
+                                  FilterRule.Rule.excludes,
+                                  "**/.DS_Store",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.jpg",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.gif",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.png",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.wav",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.mp3",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.ogg",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.xcf",
+                                  true));
+    filter.addRule(new FilterRule("Media",
+                                  FilterRule.Rule.excludes,
+                                  "**/.xpm",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.pyc",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.a",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.obj",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.o",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.so",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.la",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.lib",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.dll",
+                                  true));
+    filter.addRule(new FilterRule("Java",
+                                  FilterRule.Rule.excludes,
+                                  "**/*.class",
+                                  true));
+    filter.addRule(new FilterRule("Java",
+                                  FilterRule.Rule.excludes,
+                                  "**/*.jar",
+                                  true));
 
     addFilter(filter);
   }

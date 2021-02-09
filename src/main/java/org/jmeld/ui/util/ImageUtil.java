@@ -54,25 +54,31 @@ public class ImageUtil
 
   public static ImageIcon createDarkerIcon(ImageIcon icon)
   {
-    return createDarkerIcon(icon, -0.10f);
+    return createDarkerIcon(icon,
+                            -0.10f);
   }
 
   /** Create a x% Transparent icon */
-  public static ImageIcon createDarkerIcon(ImageIcon icon, float percentage)
+  public static ImageIcon createDarkerIcon(ImageIcon icon,
+      float percentage)
   {
-    return createIcon(icon, new BrightnessFilter(percentage));
+    return createIcon(icon,
+                      new BrightnessFilter(percentage));
   }
 
   /** Create a 20% Transparent icon */
   public static ImageIcon createTransparentIcon(ImageIcon icon)
   {
-    return createTransparentIcon(icon, 20);
+    return createTransparentIcon(icon,
+                                 20);
   }
 
   /** Create a x% Transparent icon */
-  public static ImageIcon createTransparentIcon(ImageIcon icon, int percentage)
+  public static ImageIcon createTransparentIcon(ImageIcon icon,
+      int percentage)
   {
-    return createIcon(icon, new TransparentFilter(percentage));
+    return createIcon(icon,
+                      new TransparentFilter(percentage));
   }
 
   /** Create a new icon which is filtered by some ImageFilter */
@@ -88,11 +94,13 @@ public class ImageUtil
       return null;
     }
 
-    ip = new FilteredImageSource(icon.getImage().getSource(), filter);
+    ip = new FilteredImageSource(icon.getImage().getSource(),
+                                 filter);
     image = Toolkit.getDefaultToolkit().createImage(ip);
 
     tracker = new MediaTracker(new JPanel());
-    tracker.addImage(image, 1);
+    tracker.addImage(image,
+                     1);
     try
     {
       tracker.waitForID(1);

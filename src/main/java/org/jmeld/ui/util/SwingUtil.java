@@ -12,7 +12,8 @@ public class SwingUtil
   {
   }
 
-  public static void installKey(JComponent component, String key,
+  public static void installKey(JComponent component,
+      String key,
       MeldAction action)
   {
     InputMap inputMap;
@@ -21,21 +22,23 @@ public class SwingUtil
 
     stroke = KeyStroke.getKeyStroke(key);
 
-    inputMap = component
-        .getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    inputMap = component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     if (inputMap.get(stroke) != action.getName())
     {
-      inputMap.put(stroke, action.getName());
+      inputMap.put(stroke,
+                   action.getName());
     }
 
     actionMap = component.getActionMap();
     if (actionMap.get(action.getName()) != action)
     {
-      actionMap.put(action.getName(), action);
+      actionMap.put(action.getName(),
+                    action);
     }
   }
 
-  public static void deInstallKey(JComponent component, String key,
+  public static void deInstallKey(JComponent component,
+      String key,
       MeldAction action)
   {
     InputMap inputMap;
@@ -43,8 +46,7 @@ public class SwingUtil
     KeyStroke stroke;
 
     stroke = KeyStroke.getKeyStroke(key);
-    inputMap = component
-        .getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    inputMap = component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     inputMap.remove(stroke);
 
     // Do not deinstall the action because I don't know how many other

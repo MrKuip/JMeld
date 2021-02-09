@@ -68,7 +68,9 @@ public class JMDiff
     //algorithms.add(new HuntDiff());
   }
 
-  public JMRevision diff(List<String> a, List<String> b, Ignore ignore)
+  public JMRevision diff(List<String> a,
+      List<String> b,
+      Ignore ignore)
       throws JMeldException
   {
     if (a == null)
@@ -79,10 +81,14 @@ public class JMDiff
     {
       b = Collections.emptyList();
     }
-    return diff(a.toArray(), b.toArray(), ignore);
+    return diff(a.toArray(),
+                b.toArray(),
+                ignore);
   }
 
-  public JMRevision diff(Object[] a, Object[] b, Ignore ignore)
+  public JMRevision diff(Object[] a,
+      Object[] b,
+      Ignore ignore)
       throws JMeldException
   {
     JMRevision revision;
@@ -97,15 +103,14 @@ public class JMDiff
 
     if (org == null)
     {
-      org = new Object[] {};
+      org = new Object[]{};
     }
     if (rev == null)
     {
-      rev = new Object[] {};
+      rev = new Object[]{};
     }
 
-    if (org instanceof AbstractBufferDocument.Line[]
-        && rev instanceof AbstractBufferDocument.Line[])
+    if (org instanceof AbstractBufferDocument.Line[] && rev instanceof AbstractBufferDocument.Line[])
     {
       filtered = true;
     }
@@ -119,8 +124,10 @@ public class JMDiff
 
     if (filtered)
     {
-      org = filter(ignore, org);
-      rev = filter(ignore, rev);
+      org = filter(ignore,
+                   org);
+      rev = filter(ignore,
+                   rev);
     }
 
     filteredTime = sp.getElapsedTime();
@@ -129,20 +136,25 @@ public class JMDiff
     {
       try
       {
-        revision = algorithm.diff(org, rev);
+        revision = algorithm.diff(org,
+                                  rev);
         revision.setIgnore(ignore);
-        revision.update(a, b);
+        revision.update(a,
+                        b);
         //revision.filter();
         if (filtered)
         {
-          adjustRevision(revision, a, (JMString[]) org, b, (JMString[]) rev);
+          adjustRevision(revision,
+                         a,
+                         (JMString[]) org,
+                         b,
+                         (JMString[]) rev);
         }
 
         if (a.length > 1000)
         {
-          System.out.println("diff took " + sp.getElapsedTime()
-                             + " msec. [filter=" + filteredTime + " msec]["
-                             + algorithm.getClass() + "]");
+          System.out.println("diff took " + sp.getElapsedTime() + " msec. [filter=" + filteredTime + " msec]["
+              + algorithm.getClass() + "]");
         }
 
         return revision;
@@ -151,8 +163,7 @@ public class JMDiff
       {
         if (ex.getCause() instanceof MaxTimeExceededException)
         {
-          System.out.println("Time exceeded for " + algorithm.getClass()
-                             + ": try next algorithm");
+          System.out.println("Time exceeded for " + algorithm.getClass() + ": try next algorithm");
         }
         else
         {
@@ -164,8 +175,10 @@ public class JMDiff
     return null;
   }
 
-  private void adjustRevision(JMRevision revision, Object[] orgArray,
-      JMString[] orgArrayFiltered, Object[] revArray,
+  private void adjustRevision(JMRevision revision,
+      Object[] orgArray,
+      JMString[] orgArrayFiltered,
+      Object[] revArray,
       JMString[] revArrayFiltered)
   {
     JMChunk chunk;
@@ -242,7 +255,8 @@ public class JMDiff
     }
   }
 
-  private JMString[] filter(Ignore ignore, Object[] array)
+  private JMString[] filter(Ignore ignore,
+      Object[] array)
   {
     List<JMString> result;
     JMString jms;
@@ -259,7 +273,9 @@ public class JMDiff
 
         inputLine.clear();
         inputLine.put(o.toString());
-        CompareUtil.removeIgnoredChars(inputLine, ignore, outputLine);
+        CompareUtil.removeIgnoredChars(inputLine,
+                                       ignore,
+                                       outputLine);
         if (outputLine.remaining() == 0)
         {
           continue;

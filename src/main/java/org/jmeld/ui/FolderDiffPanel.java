@@ -56,14 +56,17 @@ import org.jmeld.util.file.FolderDiff;
 import org.jmeld.util.file.cmd.AbstractCmd;
 import org.jmeld.util.node.JMDiffNode;
 
-public class FolderDiffPanel extends FolderDiffForm implements ConfigurationListenerIF
+public class FolderDiffPanel
+    extends FolderDiffForm
+    implements ConfigurationListenerIF
 {
   private JMeldPanel mainPanel;
   private FolderDiff diff;
   private ActionHandler actionHandler;
   private JMTreeTableModel treeTableModel;
 
-  FolderDiffPanel(JMeldPanel mainPanel, FolderDiff diff)
+  FolderDiffPanel(JMeldPanel mainPanel,
+      FolderDiff diff)
   {
     this.mainPanel = mainPanel;
     this.diff = diff;
@@ -101,14 +104,20 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(getFolderSettings().getLeftRightUnChanged());
 
-    expandAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    expandAllButton.setBorder(BorderFactory.createEmptyBorder(2,
+                                                              2,
+                                                              2,
+                                                              2));
     expandAllButton.setContentAreaFilled(false);
     expandAllButton.setText(null);
     expandAllButton.setIcon(Icons.EXPAND_ALL.getSmallIcon());
     expandAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) expandAllButton.getIcon()));
     expandAllButton.setFocusable(false);
 
-    collapseAllButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    collapseAllButton.setBorder(BorderFactory.createEmptyBorder(2,
+                                                                2,
+                                                                2,
+                                                                2));
     collapseAllButton.setContentAreaFilled(false);
     collapseAllButton.setText(null);
     collapseAllButton.setIcon(Icons.COLLAPSE_ALL.getSmallIcon());
@@ -116,10 +125,12 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     collapseAllButton.setFocusable(false);
 
     folder1Label.init();
-    folder1Label.setText(diff.getLeftFolderName(), diff.getRightFolderName());
+    folder1Label.setText(diff.getLeftFolderName(),
+                         diff.getRightFolderName());
 
     folder2Label.init();
-    folder2Label.setText(diff.getRightFolderName(), diff.getLeftFolderName());
+    folder2Label.setText(diff.getRightFolderName(),
+                         diff.getLeftFolderName());
 
     folderTreeTable.setTreeTableModel(getTreeTableModel());
 
@@ -130,9 +141,12 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     folderTreeTable.addMouseListener(getMouseListener());
     folderTreeTable.expandAll();
 
-    folderTreeTable.addHighlighter(new ColorHighlighter(HighlightPredicate.EVEN, Color.white, Color.black));
-    folderTreeTable.addHighlighter(
-        new ColorHighlighter(HighlightPredicate.ODD, Colors.getTableRowHighLighterColor(), Color.black));
+    folderTreeTable.addHighlighter(new ColorHighlighter(HighlightPredicate.EVEN,
+                                                        Color.white,
+                                                        Color.black));
+    folderTreeTable.addHighlighter(new ColorHighlighter(HighlightPredicate.ODD,
+                                                        Colors.getTableRowHighLighterColor(),
+                                                        Color.black));
     // folderTreeTable.setHighlighters(new AlternateRowHighlighter(Color.white,
     // Colors.getTableRowHighLighterColor(), Color.black));
 
@@ -143,38 +157,53 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
   {
     MeldAction action;
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_SELECT_NEXT_ROW);
-    installKey("DOWN", action);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_SELECT_NEXT_ROW);
+    installKey("DOWN",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_SELECT_PREVIOUS_ROW);
-    installKey("UP", action);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_SELECT_PREVIOUS_ROW);
+    installKey("UP",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_NEXT_NODE);
-    installKey("RIGHT", action);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_NEXT_NODE);
+    installKey("RIGHT",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_PREVIOUS_NODE);
-    installKey("LEFT", action);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_PREVIOUS_NODE);
+    installKey("LEFT",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON);
     action.setIcon(Icons.COMPARE);
     compareButton.setAction(action);
     compareButton.setText(null);
     compareButton.setFocusable(false);
     compareButton.setIcon(action.getSmallIcon());
     compareButton.setDisabledIcon(action.getTransparentSmallImageIcon());
-    installKey("ENTER", action);
+    installKey("ENTER",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON_BACKGROUND);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_OPEN_FILE_COMPARISON_BACKGROUND);
     action.setIcon(Icons.COMPARE);
-    installKey("alt ENTER", action);
+    installKey("alt ENTER",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_EXPAND_ALL);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_EXPAND_ALL);
     expandAllButton.setAction(action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COLLAPSE_ALL);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_COLLAPSE_ALL);
     collapseAllButton.setAction(action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REFRESH);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_REFRESH);
     action.setIcon(Icons.REFRESH);
     refreshButton.setAction(action);
     refreshButton.setText(null);
@@ -182,52 +211,65 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     refreshButton.setIcon(action.getSmallIcon());
     refreshButton.setDisabledIcon(action.getTransparentSmallImageIcon());
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REMOVE_RIGHT);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_REMOVE_RIGHT);
     action.setIcon(Icons.DELETE);
     deleteRightButton.setAction(action);
     deleteRightButton.setText(null);
     deleteRightButton.setFocusable(false);
     deleteRightButton.setIcon(action.getSmallIcon());
     deleteRightButton.setDisabledIcon(action.getTransparentSmallImageIcon());
-    installKey("ctrl alt RIGHT", action);
-    installKey("ctrl alt KP_RIGHT", action);
+    installKey("ctrl alt RIGHT",
+               action);
+    installKey("ctrl alt KP_RIGHT",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_REMOVE_LEFT);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_REMOVE_LEFT);
     action.setIcon(Icons.DELETE);
     deleteLeftButton.setAction(action);
     deleteLeftButton.setText(null);
     deleteLeftButton.setFocusable(false);
     deleteLeftButton.setIcon(action.getSmallIcon());
     deleteLeftButton.setDisabledIcon(action.getTransparentSmallImageIcon());
-    installKey("ctrl alt LEFT", action);
-    installKey("ctrl alt KP_LEFT", action);
+    installKey("ctrl alt LEFT",
+               action);
+    installKey("ctrl alt KP_LEFT",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COPY_TO_LEFT);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_COPY_TO_LEFT);
     action.setIcon(Icons.LEFT);
     copyToLeftButton.setAction(action);
     copyToLeftButton.setText(null);
     copyToLeftButton.setFocusable(false);
     copyToLeftButton.setIcon(action.getSmallIcon());
     copyToLeftButton.setDisabledIcon(action.getTransparentSmallImageIcon());
-    installKey("alt LEFT", action);
-    installKey("alt KP_LEFT", action);
+    installKey("alt LEFT",
+               action);
+    installKey("alt KP_LEFT",
+               action);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_COPY_TO_RIGHT);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_COPY_TO_RIGHT);
     action.setIcon(Icons.RIGHT);
     copyToRightButton.setAction(action);
     copyToRightButton.setText(null);
     copyToRightButton.setFocusable(false);
     copyToRightButton.setIcon(action.getSmallIcon());
     copyToRightButton.setDisabledIcon(action.getTransparentSmallImageIcon());
-    installKey("alt RIGHT", action);
-    installKey("alt KP_RIGHT", action);
+    installKey("alt RIGHT",
+               action);
+    installKey("alt KP_RIGHT",
+               action);
 
     // deleteRightButton.setVisible(false);
     // copyToRightButton.setVisible(false);
     // copyToLeftButton.setVisible(false);
     // deleteLeftButton.setVisible(false);
 
-    action = actionHandler.createAction(this, mainPanel.actions.FOLDER_FILTER);
+    action = actionHandler.createAction(this,
+                                        mainPanel.actions.FOLDER_FILTER);
     onlyRightButton.setAction(action);
     leftRightChangedButton.setAction(action);
     onlyLeftButton.setAction(action);
@@ -235,9 +277,12 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     hierarchyComboBox.setAction(action);
   }
 
-  private void installKey(String key, MeldAction action)
+  private void installKey(String key,
+      MeldAction action)
   {
-    SwingUtil.installKey(folderTreeTable, key, action);
+    SwingUtil.installKey(folderTreeTable,
+                         key,
+                         action);
   }
 
   public String getTitle()
@@ -275,19 +320,22 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
         {
           nodes.add(node);
         }
-      } else if (node.isCompareEqual(JMDiffNode.Compare.NotEqual))
+      }
+      else if (node.isCompareEqual(JMDiffNode.Compare.NotEqual))
       {
         if (leftRightChangedButton.isSelected())
         {
           nodes.add(node);
         }
-      } else if (node.isCompareEqual(JMDiffNode.Compare.RightMissing))
+      }
+      else if (node.isCompareEqual(JMDiffNode.Compare.RightMissing))
       {
         if (onlyLeftButton.isSelected())
         {
           nodes.add(node);
         }
-      } else if (node.isCompareEqual(JMDiffNode.Compare.LeftMissing))
+      }
+      else if (node.isCompareEqual(JMDiffNode.Compare.LeftMissing))
       {
         if (onlyRightButton.isSelected())
         {
@@ -296,7 +344,9 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
       }
     }
 
-    rootNode = new UINode(getTreeTableModel(), "<root>", false);
+    rootNode = new UINode(getTreeTableModel(),
+                          "<root>",
+                          false);
     hierarchy = hierarchyComboBox.getSelectedItem();
 
     // Build the hierarchy:
@@ -305,37 +355,45 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
       for (JMDiffNode node : nodes)
       {
         parent = node.getParent();
-        uiNode = new UINode(getTreeTableModel(), node);
+        uiNode = new UINode(getTreeTableModel(),
+                            node);
 
         if (parent != null)
         {
           parentName = parent.getName();
-          uiParentNode = new UINode(getTreeTableModel(), parent);
+          uiParentNode = new UINode(getTreeTableModel(),
+                                    parent);
           uiParentNode = rootNode.addChild(uiParentNode);
           uiParentNode.addChild(uiNode);
-        } else
+        }
+        else
         {
           rootNode.addChild(uiNode);
         }
       }
-    } else if (hierarchy == FolderSettings.FolderView.fileView)
+    }
+    else if (hierarchy == FolderSettings.FolderView.fileView)
     {
       for (JMDiffNode node : nodes)
       {
-        rootNode.addChild(new UINode(getTreeTableModel(), node));
+        rootNode.addChild(new UINode(getTreeTableModel(),
+                                     node));
       }
-    } else if (hierarchy == FolderSettings.FolderView.directoryView)
+    }
+    else if (hierarchy == FolderSettings.FolderView.directoryView)
     {
       for (JMDiffNode node : nodes)
       {
-        addDirectoryViewNode(rootNode, node);
+        addDirectoryViewNode(rootNode,
+                             node);
       }
     }
 
     return rootNode;
   }
 
-  private void addDirectoryViewNode(UINode rootNode, JMDiffNode node)
+  private void addDirectoryViewNode(UINode rootNode,
+      JMDiffNode node)
   {
     UINode parent;
     JMDiffNode uiNode;
@@ -345,7 +403,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     do
     {
       uiNodes.add(node);
-    } while ((node = node.getParent()) != null);
+    }
+    while ((node = node.getParent()) != null);
 
     Collections.reverse(uiNodes);
 
@@ -353,7 +412,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     for (int i = 1; i < uiNodes.size(); i++)
     {
       uiNode = uiNodes.get(i);
-      parent = parent.addChild(new UINode(getTreeTableModel(), uiNode));
+      parent = parent.addChild(new UINode(getTreeTableModel(),
+                                          uiNode));
     }
   }
 
@@ -363,7 +423,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
     row = folderTreeTable.getSelectedRow() - 1;
     row = row < 0 ? (folderTreeTable.getRowCount() - 1) : row;
-    folderTreeTable.setRowSelectionInterval(row, row);
+    folderTreeTable.setRowSelectionInterval(row,
+                                            row);
     folderTreeTable.scrollRowToVisible(row);
   }
 
@@ -373,7 +434,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
     row = folderTreeTable.getSelectedRow() + 1;
     row = row >= folderTreeTable.getRowCount() ? 0 : row;
-    folderTreeTable.setRowSelectionInterval(row, row);
+    folderTreeTable.setRowSelectionInterval(row,
+                                            row);
     folderTreeTable.scrollRowToVisible(row);
   }
 
@@ -415,19 +477,23 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
   public void doOpenFileComparisonBackground(ActionEvent ae)
   {
-    doOpenFileComparison(ae, true);
+    doOpenFileComparison(ae,
+                         true);
   }
 
   public void doOpenFileComparison(ActionEvent ae)
   {
-    doOpenFileComparison(ae, false);
+    doOpenFileComparison(ae,
+                         false);
   }
 
-  private void doOpenFileComparison(ActionEvent ae, boolean background)
+  private void doOpenFileComparison(ActionEvent ae,
+      boolean background)
   {
     for (UINode uiNode : getSelectedUINodes())
     {
-      mainPanel.openFileComparison(uiNode.getDiffNode(), background);
+      mainPanel.openFileComparison(uiNode.getDiffNode(),
+                                   background);
     }
   }
 
@@ -461,8 +527,10 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     {
       try
       {
-        cc.add(uiNode, uiNode.getDiffNode().getCopyToLeftCmd());
-      } catch (Exception ex)
+        cc.add(uiNode,
+               uiNode.getDiffNode().getCopyToLeftCmd());
+      }
+      catch (Exception ex)
       {
         ex.printStackTrace();
       }
@@ -484,8 +552,10 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     {
       try
       {
-        cc.add(uiNode, uiNode.getDiffNode().getCopyToRightCmd());
-      } catch (Exception ex)
+        cc.add(uiNode,
+               uiNode.getDiffNode().getCopyToRightCmd());
+      }
+      catch (Exception ex)
       {
         ex.printStackTrace();
       }
@@ -493,7 +563,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     cc.execute();
   }
 
-  class CompoundCommand extends CompoundEdit
+  class CompoundCommand
+      extends CompoundEdit
   {
     List<AbstractCmd> cmds;
     Map<AbstractCmd, UINode> uiNodeMap;
@@ -504,14 +575,16 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
       cmds = new ArrayList<AbstractCmd>();
     }
 
-    void add(UINode uiNode, AbstractCmd cmd)
+    void add(UINode uiNode,
+        AbstractCmd cmd)
     {
       if (cmd == null)
       {
         return;
       }
 
-      uiNodeMap.put(cmd, uiNode);
+      uiNodeMap.put(cmd,
+                    uiNode);
       cmds.add(cmd);
     }
 
@@ -528,7 +601,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
         getUndoHandler().add(this);
         compareContents();
-      } catch (Exception ex)
+      }
+      catch (Exception ex)
       {
         ex.printStackTrace();
       }
@@ -572,7 +646,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     new RefreshAction().execute();
   }
 
-  class RefreshAction extends SwingWorker<String, Object>
+  class RefreshAction
+      extends SwingWorker<String, Object>
   {
     RefreshAction()
     {
@@ -609,8 +684,10 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     {
       try
       {
-        cc.add(uiNode, uiNode.getDiffNode().getRemoveRightCmd());
-      } catch (Exception ex)
+        cc.add(uiNode,
+               uiNode.getDiffNode().getRemoveRightCmd());
+      }
+      catch (Exception ex)
       {
         ex.printStackTrace();
       }
@@ -632,8 +709,10 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
     {
       try
       {
-        cc.add(uiNode, uiNode.getDiffNode().getRemoveLeftCmd());
-      } catch (Exception ex)
+        cc.add(uiNode,
+               uiNode.getDiffNode().getRemoveLeftCmd());
+      }
+      catch (Exception ex)
       {
         ex.printStackTrace();
       }
@@ -678,13 +757,15 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
         continue;
       }
 
-      buildResult(result, uiNode);
+      buildResult(result,
+                  uiNode);
     }
 
     return result;
   }
 
-  private void buildResult(Set<UINode> result, UINode uiNode)
+  private void buildResult(Set<UINode> result,
+      UINode uiNode)
   {
     if (uiNode.isLeaf() && uiNode.getDiffNode() != null)
     {
@@ -694,7 +775,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
 
     for (UINode node : uiNode.getChildren())
     {
-      buildResult(result, node);
+      buildResult(result,
+                  node);
     }
   }
 
@@ -746,14 +828,16 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
               break;
             }
 
-            mainPanel.openFileComparison(diffNode, background);
+            mainPanel.openFileComparison(diffNode,
+                                         background);
           }
 
           // Hack to make it possible to select with the MIDDLE
           // button of a mouse.
           if (folderTreeTable.getSelectedRow() != row)
           {
-            folderTreeTable.setRowSelectionInterval(row, row);
+            folderTreeTable.setRowSelectionInterval(row,
+                                                    row);
           }
 
           // Make sure that UP and DOWN keys work the way I want.
@@ -789,7 +873,8 @@ public class FolderDiffPanel extends FolderDiffForm implements ConfigurationList
         {
           collectDiffNode(childUINode);
         }
-      } else
+      }
+      else
       {
         diffNode = uiNode.getDiffNode();
         if (diffNode != null)

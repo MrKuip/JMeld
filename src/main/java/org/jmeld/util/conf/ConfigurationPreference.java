@@ -54,7 +54,7 @@ public class ConfigurationPreference
     try
     {
       defaultFileName = new File(System.getProperty("user.home"),
-          defaultFileName).getCanonicalPath();
+                                 defaultFileName).getCanonicalPath();
     }
     catch (Exception ex)
     {
@@ -62,7 +62,8 @@ public class ConfigurationPreference
     }
     defaultFileName += ".xml";
 
-    fileName = getString(FILENAME, defaultFileName);
+    fileName = getString(FILENAME,
+                         defaultFileName);
 
     file = new File(fileName);
   }
@@ -82,7 +83,8 @@ public class ConfigurationPreference
   {
     try
     {
-      putString(FILENAME, file.getCanonicalPath());
+      putString(FILENAME,
+                file.getCanonicalPath());
     }
     catch (IOException ex)
     {

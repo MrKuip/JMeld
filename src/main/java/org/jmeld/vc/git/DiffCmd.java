@@ -15,7 +15,8 @@ import org.jmeld.util.Result;
 import org.jmeld.vc.DiffIF;
 import org.jmeld.vc.util.VcCmd;
 
-public class DiffCmd extends VcCmd<DiffData>
+public class DiffCmd
+    extends VcCmd<DiffData>
 {
   // Instance variables:
   private File file;
@@ -23,7 +24,8 @@ public class DiffCmd extends VcCmd<DiffData>
   private BufferedReader reader;
   private String unreadLine;
 
-  public DiffCmd(File file, boolean recursive)
+  public DiffCmd(File file,
+      boolean recursive)
   {
     this.file = file;
     this.recursive = recursive;
@@ -31,7 +33,12 @@ public class DiffCmd extends VcCmd<DiffData>
 
   public Result execute()
   {
-    super.execute("svn", "diff", "--non-interactive", "--no-diff-deleted", recursive ? "" : "-N", file.getPath());
+    super.execute("svn",
+                  "diff",
+                  "--non-interactive",
+                  "--no-diff-deleted",
+                  recursive ? "" : "-N",
+                  file.getPath());
 
     return getResult();
   }
@@ -59,8 +66,10 @@ public class DiffCmd extends VcCmd<DiffData>
 
         System.out.println("path = " + path);
 
-        revision = new JMRevision(null, null);
-        diffData.addTarget(path, revision);
+        revision = new JMRevision(null,
+                                  null);
+        diffData.addTarget(path,
+                           revision);
 
         readLine(); // =====================================
         readLine(); // --- <Path> (revision ...)
@@ -75,7 +84,8 @@ public class DiffCmd extends VcCmd<DiffData>
           revision.add(delta);
         }
       }
-    } catch (IOException ex)
+    }
+    catch (IOException ex)
     {
       ex.printStackTrace();
       setResult(Result.FALSE("Parse failed"));
@@ -84,7 +94,8 @@ public class DiffCmd extends VcCmd<DiffData>
     setResultData(diffData);
   }
 
-  private String readIndex() throws IOException
+  private String readIndex()
+      throws IOException
   {
     final String indexMarker = "Index: ";
     String line;
@@ -98,7 +109,8 @@ public class DiffCmd extends VcCmd<DiffData>
     return line.substring(indexMarker.length());
   }
 
-  private JMDelta readDelta() throws IOException
+  private JMDelta readDelta()
+      throws IOException
   {
     final Pattern deltaPattern = Pattern.compile("@@ -(\\d*),(\\d*) \\+(\\d*),(\\d*) @@");
 
@@ -123,10 +135,13 @@ public class DiffCmd extends VcCmd<DiffData>
       return null;
     }
 
-    originalChunk = new JMChunk(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2)));
-    revisedChunk = new JMChunk(Integer.valueOf(m.group(3)), Integer.valueOf(m.group(4)));
+    originalChunk = new JMChunk(Integer.valueOf(m.group(1)),
+                                Integer.valueOf(m.group(2)));
+    revisedChunk = new JMChunk(Integer.valueOf(m.group(3)),
+                               Integer.valueOf(m.group(4)));
 
-    delta = new JMDelta(originalChunk, revisedChunk);
+    delta = new JMDelta(originalChunk,
+                        revisedChunk);
 
     while ((line = readLine()) != null)
     {
@@ -157,7 +172,8 @@ public class DiffCmd extends VcCmd<DiffData>
     this.unreadLine = unreadLine;
   }
 
-  private String readLine() throws IOException
+  private String readLine()
+      throws IOException
   {
     String line;
 
@@ -175,7 +191,8 @@ public class DiffCmd extends VcCmd<DiffData>
   {
     DiffIF result;
 
-    result = new GitVersionControl().executeDiff(new File(args[0]), true);
+    result = new GitVersionControl().executeDiff(new File(args[0]),
+                                                 true);
     if (result != null)
     {
       for (DiffIF.TargetIF target : result.getTargetList())

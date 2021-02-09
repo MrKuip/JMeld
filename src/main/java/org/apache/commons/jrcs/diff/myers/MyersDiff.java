@@ -61,12 +61,10 @@ import org.apache.commons.jrcs.diff.*;
 import java.util.*;
 
 /**
- * A clean-room implementation of
- * <a href="http://www.cs.arizona.edu/people/gene/">
- * Eugene Myers</a> differencing algorithm.
+ * A clean-room implementation of <a href="http://www.cs.arizona.edu/people/gene/"> Eugene Myers</a> differencing
+ * algorithm.
  * <p>
- * See the paper at
- * <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
+ * See the paper at <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
  * http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps</a>
  *
  * @version $Revision: 1.6 $ $Date: 2003/05/10 19:47:25 $
@@ -96,25 +94,32 @@ public class MyersDiff
   /**
    * {@inheritDoc}
    */
-  public Revision diff(Object[] orig, Object[] rev)
+  public Revision diff(Object[] orig,
+      Object[] rev)
       throws DifferentiationFailedException
   {
-    PathNode path = buildPath(orig, rev);
+    PathNode path = buildPath(orig,
+                              rev);
 
-    return buildRevision(path, orig, rev);
+    return buildRevision(path,
+                         orig,
+                         rev);
   }
 
   /**
-   * Computes the minimum diffpath that expresses de differences
-   * between the original and revised sequences, according
+   * Computes the minimum diffpath that expresses de differences between the original and revised sequences, according
    * to Gene Myers differencing algorithm.
    *
-   * @param orig The original sequence.
-   * @param rev The revised sequence.
+   * @param orig
+   *          The original sequence.
+   * @param rev
+   *          The revised sequence.
    * @return A minimum {@link PathNode Path} accross the differences graph.
-   * @throws DifferentiationFailedException if a diff path could not be found.
+   * @throws DifferentiationFailedException
+   *           if a diff path could not be found.
    */
-  public PathNode buildPath(Object[] orig, Object[] rev)
+  public PathNode buildPath(Object[] orig,
+      Object[] rev)
       throws DifferentiationFailedException
   {
     int N;
@@ -158,13 +163,15 @@ public class MyersDiff
 
     startTime = System.currentTimeMillis();
 
-    diagonal.put(middle + 1, new Snake(0, -1, null));
+    diagonal.put(middle + 1,
+                 new Snake(0,
+                           -1,
+                           null));
     for (int d = 0; d < MAX; d++)
     {
       if (checkMaxTime && System.currentTimeMillis() - startTime > MAXTIME)
       {
-        throw new org.jmeld.diff.MaxTimeExceededException(
-            "Algoritm is taking up to much time");
+        throw new org.jmeld.diff.MaxTimeExceededException("Algoritm is taking up to much time");
       }
 
       for (int k = -d; k <= d; k += 2)
@@ -191,7 +198,9 @@ public class MyersDiff
 
         j = i - k;
 
-        node = new DiffNode(i, j, prev);
+        node = new DiffNode(i,
+                            j,
+                            prev);
 
         // orig and rev are zero-based
         // but the algorithm is one-based
@@ -204,10 +213,13 @@ public class MyersDiff
 
         if (i > node.i)
         {
-          node = new Snake(i, j, node);
+          node = new Snake(i,
+                           j,
+                           node);
         }
 
-        diagonal.put(kmiddle, node);
+        diagonal.put(kmiddle,
+                     node);
 
         if (i >= N && j >= M)
         {
@@ -215,7 +227,8 @@ public class MyersDiff
         }
       }
 
-      diagonal.put(middle + d - 1, null);
+      diagonal.put(middle + d - 1,
+                   null);
     }
 
     // According to Myers, this cannot happen
@@ -239,14 +252,19 @@ public class MyersDiff
   /**
    * Constructs a {@link Revision} from a difference path.
    *
-   * @param path The path.
-   * @param orig The original sequence.
-   * @param rev The revised sequence.
+   * @param path
+   *          The path.
+   * @param orig
+   *          The original sequence.
+   * @param rev
+   *          The revised sequence.
    * @return A {@link Revision} script corresponding to the path.
-   * @throws DifferentiationFailedException if a {@link Revision} could
-   *         not be built from the given path.
+   * @throws DifferentiationFailedException
+   *           if a {@link Revision} could not be built from the given path.
    */
-  public Revision buildRevision(PathNode path, Object[] orig, Object[] rev)
+  public Revision buildRevision(PathNode path,
+      Object[] orig,
+      Object[] rev)
   {
     if (path == null)
     {
@@ -273,8 +291,7 @@ public class MyersDiff
     {
       if (path.isSnake())
       {
-        throw new IllegalStateException(
-            "bad diffpath: found snake when looking for diff");
+        throw new IllegalStateException("bad diffpath: found snake when looking for diff");
       }
 
       int i = path.i;
@@ -284,8 +301,12 @@ public class MyersDiff
       int ianchor = path.i;
       int janchor = path.j;
 
-      Delta delta = Delta.newDelta(new Chunk(orig, ianchor, i - ianchor),
-        new Chunk(rev, janchor, j - janchor));
+      Delta delta = Delta.newDelta(new Chunk(orig,
+                                             ianchor,
+                                             i - ianchor),
+                                   new Chunk(rev,
+                                             janchor,
+                                             j - janchor));
 
       revision.insertDelta(delta);
       if (path.isSnake())

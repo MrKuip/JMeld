@@ -26,11 +26,13 @@ public class ConfigurationManager
     return instance;
   }
 
-  public boolean reload(File file, Class clazz)
+  public boolean reload(File file,
+      Class clazz)
   {
     AbstractConfiguration configuration;
 
-    configuration = load(clazz, file);
+    configuration = load(clazz,
+                         file);
     if (configuration == null)
     {
       return false;
@@ -39,7 +41,8 @@ public class ConfigurationManager
     // Set the new filename AFTER the load was succesfull!
     configuration.setConfigurationFile(file);
 
-    configurations.put(clazz.getName(), configuration);
+    configurations.put(clazz.getName(),
+                       configuration);
 
     // Let everybody know that there is a new configuration!
     fireChanged(clazz);
@@ -73,7 +76,8 @@ public class ConfigurationManager
         }
       }
 
-      configurations.put(key, configuration);
+      configurations.put(key,
+                         configuration);
     }
 
     return configuration;
@@ -87,16 +91,19 @@ public class ConfigurationManager
     preference = new ConfigurationPreference(clazz);
     file = preference.getFile();
 
-    return load(clazz, file);
+    return load(clazz,
+                file);
   }
 
-  private AbstractConfiguration load(Class clazz, File file)
+  private AbstractConfiguration load(Class clazz,
+      File file)
   {
     if (file.exists())
     {
       try
       {
-        return ConfigurationPersister.getInstance().load(clazz, file);
+        return ConfigurationPersister.getInstance().load(clazz,
+                                                         file);
       }
       catch (Exception ex)
       {
@@ -107,7 +114,8 @@ public class ConfigurationManager
     return null;
   }
 
-  void addConfigurationListener(Class clazz, ConfigurationListenerIF listener)
+  void addConfigurationListener(Class clazz,
+      ConfigurationListenerIF listener)
   {
     WeakHashSet<ConfigurationListenerIF> listeners;
     String key;
@@ -118,13 +126,15 @@ public class ConfigurationManager
     if (listeners == null)
     {
       listeners = new WeakHashSet<ConfigurationListenerIF>();
-      listenerMap.put(key, listeners);
+      listenerMap.put(key,
+                      listeners);
     }
 
     listeners.add(listener);
   }
 
-  void removeConfigurationListener(Class clazz, ConfigurationListenerIF listener)
+  void removeConfigurationListener(Class clazz,
+      ConfigurationListenerIF listener)
   {
     Set<ConfigurationListenerIF> listeners;
 

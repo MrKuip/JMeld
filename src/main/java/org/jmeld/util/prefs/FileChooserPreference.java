@@ -29,7 +29,8 @@ public class FileChooserPreference
   // Instance variables:
   private JFileChooser target;
 
-  public FileChooserPreference(String preferenceName, JFileChooser target)
+  public FileChooserPreference(String preferenceName,
+      JFileChooser target)
   {
     super("FileChooser-" + preferenceName);
 
@@ -42,7 +43,8 @@ public class FileChooserPreference
   {
     String fileName;
 
-    fileName = getString(FILE, null);
+    fileName = getString(FILE,
+                         null);
     if (fileName != null)
     {
       target.setCurrentDirectory(new File(fileName));
@@ -60,7 +62,8 @@ public class FileChooserPreference
       try
       {
         fileName = file.getCanonicalPath();
-        putString(FILE, fileName);
+        putString(FILE,
+                  fileName);
       }
       catch (IOException ex)
       {

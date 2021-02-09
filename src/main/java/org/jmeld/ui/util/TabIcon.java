@@ -28,8 +28,8 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
-/** Very ugly hack to make possible a close button on a
- *    tabbedpane (use it for jdk's before 1.6).
+/**
+ * Very ugly hack to make possible a close button on a tabbedpane (use it for jdk's before 1.6).
  */
 public class TabIcon
     implements Icon
@@ -60,7 +60,8 @@ public class TabIcon
   private MouseMotionListener mouseMotionListener;
   private ArrayList<TabExitListenerIF> tabExitListeners;
 
-  public TabIcon(Icon icon, String text)
+  public TabIcon(Icon icon,
+      String text)
   {
     this.icon = icon;
     this.text = text;
@@ -152,7 +153,10 @@ public class TabIcon
     return height;
   }
 
-  public void paintIcon(Component c, Graphics g, int x, int y)
+  public void paintIcon(Component c,
+      Graphics g,
+      int x,
+      int y)
   {
     FontMetrics fm;
     int x0;
@@ -175,7 +179,10 @@ public class TabIcon
 
     if (icon != null)
     {
-      icon.paintIcon(c, g, x0, y + ((height - icon.getIconHeight()) / 2));
+      icon.paintIcon(c,
+                     g,
+                     x0,
+                     y + ((height - icon.getIconHeight()) / 2));
       x0 += icon.getIconWidth();
       x0 += SPACE_WIDTH;
     }
@@ -185,14 +192,16 @@ public class TabIcon
       if (JMeldSettings.getInstance().getEditor().isAntialiasEnabled())
       {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-          RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
       }
 
       fm = label.getFontMetrics(label.getFont());
       y0 = y + fm.getAscent() + ((height - fm.getHeight()) / 2);
 
       g.setFont(label.getFont());
-      g.drawString(text, x0, y0);
+      g.drawString(text,
+                   x0,
+                   y0);
 
       x0 += stringWidth;
       x0 += SPACE_WIDTH;
@@ -212,14 +221,29 @@ public class TabIcon
         cIcon = closeIcon;
       }
 
-      cIcon.paintIcon(c, g, x0, y0);
-      closeBounds = new Rectangle(x0, y0, CLOSE_ICON_WIDTH, CLOSE_ICON_HEIGHT);
+      cIcon.paintIcon(c,
+                      g,
+                      x0,
+                      y0);
+      closeBounds = new Rectangle(x0,
+                                  y0,
+                                  CLOSE_ICON_WIDTH,
+                                  CLOSE_ICON_HEIGHT);
     }
     else
     {
-      g.drawLine(x0, y0, x0 + CLOSE_ICON_HEIGHT, y0 + CLOSE_ICON_WIDTH);
-      g.drawLine(x0 + CLOSE_ICON_HEIGHT, y0, x0, y0 + CLOSE_ICON_WIDTH);
-      closeBounds = new Rectangle(x0, y0, CLOSE_ICON_WIDTH, CLOSE_ICON_HEIGHT);
+      g.drawLine(x0,
+                 y0,
+                 x0 + CLOSE_ICON_HEIGHT,
+                 y0 + CLOSE_ICON_WIDTH);
+      g.drawLine(x0 + CLOSE_ICON_HEIGHT,
+                 y0,
+                 x0,
+                 y0 + CLOSE_ICON_WIDTH);
+      closeBounds = new Rectangle(x0,
+                                  y0,
+                                  CLOSE_ICON_WIDTH,
+                                  CLOSE_ICON_HEIGHT);
     }
 
     x0 += CLOSE_ICON_WIDTH;
@@ -276,7 +300,8 @@ public class TabIcon
             {
               for (TabExitListenerIF listener : tabExitListeners)
               {
-                listener.doExit(new TabExitEvent(TabIcon.this, index));
+                listener.doExit(new TabExitEvent(TabIcon.this,
+                                                 index));
               }
 
               me.consume();
@@ -350,8 +375,9 @@ public class TabIcon
 
   private boolean isCloseHit(MouseEvent me)
   {
-    return (!me.isConsumed() && closeBounds != null
-            && closeBounds.contains(me.getX(), me.getY()) && isSelected());
+    return (!me.isConsumed() && closeBounds != null && closeBounds.contains(me.getX(),
+                                                                            me.getY())
+        && isSelected());
   }
 
   private boolean isSelected()

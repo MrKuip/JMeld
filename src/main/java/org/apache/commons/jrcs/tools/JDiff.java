@@ -68,11 +68,11 @@ import java.util.List;
 
 /**
  * A program to compare two files.
- * <p>JDiff produces the deltas between the two given files in Unix diff
- * format.
+ * <p>
+ * JDiff produces the deltas between the two given files in Unix diff format.
  * </p>
- * <p>The program was written as a simple test of the
- * {@linkplain org.apache.commons.jrcs.diff diff} package.
+ * <p>
+ * The program was written as a simple test of the {@linkplain org.apache.commons.jrcs.diff diff} package.
  */
 public class JDiff
 {
@@ -120,10 +120,10 @@ public class JDiff
         Object[] reco = r.patch(orig);
 
         //String recos = Diff.arrayToString(reco);
-        if (!Diff.compare(rev, reco))
+        if (!Diff.compare(rev,
+                          reco))
         {
-          System.err
-              .println("INTERNAL ERROR:" + "files differ after patching!");
+          System.err.println("INTERNAL ERROR:" + "files differ after patching!");
         }
       }
       catch (Throwable o)

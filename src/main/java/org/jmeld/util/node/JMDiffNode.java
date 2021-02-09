@@ -40,7 +40,8 @@ public class JMDiffNode
   private JMRevision revision;
   private Ignore ignore;
 
-  public JMDiffNode(String name, boolean leaf)
+  public JMDiffNode(String name,
+      boolean leaf)
   {
     this.name = name;
     this.shortName = name;
@@ -59,8 +60,7 @@ public class JMDiffNode
 
   private void initId()
   {
-    id = (nodeLeft != null ? nodeLeft.getName() : "x")
-         + (nodeRight != null ? nodeRight.getName() : "x");
+    id = (nodeLeft != null ? nodeLeft.getName() : "x") + (nodeRight != null ? nodeRight.getName() : "x");
   }
 
   public String getName()
@@ -167,7 +167,8 @@ public class JMDiffNode
       return;
     }
 
-    parentName = name.substring(0, index);
+    parentName = name.substring(0,
+                                index);
     shortName = name.substring(index + 1);
   }
 
@@ -175,10 +176,11 @@ public class JMDiffNode
       throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeLeft.exists() && nodeLeft instanceof FileNode
-        && nodeRight instanceof FileNode)
+    if (nodeLeft.exists() && nodeLeft instanceof FileNode && nodeRight instanceof FileNode)
     {
-      return new CopyFileCmd(this, (FileNode) nodeLeft, (FileNode) nodeRight);
+      return new CopyFileCmd(this,
+                             (FileNode) nodeLeft,
+                             (FileNode) nodeRight);
     }
 
     return null;
@@ -188,10 +190,11 @@ public class JMDiffNode
       throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeRight.exists() && nodeLeft instanceof FileNode
-        && nodeRight instanceof FileNode)
+    if (nodeRight.exists() && nodeLeft instanceof FileNode && nodeRight instanceof FileNode)
     {
-      return new CopyFileCmd(this, (FileNode) nodeRight, (FileNode) nodeLeft);
+      return new CopyFileCmd(this,
+                             (FileNode) nodeRight,
+                             (FileNode) nodeLeft);
     }
 
     return null;
@@ -203,7 +206,8 @@ public class JMDiffNode
     // TODO: This is NOT OO!
     if (nodeLeft instanceof FileNode)
     {
-      return new RemoveFileCmd(this, (FileNode) nodeLeft);
+      return new RemoveFileCmd(this,
+                               (FileNode) nodeLeft);
     }
 
     return null;
@@ -215,7 +219,8 @@ public class JMDiffNode
     // TODO: This is NOT OO!
     if (nodeRight instanceof FileNode)
     {
-      return new RemoveFileCmd(this, (FileNode) nodeRight);
+      return new RemoveFileCmd(this,
+                               (FileNode) nodeRight);
     }
 
     return null;
@@ -249,7 +254,9 @@ public class JMDiffNode
       return;
     }
 
-    equals = CompareUtil.contentEquals(nodeLeft, nodeRight, ignore);
+    equals = CompareUtil.contentEquals(nodeLeft,
+                                       nodeRight,
+                                       ignore);
     setCompareState(equals ? Compare.Equal : Compare.NotEqual);
   }
 
@@ -268,7 +275,8 @@ public class JMDiffNode
     if (nodeLeft != null)
     {
       documentLeft = nodeLeft.getDocument();
-      StatusBar.getInstance().setState("Reading left : %s", nodeLeft.getName());
+      StatusBar.getInstance().setState("Reading left : %s",
+                                       nodeLeft.getName());
       if (documentLeft != null)
       {
         documentLeft.read();
@@ -278,8 +286,8 @@ public class JMDiffNode
     if (nodeRight != null)
     {
       documentRight = nodeRight.getDocument();
-      StatusBar.getInstance()
-          .setState("Reading right: %s", nodeRight.getName());
+      StatusBar.getInstance().setState("Reading right: %s",
+                                       nodeRight.getName());
       if (documentRight != null)
       {
         documentRight.read();
@@ -291,7 +299,9 @@ public class JMDiffNode
     left = documentLeft == null ? null : documentLeft.getLines();
     right = documentRight == null ? null : documentRight.getLines();
 
-    revision = diff.diff(left, right, ignore);
+    revision = diff.diff(left,
+                         right,
+                         ignore);
     StatusBar.getInstance().setState("Ready calculating differences");
     StatusBar.getInstance().stop();
   }

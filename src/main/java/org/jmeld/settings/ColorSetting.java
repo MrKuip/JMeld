@@ -57,7 +57,9 @@ public class ColorSetting
 
     if (color == null)
     {
-      color = new Color(r, g, b);
+      color = new Color(r,
+                        g,
+                        b);
     }
 
     return color;

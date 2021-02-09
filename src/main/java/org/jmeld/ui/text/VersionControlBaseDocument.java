@@ -41,7 +41,9 @@ public class VersionControlBaseDocument
   private Charset charset;
 
   public VersionControlBaseDocument(VersionControlIF versionControl,
-      StatusResult.Entry entry, FileNode fileNode, File file)
+      StatusResult.Entry entry,
+      FileNode fileNode,
+      File file)
   {
     this.versionControl = versionControl;
     this.entry = entry;
@@ -86,15 +88,15 @@ public class VersionControlBaseDocument
       try
       {
         initBaseFile();
-        bais = new BufferedInputStream(new ByteArrayInputStream(baseFile
-            .getByteArray()));
+        bais = new BufferedInputStream(new ByteArrayInputStream(baseFile.getByteArray()));
         charset = CharsetDetector.getInstance().getCharset(bais);
-        return new BufferedReader(new InputStreamReader(bais, charset));
+        return new BufferedReader(new InputStreamReader(bais,
+                                                        charset));
       }
       catch (Exception ex)
       {
-        throw new JMeldException("Could not create FileReader for : "
-                                 + file.getName(), ex);
+        throw new JMeldException("Could not create FileReader for : " + file.getName(),
+                                 ex);
       }
     }
     else

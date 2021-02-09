@@ -11,16 +11,18 @@ import org.jmeld.ui.util.Icons;
 
 public enum Settings
 {
- Editor("Editor", Icons.EDIT, new EditorSettingsPanel()),
- Filter("Filter", Icons.FILTER, new FilterSettingsPanel()),
- Folder("Folder", Icons.FOLDER, new FolderSettingsPanel());
+  Editor("Editor", Icons.EDIT, new EditorSettingsPanel()),
+  Filter("Filter", Icons.FILTER, new FilterSettingsPanel()),
+  Folder("Folder", Icons.FOLDER, new FolderSettingsPanel());
 
   // Instance variables:
   private String name;
   private Icons icon;
   private JPanel panel;
 
-  Settings(String name, Icons iconName, JPanel panel)
+  Settings(String name,
+      Icons iconName,
+      JPanel panel)
   {
     this.name = name;
     this.icon = iconName;

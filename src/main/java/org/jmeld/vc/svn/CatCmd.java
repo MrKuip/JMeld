@@ -19,8 +19,12 @@ public class CatCmd
 
   public Result execute()
   {
-    super.execute("svn", "cat", "--non-interactive", "-r", "BASE", file
-        .getPath());
+    super.execute("svn",
+                  "cat",
+                  "--non-interactive",
+                  "-r",
+                  "BASE",
+                  file.getPath());
 
     return getResult();
   }
@@ -39,7 +43,9 @@ public class CatCmd
     {
       result = new SubversionVersionControl().getBaseFile(new File(args[0]));
       byteArray = result.getByteArray();
-      System.out.write(byteArray, 0, byteArray.length);
+      System.out.write(byteArray,
+                       0,
+                       byteArray.length);
     }
     catch (Exception ex)
     {

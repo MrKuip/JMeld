@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.compare.internal;
 
-
 /* Used to determine the change set responsible for each line */
 public abstract class LCS
 {
@@ -24,18 +23,15 @@ public abstract class LCS
   private int length;
 
   /**
-   * Myers' algorithm for longest common subsequence. O((M + N)D) worst case
-   * time, O(M + N + D^2) expected time, O(M + N) space
-   * (http://citeseer.ist.psu.edu/myers86ond.html)
+   * Myers' algorithm for longest common subsequence. O((M + N)D) worst case time, O(M + N + D^2) expected time, O(M +
+   * N) space (http://citeseer.ist.psu.edu/myers86ond.html)
    *
-   * Note: Beyond implementing the algorithm as described in the paper I have
-   * added diagonal range compression which helps when finding the LCS of a
-   * very long and a very short sequence, also bound the running time to (N +
-   * M)^1.5 when both sequences are very long.
+   * Note: Beyond implementing the algorithm as described in the paper I have added diagonal range compression which
+   * helps when finding the LCS of a very long and a very short sequence, also bound the running time to (N + M)^1.5
+   * when both sequences are very long.
    *
-   * After this method is called, the longest common subsequence is available
-   * by calling getResult() where result[0] is composed of
-   * entries from l1 and result[1] is composed of entries from l2
+   * After this method is called, the longest common subsequence is available by calling getResult() where result[0] is
+   * composed of entries from l1 and result[1] is composed of entries from l2
    */
   public void longestCommonSubsequence()
   {
@@ -51,7 +47,8 @@ public abstract class LCS
     if ((double) length1 * (double) length2 > TOO_LONG)
     {
       // limit complexity to D^POW_LIMIT for long sequences
-      max_differences = (int) Math.pow(max_differences, POW_LIMIT - 1.0);
+      max_differences = (int) Math.pow(max_differences,
+                                       POW_LIMIT - 1.0);
     }
 
     initializeLcs(length1);
@@ -61,56 +58,69 @@ public abstract class LCS
      * them now to reduce our search space
      */
     int forwardBound;
-    int max = Math.min(length1, length2);
-    for (forwardBound = 0; forwardBound < max
-                           && isRangeEqual(forwardBound, forwardBound); forwardBound++)
+    int max = Math.min(length1,
+                       length2);
+    for (forwardBound = 0; forwardBound < max && isRangeEqual(forwardBound,
+                                                              forwardBound); forwardBound++)
     {
-      setLcs(forwardBound, forwardBound);
+      setLcs(forwardBound,
+             forwardBound);
     }
 
     int backBoundL1 = length1 - 1;
     int backBoundL2 = length2 - 1;
 
-    while (backBoundL1 >= forwardBound && backBoundL2 >= forwardBound
-           && isRangeEqual(backBoundL1, backBoundL2))
+    while (backBoundL1 >= forwardBound && backBoundL2 >= forwardBound && isRangeEqual(backBoundL1,
+                                                                                      backBoundL2))
     {
-      setLcs(backBoundL1, backBoundL2);
+      setLcs(backBoundL1,
+             backBoundL2);
       backBoundL1--;
       backBoundL2--;
     }
 
-    length = forwardBound
-             + length1
-             - backBoundL1
-             - 1
-             + lcs_rec(forwardBound, backBoundL1, forwardBound, backBoundL2,
-               new int[2][length1 + length2 + 1], new int[3]);
+    length = forwardBound + length1 - backBoundL1 - 1 + lcs_rec(forwardBound,
+                                                                backBoundL1,
+                                                                forwardBound,
+                                                                backBoundL2,
+                                                                new int[2][length1 + length2 + 1],
+                                                                new int[3]);
 
   }
 
   /**
-   * The recursive helper function for Myers' LCS. Computes the LCS of
-   * l1[bottoml1 .. topl1] and l2[bottoml2 .. topl2] fills in the appropriate
-   * location in lcs and returns the length
+   * The recursive helper function for Myers' LCS. Computes the LCS of l1[bottoml1 .. topl1] and l2[bottoml2 .. topl2]
+   * fills in the appropriate location in lcs and returns the length
    *
-   * @param l1 The 1st sequence
-   * @param bottoml1 Index in the 1st sequence to start from (inclusive)
-   * @param topl1 Index in the 1st sequence to end on (inclusive)
-   * @param l2 The 2nd sequence
-   * @param bottoml2 Index in the 2nd sequence to start from (inclusive)
-   * @param topl2 Index in the 2nd sequence to end on (inclusive)
-   * @param V should be allocated as int[2][l1.length + l2.length + 1], used
-   *            to store furthest reaching D-paths
-   * @param snake should be allocated as int[3], used to store the beginning
-   *            x, y coordinates and the length of the latest snake traversed
-   * @param lcs should be allocated as TextLine[2][l1.length], used to store
-   *            the common points found to be part of the LCS where lcs[0]
-   *            references lines of l1 and lcs[1] references lines of l2.
+   * @param l1
+   *          The 1st sequence
+   * @param bottoml1
+   *          Index in the 1st sequence to start from (inclusive)
+   * @param topl1
+   *          Index in the 1st sequence to end on (inclusive)
+   * @param l2
+   *          The 2nd sequence
+   * @param bottoml2
+   *          Index in the 2nd sequence to start from (inclusive)
+   * @param topl2
+   *          Index in the 2nd sequence to end on (inclusive)
+   * @param V
+   *          should be allocated as int[2][l1.length + l2.length + 1], used to store furthest reaching D-paths
+   * @param snake
+   *          should be allocated as int[3], used to store the beginning x, y coordinates and the length of the latest
+   *          snake traversed
+   * @param lcs
+   *          should be allocated as TextLine[2][l1.length], used to store the common points found to be part of the LCS
+   *          where lcs[0] references lines of l1 and lcs[1] references lines of l2.
    *
    * @return the length of the LCS
    */
-  private int lcs_rec(int bottoml1, int topl1, int bottoml2, int topl2,
-      int[][] V, int[] snake)
+  private int lcs_rec(int bottoml1,
+      int topl1,
+      int bottoml2,
+      int topl2,
+      int[][] V,
+      int[] snake)
   {
     // check that both sequences are non-empty
     if (bottoml1 > topl1 || bottoml2 > topl2)
@@ -118,7 +128,12 @@ public abstract class LCS
       return 0;
     }
 
-    int d = find_middle_snake(bottoml1, topl1, bottoml2, topl2, V, snake);
+    int d = find_middle_snake(bottoml1,
+                              topl1,
+                              bottoml2,
+                              topl2,
+                              V,
+                              snake);
 
     // System.out.println(snake[0] + " " + snake[1] + " " + snake[2]);
 
@@ -131,14 +146,24 @@ public abstract class LCS
     // the middle snake is part of the LCS, store it
     for (int i = 0; i < len; i++)
     {
-      setLcs(startx + i, starty + i);
+      setLcs(startx + i,
+             starty + i);
     }
 
     if (d > 1)
     {
-      return len
-             + lcs_rec(bottoml1, startx - 1, bottoml2, starty - 1, V, snake)
-             + lcs_rec(startx + len, topl1, starty + len, topl2, V, snake);
+      return len + lcs_rec(bottoml1,
+                           startx - 1,
+                           bottoml2,
+                           starty - 1,
+                           V,
+                           snake)
+          + lcs_rec(startx + len,
+                    topl1,
+                    starty + len,
+                    topl2,
+                    V,
+                    snake);
     }
     else if (d == 1)
     {
@@ -147,10 +172,12 @@ public abstract class LCS
        * already saved all the lines after the difference in the for loop
        * above, now we need to save all the lines before the difference.
        */
-      int max = Math.min(startx - bottoml1, starty - bottoml2);
+      int max = Math.min(startx - bottoml1,
+                         starty - bottoml2);
       for (int i = 0; i < max; i++)
       {
-        setLcs(bottoml1 + i, bottoml2 + i);
+        setLcs(bottoml1 + i,
+               bottoml2 + i);
       }
       return max + len;
     }
@@ -159,27 +186,36 @@ public abstract class LCS
   }
 
   /**
-   * Helper function for Myers' LCS algorithm to find the middle snake for
-   * l1[bottoml1..topl1] and l2[bottoml2..topl2] The x, y coodrdinates of the
-   * start of the middle snake are saved in snake[0], snake[1] respectively
-   * and the length of the snake is saved in s[2].
+   * Helper function for Myers' LCS algorithm to find the middle snake for l1[bottoml1..topl1] and l2[bottoml2..topl2]
+   * The x, y coodrdinates of the start of the middle snake are saved in snake[0], snake[1] respectively and the length
+   * of the snake is saved in s[2].
    *
-   * @param l1 The 1st sequence
-   * @param bottoml1 Index in the 1st sequence to start from (inclusive)
-   * @param topl1 Index in the 1st sequence to end on (inclusive)
-   * @param l2 The 2nd sequence
-   * @param bottoml2 Index in the 2nd sequence to start from (inclusive)
-   * @param topl2 Index in the 2nd sequence to end on (inclusive)
-   * @param V should be allocated as int[2][l1.length + l2.length + 1], used
-   *            to store furthest reaching D-paths
-   * @param snake should be allocated as int[3], used to store the beginning
-   *            x, y coordinates and the length of the middle snake
+   * @param l1
+   *          The 1st sequence
+   * @param bottoml1
+   *          Index in the 1st sequence to start from (inclusive)
+   * @param topl1
+   *          Index in the 1st sequence to end on (inclusive)
+   * @param l2
+   *          The 2nd sequence
+   * @param bottoml2
+   *          Index in the 2nd sequence to start from (inclusive)
+   * @param topl2
+   *          Index in the 2nd sequence to end on (inclusive)
+   * @param V
+   *          should be allocated as int[2][l1.length + l2.length + 1], used to store furthest reaching D-paths
+   * @param snake
+   *          should be allocated as int[3], used to store the beginning x, y coordinates and the length of the middle
+   *          snake
    *
-   * @return The number of differences (SES) between l1[bottoml1..topl1] and
-   *         l2[bottoml2..topl2]
+   * @return The number of differences (SES) between l1[bottoml1..topl1] and l2[bottoml2..topl2]
    */
-  private int find_middle_snake(int bottoml1, int topl1, int bottoml2,
-      int topl2, int[][] V, int[] snake)
+  private int find_middle_snake(int bottoml1,
+      int topl1,
+      int bottoml2,
+      int topl2,
+      int[][] V,
+      int[] snake)
   {
     int N = topl1 - bottoml1 + 1;
     int M = topl2 - bottoml2 + 1;
@@ -198,7 +234,8 @@ public abstract class LCS
       isEven = true;
     }
 
-    int limit = Math.min(max_differences, (N + M + 1) / 2); // ceil((N+M)/2)
+    int limit = Math.min(max_differences,
+                         (N + M + 1) / 2); // ceil((N+M)/2)
 
     int value_to_add_forward; // a 0 or 1 that we add to the start offset
     // to make it odd/even
@@ -231,8 +268,10 @@ public abstract class LCS
     V[1][limit - 1] = N;
     for (int d = 0; d <= limit; d++)
     {
-      int start_diag = Math.max(value_to_add_forward + start_forward, -d);
-      int end_diag = Math.min(end_forward, d);
+      int start_diag = Math.max(value_to_add_forward + start_forward,
+                                -d);
+      int end_diag = Math.min(end_forward,
+                              d);
       value_to_add_forward = 1 - value_to_add_forward;
 
       // compute forward furthest reaching paths
@@ -255,7 +294,8 @@ public abstract class LCS
         snake[2] = 0;
         // System.out.println("1 x: " + x + " y: " + y + " k: " + k + "
         // d: " + d );
-        while (x < N && y < M && isRangeEqual(x + bottoml1, y + bottoml2))
+        while (x < N && y < M && isRangeEqual(x + bottoml1,
+                                              y + bottoml2))
         {
           x++;
           y++;
@@ -264,8 +304,7 @@ public abstract class LCS
         V[0][limit + k] = x;
         // System.out.println(x + " " + V[1][limit+k -delta] + " " + k +
         // " " + delta);
-        if (!isEven && k >= delta - d + 1 && k <= delta + d - 1
-            && x >= V[1][limit + k - delta])
+        if (!isEven && k >= delta - d + 1 && k <= delta + d - 1 && x >= V[1][limit + k - delta])
         {
           // System.out.println("Returning: " + (2*d-1));
           return 2 * d - 1;
@@ -283,8 +322,10 @@ public abstract class LCS
         }
       }
 
-      start_diag = Math.max(value_to_add_backward + start_backward, -d);
-      end_diag = Math.min(end_backward, d);
+      start_diag = Math.max(value_to_add_backward + start_backward,
+                            -d);
+      end_diag = Math.min(end_backward,
+                          d);
       value_to_add_backward = 1 - value_to_add_backward;
 
       // compute backward furthest reaching paths
@@ -305,8 +346,8 @@ public abstract class LCS
         snake[2] = 0;
         // System.out.println("2 x: " + x + " y: " + y + " k: " + k + "
         // d: " + d);
-        while (x > 0 && y > 0
-               && isRangeEqual(x - 1 + bottoml1, y - 1 + bottoml2))
+        while (x > 0 && y > 0 && isRangeEqual(x - 1 + bottoml1,
+                                              y - 1 + bottoml2))
         {
           x--;
           y--;
@@ -314,8 +355,7 @@ public abstract class LCS
         }
         V[1][limit + k] = x;
 
-        if (isEven && k >= -delta - d && k <= d - delta
-            && x <= V[0][limit + k + delta])
+        if (isEven && k >= -delta - d && k <= d - delta && x <= V[0][limit + k + delta])
         {
           // System.out.println("Returning: " + 2*d);
           snake[0] = bottoml1 + x;
@@ -342,69 +382,80 @@ public abstract class LCS
      * with the most progress and pretend a midle snake of length 0 occurs
      * there.
      */
-    int[] most_progress = findMostProgress(M, N, limit, V);
+    int[] most_progress = findMostProgress(M,
+                                           N,
+                                           limit,
+                                           V);
 
     snake[0] = bottoml1 + most_progress[0];
     snake[1] = bottoml2 + most_progress[1];
     snake[2] = 0;
     return 5; /*
-       * HACK: since we didn't really finish the LCS computation
-       * we don't really know the length of the SES. We don't do
-       * anything with the result anyway, unless it's <=1. We know
-       * for a fact SES > 1 so 5 is as good a number as any to
-       * return here
-       */
+              * HACK: since we didn't really finish the LCS computation
+              * we don't really know the length of the SES. We don't do
+              * anything with the result anyway, unless it's <=1. We know
+              * for a fact SES > 1 so 5 is as good a number as any to
+              * return here
+              */
 
   }
 
   /**
-   * Takes the array with furthest reaching D-paths from an LCS computation
-   * and returns the x,y coordinates and progress made in the middle diagonal
-   * among those with maximum progress, both from the front and from the back.
+   * Takes the array with furthest reaching D-paths from an LCS computation and returns the x,y coordinates and progress
+   * made in the middle diagonal among those with maximum progress, both from the front and from the back.
    *
-   * @param M the length of the 1st sequence for which LCS is being computed
-   * @param N the length of the 2nd sequence for which LCS is being computed
-   * @param limit the number of steps made in an attempt to find the LCS from
-   *            the front and back
-   * @param V the array storing the furthest reaching D-paths for the LCS
-   *            computation
-   * @return The result as an array of 3 integers where result[0] is the x
-   *         coordinate of the current location in the diagonal with the most
-   *         progress, result[1] is the y coordinate of the current location
-   *         in the diagonal with the most progress and result[2] is the
-   *         amount of progress made in that diagonal
+   * @param M
+   *          the length of the 1st sequence for which LCS is being computed
+   * @param N
+   *          the length of the 2nd sequence for which LCS is being computed
+   * @param limit
+   *          the number of steps made in an attempt to find the LCS from the front and back
+   * @param V
+   *          the array storing the furthest reaching D-paths for the LCS computation
+   * @return The result as an array of 3 integers where result[0] is the x coordinate of the current location in the
+   *         diagonal with the most progress, result[1] is the y coordinate of the current location in the diagonal with
+   *         the most progress and result[2] is the amount of progress made in that diagonal
    */
-  private static int[] findMostProgress(int M, int N, int limit, int[][] V)
+  private static int[] findMostProgress(int M,
+      int N,
+      int limit,
+      int[][] V)
   {
     int delta = N - M;
 
     int forward_start_diag;
     if ((M & 1) == (limit & 1))
     {
-      forward_start_diag = Math.max(-M, -limit);
+      forward_start_diag = Math.max(-M,
+                                    -limit);
     }
     else
     {
-      forward_start_diag = Math.max(1 - M, -limit);
+      forward_start_diag = Math.max(1 - M,
+                                    -limit);
     }
 
-    int forward_end_diag = Math.min(N, limit);
+    int forward_end_diag = Math.min(N,
+                                    limit);
 
     int backward_start_diag;
     if ((N & 1) == (limit & 1))
     {
-      backward_start_diag = Math.max(-N, -limit);
+      backward_start_diag = Math.max(-N,
+                                     -limit);
     }
     else
     {
-      backward_start_diag = Math.max(1 - N, -limit);
+      backward_start_diag = Math.max(1 - N,
+                                     -limit);
     }
 
-    int backward_end_diag = Math.min(M, limit);
+    int backward_end_diag = Math.min(M,
+                                     limit);
 
-    int[][] max_progress = new int[Math.max(forward_end_diag
-                                            - forward_start_diag,
-      backward_end_diag - backward_start_diag) / 2 + 1][3];
+    int[][] max_progress = new int[Math.max(forward_end_diag - forward_start_diag,
+                                            backward_end_diag - backward_start_diag)
+        / 2 + 1][3];
     int num_progress = 0; // the 1st entry is current, it is initialized
     // with 0s
 
@@ -475,9 +526,11 @@ public abstract class LCS
 
   protected abstract int getLength1();
 
-  protected abstract boolean isRangeEqual(int i1, int i2);
+  protected abstract boolean isRangeEqual(int i1,
+      int i2);
 
-  protected abstract void setLcs(int sl1, int sl2);
+  protected abstract void setLcs(int sl1,
+      int sl2);
 
   protected abstract void initializeLcs(int lcsLength);
 

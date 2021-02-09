@@ -42,8 +42,7 @@ public class JMeldSettings
 
   public static synchronized JMeldSettings getInstance()
   {
-    return (JMeldSettings) ConfigurationManager.getInstance().get(
-      JMeldSettings.class);
+    return (JMeldSettings) ConfigurationManager.getInstance().get(JMeldSettings.class);
   }
 
   @Override

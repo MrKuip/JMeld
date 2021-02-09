@@ -71,7 +71,8 @@ public class Filter
     return name;
   }
 
-  public void insertRule(FilterRule ruleToInsertAfter, FilterRule rule)
+  public void insertRule(FilterRule ruleToInsertAfter,
+      FilterRule rule)
   {
     int index;
 
@@ -80,7 +81,8 @@ public class Filter
     index = rules.indexOf(ruleToInsertAfter);
     if (index != -1)
     {
-      rules.add(index + 1, rule);
+      rules.add(index + 1,
+                rule);
     }
     else
     {
@@ -139,9 +141,8 @@ public class Filter
     return name;
   }
 
-  /** Recursively get all rules.
-   *  Recursively because the rule 'importFilter' will
-   *    import all rules from that filter!
+  /**
+   * Recursively get all rules. Recursively because the rule 'importFilter' will import all rules from that filter!
    */
   class GetRules
   {
@@ -171,8 +172,7 @@ public class Filter
         // Rule 'importFilter' will add it's own rules to the result.
         if (rule.getRule() == FilterRule.Rule.importFilter)
         {
-          nextFilter = JMeldSettings.getInstance().getFilter().getFilter(
-            rule.getPattern());
+          nextFilter = JMeldSettings.getInstance().getFilter().getFilter(rule.getPattern());
 
           // Don't evaluate a filter twice! (otherwise there will be a never
           //   ending recursive loop)

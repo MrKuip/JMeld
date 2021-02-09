@@ -69,13 +69,14 @@ public class SearchBarDialog
     searchField.addKeyListener(getSearchKeyAction());
 
     // Find previous match:
-    previousButton = new JButton("Previous", ImageUtil
-        .getImageIcon("stock_data-previous"));
+    previousButton = new JButton("Previous",
+                                 ImageUtil.getImageIcon("stock_data-previous"));
     previousButton.addActionListener(getPreviousAction());
     initButton(previousButton);
 
     // Find next match:
-    nextButton = new JButton("Next", ImageUtil.getImageIcon("stock_data-next"));
+    nextButton = new JButton("Next",
+                             ImageUtil.getImageIcon("stock_data-next"));
     nextButton.addActionListener(getNextAction());
     initButton(nextButton);
 
@@ -91,7 +92,8 @@ public class SearchBarDialog
     add(Box.createHorizontalStrut(10));
     add(searchResult);
 
-    timer = new Timer(500, executeSearch());
+    timer = new Timer(500,
+                      executeSearch());
     timer.setRepeats(false);
   }
 
@@ -99,12 +101,16 @@ public class SearchBarDialog
   {
     button.setFocusable(false);
     button.setBorderPainted(false);
-    button.setBorder(new EmptyBorder(0, 5, 0, 5));
+    button.setBorder(new EmptyBorder(0,
+                                     5,
+                                     0,
+                                     5));
   }
 
   public SearchCommand getCommand()
   {
-    return new SearchCommand(searchField.getText(), false);
+    return new SearchCommand(searchField.getText(),
+                             false);
   }
 
   public void setSearchText(String searchText)
@@ -186,8 +192,8 @@ public class SearchBarDialog
           if (searchField.getForeground() != Color.red)
           {
             // Remember the original colors:
-            searchField.putClientProperty(CP_FOREGROUND, searchField
-                .getForeground());
+            searchField.putClientProperty(CP_FOREGROUND,
+                                          searchField.getForeground());
 
             // Set the new colors:
             searchField.setForeground(Color.red);
@@ -203,7 +209,8 @@ public class SearchBarDialog
           if (color != null)
           {
             searchField.setForeground(color);
-            searchField.putClientProperty(CP_FOREGROUND, null);
+            searchField.putClientProperty(CP_FOREGROUND,
+                                          null);
           }
 
           if (!StringUtil.isEmpty(searchResult.getText()))

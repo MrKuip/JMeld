@@ -44,21 +44,27 @@ public class DiffLabel
     setOpaque(false);
     // Bug in Nimbus L&F doesn't honour the opaqueness of a JLabel.
     // Setting a fully transparent color is a workaround:
-    setBackground(new Color(0, 0, 0, 0));
+    setBackground(new Color(0,
+                            0,
+                            0,
+                            0));
     setBorder(null);
 
     defaultStyle = getStyle(StyleContext.DEFAULT_STYLE);
 
     doc = getStyledDocument();
-    s = doc.addStyle("bold", defaultStyle);
-    StyleConstants.setBold(s, true);
+    s = doc.addStyle("bold",
+                     defaultStyle);
+    StyleConstants.setBold(s,
+                           true);
   }
 
-  /** Set the text on this label.
-   *  Some parts of the text will be displayed in bold-style.
-   *  These parts are the differences between text and otherText.
+  /**
+   * Set the text on this label. Some parts of the text will be displayed in bold-style. These parts are the differences
+   * between text and otherText.
    */
-  public void setText(String text, String otherText)
+  public void setText(String text,
+      String otherText)
   {
     WordTokenizer wt;
     List<String> textList;
@@ -80,8 +86,9 @@ public class DiffLabel
 
       if (otherTextList.size() != 0)
       {
-        revision = new JMDiff().diff(textList, otherTextList,
-          Ignore.NULL_IGNORE);
+        revision = new JMDiff().diff(textList,
+                                     otherTextList,
+                                     Ignore.NULL_IGNORE);
 
         for (JMDelta delta : revision.getDeltas())
         {
@@ -94,12 +101,14 @@ public class DiffLabel
       }
 
       doc = getStyledDocument();
-      doc.remove(0, doc.getLength());
+      doc.remove(0,
+                 doc.getLength());
 
       for (int i = 0; i < textList.size(); i++)
       {
-        doc.insertString(doc.getLength(), textList.get(i),
-          (styles[i] != null ? doc.getStyle(styles[i]) : null));
+        doc.insertString(doc.getLength(),
+                         textList.get(i),
+                         (styles[i] != null ? doc.getStyle(styles[i]) : null));
       }
     }
     catch (Exception ex)

@@ -18,11 +18,13 @@ public class StatusResult
     return path;
   }
 
-  public void addEntry(String name, Status status)
+  public void addEntry(String name,
+      Status status)
   {
     Entry entry;
 
-    entry = new Entry(name, status);
+    entry = new Entry(name,
+                      status);
     if (entryList.contains(entry))
     {
       return;
@@ -47,7 +49,8 @@ public class StatusResult
     private String name;
     private Status status;
 
-    Entry(String name, Status status)
+    Entry(String name,
+        Status status)
     {
       this.name = name;
       this.status = status;
@@ -104,7 +107,8 @@ public class StatusResult
     private char shortText;
     private String iconName;
 
-    Status(char shortTexti, String iconName)
+    Status(char shortTexti,
+        String iconName)
     {
       this.shortText = shortText;
       this.iconName = iconName;

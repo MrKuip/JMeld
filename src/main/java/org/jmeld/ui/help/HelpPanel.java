@@ -19,10 +19,10 @@ import java.io.*;
 
 /**
  *
- * @author  kees
+ * @author kees
  */
 public class HelpPanel
-       extends AbstractContentPanel
+    extends AbstractContentPanel
 {
   private JMeldPanel mainPanel;
 
@@ -36,16 +36,20 @@ public class HelpPanel
   private void init()
   {
     JSplitPane splitPane;
-    JList      urlList;
+    JList urlList;
 
-    urlList = new JList(new String[] { "Shortcuts", "Licenses" });
+    urlList = new JList(new String[]
+    {
+        "Shortcuts", "Licenses"
+    });
 
     splitPane = new JSplitPane();
     splitPane.setLeftComponent(urlList);
     splitPane.setRightComponent(new JButton("hhaa"));
 
     setLayout(new BorderLayout());
-    add(splitPane, BorderLayout.CENTER);
+    add(splitPane,
+        BorderLayout.CENTER);
   }
 
   class HelpURI
@@ -53,9 +57,8 @@ public class HelpPanel
     private String name;
     private String resourceName;
 
-    HelpURI(
-      String name,
-      String resourceName)
+    HelpURI(String name,
+        String resourceName)
     {
       this.name = name;
       this.resourceName = resourceName;

@@ -56,7 +56,6 @@
  */
 package org.apache.commons.jrcs.diff.myers;
 
-
 /**
  * A node in a diffpath.
  *
@@ -78,11 +77,17 @@ public abstract class PathNode
 
   /**
    * Concatenates a new path node with an existing diffpath.
-   * @param i The position in the original sequence for the new node.
-   * @param j The position in the revised sequence for the new node.
-   * @param prev The previous node in the path.
+   * 
+   * @param i
+   *          The position in the original sequence for the new node.
+   * @param j
+   *          The position in the revised sequence for the new node.
+   * @param prev
+   *          The previous node in the path.
    */
-  public PathNode(int i, int j, PathNode prev)
+  public PathNode(int i,
+      int j,
+      PathNode prev)
   {
     this.i = i;
     this.j = j;
@@ -91,6 +96,7 @@ public abstract class PathNode
 
   /**
    * Is this node a {@link Snake Snake node}?
+   * 
    * @return true if this is a {@link Snake Snake node}
    */
   public abstract boolean isSnake();
@@ -98,8 +104,8 @@ public abstract class PathNode
   /**
    * Is this a bootstrap node?
    * <p>
-   * In bottstrap nodes one of the two corrdinates is
-   * less than zero.
+   * In bottstrap nodes one of the two corrdinates is less than zero.
+   * 
    * @return tru if this is a bootstrap node.
    */
   public boolean isBootstrap()
@@ -108,12 +114,10 @@ public abstract class PathNode
   }
 
   /**
-   * Skips sequences of {@link DiffNode DiffNodes} until a
-   * {@link Snake} or bootstrap node is found, or the end
-   * of the path is reached.
-   * @return The next first {@link Snake} or bootstrap node in the path, or
-   * <code>null</code>
-   * if none found.
+   * Skips sequences of {@link DiffNode DiffNodes} until a {@link Snake} or bootstrap node is found, or the end of the
+   * path is reached.
+   * 
+   * @return The next first {@link Snake} or bootstrap node in the path, or <code>null</code> if none found.
    */
   public final PathNode previousSnake()
   {

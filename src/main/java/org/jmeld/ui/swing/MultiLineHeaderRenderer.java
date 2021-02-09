@@ -17,9 +17,12 @@ public class MultiLineHeaderRenderer
   {
     ListCellRenderer renderer;
 
-    LookAndFeel.installColorsAndFont(this, "TableHeader.background",
-      "TableHeader.foreground", "TableHeader.font");
-    LookAndFeel.installBorder(this, "TableHeader.cellBorder");
+    LookAndFeel.installColorsAndFont(this,
+                                     "TableHeader.background",
+                                     "TableHeader.foreground",
+                                     "TableHeader.font");
+    LookAndFeel.installBorder(this,
+                              "TableHeader.cellBorder");
 
     /*
         renderer = getCellRenderer();
@@ -33,8 +36,12 @@ public class MultiLineHeaderRenderer
     setOpaque(false);
   }
 
-  public Component getTableCellRendererComponent(JTable table, Object value,
-      boolean isSelected, boolean hasFocus, int row, int column)
+  public Component getTableCellRendererComponent(JTable table,
+      Object value,
+      boolean isSelected,
+      boolean hasFocus,
+      int row,
+      int column)
   {
     String str;
 
@@ -57,15 +64,15 @@ public class MultiLineHeaderRenderer
       Rectangle r;
       int       x;
       int       y;
-
+  
       super.paintComponent(g);
-
+  
       if (icon != null)
       {
         r = getBounds();
         x = r.width - icon.getIconWidth();
         y = ((r.height - icon.getIconHeight()) / 2);
-
+  
         icon.paintIcon(this, g, x, y);
       }
     }

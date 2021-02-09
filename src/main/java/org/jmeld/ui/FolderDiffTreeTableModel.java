@@ -23,7 +23,7 @@ import org.jmeld.util.node.*;
 import javax.swing.*;
 
 public class FolderDiffTreeTableModel
-       extends JMTreeTableModel
+    extends JMTreeTableModel
 {
   private Column fileNameColumn;
   private Column leftSizeColumn;
@@ -33,21 +33,42 @@ public class FolderDiffTreeTableModel
 
   public FolderDiffTreeTableModel()
   {
-    fileNameColumn = addColumn("fileName", null, "File", null, -1, false);
-    leftSizeColumn = addColumn("leftSize", "Left", "Size", Integer.class, 8,
-        false);
-    leftStateColumn = addColumn("leftState", "Left", "L", Icon.class, 3, false);
-    rightStateColumn = addColumn("rightState", "Right", "R", Icon.class, 3,
-        false);
-    rightSizeColumn = addColumn("rightSize", "Right", "Size", Integer.class,
-        8, false);
+    fileNameColumn = addColumn("fileName",
+                               null,
+                               "File",
+                               null,
+                               -1,
+                               false);
+    leftSizeColumn = addColumn("leftSize",
+                               "Left",
+                               "Size",
+                               Integer.class,
+                               8,
+                               false);
+    leftStateColumn = addColumn("leftState",
+                                "Left",
+                                "L",
+                                Icon.class,
+                                3,
+                                false);
+    rightStateColumn = addColumn("rightState",
+                                 "Right",
+                                 "R",
+                                 Icon.class,
+                                 3,
+                                 false);
+    rightSizeColumn = addColumn("rightSize",
+                                "Right",
+                                "Size",
+                                Integer.class,
+                                8,
+                                false);
   }
 
-  public Object getValueAt(
-    Object objectNode,
-    Column column)
+  public Object getValueAt(Object objectNode,
+      Column column)
   {
-    UINode     uiNode;
+    UINode uiNode;
     JMDiffNode diffNode;
     BufferNode bufferNode;
 
@@ -104,10 +125,9 @@ public class FolderDiffTreeTableModel
     return null;
   }
 
-  public void setValueAt(
-    Object value,
-    Object objectNode,
-    Column column)
+  public void setValueAt(Object value,
+      Object objectNode,
+      Column column)
   {
   }
 
@@ -121,7 +141,7 @@ public class FolderDiffTreeTableModel
       }
 
       if (diffNode.isCompareEqual(JMDiffNode.Compare.LeftMissing)
-        || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
+          || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
       {
         return "stock_deleted3";
       }
@@ -140,7 +160,7 @@ public class FolderDiffTreeTableModel
       }
 
       if (diffNode.isCompareEqual(JMDiffNode.Compare.RightMissing)
-        || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
+          || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
       {
         return "stock_deleted3";
       }

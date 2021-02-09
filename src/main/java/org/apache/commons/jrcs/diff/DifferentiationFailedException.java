@@ -56,10 +56,8 @@
  */
 package org.apache.commons.jrcs.diff;
 
-
 /**
- * Thrown whenever the differencing engine cannot produce the differences
- * between two revisions of ta text.
+ * Thrown whenever the differencing engine cannot produce the differences between two revisions of ta text.
  *
  * @version $Revision: 1.2 $ $Date: 2003/05/06 14:59:12 $
  *

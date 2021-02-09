@@ -19,7 +19,9 @@ public class ActiveCmd
   public Result execute()
   {
     // If a root can be found than we have a mercurial working directory!
-    super.execute("bzr", "info", file.getAbsolutePath());
+    super.execute("bzr",
+                  "info",
+                  file.getAbsolutePath());
 
     return getResult();
   }

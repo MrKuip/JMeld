@@ -38,18 +38,22 @@ public class CompareUtil
   }
 
   public static boolean contentEquals(BufferNode nodeLeft,
-      BufferNode nodeRight, Ignore ignore)
+      BufferNode nodeRight,
+      Ignore ignore)
   {
     if (nodeLeft instanceof FileNode && nodeRight instanceof FileNode)
     {
-      return contentEquals((FileNode) nodeLeft, (FileNode) nodeRight, ignore);
+      return contentEquals((FileNode) nodeLeft,
+                           (FileNode) nodeRight,
+                           ignore);
     }
     else
     {
       try
       {
-        return contentEquals(nodeLeft.getDocument().getReader(), nodeRight
-            .getDocument().getReader(), ignore);
+        return contentEquals(nodeLeft.getDocument().getReader(),
+                             nodeRight.getDocument().getReader(),
+                             ignore);
       }
       catch (Exception ex)
       {
@@ -60,7 +64,8 @@ public class CompareUtil
     return false;
   }
 
-  private static boolean contentEquals(FileNode nodeLeft, FileNode nodeRight,
+  private static boolean contentEquals(FileNode nodeLeft,
+      FileNode nodeRight,
       Ignore ignore)
   {
     File fileLeft;
@@ -99,15 +104,19 @@ public class CompareUtil
       //   comparisons quite a bit.
       if (!ignore.ignore || fileLeft.length() == fileRight.length())
       {
-        fLeft = new RandomAccessFile(fileLeft, "r");
-        fRight = new RandomAccessFile(fileRight, "r");
+        fLeft = new RandomAccessFile(fileLeft,
+                                     "r");
+        fRight = new RandomAccessFile(fileRight,
+                                      "r");
         fcLeft = fLeft.getChannel();
         fcRight = fRight.getChannel();
 
-        bbLeft = fcLeft.map(FileChannel.MapMode.READ_ONLY, 0, (int) fcLeft
-            .size());
-        bbRight = fcRight.map(FileChannel.MapMode.READ_ONLY, 0, (int) fcRight
-            .size());
+        bbLeft = fcLeft.map(FileChannel.MapMode.READ_ONLY,
+                            0,
+                            (int) fcLeft.size());
+        bbRight = fcRight.map(FileChannel.MapMode.READ_ONLY,
+                              0,
+                              (int) fcRight.size());
 
         equals = bbLeft.equals(bbRight);
         if (!ignore.ignore || equals)
@@ -116,8 +125,9 @@ public class CompareUtil
         }
       }
 
-      equals = contentEquals(nodeLeft.getDocument().getReader(), nodeRight
-          .getDocument().getReader(), ignore);
+      equals = contentEquals(nodeLeft.getDocument().getReader(),
+                             nodeRight.getDocument().getReader(),
+                             ignore);
 
       return equals;
     }
@@ -154,12 +164,15 @@ public class CompareUtil
     }
   }
 
-  public static boolean contentEquals(char[] left, char[] right, Ignore ignore)
+  public static boolean contentEquals(char[] left,
+      char[] right,
+      Ignore ignore)
   {
     try
     {
       return contentEquals(new CharArrayReader(left),
-        new CharArrayReader(right), ignore);
+                           new CharArrayReader(right),
+                           ignore);
     }
     catch (IOException ex)
     {
@@ -168,12 +181,13 @@ public class CompareUtil
     }
   }
 
-  /** Test if 2 readers are equals (with ignore possibilities).
-   *  Synchronized because leftLine and rightLine are static variables for
-   *    performance reasons.
+  /**
+   * Test if 2 readers are equals (with ignore possibilities). Synchronized because leftLine and rightLine are static
+   * variables for performance reasons.
    */
   private static synchronized boolean contentEquals(Reader readerLeft,
-      Reader readerRight, Ignore ignore)
+      Reader readerRight,
+      Ignore ignore)
       throws IOException
   {
     boolean leftEOF, rightEOF;
@@ -184,9 +198,12 @@ public class CompareUtil
       {
         for (;;)
         {
-          leftEOF = readLine(readerLeft, leftLineBuffer);
+          leftEOF = readLine(readerLeft,
+                             leftLineBuffer);
 
-          removeIgnoredChars(leftLineBuffer, ignore, leftLineOutputBuffer);
+          removeIgnoredChars(leftLineBuffer,
+                             ignore,
+                             leftLineOutputBuffer);
           if (leftLineOutputBuffer.remaining() != 0)
           {
             break;
@@ -200,9 +217,12 @@ public class CompareUtil
 
         for (;;)
         {
-          rightEOF = readLine(readerRight, rightLineBuffer);
+          rightEOF = readLine(readerRight,
+                              rightLineBuffer);
 
-          removeIgnoredChars(rightLineBuffer, ignore, rightLineOutputBuffer);
+          removeIgnoredChars(rightLineBuffer,
+                             ignore,
+                             rightLineOutputBuffer);
           if (rightLineOutputBuffer.remaining() != 0)
           {
             break;
@@ -214,8 +234,7 @@ public class CompareUtil
           }
         }
 
-        if (leftLineOutputBuffer.remaining() != 0
-            && rightLineOutputBuffer.remaining() != 0)
+        if (leftLineOutputBuffer.remaining() != 0 && rightLineOutputBuffer.remaining() != 0)
         {
           if (!leftLineOutputBuffer.equals(rightLineOutputBuffer))
           {
@@ -241,7 +260,8 @@ public class CompareUtil
     }
   }
 
-  private static boolean readLine(Reader reader, CharBuffer lineBuffer)
+  private static boolean readLine(Reader reader,
+      CharBuffer lineBuffer)
       throws IOException
   {
     int c, nextChar;
@@ -282,12 +302,13 @@ public class CompareUtil
     return false;
   }
 
-  /** Test if 2 readers are equals (with ignore possibilities).
-   *  Synchronized because leftLine and rightLine are static variables for
-   *    performance reasons.
+  /**
+   * Test if 2 readers are equals (with ignore possibilities). Synchronized because leftLine and rightLine are static
+   * variables for performance reasons.
    */
   private static synchronized boolean contentEquals_old(Reader readerLeft,
-      Reader readerRight, Ignore ignore)
+      Reader readerRight,
+      Ignore ignore)
       throws IOException
   {
     boolean equals;
@@ -324,8 +345,7 @@ public class CompareUtil
         {
           eol = isEOL(leftChar);
 
-          if ((ignore.ignoreEOL || ignore.ignoreBlankLines || ignore.ignoreWhitespace)
-              && eol)
+          if ((ignore.ignoreEOL || ignore.ignoreBlankLines || ignore.ignoreWhitespace) && eol)
           {
             readerLeft.mark(1);
             nextChar = readerLeft.read();
@@ -414,8 +434,7 @@ public class CompareUtil
         {
           eol = isEOL(rightChar);
 
-          if ((ignore.ignoreEOL || ignore.ignoreBlankLines || ignore.ignoreWhitespace)
-              && eol)
+          if ((ignore.ignoreEOL || ignore.ignoreBlankLines || ignore.ignoreWhitespace) && eol)
           {
             readerRight.mark(1);
             nextChar = readerRight.read();
@@ -497,7 +516,9 @@ public class CompareUtil
 
         if (leftLineIndex > 0 && leftLineIndex == rightLineIndex)
         {
-          if (equals(leftLine, rightLine, leftLineIndex))
+          if (equals(leftLine,
+                     rightLine,
+                     leftLineIndex))
           {
             leftLineIndex = 0;
             rightLineIndex = 0;
@@ -530,7 +551,9 @@ public class CompareUtil
     return equals;
   }
 
-  private static boolean equals(char[] a1, char[] a2, int size)
+  private static boolean equals(char[] a1,
+      char[] a2,
+      int size)
   {
     for (int i = 0; i < size; i++)
     {
@@ -548,14 +571,19 @@ public class CompareUtil
     return character == '\n' || character == '\r';
   }
 
-  /** Remove all characters from the 'line' that can be ignored.
-   *  @param  inputLine char[] representing a line.
-   *  @param  ignore an object with the ignore options.
-   *  @param  outputLine return value which contains all characters from line that cannot be
-   *          ignored. It is a parameter that can be reused (which is important for
-   *          performance)
+  /**
+   * Remove all characters from the 'line' that can be ignored.
+   * 
+   * @param inputLine
+   *          char[] representing a line.
+   * @param ignore
+   *          an object with the ignore options.
+   * @param outputLine
+   *          return value which contains all characters from line that cannot be ignored. It is a parameter that can be
+   *          reused (which is important for performance)
    */
-  public static void removeIgnoredChars(CharBuffer inputLine, Ignore ignore,
+  public static void removeIgnoredChars(CharBuffer inputLine,
+      Ignore ignore,
       CharBuffer outputLine)
   {
     boolean whitespaceAtBegin;
@@ -652,7 +680,7 @@ public class CompareUtil
         c = Character.toLowerCase(c);
       }
 
-      if(whiteSpaceInBetweenIgnored)
+      if (whiteSpaceInBetweenIgnored)
       {
         //outputLine.put(' ');
         whiteSpaceInBetweenIgnored = false;

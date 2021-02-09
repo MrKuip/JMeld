@@ -33,7 +33,9 @@ import org.jmeld.util.prefs.FileChooserPreference;
  *
  * @author kees
  */
-public class SettingsPanel extends SettingsPanelForm implements ConfigurationListenerIF
+public class SettingsPanel
+    extends SettingsPanelForm
+    implements ConfigurationListenerIF
 {
   private DefaultListModel<Settings> listModel;
   private JMeldPanel mainPanel;
@@ -53,16 +55,23 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
     settingsPanel.setLayout(new CardLayout());
     for (Settings setting : Settings.values())
     {
-      settingsPanel.add(setting.getPanel(), setting.getName());
+      settingsPanel.add(setting.getPanel(),
+                        setting.getName());
     }
 
-    initButton(saveButton, Icons.SAVE, "Save settings");
+    initButton(saveButton,
+               Icons.SAVE,
+               "Save settings");
     saveButton.addActionListener(getSaveAction());
 
-    initButton(saveAsButton, Icons.SAVE_AS, "Save settings to a different file");
+    initButton(saveAsButton,
+               Icons.SAVE_AS,
+               "Save settings to a different file");
     saveAsButton.addActionListener(getSaveAsAction());
 
-    initButton(reloadButton, Icons.RELOAD, "Reload settings from a different file");
+    initButton(reloadButton,
+               Icons.RELOAD,
+               "Reload settings from a different file");
     reloadButton.addActionListener(getReloadAction());
 
     fileLabel.setText("");
@@ -78,13 +87,18 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
     settingItems.addListSelectionListener(getSettingItemsAction());
   }
 
-  private void initButton(JButton button, Icons imageIcon, String toolTipText)
+  private void initButton(JButton button,
+      Icons imageIcon,
+      String toolTipText)
   {
     ImageIcon icon;
 
     button.setText("");
     button.setToolTipText(toolTipText);
-    button.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    button.setBorder(BorderFactory.createEmptyBorder(2,
+                                                     2,
+                                                     2,
+                                                     2));
     button.setContentAreaFilled(false);
     icon = imageIcon.getSmallIcon();
     button.setIcon(icon);
@@ -120,7 +134,8 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
         chooser = new JFileChooser();
         chooser.setApproveButtonText("Save");
         chooser.setDialogTitle("Save settings");
-        pref = new FileChooserPreference("SettingsSave", chooser);
+        pref = new FileChooserPreference("SettingsSave",
+                                         chooser);
 
         ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
         result = chooser.showOpenDialog(ancestor);
@@ -151,7 +166,8 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
         chooser = new JFileChooser();
         chooser.setApproveButtonText("Reload");
         chooser.setDialogTitle("Reload settings");
-        pref = new FileChooserPreference("SettingsSave", chooser);
+        pref = new FileChooserPreference("SettingsSave",
+                                         chooser);
 
         ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
         result = chooser.showOpenDialog(ancestor);
@@ -159,7 +175,8 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
         {
           pref.save();
           file = chooser.getSelectedFile();
-          if (!ConfigurationManager.getInstance().reload(file, getConfiguration().getClass()))
+          if (!ConfigurationManager.getInstance().reload(file,
+                                                         getConfiguration().getClass()))
           {
             StatusBar.getInstance().setAlarm("Failed to reload from " + file);
           }
@@ -179,7 +196,8 @@ public class SettingsPanel extends SettingsPanelForm implements ConfigurationLis
 
         settings = (Settings) settingItems.getSelectedValue();
         layout = (CardLayout) settingsPanel.getLayout();
-        layout.show(settingsPanel, settings.getName());
+        layout.show(settingsPanel,
+                    settings.getName());
       }
     };
   }

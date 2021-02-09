@@ -61,7 +61,8 @@ public class JMeld
     frame.add(jmeldPanel);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.setIconImage(ImageUtil.getImageIcon("jmeld-small").getImage());
-    new WindowPreference(frame.getTitle(), frame);
+    new WindowPreference(frame.getTitle(),
+                         frame);
     frame.addWindowListener(jmeldPanel.getWindowListener());
     //frame.getRootPane().setTransferHandler(new FileDropHandler());
     frame.setVisible(true);
@@ -74,25 +75,26 @@ public class JMeld
 
   private void debugKeyboard()
   {
-    KeyboardFocusManager
-        .setCurrentKeyboardFocusManager(new DefaultKeyboardFocusManager()
-        {
-          @Override
-          public boolean dispatchKeyEvent(KeyEvent e)
-          {
-            //System.out.println("dispatch: " + KeyStroke.getKeyStrokeForEvent(e));
-            //System.out.println("   event: " + e);
-            return super.dispatchKeyEvent(e);
-          }
+    KeyboardFocusManager.setCurrentKeyboardFocusManager(new DefaultKeyboardFocusManager()
+    {
+      @Override
+      public boolean dispatchKeyEvent(KeyEvent e)
+      {
+        //System.out.println("dispatch: " + KeyStroke.getKeyStrokeForEvent(e));
+        //System.out.println("   event: " + e);
+        return super.dispatchKeyEvent(e);
+      }
 
-          @Override
-          public void processKeyEvent(Component focusedComponent, KeyEvent e)
-          {
-            //System.out.println("processKeyEvent[" + focusedComponent.getClass()
-            //+ "] : " + KeyStroke.getKeyStrokeForEvent(e));
-            super.processKeyEvent(focusedComponent, e);
-          }
-        });
+      @Override
+      public void processKeyEvent(Component focusedComponent,
+          KeyEvent e)
+      {
+        //System.out.println("processKeyEvent[" + focusedComponent.getClass()
+        //+ "] : " + KeyStroke.getKeyStrokeForEvent(e));
+        super.processKeyEvent(focusedComponent,
+                              e);
+      }
+    });
   }
 
   public static void main(String[] args)
@@ -100,7 +102,8 @@ public class JMeld
     //e.debug.EventDispatchThreadHangMonitor.initMonitoring();
     if (JMeldSettings.getInstance().getEditor().isAntialiasEnabled())
     {
-      System.setProperty("swing.aatext", "true");
+      System.setProperty("swing.aatext",
+                         "true");
     }
 
     // According to the latest news EVERYTHING regarding swing should

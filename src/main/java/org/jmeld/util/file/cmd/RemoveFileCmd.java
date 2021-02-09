@@ -13,7 +13,8 @@ public class RemoveFileCmd
   private JMDiffNode diffNode;
   private FileNode fileNode;
 
-  public RemoveFileCmd(JMDiffNode diffNode, FileNode fileNode)
+  public RemoveFileCmd(JMDiffNode diffNode,
+      FileNode fileNode)
   {
     this.diffNode = diffNode;
     this.fileNode = fileNode;
@@ -42,14 +43,16 @@ public class RemoveFileCmd
     {
       if (file.exists())
       {
-        originalFile = FileUtil.createTempFile("jmeld", "backup");
+        originalFile = FileUtil.createTempFile("jmeld",
+                                               "backup");
 
         if (debug)
         {
           System.out.println("copy : " + file + " -> " + originalFile);
         }
 
-        FileUtil.copy(file, originalFile);
+        FileUtil.copy(file,
+                      originalFile);
       }
 
       if (debug)
@@ -69,7 +72,8 @@ public class RemoveFileCmd
           {
             System.out.println("copy : " + originalFile + " -> " + file);
           }
-          FileUtil.copy(originalFile, file);
+          FileUtil.copy(originalFile,
+                        file);
         }
       }
       catch (Exception ex)

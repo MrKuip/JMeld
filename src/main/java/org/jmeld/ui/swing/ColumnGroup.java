@@ -14,10 +14,12 @@ public class ColumnGroup
 
   public ColumnGroup(String text)
   {
-    this(null, text);
+    this(null,
+         text);
   }
 
-  public ColumnGroup(TableCellRenderer renderer, String text)
+  public ColumnGroup(TableCellRenderer renderer,
+      String text)
   {
     MultiLineHeaderRenderer multiHeaderRenderer;
     ListCellRenderer internalRenderer;
@@ -45,7 +47,8 @@ public class ColumnGroup
   }
 
   /**
-   * @param obj    TableColumn or ColumnGroup
+   * @param obj
+   *          TableColumn or ColumnGroup
    */
   public void add(Object obj)
   {
@@ -57,10 +60,13 @@ public class ColumnGroup
   }
 
   /**
-   * @param c    TableColumn
-   * @param v    ColumnGroups
+   * @param c
+   *          TableColumn
+   * @param v
+   *          ColumnGroups
    */
-  public Vector getColumnGroups(TableColumn c, Vector g)
+  public Vector getColumnGroups(TableColumn c,
+      Vector g)
   {
     g.addElement(this);
     if (v.contains(c))
@@ -76,7 +82,7 @@ public class ColumnGroup
       if (obj instanceof ColumnGroup)
       {
         Vector groups = (Vector) ((ColumnGroup) obj).getColumnGroups(c,
-          (Vector) g.clone());
+                                                                     (Vector) g.clone());
 
         if (groups != null)
         {
@@ -114,8 +120,12 @@ public class ColumnGroup
     Object obj;
     TableColumn aColumn;
 
-    comp = renderer.getTableCellRendererComponent(table, getHeaderValue(),
-      false, false, -1, -1);
+    comp = renderer.getTableCellRendererComponent(table,
+                                                  getHeaderValue(),
+                                                  false,
+                                                  false,
+                                                  -1,
+                                                  -1);
     height = comp.getPreferredSize().height;
     width = 0;
     enumerate = v.elements();
@@ -135,7 +145,8 @@ public class ColumnGroup
         width += ((ColumnGroup) obj).getSize(table).width;
       }
     }
-    return new Dimension(width, height);
+    return new Dimension(width,
+                         height);
   }
 
   public String toString()

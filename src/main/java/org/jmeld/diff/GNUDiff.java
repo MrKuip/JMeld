@@ -26,7 +26,8 @@ public class GNUDiff
   {
   }
 
-  public JMRevision diff(Object[] orig, Object[] rev)
+  public JMRevision diff(Object[] orig,
+      Object[] rev)
       throws JMeldException
   {
     Diff diff;
@@ -34,18 +35,23 @@ public class GNUDiff
 
     try
     {
-      diff = new Diff(orig, rev);
+      diff = new Diff(orig,
+                      rev);
       change = diff.diff_2();
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Diff failed [" + getClass() + "]", ex);
+      throw new JMeldException("Diff failed [" + getClass() + "]",
+                               ex);
     }
 
-    return buildRevision(change, orig, rev);
+    return buildRevision(change,
+                         orig,
+                         rev);
   }
 
-  private JMRevision buildRevision(Diff.change change, Object[] orig,
+  private JMRevision buildRevision(Diff.change change,
+      Object[] orig,
       Object[] rev)
   {
     JMRevision result;
@@ -60,11 +66,14 @@ public class GNUDiff
       throw new IllegalArgumentException("revised sequence is null");
     }
 
-    result = new JMRevision(orig, rev);
+    result = new JMRevision(orig,
+                            rev);
     while (change != null)
     {
-      result.add(new JMDelta(new JMChunk(change.line0, change.deleted),
-          new JMChunk(change.line1, change.inserted)));
+      result.add(new JMDelta(new JMChunk(change.line0,
+                                         change.deleted),
+                             new JMChunk(change.line1,
+                                         change.inserted)));
 
       change = change.link;
     }

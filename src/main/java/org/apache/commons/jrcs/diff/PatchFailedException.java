@@ -56,7 +56,6 @@
  */
 package org.apache.commons.jrcs.diff;
 
-
 /**
  * Thrown whenever a delta cannot be applied as a patch to a given text.
  *

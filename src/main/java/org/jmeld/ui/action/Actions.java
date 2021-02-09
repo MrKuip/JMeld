@@ -50,7 +50,7 @@ public class Actions
   public class Action
   {
     // Instance variables:
-    public Option  option = new Option(true);
+    public Option option = new Option(true);
     private String name;
 
     private Action(String name)

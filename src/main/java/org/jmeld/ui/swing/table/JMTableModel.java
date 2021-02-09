@@ -33,13 +33,22 @@ public abstract class JMTableModel
     columns = new ArrayList<Column>();
   }
 
-  public Column addColumn(String id, String columnGroupName, String columnName,
-      Class columnClass, int columnSize, boolean editable)
+  public Column addColumn(String id,
+      String columnGroupName,
+      String columnName,
+      Class columnClass,
+      int columnSize,
+      boolean editable)
   {
     Column column;
 
-    column = new Column(id, columns.size(), columnGroupName, columnName,
-        columnClass, columnSize, editable);
+    column = new Column(id,
+                        columns.size(),
+                        columnGroupName,
+                        columnName,
+                        columnClass,
+                        columnSize,
+                        editable);
     columns.add(column);
 
     return column;
@@ -47,9 +56,12 @@ public abstract class JMTableModel
 
   public abstract int getRowCount();
 
-  public abstract Object getValueAt(int rowIndex, Column column);
+  public abstract Object getValueAt(int rowIndex,
+      Column column);
 
-  public void setValueAt(Object value, int rowIndex, Column column)
+  public void setValueAt(Object value,
+      int rowIndex,
+      Column column)
   {
     // empty: override if you want to use it
   }
@@ -69,14 +81,17 @@ public abstract class JMTableModel
     return getColumn(columnIndex).columnClass;
   }
 
-  public Class getColumnClass(int rowIndex, Column column)
+  public Class getColumnClass(int rowIndex,
+      Column column)
   {
     return null;
   }
 
-  public Class getColumnClass(int rowIndex, int columnIndex)
+  public Class getColumnClass(int rowIndex,
+      int columnIndex)
   {
-    return getColumnClass(rowIndex, getColumn(columnIndex));
+    return getColumnClass(rowIndex,
+                          getColumn(columnIndex));
   }
 
   public String getColumnGroupName(int columnIndex)
@@ -109,39 +124,48 @@ public abstract class JMTableModel
     return columns.get(columnIndex);
   }
 
-  public boolean isCellEditable(int rowIndex, Column column)
+  public boolean isCellEditable(int rowIndex,
+      Column column)
   {
     return column.isEditable();
   }
 
-  public final boolean isCellEditable(int rowIndex, int columnIndex)
+  public final boolean isCellEditable(int rowIndex,
+      int columnIndex)
   {
     if (!checkRowCount(rowIndex))
     {
       return false;
     }
 
-    return isCellEditable(rowIndex, getColumn(columnIndex));
+    return isCellEditable(rowIndex,
+                          getColumn(columnIndex));
   }
 
-  public final Object getValueAt(int rowIndex, int columnIndex)
+  public final Object getValueAt(int rowIndex,
+      int columnIndex)
   {
     if (!checkRowCount(rowIndex))
     {
       return "";
     }
 
-    return getValueAt(rowIndex, getColumn(columnIndex));
+    return getValueAt(rowIndex,
+                      getColumn(columnIndex));
   }
 
-  public final void setValueAt(Object value, int rowIndex, int columnIndex)
+  public final void setValueAt(Object value,
+      int rowIndex,
+      int columnIndex)
   {
     if (!checkRowCount(rowIndex))
     {
       return;
     }
 
-    setValueAt(value, rowIndex, getColumn(columnIndex));
+    setValueAt(value,
+               rowIndex,
+               getColumn(columnIndex));
   }
 
   private boolean checkRowCount(int rowIndex)
@@ -161,8 +185,13 @@ public abstract class JMTableModel
     private TableCellRenderer renderer;
     private TableCellEditor editor;
 
-    public Column(String id, int columnIndex, String columnGroupName,
-        String columnName, Class columnClass, int columnSize, boolean editable)
+    public Column(String id,
+        int columnIndex,
+        String columnGroupName,
+        String columnName,
+        Class columnClass,
+        int columnSize,
+        boolean editable)
     {
       this.id = id;
       this.columnIndex = columnIndex;

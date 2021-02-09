@@ -33,10 +33,11 @@ public class LookAndFeelManager
     try
     {
       PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
-      System.setProperty(PlasticLookAndFeel.DEFAULT_THEME_KEY, "MySkyBluer");
+      System.setProperty(PlasticLookAndFeel.DEFAULT_THEME_KEY,
+                         "MySkyBluer");
 
       UIManager.installLookAndFeel("JGoodies Plastic 3D",
-        "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+                                   "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
     }
     catch (Exception e)
     {
@@ -57,12 +58,11 @@ public class LookAndFeelManager
       lookAndFeelClassName = getDefaultLookAndFeelClassName();
 
       // Try the preferred look and feel:
-      lookAndFeelName = JMeldSettings.getInstance().getEditor()
-          .getLookAndFeelName();
-      for (UIManager.LookAndFeelInfo info : UIManager
-          .getInstalledLookAndFeels())
+      lookAndFeelName = JMeldSettings.getInstance().getEditor().getLookAndFeelName();
+      for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
       {
-        if (ObjectUtil.equals(info.getName(), lookAndFeelName))
+        if (ObjectUtil.equals(info.getName(),
+                              lookAndFeelName))
         {
           lookAndFeelClassName = info.getClassName();
           break;
@@ -95,7 +95,8 @@ public class LookAndFeelManager
 
     for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
     {
-      if (ObjectUtil.equals(info.getClassName(), lf.getClass().getName()))
+      if (ObjectUtil.equals(info.getClassName(),
+                            lf.getClass().getName()))
       {
         return info.getName();
       }

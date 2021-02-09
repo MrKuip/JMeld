@@ -21,7 +21,8 @@ public class SearchCommand
   private String searchText;
   private boolean regularExpression;
 
-  public SearchCommand(String searchText, boolean regularExpression)
+  public SearchCommand(String searchText,
+      boolean regularExpression)
   {
     this.searchText = searchText;
     this.regularExpression = regularExpression;

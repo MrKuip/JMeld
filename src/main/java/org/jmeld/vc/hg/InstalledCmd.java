@@ -13,7 +13,8 @@ public class InstalledCmd
 
   public Result execute()
   {
-    super.execute("hg", "version");
+    super.execute("hg",
+                  "version");
 
     return getResult();
   }

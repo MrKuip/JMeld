@@ -30,11 +30,22 @@ public class VersionControlTreeTableModel
 
   public VersionControlTreeTableModel()
   {
-    fileNameColumn = addColumn("fileName", null, "File", null, -1, false);
-    statusColumn = addColumn("status", "Left", "Status", Icon.class, 12, false);
+    fileNameColumn = addColumn("fileName",
+                               null,
+                               "File",
+                               null,
+                               -1,
+                               false);
+    statusColumn = addColumn("status",
+                             "Left",
+                             "Status",
+                             Icon.class,
+                             12,
+                             false);
   }
 
-  public Object getValueAt(Object objectNode, Column column)
+  public Object getValueAt(Object objectNode,
+      Column column)
   {
     UINode uiNode;
     JMDiffNode diffNode;
@@ -51,19 +62,21 @@ public class VersionControlTreeTableModel
     if (column == statusColumn)
     {
       vcbNode = (VersionControlBaseNode) diffNode.getBufferNodeLeft();
-      if(vcbNode == null)
+      if (vcbNode == null)
       {
         return "";
       }
 
-      System.out.println( vcbNode.getEntry().getStatus().getIconName());
+      System.out.println(vcbNode.getEntry().getStatus().getIconName());
       return ImageUtil.getImageIcon("16x16/" + vcbNode.getEntry().getStatus().getIconName());
     }
 
     return null;
   }
 
-  public void setValueAt(Object value, Object objectNode, Column column)
+  public void setValueAt(Object value,
+      Object objectNode,
+      Column column)
   {
   }
 }

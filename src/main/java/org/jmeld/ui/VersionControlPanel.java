@@ -46,7 +46,8 @@ public class VersionControlPanel
   private ActionHandler actionHandler;
   private JPanel bufferDiffPanelHolder;
 
-  VersionControlPanel(JMeldPanel mainPanel, FolderDiff diff)
+  VersionControlPanel(JMeldPanel mainPanel,
+      FolderDiff diff)
   {
     this.mainPanel = mainPanel;
     this.diff = diff;
@@ -59,7 +60,8 @@ public class VersionControlPanel
     FolderDiffPanel folderDiffPanel;
     JSplitPane splitPane;
 
-    folderDiffPanel = new FolderDiffPanel(mainPanel, diff)
+    folderDiffPanel = new FolderDiffPanel(mainPanel,
+                                          diff)
     {
       @Override
       protected JMTreeTableModel createTreeTableModel()
@@ -70,11 +72,13 @@ public class VersionControlPanel
     bufferDiffPanelHolder = new JPanel();
     bufferDiffPanelHolder.setLayout(new BorderLayout());
 
-    splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, folderDiffPanel,
-        bufferDiffPanelHolder);
+    splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                               folderDiffPanel,
+                               bufferDiffPanelHolder);
 
     setLayout(new BorderLayout());
-    add(BorderLayout.CENTER, splitPane);
+    add(BorderLayout.CENTER,
+        splitPane);
   }
 
   public void configurationChanged()

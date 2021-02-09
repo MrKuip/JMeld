@@ -21,7 +21,8 @@ public class JMChunk
   private int anchor;
   private int size;
 
-  public JMChunk(int anchor, int size)
+  public JMChunk(int anchor,
+      int size)
   {
     this.anchor = anchor;
     this.size = size;

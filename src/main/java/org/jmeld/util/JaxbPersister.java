@@ -22,17 +22,22 @@ public class JaxbPersister
     return instance;
   }
 
-  /** Load a object of type 'clazz' from a file.
+  /**
+   * Load a object of type 'clazz' from a file.
    */
-  public <T> T load(Class<T> clazz, File file)
+  public <T> T load(Class<T> clazz,
+      File file)
       throws FileNotFoundException, JAXBException
   {
-    return load(clazz, new FileInputStream(file));
+    return load(clazz,
+                new FileInputStream(file));
   }
 
-  /** Load a object of type 'clazz' from a file.
+  /**
+   * Load a object of type 'clazz' from a file.
    */
-  public <T> T load(Class<T> clazz, InputStream is)
+  public <T> T load(Class<T> clazz,
+      InputStream is)
       throws JAXBException
   {
     Context context;
@@ -46,21 +51,26 @@ public class JaxbPersister
     }
   }
 
-  /** Save a object to a file.
+  /**
+   * Save a object to a file.
    */
-  public void save(Object object, File file)
+  public void save(Object object,
+      File file)
       throws JAXBException, IOException
   {
     OutputStream os;
 
     os = new FileOutputStream(file);
-    save(object, os);
+    save(object,
+         os);
     os.close();
   }
 
-  /** Save a object to a outputstream.
+  /**
+   * Save a object to a outputstream.
    */
-  private void save(Object object, OutputStream os)
+  private void save(Object object,
+      OutputStream os)
       throws JAXBException, IOException
   {
     Writer writer;
@@ -71,12 +81,13 @@ public class JaxbPersister
     context = getContext(object.getClass());
     synchronized (context)
     {
-      context.marshal(object, writer);
+      context.marshal(object,
+                      writer);
     }
   }
 
-  /** Each class has it's own context to marshal and unmarshal.
-   *   The context contains a jaxbcontext.
+  /**
+   * Each class has it's own context to marshal and unmarshal. The context contains a jaxbcontext.
    */
   private Context getContext(Class clazz)
   {
@@ -88,7 +99,8 @@ public class JaxbPersister
       if (c == null)
       {
         c = new Context(clazz);
-        contexts.put(clazz, c);
+        contexts.put(clazz,
+                     c);
       }
     }
 
@@ -108,7 +120,8 @@ public class JaxbPersister
         jaxbContext = JAXBContext.newInstance(clazz);
 
         marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+                               Boolean.TRUE);
         marshaller.setSchema(null);
 
         unmarshaller = jaxbContext.createUnmarshaller();
@@ -120,10 +133,12 @@ public class JaxbPersister
       }
     }
 
-    public void marshal(Object object, Writer writer)
+    public void marshal(Object object,
+        Writer writer)
         throws JAXBException
     {
-      marshaller.marshal(object, writer);
+      marshaller.marshal(object,
+                         writer);
     }
 
     public Object unmarshal(InputStream is)

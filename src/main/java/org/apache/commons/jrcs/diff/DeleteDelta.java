@@ -77,7 +77,8 @@ public class DeleteDelta
 
   public DeleteDelta(Chunk orig)
   {
-    init(orig, null);
+    init(orig,
+         null);
   }
 
   public void verify(List target)
@@ -100,10 +101,13 @@ public class DeleteDelta
     s.append("d");
     s.append(revised.rcsto());
     s.append(Diff.NL);
-    original.toString(s, "< ", Diff.NL);
+    original.toString(s,
+                      "< ",
+                      Diff.NL);
   }
 
-  public void toRCSString(StringBuffer s, String EOL)
+  public void toRCSString(StringBuffer s,
+      String EOL)
   {
     s.append("d");
     s.append(original.rcsfrom());

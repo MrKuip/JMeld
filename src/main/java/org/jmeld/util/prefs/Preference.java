@@ -36,17 +36,22 @@ public abstract class Preference
     return preferenceName;
   }
 
-  protected String getString(String name, String defaultValue)
+  protected String getString(String name,
+      String defaultValue)
   {
-    return getPreferences().get(getKey(name), defaultValue);
+    return getPreferences().get(getKey(name),
+                                defaultValue);
   }
 
-  protected void putString(String name, String value)
+  protected void putString(String name,
+      String value)
   {
-    getPreferences().put(getKey(name), value);
+    getPreferences().put(getKey(name),
+                         value);
   }
 
-  protected List<String> getListOfString(String name, int maxItems)
+  protected List<String> getListOfString(String name,
+      int maxItems)
   {
     List<String> list;
     String element;
@@ -54,7 +59,8 @@ public abstract class Preference
     list = new ArrayList<String>(maxItems);
     for (int index = 0; index < maxItems; index++)
     {
-      element = getString(name + index, null);
+      element = getString(name + index,
+                          null);
       if (StringUtil.isEmpty(element))
       {
         continue;
@@ -66,7 +72,9 @@ public abstract class Preference
     return list;
   }
 
-  protected void putListOfString(String name, int maxItems, List<String> list)
+  protected void putListOfString(String name,
+      int maxItems,
+      List<String> list)
   {
     String element;
 
@@ -82,18 +90,23 @@ public abstract class Preference
         }
       }
 
-      putString(name + index, element);
+      putString(name + index,
+                element);
     }
   }
 
-  protected int getInt(String name, int defaultValue)
+  protected int getInt(String name,
+      int defaultValue)
   {
-    return getPreferences().getInt(getKey(name), defaultValue);
+    return getPreferences().getInt(getKey(name),
+                                   defaultValue);
   }
 
-  protected void putInt(String name, int value)
+  protected void putInt(String name,
+      int value)
   {
-    getPreferences().putInt(getKey(name), value);
+    getPreferences().putInt(getKey(name),
+                            value);
   }
 
   protected Preferences getPreferences()
@@ -106,7 +119,8 @@ public abstract class Preference
     return preferenceName + "-" + name;
   }
 
-  private String getKey(String name, int index)
+  private String getKey(String name,
+      int index)
   {
     return preferenceName + "-" + name + "-" + index;
   }

@@ -18,8 +18,12 @@ public class LogCmd
 
   public Result execute()
   {
-    super.execute("svn", "log", "--non-interactive", "-v", "--xml", file
-        .getPath());
+    super.execute("svn",
+                  "log",
+                  "--non-interactive",
+                  "-v",
+                  "--xml",
+                  file.getPath());
 
     return getResult();
   }

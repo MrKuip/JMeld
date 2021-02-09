@@ -43,16 +43,19 @@ public class SaveSettingsDialog
     JOptionPane pane;
     JDialog dialog;
 
-    pane = new JOptionPane(getSaveSettings(), JOptionPane.WARNING_MESSAGE);
+    pane = new JOptionPane(getSaveSettings(),
+                           JOptionPane.WARNING_MESSAGE);
     pane.setOptionType(JOptionPane.YES_NO_OPTION);
 
-    dialog = pane.createDialog(meldPanel, "Save settings");
+    dialog = pane.createDialog(meldPanel,
+                               "Save settings");
     dialog.setResizable(true);
     try
     {
       dialog.show();
 
-      if (ObjectUtil.equals(pane.getValue(), JOptionPane.YES_OPTION))
+      if (ObjectUtil.equals(pane.getValue(),
+                            JOptionPane.YES_OPTION))
       {
         ok = true;
       }

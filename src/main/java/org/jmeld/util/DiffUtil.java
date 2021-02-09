@@ -25,7 +25,8 @@ public class DiffUtil
 {
   public static boolean debug = false;
 
-  public static int getRevisedLine(JMRevision revision, int originalLine)
+  public static int getRevisedLine(JMRevision revision,
+      int originalLine)
   {
     JMDelta delta;
     int originalAnchor;
@@ -41,7 +42,8 @@ public class DiffUtil
 
     revisedLine = originalLine;
 
-    delta = findOriginalDelta(revision, originalLine);
+    delta = findOriginalDelta(revision,
+                              originalLine);
     if (delta != null)
     {
       originalAnchor = delta.getOriginal().getAnchor();
@@ -55,8 +57,7 @@ public class DiffUtil
       }
       else
       {
-        revisedLine = revisedAnchor + revisedSize - originalSize
-                      + (originalLine - originalAnchor);
+        revisedLine = revisedAnchor + revisedSize - originalSize + (originalLine - originalAnchor);
       }
     }
     else
@@ -69,14 +70,18 @@ public class DiffUtil
 
     if (debug)
     {
-      System.out.printf("%03d-%02d, %03d-%02d == ", originalAnchor,
-        originalSize, revisedAnchor, revisedSize);
+      System.out.printf("%03d-%02d, %03d-%02d == ",
+                        originalAnchor,
+                        originalSize,
+                        revisedAnchor,
+                        revisedSize);
     }
 
     return revisedLine;
   }
 
-  public static int getOriginalLine(JMRevision revision, int revisedLine)
+  public static int getOriginalLine(JMRevision revision,
+      int revisedLine)
   {
     JMDelta delta;
     int originalAnchor;
@@ -87,7 +92,8 @@ public class DiffUtil
 
     originalLine = revisedLine;
 
-    delta = findRevisedDelta(revision, revisedLine);
+    delta = findRevisedDelta(revision,
+                             revisedLine);
     if (delta != null)
     {
       originalAnchor = delta.getOriginal().getAnchor();
@@ -101,8 +107,7 @@ public class DiffUtil
       }
       else
       {
-        originalLine = originalAnchor + originalSize - revisedSize
-                       + (revisedLine - revisedAnchor);
+        originalLine = originalAnchor + originalSize - revisedSize + (revisedLine - revisedAnchor);
       }
     }
     else
@@ -115,24 +120,34 @@ public class DiffUtil
 
     if (debug)
     {
-      System.out.printf("%03d-%02d, %03d-%02d == ", originalAnchor,
-        originalSize, revisedAnchor, revisedSize);
+      System.out.printf("%03d-%02d, %03d-%02d == ",
+                        originalAnchor,
+                        originalSize,
+                        revisedAnchor,
+                        revisedSize);
     }
 
     return originalLine;
   }
 
-  private static JMDelta findOriginalDelta(JMRevision revision, int line)
+  private static JMDelta findOriginalDelta(JMRevision revision,
+      int line)
   {
-    return findDelta(revision, line, true);
+    return findDelta(revision,
+                     line,
+                     true);
   }
 
-  private static JMDelta findRevisedDelta(JMRevision revision, int line)
+  private static JMDelta findRevisedDelta(JMRevision revision,
+      int line)
   {
-    return findDelta(revision, line, false);
+    return findDelta(revision,
+                     line,
+                     false);
   }
 
-  private static JMDelta findDelta(JMRevision revision, int line,
+  private static JMDelta findDelta(JMRevision revision,
+      int line,
       boolean originalDelta)
   {
     JMDelta previousDelta;

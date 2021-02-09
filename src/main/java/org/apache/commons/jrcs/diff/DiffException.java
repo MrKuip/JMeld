@@ -56,7 +56,6 @@
  */
 package org.apache.commons.jrcs.diff;
 
-
 /**
  * Base class for all exceptions emanating from this package.
  *

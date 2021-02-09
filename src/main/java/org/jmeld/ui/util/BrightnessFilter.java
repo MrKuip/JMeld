@@ -33,7 +33,9 @@ class BrightnessFilter
     this.percent = percent;
   }
 
-  public int filterRGB(int x, int y, int rgb)
+  public int filterRGB(int x,
+      int y,
+      int rgb)
   {
     float[] hsb;
     int r;
@@ -48,7 +50,10 @@ class BrightnessFilter
 
     if (a == 255)
     {
-      hsb = Color.RGBtoHSB(r, g, b, null);
+      hsb = Color.RGBtoHSB(r,
+                           g,
+                           b,
+                           null);
       hsb[2] = hsb[2] + percent;
       if (hsb[2] > 1.0)
       {
@@ -60,7 +65,9 @@ class BrightnessFilter
         hsb[2] = 0.0f;
       }
 
-      rgb = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+      rgb = Color.HSBtoRGB(hsb[0],
+                           hsb[1],
+                           hsb[2]);
       rgb |= ((a & 0xFF) << 24);
     }
 

@@ -5,7 +5,8 @@ import java.io.File;
 import org.jmeld.util.Result;
 import org.jmeld.vc.util.VcCmd;
 
-public class ActiveCmd extends VcCmd<Boolean>
+public class ActiveCmd
+    extends VcCmd<Boolean>
 {
   private File file;
 
@@ -16,7 +17,9 @@ public class ActiveCmd extends VcCmd<Boolean>
 
   public Result execute()
   {
-    super.execute("git", "status", file.getAbsolutePath());
+    super.execute("git",
+                  "status",
+                  file.getAbsolutePath());
 
     return getResult();
   }

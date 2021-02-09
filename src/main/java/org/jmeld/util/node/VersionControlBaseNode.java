@@ -33,9 +33,12 @@ public class VersionControlBaseNode
   private VersionControlBaseDocument document;
 
   public VersionControlBaseNode(VersionControlIF versionControl,
-      StatusResult.Entry entry, FileNode fileNode, File file)
+      StatusResult.Entry entry,
+      FileNode fileNode,
+      File file)
   {
-    super(entry.getName(), !file.isDirectory());
+    super(entry.getName(),
+          !file.isDirectory());
 
     this.versionControl = versionControl;
     this.entry = entry;
@@ -69,8 +72,10 @@ public class VersionControlBaseNode
   {
     if (document == null)
     {
-      document = new VersionControlBaseDocument(versionControl, entry,
-          fileNode, file);
+      document = new VersionControlBaseDocument(versionControl,
+                                                entry,
+                                                fileNode,
+                                                file);
     }
 
     return document;

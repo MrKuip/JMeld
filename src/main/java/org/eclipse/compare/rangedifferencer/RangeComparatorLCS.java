@@ -25,7 +25,8 @@ public class RangeComparatorLCS
   public static RangeDifference[] findDifferences(IRangeComparator left,
       IRangeComparator right)
   {
-    RangeComparatorLCS lcs = new RangeComparatorLCS(left, right);
+    RangeComparatorLCS lcs = new RangeComparatorLCS(left,
+                                                    right);
     lcs.longestCommonSubsequence();
     return lcs.getDifferences();
   }
@@ -52,12 +53,16 @@ public class RangeComparatorLCS
     lcs = new int[2][lcsLength];
   }
 
-  protected boolean isRangeEqual(int i1, int i2)
+  protected boolean isRangeEqual(int i1,
+      int i2)
   {
-    return comparator1.rangesEqual(i1, comparator2, i2);
+    return comparator1.rangesEqual(i1,
+                                   comparator2,
+                                   i2);
   }
 
-  protected void setLcs(int sl1, int sl2)
+  protected void setLcs(int sl1,
+      int sl2)
   {
     // Add one to the values so that 0 can mean that the slot is empty
     lcs[0][sl1] = sl1 + 1;
@@ -70,8 +75,11 @@ public class RangeComparatorLCS
     int length = getLength();
     if (length == 0)
     {
-      differences.add(new RangeDifference(RangeDifference.CHANGE, 0,
-          comparator2.getRangeCount(), 0, comparator1.getRangeCount()));
+      differences.add(new RangeDifference(RangeDifference.CHANGE,
+                                          0,
+                                          comparator2.getRangeCount(),
+                                          0,
+                                          comparator1.getRangeCount()));
     }
     else
     {
@@ -117,8 +125,11 @@ public class RangeComparatorLCS
         {
           // There is a diff at the beginning
           // TODO: We need to conform that this is the proper order
-          differences.add(new RangeDifference(RangeDifference.CHANGE, 0, end2,
-              0, end1));
+          differences.add(new RangeDifference(RangeDifference.CHANGE,
+                                              0,
+                                              end2,
+                                              0,
+                                              end1));
         }
         else if (end1 != s1 + 1 || end2 != s2 + 1)
         {
@@ -129,42 +140,45 @@ public class RangeComparatorLCS
           int rightLength = end2 - rightStart;
           // TODO: We need to conform that this is the proper order
           differences.add(new RangeDifference(RangeDifference.CHANGE,
-              rightStart, rightLength, leftStart, leftLength));
+                                              rightStart,
+                                              rightLength,
+                                              leftStart,
+                                              leftLength));
         }
         s1 = end1;
         s2 = end2;
         index1++;
         index2++;
       }
-      if (s1 != -1
-          && (s1 + 1 < comparator1.getRangeCount() || s2 + 1 < comparator2
-              .getRangeCount()))
+      if (s1 != -1 && (s1 + 1 < comparator1.getRangeCount() || s2 + 1 < comparator2.getRangeCount()))
       {
         // TODO: we need to find the proper way of representing an append
         int leftStart = s1 < comparator1.getRangeCount() ? s1 + 1 : s1;
         int rightStart = s2 < comparator2.getRangeCount() ? s2 + 1 : s2;
         // TODO: We need to conform that this is the proper order
-        differences.add(new RangeDifference(RangeDifference.CHANGE, rightStart,
-            comparator2.getRangeCount() - (s2 + 1), leftStart, comparator1
-                .getRangeCount()
-                                                               - (s1 + 1)));
+        differences.add(new RangeDifference(RangeDifference.CHANGE,
+                                            rightStart,
+                                            comparator2.getRangeCount() - (s2 + 1),
+                                            leftStart,
+                                            comparator1.getRangeCount() - (s1 + 1)));
       }
     }
-    return (RangeDifference[]) differences
-        .toArray(new RangeDifference[differences.size()]);
+    return (RangeDifference[]) differences.toArray(new RangeDifference[differences.size()]);
   }
 
   /**
-   * This method takes an LCS result interspersed with zeros (i.e. empty slots
-   * from the LCS algorithm), compacts it and shifts the LCS chunks as far towards
-   * the front as possible. This tends to produce good results most of the time.
+   * This method takes an LCS result interspersed with zeros (i.e. empty slots from the LCS algorithm), compacts it and
+   * shifts the LCS chunks as far towards the front as possible. This tends to produce good results most of the time.
    *
-   * @param lcsSide A subsequence of original, presumably it is the LCS of it and
-   *            some other collection of lines
-   * @param length The number of non-empty (i.e non-zero) entries in LCS
-   * @param comparator The comparator used to generate the LCS
+   * @param lcsSide
+   *          A subsequence of original, presumably it is the LCS of it and some other collection of lines
+   * @param length
+   *          The number of non-empty (i.e non-zero) entries in LCS
+   * @param comparator
+   *          The comparator used to generate the LCS
    */
-  private void compactAndShiftLCS(int[] lcsSide, int length,
+  private void compactAndShiftLCS(int[] lcsSide,
+      int length,
       IRangeComparator comparator)
   {
     // If the LCS is empty, just return
@@ -193,8 +207,9 @@ public class RangeComparatorLCS
       // Push the difference down as far as possible by comparing the line at the 
       // start of the diff with the line and the end and adjusting if they are the same
       int nextLine = lcsSide[i - 1] + 1;
-      if (nextLine != lcsSide[j]
-          && comparator.rangesEqual(nextLine - 1, comparator, lcsSide[j] - 1))
+      if (nextLine != lcsSide[j] && comparator.rangesEqual(nextLine - 1,
+                                                           comparator,
+                                                           lcsSide[j] - 1))
       {
         lcsSide[i] = nextLine;
       }
@@ -220,8 +235,12 @@ public class RangeComparatorLCS
     super.longestCommonSubsequence();
     if (lcs != null)
     { // The LCS can be null if one of the sides is empty
-      compactAndShiftLCS(lcs[0], getLength(), comparator1);
-      compactAndShiftLCS(lcs[1], getLength(), comparator2);
+      compactAndShiftLCS(lcs[0],
+                         getLength(),
+                         comparator1);
+      compactAndShiftLCS(lcs[1],
+                         getLength(),
+                         comparator2);
     }
   }
 }

@@ -14,7 +14,8 @@ public class JMDocumentEvent
     this.document = document;
   }
 
-  public JMDocumentEvent(AbstractBufferDocument document, DocumentEvent de)
+  public JMDocumentEvent(AbstractBufferDocument document,
+      DocumentEvent de)
   {
     this(document);
 

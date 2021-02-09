@@ -28,15 +28,19 @@ public class FontUtil
       resourceName = "font/materialdesignicons-webfont.ttf";
       try (InputStream is = ResourceLoader.getResourceAsStream(resourceName))
       {
-        font = Font.createFont(Font.TRUETYPE_FONT, is);
-        font = font.deriveFont(Font.PLAIN, iconSize);
+        font = Font.createFont(Font.TRUETYPE_FONT,
+                               is);
+        font = font.deriveFont(Font.PLAIN,
+                               iconSize);
         System.out.println("size=" + font.getSize());
-      } catch (IOException | FontFormatException exp)
+      }
+      catch (IOException | FontFormatException exp)
       {
         System.out.println("Cannot create font[size=" + iconSize + ", resource=" + resourceName + "]");
       }
 
-      m_fontBySizeMap.put(iconSize, font);
+      m_fontBySizeMap.put(iconSize,
+                          font);
     }
 
     return font;

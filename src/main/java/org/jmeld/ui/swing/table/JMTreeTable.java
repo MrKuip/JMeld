@@ -20,7 +20,6 @@ import org.jdesktop.swingx.*;
 
 import javax.swing.table.*;
 
-
 public class JMTreeTable
     extends JXTreeTable
 {

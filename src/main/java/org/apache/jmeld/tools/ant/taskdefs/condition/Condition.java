@@ -26,8 +26,10 @@ public interface Condition
 {
   /**
    * Is this condition true?
+   * 
    * @return true if the condition is true
-   * @exception BuildException if an error occurs
+   * @exception BuildException
+   *              if an error occurs
    */
   boolean eval()
       throws BuildException;

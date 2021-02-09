@@ -22,12 +22,22 @@ import java.awt.*;
 
 public class Colors
 {
-  public static final Color ADDED = new Color(180, 255, 180);
-  public static final Color CHANGED = new Color(160, 200, 255);
+  public static final Color ADDED = new Color(180,
+                                              255,
+                                              180);
+  public static final Color CHANGED = new Color(160,
+                                                200,
+                                                255);
   public static final Color CHANGED_LIGHTER = getChangedLighterColor(CHANGED);
-  public static final Color DELETED = new Color(255, 160, 180);
-  public static final Color DND_SELECTED_NEW = new Color(13, 143, 13);
-  public static final Color DND_SELECTED_USED = new Color(238, 214, 128);
+  public static final Color DELETED = new Color(255,
+                                                160,
+                                                180);
+  public static final Color DND_SELECTED_NEW = new Color(13,
+                                                         143,
+                                                         13);
+  public static final Color DND_SELECTED_USED = new Color(238,
+                                                          214,
+                                                          128);
 
   public static Color getChangedLighterColor(Color changedColor)
   {
@@ -42,15 +52,18 @@ public class Colors
     return c;
   }
 
-  /** Get a highlighter that will match the current l&f.
+  /**
+   * Get a highlighter that will match the current l&f.
    */
   public static Color getTableRowHighLighterColor()
   {
     Color color;
 
     color = getSelectionColor();
-    color = ColorUtil.setSaturation(color, 0.05f);
-    color = ColorUtil.setBrightness(color, 1.00f);
+    color = ColorUtil.setSaturation(color,
+                                    0.05f);
+    color = ColorUtil.setBrightness(color,
+                                    1.00f);
 
     return color;
   }
@@ -60,7 +73,8 @@ public class Colors
     Color color;
 
     color = getSelectionColor();
-    color = ColorUtil.setBrightness(color, 0.40f);
+    color = ColorUtil.setBrightness(color,
+                                    0.40f);
 
     return color;
   }

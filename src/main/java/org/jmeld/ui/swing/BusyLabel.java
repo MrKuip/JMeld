@@ -28,7 +28,8 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-public class BusyLabel extends JLabel
+public class BusyLabel
+    extends JLabel
 {
   // Instance variables:
   private Timer timer;
@@ -40,7 +41,8 @@ public class BusyLabel extends JLabel
     icon = new BusyIcon();
     setIcon(icon);
 
-    timer = new Timer(1000, busy());
+    timer = new Timer(1000,
+                      busy());
     timer.setRepeats(false);
   }
 
@@ -66,7 +68,8 @@ public class BusyLabel extends JLabel
           icon.roll();
           repaint();
           timer.restart();
-        } else
+        }
+        else
         {
           icon.stop();
           repaint();
@@ -75,7 +78,8 @@ public class BusyLabel extends JLabel
     };
   }
 
-  class BusyIcon implements Icon
+  class BusyIcon
+      implements Icon
   {
     private int startIndex;
     List<Color> colors;
@@ -83,14 +87,30 @@ public class BusyLabel extends JLabel
     BusyIcon()
     {
       colors = new ArrayList<Color>();
-      colors.add(new Color(178, 178, 178));
-      colors.add(new Color(153, 153, 153));
-      colors.add(new Color(128, 128, 128));
-      colors.add(new Color(102, 102, 102));
-      colors.add(new Color(51, 51, 51));
-      colors.add(new Color(26, 26, 26));
-      colors.add(new Color(0, 0, 0));
-      colors.add(new Color(0, 0, 0));
+      colors.add(new Color(178,
+                           178,
+                           178));
+      colors.add(new Color(153,
+                           153,
+                           153));
+      colors.add(new Color(128,
+                           128,
+                           128));
+      colors.add(new Color(102,
+                           102,
+                           102));
+      colors.add(new Color(51,
+                           51,
+                           51));
+      colors.add(new Color(26,
+                           26,
+                           26));
+      colors.add(new Color(0,
+                           0,
+                           0));
+      colors.add(new Color(0,
+                           0,
+                           0));
     }
 
     public void stop()
@@ -117,7 +137,10 @@ public class BusyLabel extends JLabel
       return 16;
     }
 
-    public void paintIcon(Component component, Graphics g, int x, int y)
+    public void paintIcon(Component component,
+        Graphics g,
+        int x,
+        int y)
     {
       Color c;
       int tx;
@@ -131,7 +154,8 @@ public class BusyLabel extends JLabel
         if (busy)
         {
           c = colors.get((i + startIndex) % 8);
-        } else
+        }
+        else
         {
           c = colors.get(0);
         }
@@ -139,52 +163,64 @@ public class BusyLabel extends JLabel
         switch (i)
         {
 
-        case 0:
-          tx = 10;
-          ty = 2;
-          break;
+          case 0:
+            tx = 10;
+            ty = 2;
+            break;
 
-        case 1:
-          tx = 12;
-          ty = 6;
-          break;
+          case 1:
+            tx = 12;
+            ty = 6;
+            break;
 
-        case 2:
-          tx = 10;
-          ty = 10;
-          break;
+          case 2:
+            tx = 10;
+            ty = 10;
+            break;
 
-        case 3:
-          tx = 6;
-          ty = 12;
-          break;
+          case 3:
+            tx = 6;
+            ty = 12;
+            break;
 
-        case 4:
-          tx = 2;
-          ty = 10;
-          break;
+          case 4:
+            tx = 2;
+            ty = 10;
+            break;
 
-        case 5:
-          tx = 0;
-          ty = 6;
-          break;
+          case 5:
+            tx = 0;
+            ty = 6;
+            break;
 
-        case 6:
-          tx = 2;
-          ty = 2;
-          break;
+          case 6:
+            tx = 2;
+            ty = 2;
+            break;
 
-        case 7:
-          tx = 6;
-          ty = 0;
-          break;
+          case 7:
+            tx = 6;
+            ty = 0;
+            break;
         }
 
         g.setColor(c);
-        g.drawLine(x + tx + 0, y + ty + 1, x + tx + 0, y + ty + 2);
-        g.drawLine(x + tx + 1, y + ty + 0, x + tx + 1, y + ty + 3);
-        g.drawLine(x + tx + 2, y + ty + 0, x + tx + 2, y + ty + 3);
-        g.drawLine(x + tx + 3, y + ty + 1, x + tx + 3, y + ty + 2);
+        g.drawLine(x + tx + 0,
+                   y + ty + 1,
+                   x + tx + 0,
+                   y + ty + 2);
+        g.drawLine(x + tx + 1,
+                   y + ty + 0,
+                   x + tx + 1,
+                   y + ty + 3);
+        g.drawLine(x + tx + 2,
+                   y + ty + 0,
+                   x + tx + 2,
+                   y + ty + 3);
+        g.drawLine(x + tx + 3,
+                   y + ty + 1,
+                   x + tx + 3,
+                   y + ty + 2);
       }
     }
   }

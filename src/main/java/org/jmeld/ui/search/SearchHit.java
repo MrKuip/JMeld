@@ -23,7 +23,9 @@ public class SearchHit
   int toOffset;
   int size;
 
-  public SearchHit(int line, int offset, int size)
+  public SearchHit(int line,
+      int offset,
+      int size)
   {
     this.line = line;
     this.fromOffset = offset;

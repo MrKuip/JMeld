@@ -66,8 +66,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A Revision holds the series of deltas that describe the differences
- * between two sequences.
+ * A Revision holds the series of deltas that describe the differences between two sequences.
  *
  * @version $Revision: 1.7 $ $Date: 2003/05/06 19:07:13 $
  *
@@ -79,10 +78,9 @@ import java.util.ListIterator;
  * @see Chunk
  * @see Revision
  *
- * modifications
- * 27 Apr 2003 bwm
+ *      modifications 27 Apr 2003 bwm
  *
- * Added visitor pattern Visitor interface and accept() method.
+ *      Added visitor pattern Visitor interface and accept() method.
  */
 public class Revision
     extends ToString
@@ -120,7 +118,9 @@ public class Revision
 
   /**
    * Adds a delta to this revision.
-   * @param delta the {@link Delta Delta} to add.
+   * 
+   * @param delta
+   *          the {@link Delta Delta} to add.
    */
   public synchronized void addDelta(Delta delta)
   {
@@ -134,7 +134,9 @@ public class Revision
 
   /**
    * Adds a delta to the start of this revision.
-   * @param delta the {@link Delta Delta} to add.
+   * 
+   * @param delta
+   *          the {@link Delta Delta} to add.
    */
   public synchronized void insertDelta(Delta delta)
   {
@@ -143,12 +145,15 @@ public class Revision
       throw new IllegalArgumentException("new delta is null");
     }
 
-    deltas_.add(0, delta);
+    deltas_.add(0,
+                delta);
   }
 
   /**
    * Retrieves a delta from this revision by position.
-   * @param i the position of the delta to retrieve.
+   * 
+   * @param i
+   *          the position of the delta to retrieve.
    * @return the specified delta
    */
   public Delta getDelta(int i)
@@ -158,6 +163,7 @@ public class Revision
 
   /**
    * Returns the number of deltas in this revision.
+   * 
    * @return the number of deltas.
    */
   public int size()
@@ -166,11 +172,13 @@ public class Revision
   }
 
   /**
-   * Applies the series of deltas in this revision as patches to
-   * the given text.
-   * @param src the text to patch, which the method doesn't change.
+   * Applies the series of deltas in this revision as patches to the given text.
+   * 
+   * @param src
+   *          the text to patch, which the method doesn't change.
    * @return the resulting text after the patches have been applied.
-   * @throws PatchFailedException if any of the patches cannot be applied.
+   * @throws PatchFailedException
+   *           if any of the patches cannot be applied.
    */
   public Object[] patch(Object[] src)
       throws PatchFailedException
@@ -182,10 +190,12 @@ public class Revision
   }
 
   /**
-   * Applies the series of deltas in this revision as patches to
-   * the given text.
-   * @param target the text to patch.
-   * @throws PatchFailedException if any of the patches cannot be applied.
+   * Applies the series of deltas in this revision as patches to the given text.
+   * 
+   * @param target
+   *          the text to patch.
+   * @throws PatchFailedException
+   *           if any of the patches cannot be applied.
    */
   public synchronized void applyTo(List target)
       throws PatchFailedException
@@ -202,8 +212,9 @@ public class Revision
 
   /**
    * Converts this revision into its Unix diff style string representation.
-   * @param s a {@link StringBuffer StringBuffer} to which the string
-   * representation will be appended.
+   * 
+   * @param s
+   *          a {@link StringBuffer StringBuffer} to which the string representation will be appended.
    */
   public synchronized void toString(StringBuffer s)
   {
@@ -217,45 +228,53 @@ public class Revision
 
   /**
    * Converts this revision into its RCS style string representation.
-   * @param s a {@link StringBuffer StringBuffer} to which the string
-   * representation will be appended.
-   * @param EOL the string to use as line separator.
+   * 
+   * @param s
+   *          a {@link StringBuffer StringBuffer} to which the string representation will be appended.
+   * @param EOL
+   *          the string to use as line separator.
    */
-  public synchronized void toRCSString(StringBuffer s, String EOL)
+  public synchronized void toRCSString(StringBuffer s,
+      String EOL)
   {
     Iterator i = deltas_.iterator();
 
     while (i.hasNext())
     {
-      ((Delta) i.next()).toRCSString(s, EOL);
+      ((Delta) i.next()).toRCSString(s,
+                                     EOL);
     }
   }
 
   /**
    * Converts this revision into its RCS style string representation.
-   * @param s a {@link StringBuffer StringBuffer} to which the string
-   * representation will be appended.
+   * 
+   * @param s
+   *          a {@link StringBuffer StringBuffer} to which the string representation will be appended.
    */
   public void toRCSString(StringBuffer s)
   {
-    toRCSString(s, Diff.NL);
+    toRCSString(s,
+                Diff.NL);
   }
 
   /**
    * Converts this delta into its RCS style string representation.
-   * @param EOL the string to use as line separator.
+   * 
+   * @param EOL
+   *          the string to use as line separator.
    */
   public String toRCSString(String EOL)
   {
     StringBuffer s = new StringBuffer();
 
-    toRCSString(s, EOL);
+    toRCSString(s,
+                EOL);
     return s.toString();
   }
 
   /**
-   * Converts this delta into its RCS style string representation
-   * using the default line separator.
+   * Converts this delta into its RCS style string representation using the default line separator.
    */
   public String toRCSString()
   {
@@ -264,7 +283,9 @@ public class Revision
 
   /**
    * Accepts a visitor.
-   * @param visitor the {@link Visitor} visiting this instance
+   * 
+   * @param visitor
+   *          the {@link Visitor} visiting this instance
    */
   public void accept(RevisionVisitor visitor)
   {

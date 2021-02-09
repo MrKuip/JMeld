@@ -11,7 +11,8 @@ import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.hg.MercurialVersionControl;
 import org.jmeld.vc.util.VcCmd;
 
-public class StatusCmd extends VcCmd<StatusResult>
+public class StatusCmd
+    extends VcCmd<StatusResult>
 {
   private File file;
 
@@ -24,7 +25,10 @@ public class StatusCmd extends VcCmd<StatusResult>
 
   public Result execute()
   {
-    super.execute("git", "status", "-s", file.getAbsolutePath());
+    super.execute("git",
+                  "status",
+                  "-s",
+                  file.getAbsolutePath());
 
     return getResult();
   }
@@ -51,30 +55,32 @@ public class StatusCmd extends VcCmd<StatusResult>
         status = null;
         switch (text.charAt(0))
         {
-        case 'M':
-        case 'R':
-          status = StatusResult.Status.modified;
-          break;
-        case 'A':
-          status = StatusResult.Status.added;
-          break;
-        case 'D':
-          status = StatusResult.Status.removed;
-          break;
-        case '!':
-          status = StatusResult.Status.ignored;
-          break;
-        case '?':
-          status = StatusResult.Status.unversioned;
-          break;
-        case ' ':
-          status = StatusResult.Status.clean;
-          break;
+          case 'M':
+          case 'R':
+            status = StatusResult.Status.modified;
+            break;
+          case 'A':
+            status = StatusResult.Status.added;
+            break;
+          case 'D':
+            status = StatusResult.Status.removed;
+            break;
+          case '!':
+            status = StatusResult.Status.ignored;
+            break;
+          case '?':
+            status = StatusResult.Status.unversioned;
+            break;
+          case ' ':
+            status = StatusResult.Status.clean;
+            break;
         }
 
-        statusResult.addEntry(text.substring(2), status);
+        statusResult.addEntry(text.substring(2),
+                              status);
       }
-    } catch (IOException ex)
+    }
+    catch (IOException ex)
     {
       // This cannot happen! We are reading from a byte array.
     }

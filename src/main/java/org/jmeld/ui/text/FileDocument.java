@@ -26,7 +26,7 @@ public class FileDocument
     extends AbstractBufferDocument
 {
   // instance variables:
-  private File    file;
+  private File file;
   private Charset charset;
 
   public FileDocument(File file)
@@ -68,12 +68,13 @@ public class FileDocument
       //   with the default charset. 
       bis = new BufferedInputStream(new FileInputStream(file));
       charset = CharsetDetector.getInstance().getCharset(bis);
-      return new BufferedReader(new InputStreamReader(bis, charset));
+      return new BufferedReader(new InputStreamReader(bis,
+                                                      charset));
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Could not create FileReader for : "
-                               + file.getName(), ex);
+      throw new JMeldException("Could not create FileReader for : " + file.getName(),
+                               ex);
     }
   }
 
@@ -85,12 +86,13 @@ public class FileDocument
     try
     {
       bos = new BufferedOutputStream(new FileOutputStream(file));
-      return new BufferedWriter(new OutputStreamWriter(bos, charset));
+      return new BufferedWriter(new OutputStreamWriter(bos,
+                                                       charset));
     }
     catch (IOException ex)
     {
-      throw new JMeldException("Cannot create FileWriter for file: "
-                               + file.getName(), ex);
+      throw new JMeldException("Cannot create FileWriter for file: " + file.getName(),
+                               ex);
     }
   }
 

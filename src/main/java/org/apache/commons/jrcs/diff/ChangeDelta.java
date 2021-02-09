@@ -75,9 +75,11 @@ public class ChangeDelta
     super();
   }
 
-  public ChangeDelta(Chunk orig, Chunk rev)
+  public ChangeDelta(Chunk orig,
+      Chunk rev)
   {
-    init(orig, rev);
+    init(orig,
+         rev);
   }
 
   public void verify(List target)
@@ -97,7 +99,8 @@ public class ChangeDelta
   public void applyTo(List target)
   {
     original.applyDelete(target);
-    revised.applyAdd(original.first(), target);
+    revised.applyAdd(original.first(),
+                     target);
   }
 
   public void toString(StringBuffer s)
@@ -106,13 +109,18 @@ public class ChangeDelta
     s.append("c");
     revised.rangeString(s);
     s.append(Diff.NL);
-    original.toString(s, "< ", "\n");
+    original.toString(s,
+                      "< ",
+                      "\n");
     s.append("---");
     s.append(Diff.NL);
-    revised.toString(s, "> ", "\n");
+    revised.toString(s,
+                     "> ",
+                     "\n");
   }
 
-  public void toRCSString(StringBuffer s, String EOL)
+  public void toRCSString(StringBuffer s,
+      String EOL)
   {
     s.append("d");
     s.append(original.rcsfrom());
@@ -124,7 +132,9 @@ public class ChangeDelta
     s.append(" ");
     s.append(revised.size());
     s.append(EOL);
-    revised.toString(s, "", EOL);
+    revised.toString(s,
+                     "",
+                     EOL);
   }
 
   public void accept(RevisionVisitor visitor)

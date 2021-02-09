@@ -64,36 +64,35 @@ import java.util.*;
 /**
  * Implements a differencing engine that works on arrays of {@link Object Object}.
  *
- * <p>Within this library, the word <i>text</i> means a unit of information
- * subject to version control.
+ * <p>
+ * Within this library, the word <i>text</i> means a unit of information subject to version control.
  *
- * <p>Text is represented as <code>Object[]</code> because
- * the diff engine is capable of handling more than plain ascci. In fact,
- * arrays of any type that implements
- * {@link java.lang.Object#hashCode hashCode()} and
- * {@link java.lang.Object#equals equals()}
- * correctly can be subject to differencing using this
- * library.</p>
+ * <p>
+ * Text is represented as <code>Object[]</code> because the diff engine is capable of handling more than plain ascci. In
+ * fact, arrays of any type that implements {@link java.lang.Object#hashCode hashCode()} and
+ * {@link java.lang.Object#equals equals()} correctly can be subject to differencing using this library.
+ * </p>
  *
- * <p>This library provides a framework in which different differencing
- * algorithms may be used.  If no algorithm is specififed, a default
- * algorithm is used.</p>
+ * <p>
+ * This library provides a framework in which different differencing algorithms may be used. If no algorithm is
+ * specififed, a default algorithm is used.
+ * </p>
  *
  * @version $Revision: 1.14 $ $Date: 2003/05/10 18:55:10 $
  * @author <a href="mailto:juanco@suigeneris.org">Juanco Anez</a>
- * @see     Delta
- * @see     DiffAlgorithm
+ * @see Delta
+ * @see DiffAlgorithm
  *
- * modifications:
+ *      modifications:
  *
- * 27 Apr 2003 bwm
+ *      27 Apr 2003 bwm
  *
- * Added some comments whilst trying to figure out the algorithm
+ *      Added some comments whilst trying to figure out the algorithm
  *
- * 03 May 2003 bwm
+ *      03 May 2003 bwm
  *
- * Factored out the algorithm implementation into a separate difference
- * algorithm class to allow pluggable algorithms.
+ *      Factored out the algorithm implementation into a separate difference algorithm class to allow pluggable
+ *      algorithms.
  */
 public class Diff
     extends ToString
@@ -113,20 +112,25 @@ public class Diff
   /**
    * Create a differencing object using the default algorithm
    *
-   * @param the original text that will be compared
+   * @param the
+   *          original text that will be compared
    */
   public Diff(Object[] original)
   {
-    this(original, null);
+    this(original,
+         null);
   }
 
   /**
    * Create a differencing object using the given algorithm
    *
-   * @param o the original text which will be compared against
-   * @param algorithm the difference algorithm to use.
+   * @param o
+   *          the original text which will be compared against
+   * @param algorithm
+   *          the difference algorithm to use.
    */
-  public Diff(Object[] original, DiffAlgorithm algorithm)
+  public Diff(Object[] original,
+      DiffAlgorithm algorithm)
   {
     if (original == null)
     {
@@ -152,11 +156,14 @@ public class Diff
   /**
    * compute the difference between an original and a revision.
    *
-   * @param orig the original
-   * @param rev the revision to compare with the original.
+   * @param orig
+   *          the original
+   * @param rev
+   *          the revision to compare with the original.
    * @return a Revision describing the differences
    */
-  public static Revision diff(Object[] orig, Object[] rev)
+  public static Revision diff(Object[] orig,
+      Object[] rev)
       throws DifferentiationFailedException
   {
     if (orig == null || rev == null)
@@ -164,18 +171,24 @@ public class Diff
       throw new IllegalArgumentException();
     }
 
-    return diff(orig, rev, null);
+    return diff(orig,
+                rev,
+                null);
   }
 
   /**
    * compute the difference between an original and a revision.
    *
-   * @param orig the original
-   * @param rev the revision to compare with the original.
-   * @param algorithm the difference algorithm to use
+   * @param orig
+   *          the original
+   * @param rev
+   *          the revision to compare with the original.
+   * @param algorithm
+   *          the difference algorithm to use
    * @return a Revision describing the differences
    */
-  public static Revision diff(Object[] orig, Object[] rev,
+  public static Revision diff(Object[] orig,
+      Object[] rev,
       DiffAlgorithm algorithm)
       throws DifferentiationFailedException
   {
@@ -184,13 +197,15 @@ public class Diff
       throw new IllegalArgumentException();
     }
 
-    return new Diff(orig, algorithm).diff(rev);
+    return new Diff(orig,
+                    algorithm).diff(rev);
   }
 
   /**
    * compute the difference between the original and a revision.
    *
-   * @param rev the revision to compare with the original.
+   * @param rev
+   *          the revision to compare with the original.
    * @return a Revision describing the differences
    */
   public Revision diff(Object[] rev)
@@ -198,7 +213,8 @@ public class Diff
   {
     Revision revision;
 
-    revision = algorithm.diff(orig, rev);
+    revision = algorithm.diff(orig,
+                              rev);
     revision.setOrgSize(orig.length);
     revision.setRevSize(rev.length);
 
@@ -207,11 +223,15 @@ public class Diff
 
   /**
    * Compares the two input sequences.
-   * @param orig The original sequence.
-   * @param rev The revised sequence.
+   * 
+   * @param orig
+   *          The original sequence.
+   * @param rev
+   *          The revised sequence.
    * @return true if the sequences are identical. False otherwise.
    */
-  public static boolean compare(Object[] orig, Object[] rev)
+  public static boolean compare(Object[] orig,
+      Object[] rev)
   {
     if (orig.length != rev.length)
     {
@@ -232,21 +252,23 @@ public class Diff
   }
 
   /**
-   * Converts an array of {@link Object Object} to a string
-   * using {@link Diff#NL Diff.NL}
-   * as the line separator.
-   * @param o the array of objects.
+   * Converts an array of {@link Object Object} to a string using {@link Diff#NL Diff.NL} as the line separator.
+   * 
+   * @param o
+   *          the array of objects.
    */
   public static String arrayToString(Object[] o)
   {
-    return arrayToString(o, Diff.NL);
+    return arrayToString(o,
+                         Diff.NL);
   }
 
   /**
    * Edits all of the items in the input sequence.
-   * @param text The input sequence.
-   * @return A sequence of the same length with all the lines
-   * differing from the corresponding ones in the input.
+   * 
+   * @param text
+   *          The input sequence.
+   * @return A sequence of the same length with all the lines differing from the corresponding ones in the input.
    */
   public static Object[] editAll(Object[] text)
   {
@@ -262,21 +284,28 @@ public class Diff
 
   /**
    * Performs random edits on the input sequence. Useful for testing.
-   * @param text The input sequence.
+   * 
+   * @param text
+   *          The input sequence.
    * @return The sequence with random edits performed.
    */
   public static Object[] randomEdit(Object[] text)
   {
-    return randomEdit(text, text.length);
+    return randomEdit(text,
+                      text.length);
   }
 
   /**
    * Performs random edits on the input sequence. Useful for testing.
-   * @param text The input sequence.
-   * @param seed A seed value for the randomizer.
+   * 
+   * @param text
+   *          The input sequence.
+   * @param seed
+   *          A seed value for the randomizer.
    * @return The sequence with random edits performed.
    */
-  public static Object[] randomEdit(Object[] text, long seed)
+  public static Object[] randomEdit(Object[] text,
+      long seed)
   {
     List result = new ArrayList(Arrays.asList(text));
     Random r = new Random(seed);
@@ -286,17 +315,21 @@ public class Diff
     {
       boolean del = r.nextBoolean();
       int pos = r.nextInt(result.size() + 1);
-      int len = Math.min(result.size() - pos, 1 + r.nextInt(4));
+      int len = Math.min(result.size() - pos,
+                         1 + r.nextInt(4));
 
       if (del && result.size() > 0)
       { // delete
-        result.subList(pos, pos + len).clear();
+        result.subList(pos,
+                       pos + len)
+            .clear();
       }
       else
       {
         for (int k = 0; k < len; k++, pos++)
         {
-          result.add(pos, "[" + i + "] random edit[" + i + "][" + i + "]");
+          result.add(pos,
+                     "[" + i + "] random edit[" + i + "][" + i + "]");
         }
       }
     }
@@ -306,21 +339,28 @@ public class Diff
 
   /**
    * Shuffles around the items in the input sequence.
-   * @param text The input sequence.
+   * 
+   * @param text
+   *          The input sequence.
    * @return The shuffled sequence.
    */
   public static Object[] shuffle(Object[] text)
   {
-    return shuffle(text, text.length);
+    return shuffle(text,
+                   text.length);
   }
 
   /**
    * Shuffles around the items in the input sequence.
-   * @param text The input sequence.
-   * @param seed A seed value for randomizing the suffle.
+   * 
+   * @param text
+   *          The input sequence.
+   * @param seed
+   *          A seed value for randomizing the suffle.
    * @return The shuffled sequence.
    */
-  public static Object[] shuffle(Object[] text, long seed)
+  public static Object[] shuffle(Object[] text,
+      long seed)
   {
     List result = new ArrayList(Arrays.asList(text));
 
@@ -330,21 +370,28 @@ public class Diff
 
   /**
    * Generate a random sequence of the given size.
-   * @param The size of the sequence to generate.
+   * 
+   * @param The
+   *          size of the sequence to generate.
    * @return The generated sequence.
    */
   public static Object[] randomSequence(int size)
   {
-    return randomSequence(size, size);
+    return randomSequence(size,
+                          size);
   }
 
   /**
    * Generate a random sequence of the given size.
-   * @param The size of the sequence to generate.
-   * @param seed A seed value for randomizing the generation.
+   * 
+   * @param The
+   *          size of the sequence to generate.
+   * @param seed
+   *          A seed value for randomizing the generation.
    * @return The generated sequence.
    */
-  public static Object[] randomSequence(int size, long seed)
+  public static Object[] randomSequence(int size,
+      long seed)
   {
     Integer[] result = new Integer[size];
     Random r = new Random(seed);

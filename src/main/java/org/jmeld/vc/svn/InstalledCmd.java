@@ -15,7 +15,8 @@ public class InstalledCmd
 
   public Result execute()
   {
-    super.execute("svn", "--version");
+    super.execute("svn",
+                  "--version");
 
     return getResult();
   }

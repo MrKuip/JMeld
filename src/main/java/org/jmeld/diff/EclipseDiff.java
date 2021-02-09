@@ -26,19 +26,23 @@ public class EclipseDiff
   {
   }
 
-  public JMRevision diff(Object[] orig, Object[] rev)
+  public JMRevision diff(Object[] orig,
+      Object[] rev)
       throws JMeldException
   {
     RangeDifference[] differences;
 
     differences = RangeDifferencer.findDifferences(new RangeComparator(orig),
-      new RangeComparator(rev));
+                                                   new RangeComparator(rev));
 
-    return buildRevision(differences, orig, rev);
+    return buildRevision(differences,
+                         orig,
+                         rev);
   }
 
   private JMRevision buildRevision(RangeDifference[] differences,
-      Object[] orig, Object[] rev)
+      Object[] orig,
+      Object[] rev)
   {
     JMRevision result;
 
@@ -52,11 +56,14 @@ public class EclipseDiff
       throw new IllegalArgumentException("revised sequence is null");
     }
 
-    result = new JMRevision(orig, rev);
+    result = new JMRevision(orig,
+                            rev);
     for (RangeDifference rd : differences)
     {
-      result.add(new JMDelta(new JMChunk(rd.leftStart(), rd.leftLength()),
-          new JMChunk(rd.rightStart(), rd.rightLength())));
+      result.add(new JMDelta(new JMChunk(rd.leftStart(),
+                                         rd.leftLength()),
+                             new JMChunk(rd.rightStart(),
+                                         rd.rightLength())));
     }
 
     return result;
@@ -77,7 +84,8 @@ public class EclipseDiff
       return objectArray.length;
     }
 
-    public boolean rangesEqual(int thisIndex, IRangeComparator other,
+    public boolean rangesEqual(int thisIndex,
+        IRangeComparator other,
         int otherIndex)
     {
       Object o1;
@@ -104,7 +112,8 @@ public class EclipseDiff
       return o1.equals(o2);
     }
 
-    public boolean skipRangeComparison(int length, int maxLength,
+    public boolean skipRangeComparison(int length,
+        int maxLength,
         IRangeComparator other)
     {
       return false;

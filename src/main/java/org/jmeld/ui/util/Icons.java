@@ -28,37 +28,37 @@ import javax.swing.JLabel;
 
 public enum Icons
 {
- NEW("F0224"),
- DELETE("F09E7"),
- SAVE("F0818"),
- SAVE_AS("F0E28"),
- RELOAD("F0453"),
- UNDO("F054C"),
- REDO("F044E"),
- HELP("F0206"),
- SETTINGS("F1064"),
- REFRESH("F0450"),
- LEFT("F004D"),
- RIGHT("F0054"),
- COMPARE("F1492"),
- EDIT("F11E8"),
- FILTER("F0233"),
- FOLDER("F0256"),
- EXPAND_ALL("F1143"),
- COLLAPSE_ALL("F1142"),
- ABOUT("F02FC"),
- FILE("F0214"),
- FILE_OUTLINE("F0224"),
- FILE_HIDDEN("F0613");
+  NEW("F0224"),
+  DELETE("F09E7"),
+  SAVE("F0818"),
+  SAVE_AS("F0E28"),
+  RELOAD("F0453"),
+  UNDO("F054C"),
+  REDO("F044E"),
+  HELP("F0206"),
+  SETTINGS("F1064"),
+  REFRESH("F0450"),
+  LEFT("F004D"),
+  RIGHT("F0054"),
+  COMPARE("F1492"),
+  EDIT("F11E8"),
+  FILTER("F0233"),
+  FOLDER("F0256"),
+  EXPAND_ALL("F1143"),
+  COLLAPSE_ALL("F1142"),
+  ABOUT("F02FC"),
+  FILE("F0214"),
+  FILE_OUTLINE("F0224"),
+  FILE_HIDDEN("F0613");
 
   static private Map<String, ImageIcon> m_iconImageMap = new HashMap<>();
 
   public enum IconSize
   {
-   VERY_SMALL(12),
-   SMALL(24),
-   LARGE(32),
-   VERY_LARGE(64);
+    VERY_SMALL(12),
+    SMALL(24),
+    LARGE(32),
+    VERY_LARGE(64);
 
     private final int m_size;
 
@@ -75,12 +75,14 @@ public enum Icons
 
   public enum IconColor
   {
-   DEFAULT(new Color(0, 74, 131)),
-   WHITE(Color.WHITE),
-   BLACK(Color.BLACK),
-   RED(Color.RED),
-   BLUE(Color.BLUE),
-   YELLOW(Color.YELLOW);
+    DEFAULT(new Color(0,
+                      74,
+                      131)),
+    WHITE(Color.WHITE),
+    BLACK(Color.BLACK),
+    RED(Color.RED),
+    BLUE(Color.BLUE),
+    YELLOW(Color.YELLOW);
 
     private Color m_color;
 
@@ -100,10 +102,12 @@ public enum Icons
 
   Icons(String codepoint)
   {
-    this(codepoint, IconColor.DEFAULT);
+    this(codepoint,
+         IconColor.DEFAULT);
   }
 
-  Icons(String codepoint, IconColor color)
+  Icons(String codepoint,
+      IconColor color)
   {
     m_codepoint = codepoint;
     m_color = color;
@@ -111,15 +115,18 @@ public enum Icons
 
   public ImageIcon getSmallIcon()
   {
-    return getIcon(m_color, IconSize.SMALL);
+    return getIcon(m_color,
+                   IconSize.SMALL);
   }
 
   public ImageIcon getLargeIcon()
   {
-    return getIcon(m_color, IconSize.LARGE);
+    return getIcon(m_color,
+                   IconSize.LARGE);
   }
 
-  public ImageIcon getIcon(IconColor iconColor, IconSize iconSize)
+  public ImageIcon getIcon(IconColor iconColor,
+      IconSize iconSize)
   {
     JLabel label;
     BufferedImage image;
@@ -140,28 +147,36 @@ public enum Icons
       return icon;
     }
 
-    codepoint = Integer.parseInt(m_codepoint, 16);
+    codepoint = Integer.parseInt(m_codepoint,
+                                 16);
     if (codepoint == 0)
     {
       codepoint = 0xfc8c; // a solid filled square to indicate that the icon is not yetdefined.
       color = Color.RED;
     }
 
-    label = new JLabel(new String(Character.toChars(Integer.parseInt(m_codepoint, 16))));
+    label = new JLabel(new String(Character.toChars(Integer.parseInt(m_codepoint,
+                                                                     16))));
 
     label.setForeground(color);
     label.setFont(FontUtil.getIconFont(size));
-    label.setSize(size, size);
+    label.setSize(size,
+                  size);
 
-    image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+    image = new BufferedImage(size,
+                              size,
+                              BufferedImage.TYPE_INT_ARGB);
     g2d = image.createGraphics();
-    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                         RenderingHints.VALUE_FRACTIONALMETRICS_ON);
     label.print(g2d);
     g2d.dispose();
 
     icon = new ImageIcon(image);
-    m_iconImageMap.put(key, icon);
+    m_iconImageMap.put(key,
+                       icon);
 
     return icon;
   }

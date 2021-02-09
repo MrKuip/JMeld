@@ -13,7 +13,8 @@ public class InstalledCmd
 
   public Result execute()
   {
-    super.execute("bzr", "version");
+    super.execute("bzr",
+                  "version");
 
     return getResult();
   }

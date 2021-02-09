@@ -25,13 +25,15 @@ public class SvnXmlCmd<T>
     try
     {
       is = new ByteArrayInputStream(data);
-      setResultData(JaxbPersister.getInstance().load(clazz, is));
+      setResultData(JaxbPersister.getInstance().load(clazz,
+                                                     is));
       is.close();
       setResult(Result.TRUE());
     }
     catch (Exception ex)
     {
-      setResult(Result.FALSE(ex.getMessage(), ex));
+      setResult(Result.FALSE(ex.getMessage(),
+                             ex));
     }
   }
 }

@@ -71,12 +71,15 @@ public class BufferDiffPanel
     bnRight = diffNode.getBufferNodeRight();
 
     setBufferDocuments(bnLeft == null ? null : bnLeft.getDocument(),
-      bnRight == null ? null : bnRight.getDocument(), diffNode.getDiff(),
-      diffNode.getRevision());
+                       bnRight == null ? null : bnRight.getDocument(),
+                       diffNode.getDiff(),
+                       diffNode.getRevision());
   }
 
-  private void setBufferDocuments(BufferDocumentIF bd1, BufferDocumentIF bd2,
-      JMDiff diff, JMRevision revision)
+  private void setBufferDocuments(BufferDocumentIF bd1,
+      BufferDocumentIF bd2,
+      JMDiff diff,
+      JMRevision revision)
   {
     this.diff = diff;
 
@@ -94,8 +97,10 @@ public class BufferDiffPanel
 
     if (bd1 != null && bd2 != null)
     {
-      filePanels[LEFT].updateFileLabel(bd1.getName(), bd2.getName());
-      filePanels[RIGHT].updateFileLabel(bd2.getName(), bd1.getName());
+      filePanels[LEFT].updateFileLabel(bd1.getName(),
+                                       bd2.getName());
+      filePanels[RIGHT].updateFileLabel(bd2.getName(),
+                                        bd1.getName());
     }
 
     if (bd1 != null && bd2 != null)
@@ -190,8 +195,10 @@ public class BufferDiffPanel
       bd2 = filePanels[RIGHT].getBufferDocument();
 
       if (!currentRevision.update(bd1 != null ? bd1.getLines() : null,
-        bd2 != null ? bd2.getLines() : null, fp == filePanels[LEFT], de
-            .getStartLine(), de.getNumberOfLines()))
+                                  bd2 != null ? bd2.getLines() : null,
+                                  fp == filePanels[LEFT],
+                                  de.getStartLine(),
+                                  de.getNumberOfLines()))
       {
         return false;
       }
@@ -232,8 +239,9 @@ public class BufferDiffPanel
     {
       try
       {
-        currentRevision = diff.diff(bd1.getLines(), bd2.getLines(), diffNode
-            .getIgnore());
+        currentRevision = diff.diff(bd1.getLines(),
+                                    bd2.getLines(),
+                                    diffNode.getIgnore());
 
         reDisplay();
       }
@@ -253,47 +261,87 @@ public class BufferDiffPanel
 
     columns = "3px, pref, 3px, 0:grow, 5px, min, 60px, 0:grow, 25px, min, 3px, pref, 3px";
     rows = "6px, pref, 3px, fill:0:grow, pref";
-    layout = new FormLayout(columns, rows);
+    layout = new FormLayout(columns,
+                            rows);
     cc = new CellConstraints();
 
     setLayout(layout);
 
-    filePanels[LEFT] = new FilePanel(this, BufferDocumentIF.ORIGINAL, LEFT);
-    filePanels[RIGHT] = new FilePanel(this, BufferDocumentIF.REVISED, RIGHT);
+    filePanels[LEFT] = new FilePanel(this,
+                                     BufferDocumentIF.ORIGINAL,
+                                     LEFT);
+    filePanels[RIGHT] = new FilePanel(this,
+                                      BufferDocumentIF.REVISED,
+                                      RIGHT);
 
     // panel for file1
-    add(new RevisionBar(this, filePanels[LEFT], true), cc.xy(2, 4));
-    if(mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
+    add(new RevisionBar(this,
+                        filePanels[LEFT],
+                        true),
+        cc.xy(2,
+              4));
+    if (mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
     {
-      add(filePanels[LEFT].getSaveButton(), cc.xy(2, 2));
-      add(filePanels[LEFT].getFileLabel(), cc.xyw(4, 2, 3));
+      add(filePanels[LEFT].getSaveButton(),
+          cc.xy(2,
+                2));
+      add(filePanels[LEFT].getFileLabel(),
+          cc.xyw(4,
+                 2,
+                 3));
     }
-    add(filePanels[LEFT].getScrollPane(), cc.xyw(4, 4, 3));
-    if(mainPanel.SHOW_FILE_STATUSBAR_OPTION.isEnabled())
+    add(filePanels[LEFT].getScrollPane(),
+        cc.xyw(4,
+               4,
+               3));
+    if (mainPanel.SHOW_FILE_STATUSBAR_OPTION.isEnabled())
     {
-      add(filePanels[LEFT].getFilePanelBar(), cc.xyw(4, 5, 3));
+      add(filePanels[LEFT].getFilePanelBar(),
+          cc.xyw(4,
+                 5,
+                 3));
     }
 
-    add(new DiffScrollComponent(this, LEFT, RIGHT), cc.xy(7, 4));
+    add(new DiffScrollComponent(this,
+                                LEFT,
+                                RIGHT),
+        cc.xy(7,
+              4));
 
     // panel for file2
-    add(new RevisionBar(this, filePanels[RIGHT], false), cc.xy(12, 4));
-    if(mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
+    add(new RevisionBar(this,
+                        filePanels[RIGHT],
+                        false),
+        cc.xy(12,
+              4));
+    if (mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
     {
-      add(filePanels[RIGHT].getFileLabel(), cc.xyw(8, 2, 3));
+      add(filePanels[RIGHT].getFileLabel(),
+          cc.xyw(8,
+                 2,
+                 3));
     }
-    add(filePanels[RIGHT].getScrollPane(), cc.xyw(8, 4, 3));
-    if(mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
+    add(filePanels[RIGHT].getScrollPane(),
+        cc.xyw(8,
+               4,
+               3));
+    if (mainPanel.SHOW_FILE_TOOLBAR_OPTION.isEnabled())
     {
-      add(filePanels[RIGHT].getSaveButton(), cc.xy(12, 2));
+      add(filePanels[RIGHT].getSaveButton(),
+          cc.xy(12,
+                2));
     }
-    if(mainPanel.SHOW_FILE_STATUSBAR_OPTION.isEnabled())
+    if (mainPanel.SHOW_FILE_STATUSBAR_OPTION.isEnabled())
     {
-      add(filePanels[RIGHT].getFilePanelBar(), cc.xyw(8, 5, 3));
+      add(filePanels[RIGHT].getFilePanelBar(),
+          cc.xyw(8,
+                 5,
+                 3));
     }
 
-    scrollSynchronizer = new ScrollSynchronizer(this, filePanels[LEFT],
-        filePanels[RIGHT]);
+    scrollSynchronizer = new ScrollSynchronizer(this,
+                                                filePanels[LEFT],
+                                                filePanels[RIGHT]);
 
     setSelectedPanel(filePanels[LEFT]);
   }
@@ -371,9 +419,10 @@ public class BufferDiffPanel
       catch (JMeldException ex)
       {
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(mainPanel, "Can't write file"
-                                                 + document.getName(),
-          "Problem writing file", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel,
+                                      "Can't write file" + document.getName(),
+                                      "Problem writing file",
+                                      JOptionPane.ERROR_MESSAGE);
       }
     }
   }
@@ -423,7 +472,8 @@ public class BufferDiffPanel
 
     searchHits = fp.doSearch();
 
-    scrollToSearch(fp, searchHits);
+    scrollToSearch(fp,
+                   searchHits);
 
     return searchHits;
   }
@@ -444,7 +494,8 @@ public class BufferDiffPanel
     searchHits.next();
     fp.reDisplay();
 
-    scrollToSearch(fp, searchHits);
+    scrollToSearch(fp,
+                   searchHits);
   }
 
   @Override
@@ -463,7 +514,8 @@ public class BufferDiffPanel
     searchHits.previous();
     fp.reDisplay();
 
-    scrollToSearch(fp, searchHits);
+    scrollToSearch(fp,
+                   searchHits);
   }
 
   @Override
@@ -484,7 +536,8 @@ public class BufferDiffPanel
     }
   }
 
-  private void scrollToSearch(FilePanel fp, SearchHits searchHits)
+  private void scrollToSearch(FilePanel fp,
+      SearchHits searchHits)
   {
     SearchHit currentHit;
     int line;
@@ -499,15 +552,15 @@ public class BufferDiffPanel
     {
       line = currentHit.getLine();
 
-      scrollSynchronizer.scrollToLine(fp, line);
+      scrollSynchronizer.scrollToLine(fp,
+                                      line);
       setSelectedLine(line);
     }
   }
 
   private FilePanel getSelectedPanel()
   {
-    if (filePanelSelectedIndex >= 0
-        && filePanelSelectedIndex < filePanels.length)
+    if (filePanelSelectedIndex >= 0 && filePanelSelectedIndex < filePanels.length)
     {
       return filePanels[filePanelSelectedIndex];
     }
@@ -553,16 +606,19 @@ public class BufferDiffPanel
   @Override
   public void doLeft()
   {
-    runChange(RIGHT, LEFT);
+    runChange(RIGHT,
+              LEFT);
   }
 
   @Override
   public void doRight()
   {
-    runChange(LEFT, RIGHT);
+    runChange(LEFT,
+              RIGHT);
   }
 
-  void runChange(int fromPanelIndex, int toPanelIndex)
+  void runChange(int fromPanelIndex,
+      int toPanelIndex)
   {
     JMDelta delta;
     BufferDocumentIF fromBufferDocument;
@@ -632,7 +688,8 @@ public class BufferDiffPanel
       }
 
       from = fromBufferDocument.getDocument();
-      s = from.getText(fromOffset, toOffset - fromOffset);
+      s = from.getText(fromOffset,
+                       toOffset - fromOffset);
 
       fromLine = toChunk.getAnchor();
       size = toChunk.getSize();
@@ -663,7 +720,8 @@ public class BufferDiffPanel
     }
   }
 
-  void runDelete(int fromPanelIndex, int toPanelIndex)
+  void runDelete(int fromPanelIndex,
+      int toPanelIndex)
   {
     JMDelta delta;
     BufferDocumentIF bufferDocument;
@@ -871,7 +929,8 @@ public class BufferDiffPanel
     // Don't go anywhere if the line is already visible.
     rect = viewport.getViewRect();
     startOffset = editor.viewToModel(rect.getLocation());
-    endOffset = editor.viewToModel(new Point(rect.x, rect.y + rect.height));
+    endOffset = editor.viewToModel(new Point(rect.x,
+                                             rect.y + rect.height));
     if (offset >= startOffset && offset <= endOffset)
     {
       return;
@@ -913,7 +972,8 @@ public class BufferDiffPanel
         //   give the derived font.
         zoom = new Zoom();
         zoom.font = c.getFont();
-        c.putClientProperty("JMeld.zoom", zoom);
+        c.putClientProperty("JMeld.zoom",
+                            zoom);
       }
 
       size = c.getFont().getSize() + (direction ? 1.0f : -1.0f);
@@ -979,7 +1039,8 @@ public class BufferDiffPanel
       return;
     }
 
-    scrollSynchronizer.scrollToLine(fp, line);
+    scrollSynchronizer.scrollToLine(fp,
+                                    line);
     setSelectedLine(line);
   }
 

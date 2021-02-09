@@ -56,10 +56,8 @@
  */
 package org.apache.commons.jrcs.diff;
 
-
 /**
- * Definition of a Visitor interface for {@link Revision Revisions}
- * See "Design Patterns" by the Gang of Four
+ * Definition of a Visitor interface for {@link Revision Revisions} See "Design Patterns" by the Gang of Four
  */
 public interface RevisionVisitor
 {

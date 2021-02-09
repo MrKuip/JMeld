@@ -53,7 +53,8 @@ public class RevisionUtil
     if (result == null)
     {
       result = c.darker();
-      darker.put(c, result);
+      darker.put(c,
+                 result);
     }
 
     return result;

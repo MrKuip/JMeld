@@ -22,7 +22,8 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-/** A highlighter that paints in layers.
+/**
+ * A highlighter that paints in layers.
  */
 public class JMHighlighter
     implements Highlighter
@@ -62,7 +63,8 @@ public class JMHighlighter
   /**
    * Renders the highlights.
    *
-   * @param g the graphics context
+   * @param g
+   *          the graphics context
    */
   public void paint(Graphics g)
   {
@@ -78,9 +80,10 @@ public class JMHighlighter
 
     clip = g.getClipBounds();
     lineHeight = component.getFontMetrics(component.getFont()).getHeight();
-    startOffset = component.viewToModel(new Point(clip.x - lineHeight, clip.y));
-    endOffset = component.viewToModel(new Point(clip.x, clip.y + clip.height
-                                                        + lineHeight));
+    startOffset = component.viewToModel(new Point(clip.x - lineHeight,
+                                                  clip.y));
+    endOffset = component.viewToModel(new Point(clip.x,
+                                                clip.y + clip.height + lineHeight));
 
     // Just some hacks to allow linenumbers painted in the emptyborder.
     lineNumberBorder = null;
@@ -121,20 +124,24 @@ public class JMHighlighter
       for (Highlighter.Highlight hli : list)
       {
         // Don't paint highlighters that are not in sight!
-        if (hli.getStartOffset() > endOffset
-            || hli.getEndOffset() < startOffset)
+        if (hli.getStartOffset() > endOffset || hli.getEndOffset() < startOffset)
         {
           continue;
         }
 
-        hli.getPainter().paint(g, hli.getStartOffset(), hli.getEndOffset(), a,
-          component);
+        hli.getPainter().paint(g,
+                               hli.getStartOffset(),
+                               hli.getEndOffset(),
+                               a,
+                               component);
       }
     }
 
     if (lineNumberBorder != null)
     {
-      lineNumberBorder.paintAfter(g, startOffset, endOffset);
+      lineNumberBorder.paintAfter(g,
+                                  startOffset,
+                                  endOffset);
     }
   }
 
@@ -149,14 +156,20 @@ public class JMHighlighter
     component = null;
   }
 
-  public Object addHighlight(int p0, int p1,
+  public Object addHighlight(int p0,
+      int p1,
       Highlighter.HighlightPainter painter)
       throws BadLocationException
   {
-    return addHighlight(UPPER_LAYER, p0, p1, painter);
+    return addHighlight(UPPER_LAYER,
+                        p0,
+                        p1,
+                        painter);
   }
 
-  public Object addHighlight(Integer layer, int p0, int p1,
+  public Object addHighlight(Integer layer,
+      int p0,
+      int p1,
       Highlighter.HighlightPainter painter)
       throws BadLocationException
   {
@@ -178,10 +191,12 @@ public class JMHighlighter
 
   public void removeHighlight(Object object)
   {
-    removeHighlight(UPPER_LAYER, object);
+    removeHighlight(UPPER_LAYER,
+                    object);
   }
 
-  public void removeHighlight(Integer layer, Object object)
+  public void removeHighlight(Integer layer,
+      Object object)
   {
     getLayer(layer).remove(object);
     repaint();
@@ -205,13 +220,21 @@ public class JMHighlighter
     repaint();
   }
 
-  public void changeHighlight(Object object, int p0, int p1)
+  public void changeHighlight(Object object,
+      int p0,
+      int p1)
       throws BadLocationException
   {
-    changeHighlight(UPPER_LAYER, object, p0, p1);
+    changeHighlight(UPPER_LAYER,
+                    object,
+                    p0,
+                    p1);
   }
 
-  public void changeHighlight(Integer layer, Object object, int p0, int p1)
+  public void changeHighlight(Integer layer,
+      Object object,
+      int p0,
+      int p1)
       throws BadLocationException
   {
     Document doc;
@@ -227,8 +250,7 @@ public class JMHighlighter
   }
 
   /**
-   * Makes a copy of the highlights.  Does not actually clone each highlight,
-   * but only makes references to them.
+   * Makes a copy of the highlights. Does not actually clone each highlight, but only makes references to them.
    *
    * @return the copy
    * @see Highlighter#getHighlights
@@ -267,7 +289,8 @@ public class JMHighlighter
     if (result == null)
     {
       result = new ArrayList<Highlighter.Highlight>();
-      highlights.put(layer, result);
+      highlights.put(layer,
+                     result);
     }
 
     return result;

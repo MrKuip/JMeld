@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-class SettingCellRenderer extends JLabel implements ListCellRenderer<Settings>
+class SettingCellRenderer
+    extends JLabel
+    implements ListCellRenderer<Settings>
 {
   public SettingCellRenderer()
   {
@@ -20,12 +22,19 @@ class SettingCellRenderer extends JLabel implements ListCellRenderer<Settings>
     setVerticalAlignment(JLabel.CENTER);
     setVerticalTextPosition(JLabel.BOTTOM);
     setHorizontalTextPosition(JLabel.CENTER);
-    setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    setPreferredSize(new Dimension(70, 70));
+    setBorder(BorderFactory.createEmptyBorder(10,
+                                              10,
+                                              10,
+                                              10));
+    setPreferredSize(new Dimension(70,
+                                   70));
   }
 
-  public Component getListCellRendererComponent(JList<? extends Settings> list, Settings value, int index,
-      boolean isSelected, boolean cellHasFocus)
+  public Component getListCellRendererComponent(JList<? extends Settings> list,
+      Settings value,
+      int index,
+      boolean isSelected,
+      boolean cellHasFocus)
   {
     Settings settings;
 
@@ -38,7 +47,8 @@ class SettingCellRenderer extends JLabel implements ListCellRenderer<Settings>
     {
       setBackground(list.getSelectionBackground());
       setForeground(list.getSelectionForeground());
-    } else
+    }
+    else
     {
       setBackground(Color.white);
       setForeground(Color.black);

@@ -32,7 +32,8 @@ public class ComboBoxPreference
   private JComboBox target;
   private int maxItems = 10;
 
-  public ComboBoxPreference(String preferenceName, JComboBox target)
+  public ComboBoxPreference(String preferenceName,
+      JComboBox target)
   {
     super("ComboBox-" + preferenceName);
 
@@ -46,7 +47,8 @@ public class ComboBoxPreference
     DefaultComboBoxModel model;
 
     model = new DefaultComboBoxModel();
-    for (String item : getListOfString(ITEMS, maxItems))
+    for (String item : getListOfString(ITEMS,
+                                       maxItems))
     {
       model.addElement(item);
     }
@@ -89,7 +91,9 @@ public class ComboBoxPreference
       list.add(item);
     }
 
-    putListOfString(ITEMS, maxItems, list);
+    putListOfString(ITEMS,
+                    maxItems,
+                    list);
   }
 
   private ListDataListener getListDataListener()

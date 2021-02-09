@@ -34,7 +34,8 @@ public abstract class JMTreeTableModel
     columns = new ArrayList<Column>();
   }
 
-  public Object getChild(Object parent, int index)
+  public Object getChild(Object parent,
+      int index)
   {
     return ((UINode) parent).getChildAt(index);
   }
@@ -44,19 +45,29 @@ public abstract class JMTreeTableModel
     return ((UINode) parent).getChildCount();
   }
 
-  public Column addColumn(String id, String columnGroupName, String columnName,
-      Class columnClass, int columnSize, boolean editable)
+  public Column addColumn(String id,
+      String columnGroupName,
+      String columnName,
+      Class columnClass,
+      int columnSize,
+      boolean editable)
   {
     Column column;
 
-    column = new Column(id, columns.size(), columnGroupName, columnName,
-        columnClass, columnSize, editable);
+    column = new Column(id,
+                        columns.size(),
+                        columnGroupName,
+                        columnName,
+                        columnClass,
+                        columnSize,
+                        editable);
     columns.add(column);
 
     return column;
   }
 
-  public abstract Object getValueAt(Object objectNode, Column column);
+  public abstract Object getValueAt(Object objectNode,
+      Column column);
 
   public int getColumnSize(int columnIndex)
   {
@@ -106,19 +117,24 @@ public abstract class JMTreeTableModel
     return columns.get(columnIndex);
   }
 
-  public boolean isCellEditable(int rowIndex, Column column)
+  public boolean isCellEditable(int rowIndex,
+      Column column)
   {
     return column.isEditable();
   }
 
-  public final boolean isCellEditable(int rowIndex, int columnIndex)
+  public final boolean isCellEditable(int rowIndex,
+      int columnIndex)
   {
-    return isCellEditable(rowIndex, getColumn(columnIndex));
+    return isCellEditable(rowIndex,
+                          getColumn(columnIndex));
   }
 
-  public final Object getValueAt(Object objectNode, int columnIndex)
+  public final Object getValueAt(Object objectNode,
+      int columnIndex)
   {
-    return getValueAt(objectNode, getColumn(columnIndex));
+    return getValueAt(objectNode,
+                      getColumn(columnIndex));
   }
 
   public class Column
@@ -133,8 +149,13 @@ public abstract class JMTreeTableModel
     private TableCellRenderer renderer;
     private TableCellEditor editor;
 
-    public Column(String id, int columnIndex, String columnGroupName,
-        String columnName, Class columnClass, int columnSize, boolean editable)
+    public Column(String id,
+        int columnIndex,
+        String columnGroupName,
+        String columnName,
+        Class columnClass,
+        int columnSize,
+        boolean editable)
     {
       this.id = id;
       this.columnIndex = columnIndex;

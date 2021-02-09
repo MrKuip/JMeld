@@ -23,12 +23,14 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
- * <p>This is a utility class used by selectors and DirectoryScanner. The
- * functionality more properly belongs just to selectors, but unfortunately
- * DirectoryScanner exposed these as protected methods. Thus we have to
- * support any subclasses of DirectoryScanner that may access these methods.
+ * <p>
+ * This is a utility class used by selectors and DirectoryScanner. The functionality more properly belongs just to
+ * selectors, but unfortunately DirectoryScanner exposed these as protected methods. Thus we have to support any
+ * subclasses of DirectoryScanner that may access these methods.
  * </p>
- * <p>This is a Singleton.</p>
+ * <p>
+ * This is a Singleton.
+ * </p>
  *
  * @since 1.5
  */
@@ -45,6 +47,7 @@ public final class SelectorUtils
 
   /**
    * Retrieves the instance of the Singleton.
+   * 
    * @return singleton instance
    */
   public static SelectorUtils getInstance()
@@ -53,45 +56,43 @@ public final class SelectorUtils
   }
 
   /**
-   * Tests whether or not a given path matches the start of a given
-   * pattern up to the first "**".
+   * Tests whether or not a given path matches the start of a given pattern up to the first "**".
    * <p>
-   * This is not a general purpose test and should only be used if you
-   * can live with false positives. For example, <code>pattern=**\a</code>
-   * and <code>str=b</code> will yield <code>true</code>.
+   * This is not a general purpose test and should only be used if you can live with false positives. For example,
+   * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
    *
-   * @param pattern The pattern to match against. Must not be
-   *                <code>null</code>.
-   * @param str     The path to match, as a String. Must not be
-   *                <code>null</code>.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The path to match, as a String. Must not be <code>null</code>.
    *
-   * @return whether or not a given path matches the start of a given
-   * pattern up to the first "**".
+   * @return whether or not a given path matches the start of a given pattern up to the first "**".
    */
-  public static boolean matchPatternStart(String pattern, String str)
+  public static boolean matchPatternStart(String pattern,
+      String str)
   {
-    return matchPatternStart(pattern, str, true);
+    return matchPatternStart(pattern,
+                             str,
+                             true);
   }
 
   /**
-   * Tests whether or not a given path matches the start of a given
-   * pattern up to the first "**".
+   * Tests whether or not a given path matches the start of a given pattern up to the first "**".
    * <p>
-   * This is not a general purpose test and should only be used if you
-   * can live with false positives. For example, <code>pattern=**\a</code>
-   * and <code>str=b</code> will yield <code>true</code>.
+   * This is not a general purpose test and should only be used if you can live with false positives. For example,
+   * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
    *
-   * @param pattern The pattern to match against. Must not be
-   *                <code>null</code>.
-   * @param str     The path to match, as a String. Must not be
-   *                <code>null</code>.
-   * @param isCaseSensitive Whether or not matching should be performed
-   *                        case sensitively.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The path to match, as a String. Must not be <code>null</code>.
+   * @param isCaseSensitive
+   *          Whether or not matching should be performed case sensitively.
    *
-   * @return whether or not a given path matches the start of a given
-   * pattern up to the first "**".
+   * @return whether or not a given path matches the start of a given pattern up to the first "**".
    */
-  public static boolean matchPatternStart(String pattern, String str,
+  public static boolean matchPatternStart(String pattern,
+      String str,
       boolean isCaseSensitive)
   {
     // When str starts with a File.separator, pattern has to start with a
@@ -119,7 +120,9 @@ public final class SelectorUtils
       {
         break;
       }
-      if (!match(patDir, strDirs[strIdxStart], isCaseSensitive))
+      if (!match(patDir,
+                 strDirs[strIdxStart],
+                 isCaseSensitive))
       {
         return false;
       }
@@ -148,33 +151,35 @@ public final class SelectorUtils
   /**
    * Tests whether or not a given path matches a given pattern.
    *
-   * @param pattern The pattern to match against. Must not be
-   *                <code>null</code>.
-   * @param str     The path to match, as a String. Must not be
-   *                <code>null</code>.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The path to match, as a String. Must not be <code>null</code>.
    *
-   * @return <code>true</code> if the pattern matches against the string,
-   *         or <code>false</code> otherwise.
+   * @return <code>true</code> if the pattern matches against the string, or <code>false</code> otherwise.
    */
-  public static boolean matchPath(String pattern, String str)
+  public static boolean matchPath(String pattern,
+      String str)
   {
-    return matchPath(pattern, str, true);
+    return matchPath(pattern,
+                     str,
+                     true);
   }
 
   /**
    * Tests whether or not a given path matches a given pattern.
    *
-   * @param pattern The pattern to match against. Must not be
-   *                <code>null</code>.
-   * @param str     The path to match, as a String. Must not be
-   *                <code>null</code>.
-   * @param isCaseSensitive Whether or not matching should be performed
-   *                        case sensitively.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The path to match, as a String. Must not be <code>null</code>.
+   * @param isCaseSensitive
+   *          Whether or not matching should be performed case sensitively.
    *
-   * @return <code>true</code> if the pattern matches against the string,
-   *         or <code>false</code> otherwise.
+   * @return <code>true</code> if the pattern matches against the string, or <code>false</code> otherwise.
    */
-  public static boolean matchPath(String pattern, String str,
+  public static boolean matchPath(String pattern,
+      String str,
       boolean isCaseSensitive)
   {
     // When str starts with a File.separator, pattern has to start with a
@@ -202,7 +207,9 @@ public final class SelectorUtils
       {
         break;
       }
-      if (!match(patDir, strDirs[strIdxStart], isCaseSensitive))
+      if (!match(patDir,
+                 strDirs[strIdxStart],
+                 isCaseSensitive))
       {
         patDirs = null;
         strDirs = null;
@@ -244,7 +251,9 @@ public final class SelectorUtils
       {
         break;
       }
-      if (!match(patDir, strDirs[strIdxEnd], isCaseSensitive))
+      if (!match(patDir,
+                 strDirs[strIdxEnd],
+                 isCaseSensitive))
       {
         patDirs = null;
         strDirs = null;
@@ -297,7 +306,9 @@ public final class SelectorUtils
         {
           String subPat = patDirs[patIdxStart + j + 1];
           String subStr = strDirs[strIdxStart + i + j];
-          if (!match(subPat, subStr, isCaseSensitive))
+          if (!match(subPat,
+                     subStr,
+                     isCaseSensitive))
           {
             continue strLoop;
           }
@@ -332,42 +343,42 @@ public final class SelectorUtils
   }
 
   /**
-   * Tests whether or not a string matches against a pattern.
-   * The pattern may contain two special characters:<br>
+   * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:<br>
    * '*' means zero or more characters<br>
    * '?' means one and only one character
    *
-   * @param pattern The pattern to match against.
-   *                Must not be <code>null</code>.
-   * @param str     The string which must be matched against the pattern.
-   *                Must not be <code>null</code>.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The string which must be matched against the pattern. Must not be <code>null</code>.
    *
-   * @return <code>true</code> if the string matches against the pattern,
-   *         or <code>false</code> otherwise.
+   * @return <code>true</code> if the string matches against the pattern, or <code>false</code> otherwise.
    */
-  public static boolean match(String pattern, String str)
+  public static boolean match(String pattern,
+      String str)
   {
-    return match(pattern, str, true);
+    return match(pattern,
+                 str,
+                 true);
   }
 
   /**
-   * Tests whether or not a string matches against a pattern.
-   * The pattern may contain two special characters:<br>
+   * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:<br>
    * '*' means zero or more characters<br>
    * '?' means one and only one character
    *
-   * @param pattern The pattern to match against.
-   *                Must not be <code>null</code>.
-   * @param str     The string which must be matched against the pattern.
-   *                Must not be <code>null</code>.
-   * @param isCaseSensitive Whether or not matching should be performed
-   *                        case sensitively.
+   * @param pattern
+   *          The pattern to match against. Must not be <code>null</code>.
+   * @param str
+   *          The string which must be matched against the pattern. Must not be <code>null</code>.
+   * @param isCaseSensitive
+   *          Whether or not matching should be performed case sensitively.
    *
    *
-   * @return <code>true</code> if the string matches against the pattern,
-   *         or <code>false</code> otherwise.
+   * @return <code>true</code> if the string matches against the pattern, or <code>false</code> otherwise.
    */
-  public static boolean match(String pattern, String str,
+  public static boolean match(String pattern,
+      String str,
       boolean isCaseSensitive)
   {
     char[] patArr = pattern.toCharArray();
@@ -404,8 +415,7 @@ public final class SelectorUtils
           {
             return false; // Character mismatch
           }
-          if (!isCaseSensitive
-              && Character.toUpperCase(ch) != Character.toUpperCase(strArr[i]))
+          if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[i]))
           {
             return false; // Character mismatch
           }
@@ -428,9 +438,7 @@ public final class SelectorUtils
         {
           return false; // Character mismatch
         }
-        if (!isCaseSensitive
-            && Character.toUpperCase(ch) != Character
-                .toUpperCase(strArr[strIdxStart]))
+        if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart]))
         {
           return false; // Character mismatch
         }
@@ -461,9 +469,7 @@ public final class SelectorUtils
         {
           return false; // Character mismatch
         }
-        if (!isCaseSensitive
-            && Character.toUpperCase(ch) != Character
-                .toUpperCase(strArr[strIdxEnd]))
+        if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxEnd]))
         {
           return false; // Character mismatch
         }
@@ -521,9 +527,7 @@ public final class SelectorUtils
             {
               continue strLoop;
             }
-            if (!isCaseSensitive
-                && Character.toUpperCase(ch) != Character
-                    .toUpperCase(strArr[strIdxStart + i + j]))
+            if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart + i + j]))
             {
               continue strLoop;
             }
@@ -556,31 +560,36 @@ public final class SelectorUtils
   }
 
   /**
-   * Breaks a path up into a Vector of path elements, tokenizing on
-   * <code>File.separator</code>.
+   * Breaks a path up into a Vector of path elements, tokenizing on <code>File.separator</code>.
    *
-   * @param path Path to tokenize. Must not be <code>null</code>.
+   * @param path
+   *          Path to tokenize. Must not be <code>null</code>.
    *
    * @return a Vector of path elements from the tokenized path
    */
   public static Vector tokenizePath(String path)
   {
-    return tokenizePath(path, File.separator);
+    return tokenizePath(path,
+                        File.separator);
   }
 
   /**
    * Breaks a path up into a Vector of path elements, tokenizing on
    *
-   * @param path Path to tokenize. Must not be <code>null</code>.
-   * @param separator the separator against which to tokenize.
+   * @param path
+   *          Path to tokenize. Must not be <code>null</code>.
+   * @param separator
+   *          the separator against which to tokenize.
    *
    * @return a Vector of path elements from the tokenized path
    * @since Ant 1.6
    */
-  public static Vector tokenizePath(String path, String separator)
+  public static Vector tokenizePath(String path,
+      String separator)
   {
     Vector ret = new Vector();
-    StringTokenizer st = new StringTokenizer(path, separator);
+    StringTokenizer st = new StringTokenizer(path,
+                                             separator);
     while (st.hasMoreTokens())
     {
       ret.addElement(st.nextToken());
@@ -621,7 +630,8 @@ public final class SelectorUtils
       {
         if (pos != start)
         {
-          String tok = path.substring(start, pos);
+          String tok = path.substring(start,
+                                      pos);
           l[count++] = tok;
         }
         start = pos + 1;
@@ -636,20 +646,22 @@ public final class SelectorUtils
   }
 
   /**
-   * Returns dependency information on these two files. If src has been
-   * modified later than target, it returns true. If target doesn't exist,
-   * it likewise returns true. Otherwise, target is newer than src and
-   * is not out of date, thus the method returns false. It also returns
-   * false if the src file doesn't even exist, since how could the
-   * target then be out of date.
+   * Returns dependency information on these two files. If src has been modified later than target, it returns true. If
+   * target doesn't exist, it likewise returns true. Otherwise, target is newer than src and is not out of date, thus
+   * the method returns false. It also returns false if the src file doesn't even exist, since how could the target then
+   * be out of date.
    *
-   * @param src the original file
-   * @param target the file being compared against
-   * @param granularity the amount in seconds of slack we will give in
-   *        determining out of dateness
+   * @param src
+   *          the original file
+   * @param target
+   *          the file being compared against
+   * @param granularity
+   *          the amount in seconds of slack we will give in determining out of dateness
    * @return whether the target is out of date
    */
-  public static boolean isOutOfDate(File src, File target, int granularity)
+  public static boolean isOutOfDate(File src,
+      File target,
+      int granularity)
   {
     if (!src.exists())
     {
@@ -667,20 +679,21 @@ public final class SelectorUtils
   }
 
   /**
-   * Returns dependency information on these two resources. If src has been
-   * modified later than target, it returns true. If target doesn't exist,
-   * it likewise returns true. Otherwise, target is newer than src and
-   * is not out of date, thus the method returns false. It also returns
-   * false if the src file doesn't even exist, since how could the
-   * target then be out of date.
+   * Returns dependency information on these two resources. If src has been modified later than target, it returns true.
+   * If target doesn't exist, it likewise returns true. Otherwise, target is newer than src and is not out of date, thus
+   * the method returns false. It also returns false if the src file doesn't even exist, since how could the target then
+   * be out of date.
    *
-   * @param src the original resource
-   * @param target the resource being compared against
-   * @param granularity the amount in seconds of slack we will give in
-   *        determining out of dateness
+   * @param src
+   *          the original resource
+   * @param target
+   *          the resource being compared against
+   * @param granularity
+   *          the amount in seconds of slack we will give in determining out of dateness
    * @return whether the target is out of date
    */
-  public static boolean isOutOfDate(Resource src, Resource target,
+  public static boolean isOutOfDate(Resource src,
+      Resource target,
       int granularity)
   {
     if (!src.isExists())
@@ -699,11 +712,11 @@ public final class SelectorUtils
   }
 
   /**
-   * "Flattens" a string by removing all whitespace (space, tab, linefeed,
-   * carriage return, and formfeed). This uses StringTokenizer and the
-   * default set of tokens as documented in the single arguement constructor.
+   * "Flattens" a string by removing all whitespace (space, tab, linefeed, carriage return, and formfeed). This uses
+   * StringTokenizer and the default set of tokens as documented in the single arguement constructor.
    *
-   * @param input a String to remove all whitespace.
+   * @param input
+   *          a String to remove all whitespace.
    * @return a String that has had all whitespace removed.
    */
   public static String removeWhitespace(String input)
@@ -722,7 +735,9 @@ public final class SelectorUtils
 
   /**
    * Tests if a string contains stars or question marks
-   * @param input a String which one wants to test for containing wildcard
+   * 
+   * @param input
+   *          a String which one wants to test for containing wildcard
    * @return true if the string contains at least a star or a question mark
    */
   public static boolean hasWildcards(String input)
@@ -732,12 +747,15 @@ public final class SelectorUtils
 
   /**
    * removes from a pattern all tokens to the right containing wildcards
-   * @param input the input string
+   * 
+   * @param input
+   *          the input string
    * @return the leftmost part of the pattern without wildcards
    */
   public static String rtrimWildcardTokens(String input)
   {
-    Vector v = tokenizePath(input, File.separator);
+    Vector v = tokenizePath(input,
+                            File.separator);
     StringBuffer sb = new StringBuffer();
     for (int counter = 0; counter < v.size(); counter++)
     {

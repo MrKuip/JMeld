@@ -62,8 +62,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Holds a information about a parrt of the text involved in
- * a differencing or patching operation.
+ * Holds a information about a parrt of the text involved in a differencing or patching operation.
  *
  * @version $Id: Chunk.java,v 1.3 2003/05/06 14:59:12 juanco Exp $
  * @author <a href="mailto:juanco@suigeneris.org">Juanco Anez</a>
@@ -79,10 +78,14 @@ public class Chunk
 
   /**
    * Creates a chunk that doesn't copy the original text.
-   * @param pos the start position in the text.
-   * @param count the size of the chunk.
+   * 
+   * @param pos
+   *          the start position in the text.
+   * @param count
+   *          the size of the chunk.
    */
-  public Chunk(int pos, int count)
+  public Chunk(int pos,
+      int count)
   {
     this.anchor = pos;
     this.count = (count >= 0 ? count : 0);
@@ -90,58 +93,97 @@ public class Chunk
 
   /**
    * Creates a chunk and saves a copy the original chunk's text.
-   * @param iseq the original text.
-   * @param pos the start position in the text.
-   * @param count the size of the chunk.
+   * 
+   * @param iseq
+   *          the original text.
+   * @param pos
+   *          the start position in the text.
+   * @param count
+   *          the size of the chunk.
    */
-  public Chunk(Object[] iseq, int pos, int count)
+  public Chunk(Object[] iseq,
+      int pos,
+      int count)
   {
-    this(pos, count);
-    chunk = slice(iseq, pos, count);
+    this(pos,
+         count);
+    chunk = slice(iseq,
+                  pos,
+                  count);
   }
 
   /**
-   * Creates a chunk that will be displaced in the resulting text,
-   * and saves a copy the original chunk's text.
-   * @param iseq the original text.
-   * @param pos the start position in the text.
-   * @param count the size of the chunk.
-   * @param offset the position the chunk should have in the resulting text.
+   * Creates a chunk that will be displaced in the resulting text, and saves a copy the original chunk's text.
+   * 
+   * @param iseq
+   *          the original text.
+   * @param pos
+   *          the start position in the text.
+   * @param count
+   *          the size of the chunk.
+   * @param offset
+   *          the position the chunk should have in the resulting text.
    */
-  public Chunk(Object[] iseq, int pos, int count, int offset)
+  public Chunk(Object[] iseq,
+      int pos,
+      int count,
+      int offset)
   {
-    this(offset, count);
-    chunk = slice(iseq, pos, count);
+    this(offset,
+         count);
+    chunk = slice(iseq,
+                  pos,
+                  count);
   }
 
   /**
    * Creates a chunk and saves a copy the original chunk's text.
-   * @param iseq the original text.
-   * @param pos the start position in the text.
-   * @param count the size of the chunk.
+   * 
+   * @param iseq
+   *          the original text.
+   * @param pos
+   *          the start position in the text.
+   * @param count
+   *          the size of the chunk.
    */
-  public Chunk(List iseq, int pos, int count)
+  public Chunk(List iseq,
+      int pos,
+      int count)
   {
-    this(pos, count);
-    chunk = slice(iseq, pos, count);
+    this(pos,
+         count);
+    chunk = slice(iseq,
+                  pos,
+                  count);
   }
 
   /**
-   * Creates a chunk that will be displaced in the resulting text,
-   * and saves a copy the original chunk's text.
-   * @param iseq the original text.
-   * @param pos the start position in the text.
-   * @param count the size of the chunk.
-   * @param offset the position the chunk should have in the resulting text.
+   * Creates a chunk that will be displaced in the resulting text, and saves a copy the original chunk's text.
+   * 
+   * @param iseq
+   *          the original text.
+   * @param pos
+   *          the start position in the text.
+   * @param count
+   *          the size of the chunk.
+   * @param offset
+   *          the position the chunk should have in the resulting text.
    */
-  public Chunk(List iseq, int pos, int count, int offset)
+  public Chunk(List iseq,
+      int pos,
+      int count,
+      int offset)
   {
-    this(offset, count);
-    chunk = slice(iseq, pos, count);
+    this(offset,
+         count);
+    chunk = slice(iseq,
+                  pos,
+                  count);
   }
 
   /**
    * Returns the anchor position of the chunk.
+   * 
    * @return the anchor position.
    */
   public int anchor()
@@ -151,6 +193,7 @@ public class Chunk
 
   /**
    * Returns the size of the chunk.
+   * 
    * @return the size.
    */
   public int size()
@@ -192,6 +235,7 @@ public class Chunk
 
   /**
    * Returns the text saved for this chunk.
+   * 
    * @return the text.
    */
   public List chunk()
@@ -200,9 +244,10 @@ public class Chunk
   }
 
   /**
-   * Verifies that this chunk's saved text matches the corresponding
-   * text in the given sequence.
-   * @param target the sequence to verify against.
+   * Verifies that this chunk's saved text matches the corresponding text in the given sequence.
+   * 
+   * @param target
+   *          the sequence to verify against.
    * @return true if the texts match.
    */
   public boolean verify(List target)
@@ -230,7 +275,9 @@ public class Chunk
 
   /**
    * Delete this chunk from he given text.
-   * @param target the text to delete from.
+   * 
+   * @param target
+   *          the text to delete from.
    */
   public void applyDelete(List target)
   {
@@ -242,36 +289,47 @@ public class Chunk
 
   /**
    * Add the text of this chunk to the target at the given position.
-   * @param start where to add the text.
-   * @param target the text to add to.
+   * 
+   * @param start
+   *          where to add the text.
+   * @param target
+   *          the text to add to.
    */
-  public void applyAdd(int start, List target)
+  public void applyAdd(int start,
+      List target)
   {
     Iterator i = chunk.iterator();
 
     while (i.hasNext())
     {
-      target.add(start++, i.next());
+      target.add(start++,
+                 i.next());
     }
   }
 
   /**
-   * Provide a string image of the chunk using the an empty prefix and
-   * postfix.
+   * Provide a string image of the chunk using the an empty prefix and postfix.
    */
   public void toString(StringBuffer s)
   {
-    toString(s, "", "");
+    toString(s,
+             "",
+             "");
   }
 
   /**
-   * Provide a string image of the chunk using the given prefix and
-   * postfix.
-   * @param s where the string image should be appended.
-   * @param prefix the text thatshould prefix each line.
-   * @param postfix the text that should end each line.
+   * Provide a string image of the chunk using the given prefix and postfix.
+   * 
+   * @param s
+   *          where the string image should be appended.
+   * @param prefix
+   *          the text thatshould prefix each line.
+   * @param postfix
+   *          the text that should end each line.
    */
-  public StringBuffer toString(StringBuffer s, String prefix, String postfix)
+  public StringBuffer toString(StringBuffer s,
+      String prefix,
+      String postfix)
   {
     if (chunk != null)
     {
@@ -290,33 +348,49 @@ public class Chunk
 
   /**
    * Retreives the specified part from a {@link List List}.
-   * @param seq the list to retreive a slice from.
-   * @param pos the start position.
-   * @param count the number of items in the slice.
+   * 
+   * @param seq
+   *          the list to retreive a slice from.
+   * @param pos
+   *          the start position.
+   * @param count
+   *          the number of items in the slice.
    * @return a {@link List List} containing the specified items.
    */
-  public static List slice(List seq, int pos, int count)
+  public static List slice(List seq,
+      int pos,
+      int count)
   {
     if (count <= 0)
     {
-      return new ArrayList(seq.subList(pos, pos));
+      return new ArrayList(seq.subList(pos,
+                                       pos));
     }
     else
     {
-      return new ArrayList(seq.subList(pos, pos + count));
+      return new ArrayList(seq.subList(pos,
+                                       pos + count));
     }
   }
 
   /**
    * Retrieves a slice from an {@link Object Object} array.
-   * @param seq the list to retreive a slice from.
-   * @param pos the start position.
-   * @param count the number of items in the slice.
+   * 
+   * @param seq
+   *          the list to retreive a slice from.
+   * @param pos
+   *          the start position.
+   * @param count
+   *          the number of items in the slice.
    * @return a {@link List List} containing the specified items.
    */
-  public static List slice(Object[] seq, int pos, int count)
+  public static List slice(Object[] seq,
+      int pos,
+      int count)
   {
-    return slice(Arrays.asList(seq), pos, count);
+    return slice(Arrays.asList(seq),
+                 pos,
+                 count);
   }
 
   /**
@@ -332,19 +406,26 @@ public class Chunk
 
   /**
    * Provide a string representation of the numeric range of this chunk.
-   * @param s where the string representation should be appended.
+   * 
+   * @param s
+   *          where the string representation should be appended.
    */
   public void rangeString(StringBuffer s)
   {
-    rangeString(s, ",");
+    rangeString(s,
+                ",");
   }
 
   /**
    * Provide a string representation of the numeric range of this chunk.
-   * @param s where the string representation should be appended.
-   * @param separ what to use as line separator.
+   * 
+   * @param s
+   *          where the string representation should be appended.
+   * @param separ
+   *          what to use as line separator.
    */
-  public void rangeString(StringBuffer s, String separ)
+  public void rangeString(StringBuffer s,
+      String separ)
   {
     if (size() <= 1)
     {

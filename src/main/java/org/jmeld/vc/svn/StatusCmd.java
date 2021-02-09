@@ -12,7 +12,8 @@ public class StatusCmd
   private File file;
   private boolean recursive;
 
-  public StatusCmd(File file, boolean recursive)
+  public StatusCmd(File file,
+      boolean recursive)
   {
     super(StatusData.class);
 
@@ -22,8 +23,13 @@ public class StatusCmd
 
   public Result execute()
   {
-    super.execute("svn", "status", "--non-interactive", "-v", "--xml",
-      recursive ? "" : "-N", file.getPath());
+    super.execute("svn",
+                  "status",
+                  "--non-interactive",
+                  "-v",
+                  "--xml",
+                  recursive ? "" : "-N",
+                  file.getPath());
 
     return getResult();
   }
@@ -87,7 +93,8 @@ public class StatusCmd
               break;
           }
 
-          result.addEntry(te.getPath(), status);
+          result.addEntry(te.getPath(),
+                          status);
         }
       }
     }
@@ -105,8 +112,7 @@ public class StatusCmd
     {
       for (StatusResult.Entry entry : result.getEntryList())
       {
-        System.out.println(entry.getStatus().getShortText() + " "
-                           + entry.getName());
+        System.out.println(entry.getStatus().getShortText() + " " + entry.getName());
       }
     }
   }

@@ -26,7 +26,8 @@ import javax.swing.ImageIcon;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.Icons;
 
-public class MeldAction extends AbstractAction
+public class MeldAction
+    extends AbstractAction
 {
   // class variables:
   // backwards compatible with jdk1.5
@@ -38,7 +39,9 @@ public class MeldAction extends AbstractAction
   private Method isActionEnabledMethod;
   private ActionHandler actionHandler;
 
-  MeldAction(ActionHandler actionHandler, Object object, String name)
+  MeldAction(ActionHandler actionHandler,
+      Object object,
+      String name)
   {
     super(name);
 
@@ -51,8 +54,10 @@ public class MeldAction extends AbstractAction
   {
     try
     {
-      actionMethod = object.getClass().getMethod("do" + getName(), ActionEvent.class);
-    } catch (Exception ex)
+      actionMethod = object.getClass().getMethod("do" + getName(),
+                                                 ActionEvent.class);
+    }
+    catch (Exception ex)
     {
       ex.printStackTrace();
       System.exit(1);
@@ -63,7 +68,8 @@ public class MeldAction extends AbstractAction
       // This method is not mandatory!
       // If it is not available the method is always enabled.
       isActionEnabledMethod = object.getClass().getMethod("is" + getName() + "Enabled");
-    } catch (NoSuchMethodException ex)
+    }
+    catch (NoSuchMethodException ex)
     {
     }
   }
@@ -75,13 +81,16 @@ public class MeldAction extends AbstractAction
 
   public void setToolTip(String toolTip)
   {
-    putValue(SHORT_DESCRIPTION, toolTip);
+    putValue(SHORT_DESCRIPTION,
+             toolTip);
   }
 
   public void setIcon(Icons icon)
   {
-    putValue(SMALL_ICON, icon.getSmallIcon());
-    putValue(LARGE_ICON_KEY, icon.getLargeIcon());
+    putValue(SMALL_ICON,
+             icon.getSmallIcon());
+    putValue(LARGE_ICON_KEY,
+             icon.getLargeIcon());
   }
 
   public ImageIcon getSmallIcon()
@@ -109,16 +118,20 @@ public class MeldAction extends AbstractAction
 
     try
     {
-      actionMethod.invoke(object, ae);
+      actionMethod.invoke(object,
+                          ae);
 
       actionHandler.checkActions();
-    } catch (IllegalAccessException ex)
+    }
+    catch (IllegalAccessException ex)
     {
       ex.printStackTrace();
-    } catch (IllegalArgumentException ex)
+    }
+    catch (IllegalArgumentException ex)
     {
       ex.printStackTrace();
-    } catch (InvocationTargetException ex)
+    }
+    catch (InvocationTargetException ex)
     {
       ex.printStackTrace();
     }
@@ -134,13 +147,16 @@ public class MeldAction extends AbstractAction
     try
     {
       return (Boolean) isActionEnabledMethod.invoke(object);
-    } catch (IllegalAccessException ex)
+    }
+    catch (IllegalAccessException ex)
     {
       ex.printStackTrace();
-    } catch (IllegalArgumentException ex)
+    }
+    catch (IllegalArgumentException ex)
     {
       ex.printStackTrace();
-    } catch (InvocationTargetException ex)
+    }
+    catch (InvocationTargetException ex)
     {
       ex.printStackTrace();
     }

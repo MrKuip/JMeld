@@ -15,12 +15,16 @@ public class ActionHandler
     return actions.get(a);
   }
 
-  public MeldAction createAction(Object object, Actions.Action a)
+  public MeldAction createAction(Object object,
+      Actions.Action a)
   {
     MeldAction action;
 
-    action = new MeldAction(this, object, a.getName());
-    actions.put(a, action);
+    action = new MeldAction(this,
+                            object,
+                            a.getName());
+    actions.put(a,
+                action);
 
     checkActions();
 

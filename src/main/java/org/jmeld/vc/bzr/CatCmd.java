@@ -15,13 +15,16 @@ public class CatCmd
   public CatCmd(File file)
   {
     this.file = file;
-    
+
     initWorkingDirectory(file);
   }
 
   public Result execute()
   {
-    super.execute("bzr", "cat", "--noninteractive", file.getAbsolutePath());
+    super.execute("bzr",
+                  "cat",
+                  "--noninteractive",
+                  file.getAbsolutePath());
 
     return getResult();
   }

@@ -6,7 +6,8 @@ import org.jmeld.util.Result;
 import org.jmeld.vc.BaseFile;
 import org.jmeld.vc.util.VcCmd;
 
-public class CatCmd extends VcCmd<BaseFile>
+public class CatCmd
+    extends VcCmd<BaseFile>
 {
   // Instance variables:
   private File file;
@@ -18,7 +19,9 @@ public class CatCmd extends VcCmd<BaseFile>
 
   public Result execute()
   {
-    super.execute("git", "show", "HEAD:" + file.getPath());
+    super.execute("git",
+                  "show",
+                  "HEAD:" + file.getPath());
 
     return getResult();
   }
@@ -37,8 +40,11 @@ public class CatCmd extends VcCmd<BaseFile>
     {
       result = new GitVersionControl().getBaseFile(new File(args[0]));
       byteArray = result.getByteArray();
-      System.out.write(byteArray, 0, byteArray.length);
-    } catch (Exception ex)
+      System.out.write(byteArray,
+                       0,
+                       byteArray.length);
+    }
+    catch (Exception ex)
     {
       ex.printStackTrace();
     }

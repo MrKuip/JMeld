@@ -39,7 +39,9 @@ public class UIDefaultsPrint
       Collections.sort(list);
       for (Object key : list)
       {
-        System.out.printf("%-40.40s = %s\n", key, UIManager.get(key));
+        System.out.printf("%-40.40s = %s\n",
+                          key,
+                          UIManager.get(key));
       }
     }
     catch (Exception ex)

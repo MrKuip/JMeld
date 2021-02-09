@@ -29,9 +29,11 @@ public class FileNode
   private FileDocument document;
   private boolean exists;
 
-  public FileNode(String name, File file)
+  public FileNode(String name,
+      File file)
   {
-    super(name, !file.isDirectory());
+    super(name,
+          !file.isDirectory());
     this.file = file;
 
     initialize();
@@ -88,9 +90,8 @@ public class FileNode
 
     if (outOfDate)
     {
-      System.out.println("FileNode[" + this + "] is out of date ["
-                         + file.lastModified() + " != " + fileLastModified
-                         + "]");
+      System.out
+          .println("FileNode[" + this + "] is out of date [" + file.lastModified() + " != " + fileLastModified + "]");
     }
     return outOfDate;
   }

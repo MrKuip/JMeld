@@ -16,7 +16,8 @@ import javax.swing.JPanel;
 import org.jmeld.ui.util.Icons.IconColor;
 import org.jmeld.ui.util.Icons.IconSize;
 
-public class IconComposer implements Icon
+public class IconComposer
+    implements Icon
 {
   private Icon m_icon;
   private List<IconData> m_iconDataList;
@@ -28,15 +29,15 @@ public class IconComposer implements Icon
 
   public enum Location
   {
-   CENTER,
-   TOP_LEFT,
-   TOP_RIGHT,
-   BOTTOM_LEFT,
-   BOTTOM_RIGHT,
-   TOP,
-   LEFT,
-   RIGHT,
-   BOTTOM
+    CENTER,
+    TOP_LEFT,
+    TOP_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT,
+    TOP,
+    LEFT,
+    RIGHT,
+    BOTTOM
   }
 
   public IconComposer(Icon icon)
@@ -61,7 +62,8 @@ public class IconComposer implements Icon
     m_minWidth = minWidth;
   }
 
-  public void decorate(Location location, Icon icon)
+  public void decorate(Location location,
+      Icon icon)
   {
     int x;
     int y;
@@ -82,61 +84,77 @@ public class IconComposer implements Icon
       case CENTER:
         x = m_icon.getIconWidth() / 2 - iconWidth / 2;
         y = m_icon.getIconHeight() / 2 - iconHeight / 2;
-        m_width = Math.max(getIconWidth(), iconWidth);
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case TOP_LEFT:
         x = 0;
         y = 0;
-        m_width = Math.max(getIconWidth(), iconWidth);
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case TOP_RIGHT:
         x = m_icon.getIconWidth() - iconWidth;
         y = 0;
-        m_width = Math.max(getIconWidth(), iconWidth);
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case BOTTOM_LEFT:
         x = 0;
         y = m_icon.getIconHeight() - iconHeight;
-        m_width = Math.max(getIconWidth(), iconWidth);
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       default:
       case BOTTOM_RIGHT:
         x = m_icon.getIconWidth() - iconWidth;
         y = m_icon.getIconHeight() - iconHeight;
-        m_width = Math.max(getIconWidth(), iconWidth);
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case RIGHT:
         x = m_icon.getIconWidth();
         y = m_icon.getIconHeight() / 2 - iconHeight / 2;
         m_width = getIconWidth() + iconWidth;
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case LEFT:
         x = -iconWidth;
         y = m_icon.getIconHeight() / 2 - iconHeight / 2;
         m_width = getIconWidth() + iconWidth;
-        m_height = Math.max(getIconHeight(), iconHeight);
+        m_height = Math.max(getIconHeight(),
+                            iconHeight);
         break;
       case TOP:
         x = m_icon.getIconWidth() / 2 - iconWidth / 2;
         y = -iconHeight;
-        m_width = Math.max(getIconWidth(), iconWidth);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
         m_height = getIconHeight() + iconHeight;
         break;
       case BOTTOM:
         x = m_icon.getIconWidth() / 2 - iconWidth / 2;
         y = m_icon.getIconHeight();
-        m_width = Math.max(getIconWidth(), iconWidth);
+        m_width = Math.max(getIconWidth(),
+                           iconWidth);
         m_height = getIconHeight() + iconHeight;
         break;
     }
 
-    iconData = new IconData(x, y, icon);
+    iconData = new IconData(x,
+                            y,
+                            icon);
     if (m_iconDataList == null)
     {
       m_iconDataList = new ArrayList<IconData>();
@@ -145,7 +163,10 @@ public class IconComposer implements Icon
   }
 
   @Override
-  public void paintIcon(Component c, Graphics g, int x, int y)
+  public void paintIcon(Component c,
+      Graphics g,
+      int x,
+      int y)
   {
     int width;
     int height;
@@ -157,7 +178,8 @@ public class IconComposer implements Icon
 
     g2 = (Graphics2D) g;
 
-    g.translate(x, y);
+    g.translate(x,
+                y);
 
     lowest_x = 0;
     lowest_y = 0;
@@ -173,7 +195,10 @@ public class IconComposer implements Icon
     if (m_background != null)
     {
       g2.setColor(m_background);
-      g2.fillRect(0, 0, getIconWidth(), getIconHeight());
+      g2.fillRect(0,
+                  0,
+                  getIconWidth(),
+                  getIconHeight());
     }
 
     // Center the icon.
@@ -191,12 +216,18 @@ public class IconComposer implements Icon
       y1 += (m_minHeight - height) / 2;
     }
 
-    m_icon.paintIcon(c, g, x1, y1);
+    m_icon.paintIcon(c,
+                     g,
+                     x1,
+                     y1);
     if (m_iconDataList != null)
     {
       for (IconData iconData : m_iconDataList)
       {
-        iconData.mi_icon.paintIcon(c, g, iconData.mi_x - lowest_x, iconData.mi_y - lowest_y);
+        iconData.mi_icon.paintIcon(c,
+                                   g,
+                                   iconData.mi_x - lowest_x,
+                                   iconData.mi_y - lowest_y);
       }
     }
   }
@@ -219,7 +250,9 @@ public class IconComposer implements Icon
     int mi_y;
     Icon mi_icon;
 
-    IconData(int x, int y, Icon icon)
+    IconData(int x,
+        int y,
+        Icon icon)
     {
       mi_x = x;
       mi_y = y;
@@ -238,11 +271,18 @@ public class IconComposer implements Icon
     panel = new JPanel();
     panel.setLayout(new FlowLayout());
 
-    icon = new IconComposer(Icons.FILE.getIcon(IconColor.YELLOW, IconSize.LARGE));
-    icon.decorate(Location.CENTER, Icons.FILE_OUTLINE.getIcon(IconColor.DEFAULT, IconSize.LARGE));
-    icon2 = new IconComposer(Icons.FILE.getIcon(IconColor.WHITE, IconSize.LARGE));
-    icon2.decorate(Location.CENTER, Icons.FILE_HIDDEN.getIcon(IconColor.DEFAULT, IconSize.LARGE));
-    icon.decorate(Location.RIGHT, icon2);
+    icon = new IconComposer(Icons.FILE.getIcon(IconColor.YELLOW,
+                                               IconSize.LARGE));
+    icon.decorate(Location.CENTER,
+                  Icons.FILE_OUTLINE.getIcon(IconColor.DEFAULT,
+                                             IconSize.LARGE));
+    icon2 = new IconComposer(Icons.FILE.getIcon(IconColor.WHITE,
+                                                IconSize.LARGE));
+    icon2.decorate(Location.CENTER,
+                   Icons.FILE_HIDDEN.getIcon(IconColor.DEFAULT,
+                                             IconSize.LARGE));
+    icon.decorate(Location.RIGHT,
+                  icon2);
 
     // blender.setBackground(Color.orange);
     label = new JLabel(icon);

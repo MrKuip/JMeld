@@ -55,7 +55,9 @@ public class FontSetting
   {
     if (font == null && !StringUtil.isEmpty(name))
     {
-      font = new Font(name, style, size);
+      font = new Font(name,
+                      style,
+                      size);
     }
 
     return font;

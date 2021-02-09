@@ -56,15 +56,13 @@
  */
 package org.apache.commons.jrcs.diff.myers;
 
-
 /**
- *  Represents a snake in a diffpath.
+ * Represents a snake in a diffpath.
  * <p>
  *
- * {@link DiffNode DiffNodes} and {@link Snake Snakes} allow for compression
- * of diffpaths, as each snake is represented by a single {@link Snake Snake}
- * node and each contiguous series of insertions and deletions is represented
- * by a single {@link DiffNode DiffNodes}.
+ * {@link DiffNode DiffNodes} and {@link Snake Snakes} allow for compression of diffpaths, as each snake is represented
+ * by a single {@link Snake Snake} node and each contiguous series of insertions and deletions is represented by a
+ * single {@link DiffNode DiffNodes}.
  *
  * @version $Revision: 1.1 $ $Date: 2003/05/10 18:56:10 $
  * @author <a href="mailto:juanco@suigeneris.org">Juanco Anez</a>
@@ -76,17 +74,25 @@ public final class Snake
   /**
    * Constructs a snake node.
    *
-   * @param the position in the original sequence
-   * @param the position in the revised sequence
-   * @param prev the previous node in the path.
+   * @param the
+   *          position in the original sequence
+   * @param the
+   *          position in the revised sequence
+   * @param prev
+   *          the previous node in the path.
    */
-  public Snake(int i, int j, PathNode prev)
+  public Snake(int i,
+      int j,
+      PathNode prev)
   {
-    super(i, j, prev);
+    super(i,
+          j,
+          prev);
   }
 
   /**
    * {@inheritDoc}
+   * 
    * @return true always
    */
   public boolean isSnake()

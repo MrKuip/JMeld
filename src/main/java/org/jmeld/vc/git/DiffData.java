@@ -31,9 +31,11 @@ public class DiffData
     targetList = new ArrayList<Target>();
   }
 
-  public void addTarget(String path, JMRevision revision)
+  public void addTarget(String path,
+      JMRevision revision)
   {
-    targetList.add(new Target(path, revision));
+    targetList.add(new Target(path,
+                              revision));
   }
 
   public List<Target> getTargetList()
@@ -47,7 +49,8 @@ public class DiffData
     private String path;
     private JMRevision revision;
 
-    public Target(String path, JMRevision revision)
+    public Target(String path,
+        JMRevision revision)
     {
       this.path = path;
       this.revision = revision;

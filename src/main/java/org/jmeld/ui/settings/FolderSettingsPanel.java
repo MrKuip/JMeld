@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  *
- * @author  kees
+ * @author kees
  */
 public class FolderSettingsPanel
     extends FolderSettingsForm
@@ -42,8 +42,7 @@ public class FolderSettingsPanel
 
     settings = getSettings();
 
-    hierarchyComboBox.setModel(new DefaultComboBoxModel(
-        FolderSettings.FolderView.values()));
+    hierarchyComboBox.setModel(new DefaultComboBoxModel(FolderSettings.FolderView.values()));
     hierarchyComboBox.setSelectedItem(getSettings().getView());
     hierarchyComboBox.setFocusable(false);
     hierarchyComboBox.addActionListener(getHierarchyAction());
@@ -55,8 +54,7 @@ public class FolderSettingsPanel
     onlyLeftButton.addActionListener(getOnlyLeftAction());
 
     leftRightChangedButton.setText(null);
-    leftRightChangedButton.setIcon(ImageUtil
-        .getImageIcon("jmeld_left-right-changed"));
+    leftRightChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-changed"));
     leftRightChangedButton.setFocusable(false);
     leftRightChangedButton.setSelected(settings.getLeftRightChanged());
     leftRightChangedButton.addActionListener(getLeftRightChangedAction());
@@ -68,8 +66,7 @@ public class FolderSettingsPanel
     onlyRightButton.addActionListener(getOnlyRightAction());
 
     leftRightUnChangedButton.setText(null);
-    leftRightUnChangedButton.setIcon(ImageUtil
-        .getImageIcon("jmeld_left-right-unchanged"));
+    leftRightUnChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-unchanged"));
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(settings.getLeftRightUnChanged());
     leftRightUnChangedButton.addActionListener(getLeftRightUnChangedAction());
@@ -81,8 +78,7 @@ public class FolderSettingsPanel
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
-        getSettings().setView(
-          (FolderSettings.FolderView) hierarchyComboBox.getSelectedItem());
+        getSettings().setView((FolderSettings.FolderView) hierarchyComboBox.getSelectedItem());
       }
     };
   }
@@ -126,8 +122,7 @@ public class FolderSettingsPanel
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
-        getSettings().setLeftRightUnChanged(
-          leftRightUnChangedButton.isSelected());
+        getSettings().setLeftRightUnChanged(leftRightUnChangedButton.isSelected());
       }
     };
   }

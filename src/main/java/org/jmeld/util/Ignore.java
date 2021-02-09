@@ -33,26 +33,39 @@ public class Ignore
 
   public Ignore(Ignore ignore)
   {
-    this(ignore.ignoreWhitespaceAtBegin, ignore.ignoreWhitespaceInBetween,
-         ignore.ignoreWhitespaceAtEnd, ignore.ignoreEOL,
-         ignore.ignoreBlankLines, ignore.ignoreCase);
+    this(ignore.ignoreWhitespaceAtBegin,
+         ignore.ignoreWhitespaceInBetween,
+         ignore.ignoreWhitespaceAtEnd,
+         ignore.ignoreEOL,
+         ignore.ignoreBlankLines,
+         ignore.ignoreCase);
   }
 
   public Ignore()
   {
-    this(false, false, false);
+    this(false,
+         false,
+         false);
   }
 
-  public Ignore(boolean ignoreWhitespace, boolean ignoreEOL,
+  public Ignore(boolean ignoreWhitespace,
+      boolean ignoreEOL,
       boolean ignoreBlankLines)
   {
-    this(ignoreWhitespace, ignoreWhitespace, ignoreWhitespace, ignoreEOL,
-         ignoreBlankLines, false);
+    this(ignoreWhitespace,
+         ignoreWhitespace,
+         ignoreWhitespace,
+         ignoreEOL,
+         ignoreBlankLines,
+         false);
   }
 
   public Ignore(boolean ignoreWhitespaceAtBegin,
-      boolean ignoreWhitespaceInBetween, boolean ignoreWhitespaceAtEnd,
-      boolean ignoreEOL, boolean ignoreBlankLines, boolean ignoreCase)
+      boolean ignoreWhitespaceInBetween,
+      boolean ignoreWhitespaceAtEnd,
+      boolean ignoreEOL,
+      boolean ignoreBlankLines,
+      boolean ignoreCase)
   {
     this.ignoreWhitespaceAtBegin = ignoreWhitespaceAtBegin;
     this.ignoreWhitespaceInBetween = ignoreWhitespaceInBetween;
@@ -73,21 +86,17 @@ public class Ignore
 
   private void init()
   {
-    this.ignore = (ignoreWhitespaceAtBegin || ignoreWhitespaceInBetween
-                   || ignoreWhitespaceAtEnd || ignoreEOL || ignoreBlankLines || ignoreCase);
-    this.ignoreWhitespace = (ignoreWhitespaceAtBegin
-                             || ignoreWhitespaceInBetween || ignoreWhitespaceAtEnd);
+    this.ignore = (ignoreWhitespaceAtBegin || ignoreWhitespaceInBetween || ignoreWhitespaceAtEnd || ignoreEOL
+        || ignoreBlankLines || ignoreCase);
+    this.ignoreWhitespace = (ignoreWhitespaceAtBegin || ignoreWhitespaceInBetween || ignoreWhitespaceAtEnd);
   }
 
   @Override
   public String toString()
   {
-    return "ignore: " + (!ignore ? "nothing" : "")
-           + (ignoreWhitespaceAtBegin ? "whitespace[begin] " : "")
-           + (ignoreWhitespaceInBetween ? "whitespace[in between] " : "")
-           + (ignoreWhitespaceAtEnd ? "whitespace[end] " : "")
-           + (ignoreEOL ? "eol " : "")
-           + (ignoreBlankLines ? "blanklines " : "")
-           + (ignoreCase ? "case " : "");
+    return "ignore: " + (!ignore ? "nothing" : "") + (ignoreWhitespaceAtBegin ? "whitespace[begin] " : "")
+        + (ignoreWhitespaceInBetween ? "whitespace[in between] " : "")
+        + (ignoreWhitespaceAtEnd ? "whitespace[end] " : "") + (ignoreEOL ? "eol " : "")
+        + (ignoreBlankLines ? "blanklines " : "") + (ignoreCase ? "case " : "");
   }
 }

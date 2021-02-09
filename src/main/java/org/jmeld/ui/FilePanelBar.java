@@ -93,10 +93,13 @@ public class FilePanelBar
       column = -1;
     }
 
-    text = String.format("Line: %05d/%05d", line + 1, editor.getLineCount());
+    text = String.format("Line: %05d/%05d",
+                         line + 1,
+                         editor.getLineCount());
     lineNumber.setText(text);
 
-    text = String.format("Column: %03d", column);
+    text = String.format("Column: %03d",
+                         column);
     columnNumber.setText(text);
   }
 }

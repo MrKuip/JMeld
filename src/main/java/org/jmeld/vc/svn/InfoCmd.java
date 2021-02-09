@@ -18,8 +18,12 @@ public class InfoCmd
 
   public Result execute()
   {
-    super.execute("svn", "info", "--non-interactive", "-R", "--xml", file
-        .getPath());
+    super.execute("svn",
+                  "info",
+                  "--non-interactive",
+                  "-R",
+                  "--xml",
+                  file.getPath());
 
     return getResult();
   }

@@ -38,7 +38,8 @@ public class JMDelta
   private JMRevision revision;
   private JMRevision changeRevision;
 
-  public JMDelta(JMChunk original, JMChunk revised)
+  public JMDelta(JMChunk original,
+      JMChunk revised)
   {
     this.original = original;
     this.revised = revised;
@@ -133,7 +134,9 @@ public class JMDelta
       wt = TokenizerFactory.getInnerDiffTokenizer();
       o2 = wt.getTokens(revision.getOriginalString(original));
       r2 = wt.getTokens(revision.getRevisedString(revised));
-      rev = new JMDiff().diff(o2, r2, Ignore.NULL_IGNORE);
+      rev = new JMDiff().diff(o2,
+                              r2,
+                              Ignore.NULL_IGNORE);
 
       oIndex = new int[o2.size()];
       for (int i = 0; i < o2.size(); i++)
@@ -157,7 +160,8 @@ public class JMDelta
         debug("rIndex[" + i + "] = " + rIndex[i] + " \"" + r2.get(i) + "\"");
       }
 
-      rev2 = new JMRevision(original2, revised2);
+      rev2 = new JMRevision(original2,
+                            revised2);
       rev2.setIgnore(Ignore.NULL_IGNORE);
       for (JMDelta d : rev.getDeltas())
       {
@@ -174,8 +178,10 @@ public class JMDelta
         rAnchor = anchor == 0 ? 0 : rIndex[anchor - 1];
         rLength = size > 0 ? (rIndex[anchor + size - 1] - rAnchor) : 0;
 
-        d2 = new JMDelta(new JMChunk(oAnchor, oLength), new JMChunk(rAnchor,
-            rLength));
+        d2 = new JMDelta(new JMChunk(oAnchor,
+                                     oLength),
+                         new JMChunk(rAnchor,
+                                     rLength));
         rev2.add(d2);
 
         debug("delta = " + d + " -> " + d2);

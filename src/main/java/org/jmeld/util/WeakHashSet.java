@@ -20,9 +20,11 @@ public class WeakHashSet<E>
     addAll(c);
   }
 
-  public WeakHashSet(int initialCapacity, float loadFactor)
+  public WeakHashSet(int initialCapacity,
+      float loadFactor)
   {
-    map = new WeakHashMap<E, Boolean>(initialCapacity, loadFactor);
+    map = new WeakHashMap<E, Boolean>(initialCapacity,
+                                      loadFactor);
   }
 
   public WeakHashSet(int initialCapacity)
@@ -52,7 +54,8 @@ public class WeakHashSet<E>
 
   public boolean add(E o)
   {
-    return map.put(o, value) == null;
+    return map.put(o,
+                   value) == null;
   }
 
   public boolean remove(Object o)

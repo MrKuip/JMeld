@@ -21,8 +21,16 @@ public class StatusCmd
 
   public Result execute()
   {
-    super.execute("hg", "status", "-m", "-a", "-r", "-d", "-c", "-u",
-      "--noninteractive", file.getAbsolutePath());
+    super.execute("hg",
+                  "status",
+                  "-m",
+                  "-a",
+                  "-r",
+                  "-d",
+                  "-c",
+                  "-u",
+                  "--noninteractive",
+                  file.getAbsolutePath());
 
     return getResult();
   }
@@ -36,8 +44,7 @@ public class StatusCmd
 
     statusResult = new StatusResult(file);
 
-    reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
-        data)));
+    reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(data)));
     try
     {
       while ((text = reader.readLine()) != null)
@@ -76,7 +83,8 @@ public class StatusCmd
             break;
         }
 
-        statusResult.addEntry(text.substring(2), status);
+        statusResult.addEntry(text.substring(2),
+                              status);
       }
     }
     catch (IOException ex)
@@ -97,8 +105,7 @@ public class StatusCmd
     {
       for (StatusResult.Entry entry : result.getEntryList())
       {
-        System.out.println(entry.getStatus().getShortText() + " "
-                           + entry.getName());
+        System.out.println(entry.getStatus().getShortText() + " " + entry.getName());
       }
     }
   }

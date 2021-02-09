@@ -24,8 +24,10 @@ public class JMeldException
     super(m);
   }
 
-  public JMeldException(String m, Throwable t)
+  public JMeldException(String m,
+      Throwable t)
   {
-    super(m, t);
+    super(m,
+          t);
   }
 }

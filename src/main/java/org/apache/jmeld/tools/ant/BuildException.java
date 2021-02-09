@@ -40,8 +40,8 @@ public class BuildException
   /**
    * Constructs an exception with the given descriptive message.
    *
-   * @param message A description of or information about the exception.
-   *            Should not be <code>null</code>.
+   * @param message
+   *          A description of or information about the exception. Should not be <code>null</code>.
    */
   public BuildException(String message)
   {
@@ -49,15 +49,16 @@ public class BuildException
   }
 
   /**
-   * Constructs an exception with the given message and exception as
-   * a root cause.
+   * Constructs an exception with the given message and exception as a root cause.
    *
-   * @param message A description of or information about the exception.
-   *            Should not be <code>null</code> unless a cause is specified.
-   * @param cause The exception that might have caused this one.
-   *              May be <code>null</code>.
+   * @param message
+   *          A description of or information about the exception. Should not be <code>null</code> unless a cause is
+   *          specified.
+   * @param cause
+   *          The exception that might have caused this one. May be <code>null</code>.
    */
-  public BuildException(String message, Throwable cause)
+  public BuildException(String message,
+      Throwable cause)
   {
     super(message);
     this.cause = cause;
@@ -66,8 +67,8 @@ public class BuildException
   /**
    * Constructs an exception with the given exception as a root cause.
    *
-   * @param cause The exception that might have caused this one.
-   *              Should not be <code>null</code>.
+   * @param cause
+   *          The exception that might have caused this one. Should not be <code>null</code>.
    */
   public BuildException(Throwable cause)
   {
@@ -78,8 +79,7 @@ public class BuildException
   /**
    * Returns the nested exception, if any.
    *
-   * @return the nested exception, or <code>null</code> if no
-   *         exception is associated with this one
+   * @return the nested exception, or <code>null</code> if no exception is associated with this one
    */
   public Throwable getException()
   {
@@ -89,8 +89,7 @@ public class BuildException
   /**
    * Returns the nested exception, if any.
    *
-   * @return the nested exception, or <code>null</code> if no
-   *         exception is associated with this one
+   * @return the nested exception, or <code>null</code> if no exception is associated with this one
    */
   public Throwable getCause()
   {
@@ -108,8 +107,7 @@ public class BuildException
   }
 
   /**
-   * Prints the stack trace for this exception and any
-   * nested exception to <code>System.err</code>.
+   * Prints the stack trace for this exception and any nested exception to <code>System.err</code>.
    */
   public void printStackTrace()
   {
@@ -117,11 +115,10 @@ public class BuildException
   }
 
   /**
-   * Prints the stack trace of this exception and any nested
-   * exception to the specified PrintStream.
+   * Prints the stack trace of this exception and any nested exception to the specified PrintStream.
    *
-   * @param ps The PrintStream to print the stack trace to.
-   *           Must not be <code>null</code>.
+   * @param ps
+   *          The PrintStream to print the stack trace to. Must not be <code>null</code>.
    */
   public void printStackTrace(PrintStream ps)
   {
@@ -137,11 +134,10 @@ public class BuildException
   }
 
   /**
-   * Prints the stack trace of this exception and any nested
-   * exception to the specified PrintWriter.
+   * Prints the stack trace of this exception and any nested exception to the specified PrintWriter.
    *
-   * @param pw The PrintWriter to print the stack trace to.
-   *           Must not be <code>null</code>.
+   * @param pw
+   *          The PrintWriter to print the stack trace to. Must not be <code>null</code>.
    */
   public void printStackTrace(PrintWriter pw)
   {

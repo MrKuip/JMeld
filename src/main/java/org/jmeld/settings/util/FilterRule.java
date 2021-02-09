@@ -55,7 +55,9 @@ public class FilterRule
   @XmlAttribute
   private String description;
 
-  public FilterRule(String description, Rule rule, String pattern,
+  public FilterRule(String description,
+      Rule rule,
+      String pattern,
       boolean active)
   {
     setDescription(description);

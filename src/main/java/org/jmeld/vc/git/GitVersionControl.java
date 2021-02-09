@@ -8,7 +8,8 @@ import org.jmeld.vc.DiffIF;
 import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.VersionControlIF;
 
-public class GitVersionControl implements VersionControlIF
+public class GitVersionControl
+    implements VersionControlIF
 {
   private Boolean installed;
 
@@ -50,11 +51,13 @@ public class GitVersionControl implements VersionControlIF
     return cmd.getResultData();
   }
 
-  public DiffIF executeDiff(File file, boolean recursive)
+  public DiffIF executeDiff(File file,
+      boolean recursive)
   {
     DiffCmd cmd;
 
-    cmd = new DiffCmd(file, recursive);
+    cmd = new DiffCmd(file,
+                      recursive);
     cmd.execute();
     return cmd.getResultData();
   }

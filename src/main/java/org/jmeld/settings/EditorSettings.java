@@ -262,7 +262,8 @@ public class EditorSettings
 
   public void setSpecificFileEncodingName(String encodingName)
   {
-    if (ObjectUtil.equals(this.specificFileEncodingName, encodingName))
+    if (ObjectUtil.equals(this.specificFileEncodingName,
+                          encodingName))
     {
       return;
     }
@@ -287,7 +288,8 @@ public class EditorSettings
 
   public Color getAddedColor()
   {
-    return getColor(addedColor, Colors.ADDED);
+    return getColor(addedColor,
+                    Colors.ADDED);
   }
 
   public void setChangedColor(Color color)
@@ -298,7 +300,8 @@ public class EditorSettings
 
   public Color getChangedColor()
   {
-    return getColor(changedColor, Colors.CHANGED);
+    return getColor(changedColor,
+                    Colors.CHANGED);
   }
 
   public void setDeletedColor(Color color)
@@ -309,7 +312,8 @@ public class EditorSettings
 
   public Color getDeletedColor()
   {
-    return getColor(deletedColor, Colors.DELETED);
+    return getColor(deletedColor,
+                    Colors.DELETED);
   }
 
   public void setLookAndFeelName(String lookAndFeelName)
@@ -337,7 +341,6 @@ public class EditorSettings
     {
       toolbarButtonTextEnabled = true;
     }
-
 
     fireChanged();
   }
@@ -408,7 +411,8 @@ public class EditorSettings
     return font == null ? null : font.getFont();
   }
 
-  private Color getColor(ColorSetting cc, Color defaultColor)
+  private Color getColor(ColorSetting cc,
+      Color defaultColor)
   {
     Color c;
 

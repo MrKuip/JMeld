@@ -177,7 +177,8 @@ public abstract class AbstractBufferDocument
       return lineOffsetArray.length - 1;
     }
 
-    searchIndex = Arrays.binarySearch(lineOffsetArray, offset);
+    searchIndex = Arrays.binarySearch(lineOffsetArray,
+                                      offset);
     if (searchIndex >= 0)
     {
       return searchIndex + 1;
@@ -207,14 +208,16 @@ public abstract class AbstractBufferDocument
       document = new PlainDocument(content);
 
       reader = getReader();
-      new DefaultEditorKit().read(reader, document, 0);
+      new DefaultEditorKit().read(reader,
+                                  document,
+                                  0);
       reader.close();
 
       System.out.println("create document took " + stopWatch.getElapsedTime());
       document.addDocumentListener(this);
 
       reset();
-      
+
       initLines();
       initDigest();
     }
@@ -224,8 +227,8 @@ public abstract class AbstractBufferDocument
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Problem reading document (name=" + getName()
-                               + ") in buffer", ex);
+      throw new JMeldException("Problem reading document (name=" + getName() + ") in buffer",
+                               ex);
     }
   }
 
@@ -271,7 +274,10 @@ public abstract class AbstractBufferDocument
     try
     {
       out = getWriter();
-      new DefaultEditorKit().write(out, document, 0, document.getLength());
+      new DefaultEditorKit().write(out,
+                                   document,
+                                   0,
+                                   document.getLength());
       out.flush();
       out.close();
 
@@ -283,8 +289,8 @@ public abstract class AbstractBufferDocument
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Problem writing document (name=" + getName()
-                               + ") from buffer", ex);
+      throw new JMeldException("Problem writing document (name=" + getName() + ") from buffer",
+                               ex);
     }
   }
 
@@ -319,7 +325,10 @@ public abstract class AbstractBufferDocument
       return getCharArray()[offset];
     }
 
-    public boolean equals(MyGapContent c2, int start1, int end1, int start2)
+    public boolean equals(MyGapContent c2,
+        int start1,
+        int end1,
+        int start2)
     {
       char[] array1;
       char[] array2;
@@ -379,7 +388,8 @@ public abstract class AbstractBufferDocument
       return true;
     }
 
-    public int hashCode(int start, int end)
+    public int hashCode(int start,
+        int end)
     {
       char[] array;
       int g0;
@@ -427,7 +437,8 @@ public abstract class AbstractBufferDocument
 
     public int getDigest()
     {
-      return hashCode(0, document.getLength());
+      return hashCode(0,
+                      document.getLength());
     }
   }
 
@@ -453,8 +464,9 @@ public abstract class AbstractBufferDocument
 
     public void print()
     {
-      System.out.printf("[%08d]: %s\n", getOffset(), StringUtil
-          .replaceNewLines(toString()));
+      System.out.printf("[%08d]: %s\n",
+                        getOffset(),
+                        StringUtil.replaceNewLines(toString()));
     }
 
     @Override
@@ -486,13 +498,17 @@ public abstract class AbstractBufferDocument
         return false;
       }
 
-      return content.equals(line2.getContent(), start1, end1, start2);
+      return content.equals(line2.getContent(),
+                            start1,
+                            end1,
+                            start2);
     }
 
     @Override
     public int hashCode()
     {
-      return content.hashCode(element.getStartOffset(), element.getEndOffset());
+      return content.hashCode(element.getStartOffset(),
+                              element.getEndOffset());
     }
 
     @Override
@@ -501,7 +517,7 @@ public abstract class AbstractBufferDocument
       try
       {
         return content.getString(element.getStartOffset(),
-          element.getEndOffset() - element.getStartOffset());
+                                 element.getEndOffset() - element.getStartOffset());
       }
       catch (Exception ex)
       {
@@ -525,7 +541,8 @@ public abstract class AbstractBufferDocument
     {
       for (int lineNumber = 0; lineNumber < la.length; lineNumber++)
       {
-        System.out.printf("[%05d]", lineNumber);
+        System.out.printf("[%05d]",
+                          lineNumber);
         la[lineNumber].print();
       }
     }
@@ -569,7 +586,8 @@ public abstract class AbstractBufferDocument
     JMDocumentEvent jmde;
     String text;
 
-    jmde = new JMDocumentEvent(this, de);
+    jmde = new JMDocumentEvent(this,
+                               de);
     numberOfLinesChanged = 0;
 
     if (lineArray != null)
@@ -579,7 +597,8 @@ public abstract class AbstractBufferDocument
       {
         try
         {
-          text = document.getText(de.getOffset(), de.getLength());
+          text = document.getText(de.getOffset(),
+                                  de.getLength());
         }
         catch (BadLocationException ex)
         {

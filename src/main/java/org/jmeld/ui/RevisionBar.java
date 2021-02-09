@@ -34,15 +34,15 @@ public class RevisionBar
   private FilePanel filePanel;
   private boolean original;
 
-  public RevisionBar(BufferDiffPanel diffPanel, FilePanel filePanel,
+  public RevisionBar(BufferDiffPanel diffPanel,
+      FilePanel filePanel,
       boolean original)
   {
     this.diffPanel = diffPanel;
     this.filePanel = filePanel;
     this.original = original;
 
-    setBorder(BorderFactory.createLineBorder(ColorUtil.darker(ColorUtil
-        .darker(Colors.getPanelBackground()))));
+    setBorder(BorderFactory.createLineBorder(ColorUtil.darker(ColorUtil.darker(Colors.getPanelBackground()))));
 
     addMouseListener(getMouseListener());
   }
@@ -109,8 +109,7 @@ public class RevisionBar
           original = delta.getOriginal();
 
           // The chunk starts within the bounds of the line-resolution.
-          if (original.getAnchor() > lineBefore
-              && original.getAnchor() < lineAfter)
+          if (original.getAnchor() > lineBefore && original.getAnchor() < lineAfter)
           {
             diffPanel.doGotoDelta(delta);
             return;
@@ -122,8 +121,9 @@ public class RevisionBar
     };
   }
 
-  /** Calculate the rectangle that can be used to draw the diffs.
-   *    It is essentially the size of the scrollbar minus its buttons.
+  /**
+   * Calculate the rectangle that can be used to draw the diffs. It is essentially the size of the scrollbar minus its
+   * buttons.
    */
   private Rectangle getDrawableRectangle()
   {
@@ -195,7 +195,10 @@ public class RevisionBar
         height = 1;
       }
 
-      g.fillRect(0, y, r.width, height);
+      g.fillRect(0,
+                 y,
+                 r.width,
+                 height);
     }
   }
 

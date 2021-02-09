@@ -226,6 +226,7 @@ public class AbstractContentPanel
       return false;
     }
 
-    return ObjectUtil.equals(((AbstractContentPanel) o).getId(), id);
+    return ObjectUtil.equals(((AbstractContentPanel) o).getId(),
+                             id);
   }
 }

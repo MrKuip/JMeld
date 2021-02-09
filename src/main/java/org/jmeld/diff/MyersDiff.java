@@ -27,7 +27,8 @@ public class MyersDiff
   {
   }
 
-  public JMRevision diff(Object[] orig, Object[] rev)
+  public JMRevision diff(Object[] orig,
+      Object[] rev)
       throws JMeldException
   {
     org.apache.commons.jrcs.diff.myers.MyersDiff diff;
@@ -37,17 +38,22 @@ public class MyersDiff
     {
       diff = new org.apache.commons.jrcs.diff.myers.MyersDiff();
       diff.checkMaxTime(isMaxTimeChecked());
-      revision = diff.diff(orig, rev);
+      revision = diff.diff(orig,
+                           rev);
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Diff failed [" + getClass() + "]", ex);
+      throw new JMeldException("Diff failed [" + getClass() + "]",
+                               ex);
     }
 
-    return buildRevision(revision, orig, rev);
+    return buildRevision(revision,
+                         orig,
+                         rev);
   }
 
-  private JMRevision buildRevision(Revision revision, Object[] orig,
+  private JMRevision buildRevision(Revision revision,
+      Object[] orig,
       Object[] rev)
   {
     JMRevision result;
@@ -65,15 +71,18 @@ public class MyersDiff
       throw new IllegalArgumentException("revised sequence is null");
     }
 
-    result = new JMRevision(orig, rev);
+    result = new JMRevision(orig,
+                            rev);
     for (int i = 0; i < revision.size(); i++)
     {
       delta = revision.getDelta(i);
       original = delta.getOriginal();
       revised = delta.getRevised();
 
-      result.add(new JMDelta(new JMChunk(original.anchor(), original.size()),
-          new JMChunk(revised.anchor(), revised.size())));
+      result.add(new JMDelta(new JMChunk(original.anchor(),
+                                         original.size()),
+                             new JMChunk(revised.anchor(),
+                                         revised.size())));
     }
 
     return result;
