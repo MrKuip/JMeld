@@ -16,9 +16,12 @@
  */
 package org.jmeld.diff;
 
-import org.jmeld.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-import java.util.*;
+import org.jmeld.util.DiffUtil;
+import org.jmeld.util.Ignore;
 
 public class JMRevision
 {
@@ -45,6 +48,11 @@ public class JMRevision
   public void setIgnore(Ignore ignore)
   {
     this.ignore = ignore;
+  }
+
+  Ignore getIgnore()
+  {
+    return ignore;
   }
 
   public void add(JMDelta delta)
@@ -162,8 +170,8 @@ public class JMRevision
       }
 
       // This chunk is affected by the change. It will eventually be removed.
-      //   The lines that are affected will be compared and they will insert
-      //   new delta's if necessary.
+      // The lines that are affected will be compared and they will insert
+      // new delta's if necessary.
       deltaListToRemove.add(delta);
 
       // Revise the start and end if there are overlapping chunks.

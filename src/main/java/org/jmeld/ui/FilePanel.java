@@ -408,6 +408,11 @@ public class FilePanel
           // Mark the changes in a change in a different color.
           if (original.getSize() < MAXSIZE_CHANGE_DIFF && revised.getSize() < MAXSIZE_CHANGE_DIFF)
           {
+            if(!delta.isReallyChanged())
+            {
+              continue;
+            }
+            
             changeRev = delta.getChangeRevision();
             if (changeRev != null)
             {
@@ -467,6 +472,11 @@ public class FilePanel
         {
           if (original.getSize() < MAXSIZE_CHANGE_DIFF && revised.getSize() < MAXSIZE_CHANGE_DIFF)
           {
+            if(!delta.isReallyChanged())
+            {
+              continue;
+            }
+            
             changeRev = delta.getChangeRevision();
             if (changeRev != null)
             {

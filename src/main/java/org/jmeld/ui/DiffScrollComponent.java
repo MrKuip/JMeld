@@ -264,6 +264,11 @@ public class DiffScrollComponent
       {
         original = delta.getOriginal();
         revised = delta.getRevised();
+        
+        if(delta.isChange() && !delta.isReallyChanged())
+        {
+          continue;
+        }
 
         // This delta is before the firstLine of the screen: Keep on searching!
         if (original.getAnchor() + original.getSize() < firstLineFrom

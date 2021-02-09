@@ -16,16 +16,30 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.diff.*;
-import org.jmeld.settings.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.ui.util.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollBar;
+import javax.swing.JViewport;
+import javax.swing.text.JTextComponent;
 
-import java.awt.*;
-import java.awt.event.*;
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.ui.util.ColorUtil;
+import org.jmeld.ui.util.Colors;
+import org.jmeld.ui.util.RevisionUtil;
 
 public class RevisionBar
     extends JComponent
@@ -98,10 +112,10 @@ public class RevisionBar
           line = 0;
         }
 
-        // If the files are very large the resolution of one pixel contains 
-        //   a lot of lines of the document. Check if there is a chunk in 
-        //   the revision between those lines and if there is position on 
-        //   that chunk.
+        // If the files are very large the resolution of one pixel contains
+        // a lot of lines of the document. Check if there is a chunk in
+        // the revision between those lines and if there is position on
+        // that chunk.
         lineBefore = ((y - 3) * numberOfLines) / r.height;
         lineAfter = ((y + 3) * numberOfLines) / r.height;
         for (JMDelta delta : revision.getDeltas())
@@ -185,6 +199,11 @@ public class RevisionBar
 
     for (JMDelta delta : revision.getDeltas())
     {
+      if (delta.isChange() && !delta.isReallyChanged())
+      {
+        continue;
+      }
+
       chunk = original ? delta.getOriginal() : delta.getRevised();
 
       g.setColor(RevisionUtil.getColor(delta));

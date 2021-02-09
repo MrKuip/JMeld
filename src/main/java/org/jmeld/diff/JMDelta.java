@@ -16,9 +16,10 @@
  */
 package org.jmeld.diff;
 
-import org.jmeld.util.*;
+import java.util.List;
 
-import java.util.*;
+import org.jmeld.util.TokenizerFactory;
+import org.jmeld.util.WordTokenizer;
 
 public class JMDelta
 {
@@ -29,6 +30,7 @@ public class JMDelta
     DELETE,
     CHANGE;
   }
+
   private static boolean debug = false;
 
   // Instance variables:
@@ -36,6 +38,7 @@ public class JMDelta
   private JMChunk revised;
   private Type type;
   private JMRevision revision;
+  private boolean changeRevisionEvaluated;
   private JMRevision changeRevision;
 
   public JMDelta(JMChunk original,
@@ -79,14 +82,20 @@ public class JMDelta
 
   public void invalidateChangeRevision()
   {
-    changeRevision = null;
+    changeRevisionEvaluated = false;
+  }
+
+  public boolean isReallyChanged()
+  {
+    return getChangeRevision() == null || getChangeRevision().getDeltas().size() > 0;
   }
 
   public JMRevision getChangeRevision()
   {
-    if (changeRevision == null)
+    if (!changeRevisionEvaluated)
     {
       changeRevision = createChangeRevision();
+      changeRevisionEvaluated = true;
     }
 
     return changeRevision;
@@ -134,9 +143,10 @@ public class JMDelta
       wt = TokenizerFactory.getInnerDiffTokenizer();
       o2 = wt.getTokens(revision.getOriginalString(original));
       r2 = wt.getTokens(revision.getRevisedString(revised));
+
       rev = new JMDiff().diff(o2,
                               r2,
-                              Ignore.NULL_IGNORE);
+                              revision.getIgnore());
 
       oIndex = new int[o2.size()];
       for (int i = 0; i < o2.size(); i++)
@@ -162,7 +172,7 @@ public class JMDelta
 
       rev2 = new JMRevision(original2,
                             revised2);
-      rev2.setIgnore(Ignore.NULL_IGNORE);
+      rev2.setIgnore(revision.getIgnore());
       for (JMDelta d : rev.getDeltas())
       {
         o = d.getOriginal();
