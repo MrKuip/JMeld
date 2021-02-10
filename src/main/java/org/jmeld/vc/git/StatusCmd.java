@@ -47,6 +47,7 @@ public class StatusCmd
     {
       while ((text = reader.readLine()) != null)
       {
+        text = text.trim();
         if (text.length() < 3)
         {
           continue;
