@@ -5,19 +5,29 @@
  */
 package org.jmeld.ui.settings;
 
-import com.l2fprod.common.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import org.jmeld.*;
-import org.jmeld.settings.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
-import org.jmeld.util.conf.*;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JColorChooser;
+import javax.swing.JDialog;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import org.jmeld.JMeld;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.util.EmptyIcon;
+import org.jmeld.ui.util.FontUtil;
+import org.jmeld.ui.util.LookAndFeelManager;
+import org.jmeld.util.CharsetDetector;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.conf.ConfigurationListenerIF;
 
-import java.awt.*;
-import java.awt.event.*;
+import com.l2fprod.common.swing.JFontChooser;
 
 /**
  *

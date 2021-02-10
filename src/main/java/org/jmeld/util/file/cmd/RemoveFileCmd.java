@@ -1,11 +1,12 @@
 package org.jmeld.util.file.cmd;
 
-import org.jmeld.util.file.*;
-import org.jmeld.util.node.*;
+import java.io.File;
 
-import javax.swing.undo.*;
+import javax.swing.undo.CannotUndoException;
 
-import java.io.*;
+import org.jmeld.util.file.FileUtil;
+import org.jmeld.util.node.FileNode;
+import org.jmeld.util.node.JMDiffNode;
 
 public class RemoveFileCmd
     extends AbstractCmd

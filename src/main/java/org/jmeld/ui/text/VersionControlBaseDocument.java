@@ -16,17 +16,21 @@
  */
 package org.jmeld.ui.text;
 
-import org.jmeld.vc.*;
-import org.jmeld.*;
-import org.jmeld.util.node.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
 
-import java.io.*;
-
-import org.jmeld.vc.*;
-import org.jmeld.util.*;
-
-import java.io.*;
-import java.nio.charset.*;
+import org.jmeld.JMeldException;
+import org.jmeld.util.CharsetDetector;
+import org.jmeld.util.node.FileNode;
+import org.jmeld.vc.BaseFile;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.VersionControlIF;
 
 public class VersionControlBaseDocument
     extends AbstractBufferDocument

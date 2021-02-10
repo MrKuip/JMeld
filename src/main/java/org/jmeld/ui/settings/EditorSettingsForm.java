@@ -6,11 +6,6 @@
 
 package org.jmeld.ui.settings;
 
-import java.awt.Color;
-import javax.swing.JDialog;
-import org.jmeld.settings.EditorSettings;
-import org.jmeld.ui.util.EmptyIcon;
-
 /**
  *
  * @author kees

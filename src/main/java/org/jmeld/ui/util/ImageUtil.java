@@ -16,13 +16,18 @@
  */
 package org.jmeld.ui.util;
 
-import org.jmeld.util.*;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
+import java.net.URL;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.net.*;
+import org.jmeld.util.ResourceLoader;
 
 public class ImageUtil
 {

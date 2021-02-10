@@ -16,11 +16,22 @@
  */
 package org.jmeld.ui.text;
 
-import org.jmeld.*;
-import org.jmeld.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
 
-import java.io.*;
-import java.nio.charset.*;
+import org.jmeld.JMeldException;
+import org.jmeld.util.CharsetDetector;
 
 public class FileDocument
     extends AbstractBufferDocument

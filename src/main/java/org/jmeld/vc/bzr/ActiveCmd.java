@@ -1,10 +1,9 @@
 package org.jmeld.vc.bzr;
 
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
-import org.jmeld.vc.util.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.util.VcCmd;
 
 public class ActiveCmd
     extends VcCmd<Boolean>

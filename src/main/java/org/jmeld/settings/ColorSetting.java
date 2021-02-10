@@ -16,12 +16,13 @@
  */
 package org.jmeld.settings;
 
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
+import java.awt.Color;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
-import java.awt.*;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public class ColorSetting

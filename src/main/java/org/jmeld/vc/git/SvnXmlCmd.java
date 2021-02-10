@@ -1,10 +1,12 @@
 package org.jmeld.vc.git;
 
-import org.jmeld.util.*;
-import org.jmeld.vc.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
-import java.io.*;
-import java.util.*;
+import org.jmeld.util.JaxbPersister;
+import org.jmeld.util.Result;
+import org.jmeld.vc.util.VcCmd;
 
 public class SvnXmlCmd<T>
     extends VcCmd<T>

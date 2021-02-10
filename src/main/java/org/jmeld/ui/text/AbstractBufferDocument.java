@@ -16,16 +16,24 @@
  */
 package org.jmeld.ui.text;
 
-import org.jmeld.*;
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
-
-import javax.swing.event.*;
-import javax.swing.text.*;
-
-import java.io.*;
-import java.util.*;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.Element;
+import javax.swing.text.GapContent;
+import javax.swing.text.PlainDocument;
+
+import org.jmeld.JMeldException;
+import org.jmeld.util.StopWatch;
+import org.jmeld.util.StringUtil;
+import org.jmeld.vc.BlameIF;
 
 public abstract class AbstractBufferDocument
     implements BufferDocumentIF, DocumentListener

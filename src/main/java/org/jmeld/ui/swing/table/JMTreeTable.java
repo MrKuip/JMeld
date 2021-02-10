@@ -16,9 +16,12 @@
  */
 package org.jmeld.ui.swing.table;
 
-import org.jdesktop.swingx.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
-import javax.swing.table.*;
+import org.jdesktop.swingx.JXTreeTable;
 
 public class JMTreeTable
     extends JXTreeTable

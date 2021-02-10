@@ -1,12 +1,19 @@
 package org.jmeld.vc.svn;
 
-import org.jmeld.diff.*;
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
-import org.jmeld.vc.util.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.io.*;
-import java.util.regex.*;
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.util.Result;
+import org.jmeld.vc.DiffIF;
+import org.jmeld.vc.util.VcCmd;
 
 public class DiffCmd
     extends VcCmd<DiffData>

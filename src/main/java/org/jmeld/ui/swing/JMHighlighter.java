@@ -16,11 +16,20 @@
  */
 package org.jmeld.ui.swing;
 
-import javax.swing.text.*;
-
-import java.awt.*;
-import java.util.*;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Position;
 
 /**
  * A highlighter that paints in layers.

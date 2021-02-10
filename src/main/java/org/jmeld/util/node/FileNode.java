@@ -16,9 +16,9 @@
  */
 package org.jmeld.util.node;
 
-import org.jmeld.ui.text.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.ui.text.FileDocument;
 
 public class FileNode
     extends JMeldNode

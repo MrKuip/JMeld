@@ -16,9 +16,10 @@
  */
 package org.jmeld.diff;
 
-import org.apache.commons.jrcs.diff.*;
-import org.gnu.diff.*;
-import org.jmeld.*;
+import org.apache.commons.jrcs.diff.Chunk;
+import org.apache.commons.jrcs.diff.Delta;
+import org.apache.commons.jrcs.diff.Revision;
+import org.jmeld.JMeldException;
 
 public class MyersDiff
     extends AbstractJMDiffAlgorithm

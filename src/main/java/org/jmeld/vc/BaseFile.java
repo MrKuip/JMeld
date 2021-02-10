@@ -1,7 +1,5 @@
 package org.jmeld.vc;
 
-import java.util.*;
-
 public class BaseFile
 {
   private byte[] byteArray;

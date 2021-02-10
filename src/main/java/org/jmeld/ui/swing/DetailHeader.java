@@ -1,8 +1,8 @@
 package org.jmeld.ui.swing;
 
-import javax.swing.*;
+import java.awt.Font;
 
-import java.awt.*;
+import javax.swing.JLabel;
 
 public class DetailHeader
     extends JLabel

@@ -16,21 +16,39 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.diff.*;
-import org.jmeld.settings.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
-
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
-
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.geom.CubicCurve2D;
+import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.ui.util.RevisionUtil;
+import org.jmeld.util.conf.ConfigurationListenerIF;
 
 public class DiffScrollComponent
     extends JComponent

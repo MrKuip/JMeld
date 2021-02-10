@@ -16,10 +16,11 @@
  */
 package org.jmeld.util.prefs;
 
-import org.jmeld.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.prefs.Preferences;
 
-import java.util.*;
-import java.util.prefs.*;
+import org.jmeld.util.StringUtil;
 
 public abstract class Preference
 {

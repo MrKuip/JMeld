@@ -5,21 +5,14 @@
  */
 package org.jmeld.ui.settings;
 
-import org.jmeld.settings.*;
-import org.jmeld.settings.util.*;
-import org.jmeld.ui.swing.table.*;
-import org.jmeld.ui.swing.table.util.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import javax.swing.DefaultComboBoxModel;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import org.jmeld.settings.FolderSettings;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.util.conf.ConfigurationListenerIF;
 
 /**
  *

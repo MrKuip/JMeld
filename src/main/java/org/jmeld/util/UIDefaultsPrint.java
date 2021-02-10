@@ -16,9 +16,11 @@
  */
 package org.jmeld.util;
 
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 
-import java.util.*;
+import javax.swing.UIManager;
 
 public class UIDefaultsPrint
 {

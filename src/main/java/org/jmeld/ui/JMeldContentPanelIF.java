@@ -16,7 +16,7 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.ui.search.*;
+import org.jmeld.ui.search.SearchHits;
 
 public interface JMeldContentPanelIF
 {

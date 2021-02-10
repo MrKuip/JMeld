@@ -1,8 +1,8 @@
 package org.jmeld.vc.svn;
 
-import org.jmeld.util.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.util.Result;
 
 public class InfoCmd
     extends SvnXmlCmd<InfoData>

@@ -1,6 +1,6 @@
 package org.jmeld.vc;
 
-import java.io.*;
+import java.io.File;
 
 public interface VersionControlIF
 {

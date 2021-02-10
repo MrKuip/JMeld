@@ -56,9 +56,15 @@
  */
 package org.apache.commons.jrcs.diff.myers;
 
-import org.apache.commons.jrcs.diff.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.*;
+import org.apache.commons.jrcs.diff.Chunk;
+import org.apache.commons.jrcs.diff.Delta;
+import org.apache.commons.jrcs.diff.Diff;
+import org.apache.commons.jrcs.diff.DiffAlgorithm;
+import org.apache.commons.jrcs.diff.DifferentiationFailedException;
+import org.apache.commons.jrcs.diff.Revision;
 
 /**
  * A clean-room implementation of <a href="http://www.cs.arizona.edu/people/gene/"> Eugene Myers</a> differencing

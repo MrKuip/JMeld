@@ -16,7 +16,7 @@
  */
 package org.jmeld.util.node;
 
-import org.jmeld.ui.text.*;
+import org.jmeld.ui.text.BufferDocumentIF;
 
 public interface BufferNode
 {

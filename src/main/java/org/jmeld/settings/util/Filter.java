@@ -16,13 +16,17 @@
  */
 package org.jmeld.settings.util;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
-import java.util.*;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public class Filter

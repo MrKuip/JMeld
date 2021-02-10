@@ -1,10 +1,11 @@
 package org.jmeld.ui.util;
 
-import org.jmeld.ui.action.*;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
-import javax.swing.*;
-
-import java.awt.*;
+import org.jmeld.ui.action.MeldAction;
 
 public class SwingUtil
 {

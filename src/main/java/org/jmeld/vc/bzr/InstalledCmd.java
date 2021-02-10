@@ -1,8 +1,7 @@
 package org.jmeld.vc.bzr;
 
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
-import org.jmeld.vc.util.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.util.VcCmd;
 
 public class InstalledCmd
     extends VcCmd<Boolean>

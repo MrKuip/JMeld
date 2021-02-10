@@ -56,14 +56,14 @@
  */
 package org.apache.commons.jrcs.diff;
 
-import org.apache.commons.jrcs.util.ToString;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.apache.commons.jrcs.util.ToString;
 
 /**
  * A Revision holds the series of deltas that describe the differences between two sequences.

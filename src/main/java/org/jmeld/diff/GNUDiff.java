@@ -16,8 +16,8 @@
  */
 package org.jmeld.diff;
 
-import org.gnu.diff.*;
-import org.jmeld.*;
+import org.gnu.diff.Diff;
+import org.jmeld.JMeldException;
 
 public class GNUDiff
     extends AbstractJMDiffAlgorithm

@@ -16,10 +16,7 @@
  */
 package org.jmeld.ui.util;
 
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.RGBImageFilter;
 
 /** Filter that adds transparency */
 class TransparentFilter

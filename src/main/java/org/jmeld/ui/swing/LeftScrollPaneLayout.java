@@ -16,9 +16,8 @@
  */
 package org.jmeld.ui.swing;
 
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
 
 public class LeftScrollPaneLayout
     extends javax.swing.ScrollPaneLayout

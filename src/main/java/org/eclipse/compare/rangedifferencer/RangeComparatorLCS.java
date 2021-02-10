@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.compare.rangedifferencer;
 
-import org.eclipse.compare.internal.LCS;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.compare.internal.LCS;
 
 public class RangeComparatorLCS
     extends LCS

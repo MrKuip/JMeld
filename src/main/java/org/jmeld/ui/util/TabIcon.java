@@ -16,17 +16,27 @@
  */
 package org.jmeld.ui.util;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.util.*;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import org.jmeld.settings.JMeldSettings;
 
 /**
  * Very ugly hack to make possible a close button on a tabbedpane (use it for jdk's before 1.6).

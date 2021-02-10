@@ -1,17 +1,20 @@
 package org.jmeld.ui.util;
 
-import com.jgoodies.looks.plastic.*;
-import com.jgoodies.looks.plastic.theme.*;
-import com.jidesoft.plaf.*;
-
-import java.awt.*;
-import java.util.*;
+import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
-import org.jmeld.settings.*;
-import org.jmeld.*;
-import org.jmeld.util.*;
+import javax.swing.LookAndFeel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import org.jmeld.JMeld;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.util.ObjectUtil;
+
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jidesoft.plaf.LookAndFeelFactory;
 
 public class LookAndFeelManager
 {

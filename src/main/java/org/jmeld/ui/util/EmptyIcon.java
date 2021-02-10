@@ -16,9 +16,11 @@
  */
 package org.jmeld.ui.util;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 
-import java.awt.*;
+import javax.swing.Icon;
 
 public class EmptyIcon
     implements Icon

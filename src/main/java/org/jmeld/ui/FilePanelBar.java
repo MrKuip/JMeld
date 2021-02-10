@@ -16,9 +16,14 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.ui.util.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
-import javax.swing.*;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.ui.util.ToolBarBuilder;
 
 public class FilePanelBar
     extends JPanel

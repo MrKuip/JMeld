@@ -16,20 +16,38 @@
  */
 package org.jmeld.ui;
 
-import com.jgoodies.forms.layout.*;
-
-import org.jmeld.settings.*;
-import org.jmeld.settings.util.*;
-import org.jmeld.util.*;
-import org.jmeld.util.prefs.*;
-
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.settings.util.Filter;
+import org.jmeld.util.ObjectUtil;
+import org.jmeld.util.prefs.ComboBoxPreference;
+import org.jmeld.util.prefs.ComboBoxSelectionPreference;
+import org.jmeld.util.prefs.DirectoryChooserPreference;
+import org.jmeld.util.prefs.FileChooserPreference;
+import org.jmeld.util.prefs.TabbedPanePreference;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class NewPanelDialog
 {

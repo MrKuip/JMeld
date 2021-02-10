@@ -16,7 +16,8 @@
  */
 package org.jmeld.ui.search;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchHits
 {

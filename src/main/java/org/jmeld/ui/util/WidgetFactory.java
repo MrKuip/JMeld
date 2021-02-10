@@ -16,12 +16,17 @@
  */
 package org.jmeld.ui.util;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.action.*;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
 
-import java.awt.*;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.action.MeldAction;
 
 public class WidgetFactory
 {

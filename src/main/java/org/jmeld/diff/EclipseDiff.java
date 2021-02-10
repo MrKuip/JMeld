@@ -16,8 +16,10 @@
  */
 package org.jmeld.diff;
 
-import org.eclipse.compare.rangedifferencer.*;
-import org.jmeld.*;
+import org.eclipse.compare.rangedifferencer.IRangeComparator;
+import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.rangedifferencer.RangeDifferencer;
+import org.jmeld.JMeldException;
 
 public class EclipseDiff
     extends AbstractJMDiffAlgorithm

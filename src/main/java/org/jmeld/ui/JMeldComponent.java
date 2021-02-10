@@ -5,9 +5,15 @@
 
 package org.jmeld.ui;
 
-import java.awt.*;
-import java.io.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.io.File;
+
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.jmeld.ui.action.Actions;
 
 /**

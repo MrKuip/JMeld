@@ -16,11 +16,11 @@
  */
 package org.apache.jmeld.tools.ant.types.selectors;
 
-import org.apache.jmeld.tools.ant.types.Resource;
-
 import java.io.File;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import org.apache.jmeld.tools.ant.types.Resource;
 
 /**
  * <p>

@@ -16,11 +16,12 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.ui.swing.table.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.node.*;
+import javax.swing.Icon;
 
-import javax.swing.*;
+import org.jmeld.ui.swing.table.JMTreeTableModel;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.util.node.JMDiffNode;
+import org.jmeld.util.node.VersionControlBaseNode;
 
 public class VersionControlTreeTableModel
     extends JMTreeTableModel

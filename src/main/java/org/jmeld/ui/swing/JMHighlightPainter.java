@@ -16,14 +16,19 @@
  */
 package org.jmeld.ui.swing;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Shape;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.JTextComponent;
+
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
-
-import javax.swing.text.*;
-
-import java.awt.*;
+import org.jmeld.ui.util.Colors;
+import org.jmeld.util.conf.ConfigurationListenerIF;
 
 public class JMHighlightPainter
     extends DefaultHighlighter.DefaultHighlightPainter

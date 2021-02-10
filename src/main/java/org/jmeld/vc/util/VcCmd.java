@@ -1,9 +1,14 @@
 package org.jmeld.vc.util;
 
-import org.jmeld.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
-import java.io.*;
-import java.util.*;
+import org.jmeld.util.Result;
 
 public abstract class VcCmd<T>
 {

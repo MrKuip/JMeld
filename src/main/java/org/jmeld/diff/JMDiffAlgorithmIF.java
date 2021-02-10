@@ -16,7 +16,7 @@
  */
 package org.jmeld.diff;
 
-import org.jmeld.*;
+import org.jmeld.JMeldException;
 
 public interface JMDiffAlgorithmIF
 {

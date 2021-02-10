@@ -7,8 +7,8 @@
 
 package org.jdesktop.swingworker;
 
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.SwingUtilities;
 

@@ -16,9 +16,10 @@
  */
 package org.jmeld.util.prefs;
 
-import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
-import java.io.*;
+import javax.swing.JFileChooser;
 
 public class FileChooserPreference
     extends Preference

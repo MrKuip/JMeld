@@ -1,11 +1,12 @@
 package org.jmeld.util.conf;
 
-import org.jmeld.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import java.io.*;
-import java.util.*;
+import javax.xml.bind.JAXBException;
 
-import javax.xml.bind.*;
+import org.jmeld.util.JaxbPersister;
 
 public class ConfigurationPersister
 {

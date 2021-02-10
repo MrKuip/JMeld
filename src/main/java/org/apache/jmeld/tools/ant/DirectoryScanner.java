@@ -16,15 +16,28 @@
  */
 package org.apache.jmeld.tools.ant;
 
-import org.apache.jmeld.tools.ant.taskdefs.condition.*;
-import org.apache.jmeld.tools.ant.types.*;
-import org.apache.jmeld.tools.ant.types.selectors.*;
-import org.apache.jmeld.tools.ant.util.*;
-import org.jmeld.ui.*;
-import org.jmeld.util.node.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import java.io.*;
-import java.util.*;
+import org.apache.jmeld.tools.ant.taskdefs.condition.Os;
+import org.apache.jmeld.tools.ant.types.Resource;
+import org.apache.jmeld.tools.ant.types.ResourceFactory;
+import org.apache.jmeld.tools.ant.types.selectors.FileSelector;
+import org.apache.jmeld.tools.ant.types.selectors.SelectorScanner;
+import org.apache.jmeld.tools.ant.types.selectors.SelectorUtils;
+import org.apache.jmeld.tools.ant.util.FileUtils;
+import org.jmeld.ui.StatusBar;
+import org.jmeld.util.node.FileNode;
 
 /**
  * Class for scanning a directory for files/directories which match certain criteria.

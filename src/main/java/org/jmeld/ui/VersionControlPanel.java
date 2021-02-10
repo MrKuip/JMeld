@@ -16,26 +16,15 @@
  */
 package org.jmeld.ui;
 
-import org.jdesktop.swingworker.SwingWorker;
-import org.jdesktop.swingx.decorator.*;
-import org.jdesktop.swingx.treetable.*;
-import org.jmeld.settings.*;
-import org.jmeld.ui.action.*;
-import org.jmeld.ui.swing.table.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
-import org.jmeld.util.file.*;
-import org.jmeld.util.file.cmd.*;
-import org.jmeld.util.node.*;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.undo.*;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import org.jmeld.ui.action.ActionHandler;
+import org.jmeld.ui.swing.table.JMTreeTableModel;
+import org.jmeld.util.conf.ConfigurationListenerIF;
+import org.jmeld.util.file.FolderDiff;
 
 public class VersionControlPanel
     extends AbstractContentPanel

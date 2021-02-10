@@ -1,10 +1,9 @@
 package org.jmeld.vc.svn;
 
-import org.jmeld.vc.*;
+import java.io.File;
 
-import org.jmeld.util.*;
-
-import java.io.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.StatusResult;
 
 public class StatusCmd
     extends SvnXmlCmd<StatusData>

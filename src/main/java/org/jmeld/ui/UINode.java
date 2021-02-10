@@ -1,13 +1,18 @@
 package org.jmeld.ui;
 
-import org.jdesktop.swingx.treetable.*;
-import org.jmeld.ui.swing.table.*;
-import org.jmeld.util.node.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.swing.tree.*;
+import javax.swing.tree.TreeNode;
 
-import java.util.*;
-import java.io.*;
+import org.jdesktop.swingx.treetable.TreeTableNode;
+import org.jmeld.ui.swing.table.JMTreeTableModel;
+import org.jmeld.util.node.JMDiffNode;
 
 public class UINode
     implements TreeTableNode, Comparable<UINode>

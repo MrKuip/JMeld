@@ -16,10 +16,11 @@
  */
 package org.jmeld.ui.util;
 
-import org.jmeld.diff.*;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.awt.*;
-import java.util.*;
+import org.jmeld.diff.JMDelta;
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
 

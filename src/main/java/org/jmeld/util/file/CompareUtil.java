@@ -16,12 +16,18 @@
  */
 package org.jmeld.util.file;
 
-import org.jmeld.util.*;
-import org.jmeld.util.node.*;
+import java.io.CharArrayReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.Reader;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.FileChannel;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.node.BufferNode;
+import org.jmeld.util.node.FileNode;
 
 public class CompareUtil
 {

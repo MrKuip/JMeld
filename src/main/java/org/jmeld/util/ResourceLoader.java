@@ -16,12 +16,8 @@
  */
 package org.jmeld.util;
 
-import javax.swing.*;
-
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.InputStream;
+import java.net.URL;
 
 public class ResourceLoader
 {

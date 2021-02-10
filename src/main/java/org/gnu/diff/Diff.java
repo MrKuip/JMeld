@@ -1,6 +1,7 @@
 package org.gnu.diff;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class to compare vectors of objects. The result of comparison is a list of <code>change</code> objects which form

@@ -56,15 +56,15 @@
  */
 package org.apache.commons.jrcs.tools;
 
-import org.apache.commons.jrcs.diff.Diff;
-import org.apache.commons.jrcs.diff.Revision;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.jrcs.diff.Diff;
+import org.apache.commons.jrcs.diff.Revision;
 
 /**
  * A program to compare two files.

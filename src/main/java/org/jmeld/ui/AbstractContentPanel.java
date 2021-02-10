@@ -16,12 +16,16 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.util.*;
-import org.jmeld.ui.search.*;
+import javax.swing.JPanel;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.CompoundEdit;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.undo.*;
+import org.jmeld.ui.search.SearchHits;
+import org.jmeld.util.ObjectUtil;
 
 public class AbstractContentPanel
     extends JPanel

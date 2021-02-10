@@ -16,9 +16,9 @@
  */
 package org.apache.jmeld.tools.ant.types.selectors;
 
-import org.apache.jmeld.tools.ant.BuildException;
-
 import java.io.File;
+
+import org.apache.jmeld.tools.ant.BuildException;
 
 /**
  * This is the interface to be used by all selectors.

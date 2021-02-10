@@ -1,6 +1,6 @@
 package org.jmeld.util.node;
 
-import java.io.*;
+import java.io.File;
 
 public class JMDiffNodeFactory
 {

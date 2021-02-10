@@ -1,9 +1,12 @@
 package org.jmeld.vc.svn;
 
-import org.jmeld.vc.*;
+import java.io.File;
 
-import java.io.*;
-import java.util.*;
+import org.jmeld.vc.BaseFile;
+import org.jmeld.vc.BlameIF;
+import org.jmeld.vc.DiffIF;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.VersionControlIF;
 
 public class SubversionVersionControl
     implements VersionControlIF

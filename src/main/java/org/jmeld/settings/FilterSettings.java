@@ -16,14 +16,17 @@
  */
 package org.jmeld.settings;
 
-import org.jmeld.settings.util.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
-import org.jmeld.util.conf.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
-import java.util.*;
+import org.jmeld.settings.util.Filter;
+import org.jmeld.settings.util.FilterRule;
+import org.jmeld.util.ObjectUtil;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public class FilterSettings

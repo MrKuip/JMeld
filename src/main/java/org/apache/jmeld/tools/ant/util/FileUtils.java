@@ -16,22 +16,14 @@
  */
 package org.apache.jmeld.tools.ant.util;
 
-import org.apache.jmeld.tools.ant.BuildException;
-import org.apache.jmeld.tools.ant.taskdefs.condition.Os;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.MalformedURLException;
@@ -42,7 +34,9 @@ import java.text.StringCharacterIterator;
 import java.util.Random;
 import java.util.Stack;
 import java.util.StringTokenizer;
-import java.util.Vector;
+
+import org.apache.jmeld.tools.ant.BuildException;
+import org.apache.jmeld.tools.ant.taskdefs.condition.Os;
 
 /**
  * This class also encapsulates methods which allow Files to be referred to using abstract path names which are

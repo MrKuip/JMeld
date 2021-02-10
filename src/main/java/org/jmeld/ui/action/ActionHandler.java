@@ -1,6 +1,7 @@
 package org.jmeld.ui.action;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionHandler
 {

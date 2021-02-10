@@ -16,10 +16,11 @@
  */
 package org.jmeld.vc.svn;
 
-import org.jmeld.diff.*;
-import org.jmeld.vc.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.vc.DiffIF;
 
 public class DiffData
     implements DiffIF

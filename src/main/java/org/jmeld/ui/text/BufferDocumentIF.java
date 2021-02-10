@@ -16,12 +16,12 @@
  */
 package org.jmeld.ui.text;
 
-import org.jmeld.*;
-import org.jmeld.vc.*;
+import java.io.Reader;
 
-import java.io.*;
+import javax.swing.text.PlainDocument;
 
-import javax.swing.text.*;
+import org.jmeld.JMeldException;
+import org.jmeld.vc.BlameIF;
 
 public interface BufferDocumentIF
 {

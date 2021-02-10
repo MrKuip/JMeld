@@ -16,16 +16,22 @@
  */
 package org.jmeld.util.file;
 
-import org.apache.jmeld.tools.ant.*;
-import org.jmeld.settings.*;
-import org.jmeld.settings.util.*;
-import org.jmeld.ui.*;
-import org.jmeld.util.*;
-import org.jmeld.util.node.*;
-import org.jmeld.vc.*;
+import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.io.*;
-import java.util.*;
+import org.apache.jmeld.tools.ant.DirectoryScanner;
+import org.jmeld.ui.StatusBar;
+import org.jmeld.util.StopWatch;
+import org.jmeld.util.StringUtil;
+import org.jmeld.util.node.FileNode;
+import org.jmeld.util.node.JMDiffNode;
+import org.jmeld.util.node.VersionControlBaseNode;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.VersionControlIF;
+import org.jmeld.vc.VersionControlUtil;
 
 public class VersionControlDiff
     extends FolderDiff

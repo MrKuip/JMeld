@@ -1,9 +1,9 @@
 package org.jmeld.vc.svn;
 
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.BlameIF;
 
 public class BlameCmd
     extends SvnXmlCmd<BlameData>

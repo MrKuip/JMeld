@@ -16,9 +16,10 @@
  */
 package org.jmeld.ui.util;
 
-import javax.swing.*;
+import java.awt.Color;
 
-import java.awt.*;
+import javax.swing.JList;
+import javax.swing.JPanel;
 
 public class Colors
 {

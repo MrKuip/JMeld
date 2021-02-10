@@ -16,13 +16,14 @@
  */
 package org.jmeld.ui.swing.table;
 
-import org.jdesktop.swingx.treetable.*;
-import org.jmeld.ui.*;
-
-import javax.swing.table.*;
-
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+
+import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
+import org.jmeld.ui.UINode;
 
 public abstract class JMTreeTableModel
     extends DefaultTreeTableModel

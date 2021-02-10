@@ -16,15 +16,22 @@
  */
 package org.jmeld.ui.swing;
 
-import org.jmeld.diff.*;
-import org.jmeld.util.*;
-
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.text.*;
-
+import java.awt.Color;
 import java.util.List;
+
+import javax.swing.JTextPane;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
+
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMDiff;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.TokenizerFactory;
+import org.jmeld.util.WordTokenizer;
 
 public class DiffLabel
     extends JTextPane

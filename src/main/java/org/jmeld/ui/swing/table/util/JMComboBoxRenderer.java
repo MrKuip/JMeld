@@ -1,11 +1,11 @@
 package org.jmeld.ui.swing.table.util;
 
-import javax.swing.*;
-import javax.swing.table.*;
-
-import java.awt.*;
-import java.util.*;
+import java.awt.Component;
 import java.util.List;
+
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
 public class JMComboBoxRenderer
     extends JComboBox

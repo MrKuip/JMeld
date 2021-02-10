@@ -16,17 +16,22 @@
  */
 package org.jmeld;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.prefs.*;
-
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.DefaultKeyboardFocusManager;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.JMeldPanel;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.ui.util.LookAndFeelManager;
+import org.jmeld.util.prefs.WindowPreference;
+
 
 public class JMeld
     implements Runnable

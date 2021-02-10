@@ -1,6 +1,7 @@
 package org.jmeld.util.conf;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class AbstractConfiguration
 {

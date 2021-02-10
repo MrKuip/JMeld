@@ -1,8 +1,10 @@
 package org.jmeld.vc.hg;
 
-import org.jmeld.vc.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.vc.BaseFile;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.VersionControlIF;
 
 public class MercurialVersionControl
     implements VersionControlIF

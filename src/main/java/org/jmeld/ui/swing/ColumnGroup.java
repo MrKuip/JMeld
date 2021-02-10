@@ -1,10 +1,14 @@
 package org.jmeld.ui.swing;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import java.awt.*;
-import java.util.*;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class ColumnGroup
 {

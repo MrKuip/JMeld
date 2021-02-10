@@ -16,13 +16,11 @@
  */
 package org.jmeld.util.prefs;
 
-import org.jmeld.util.*;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import javax.swing.*;
-import javax.swing.event.*;
-
-import java.io.*;
-import java.util.*;
+import org.jmeld.util.StringUtil;
 
 public class TabbedPanePreference
     extends Preference

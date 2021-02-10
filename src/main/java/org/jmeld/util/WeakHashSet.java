@@ -1,6 +1,10 @@
 package org.jmeld.util;
 
-import java.util.*;
+import java.util.AbstractSet;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 public class WeakHashSet<E>
     extends AbstractSet<E>

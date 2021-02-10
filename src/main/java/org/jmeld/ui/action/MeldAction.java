@@ -23,8 +23,8 @@ import java.lang.reflect.Method;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.Icons;
+import org.jmeld.ui.util.ImageUtil;
 
 public class MeldAction
     extends AbstractAction

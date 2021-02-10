@@ -16,9 +16,9 @@
  */
 package org.apache.jmeld.tools.ant.taskdefs.condition;
 
-import org.apache.jmeld.tools.ant.BuildException;
-
 import java.util.Locale;
+
+import org.apache.jmeld.tools.ant.BuildException;
 
 /**
  * Condition that tests the OS type.

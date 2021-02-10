@@ -1,11 +1,14 @@
 package org.jmeld.vc.bzr;
 
-import org.jmeld.vc.*;
-import org.jmeld.vc.util.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import org.jmeld.util.*;
-
-import java.io.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.util.VcCmd;
 
 public class StatusCmd
     extends VcCmd<StatusResult>

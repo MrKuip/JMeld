@@ -1,10 +1,10 @@
 package org.jmeld.vc.hg;
 
-import org.jmeld.util.*;
-import org.jmeld.vc.*;
-import org.jmeld.vc.util.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.util.Result;
+import org.jmeld.vc.BaseFile;
+import org.jmeld.vc.util.VcCmd;
 
 public class CatCmd
     extends VcCmd<BaseFile>

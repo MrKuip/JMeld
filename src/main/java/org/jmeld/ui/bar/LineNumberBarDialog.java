@@ -16,19 +16,17 @@
  */
 package org.jmeld.ui.bar;
 
-import org.jmeld.ui.*;
-import org.jmeld.ui.search.*;
-import org.jmeld.ui.swing.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
+import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-import java.awt.*;
-import java.awt.event.*;
+import org.jmeld.ui.AbstractBarDialog;
+import org.jmeld.ui.JMeldPanel;
 
 public class LineNumberBarDialog
     extends AbstractBarDialog

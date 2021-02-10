@@ -16,10 +16,8 @@
  */
 package org.jmeld.util;
 
-import org.jmeld.diff.*;
-import org.jmeld.ui.*;
-
-import java.io.*;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
 
 public class DiffUtil
 {

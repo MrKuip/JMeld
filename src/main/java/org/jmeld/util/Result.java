@@ -1,8 +1,5 @@
 package org.jmeld.util;
 
-import java.io.*;
-import java.util.*;
-
 public class Result
 {
   // instance variables

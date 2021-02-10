@@ -16,9 +16,10 @@
  */
 package org.jmeld.util.conf;
 
-import org.jmeld.util.prefs.*;
+import java.io.File;
+import java.io.IOException;
 
-import java.io.*;
+import org.jmeld.util.prefs.Preference;
 
 public class ConfigurationPreference
     extends Preference

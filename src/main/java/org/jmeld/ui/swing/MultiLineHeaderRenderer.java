@@ -1,11 +1,13 @@
 package org.jmeld.ui.swing;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import java.awt.Component;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.LookAndFeel;
+import javax.swing.table.TableCellRenderer;
 
 public class MultiLineHeaderRenderer
     extends JLabel

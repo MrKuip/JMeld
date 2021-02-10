@@ -16,13 +16,18 @@
  */
 package org.jmeld.settings;
 
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
-import org.jmeld.util.conf.*;
+import java.awt.Color;
+import java.awt.Font;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
-import java.awt.*;
+import org.jmeld.ui.util.Colors;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.ObjectUtil;
+import org.jmeld.util.conf.AbstractConfiguration;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public class EditorSettings

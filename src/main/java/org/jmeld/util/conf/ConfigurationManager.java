@@ -1,10 +1,11 @@
 package org.jmeld.util.conf;
 
-import org.jmeld.*;
-import org.jmeld.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-import java.io.*;
-import java.util.*;
+import org.jmeld.util.WeakHashSet;
 
 public class ConfigurationManager
 {

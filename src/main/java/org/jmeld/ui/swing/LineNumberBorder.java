@@ -16,14 +16,21 @@
  */
 package org.jmeld.ui.swing;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.util.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.FilePanel;
+import org.jmeld.ui.util.ColorUtil;
+import org.jmeld.ui.util.Colors;
 
 public class LineNumberBorder
     extends EmptyBorder

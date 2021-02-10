@@ -16,7 +16,7 @@
  */
 package org.jmeld.util.prefs;
 
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
 public class AppPreferences
 {

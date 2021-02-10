@@ -1,8 +1,11 @@
 package org.jmeld.util.file.cmd;
 
-import javax.swing.undo.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import java.util.*;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
 
 public abstract class AbstractCmd
     extends AbstractUndoableEdit

@@ -16,8 +16,6 @@
  */
 package org.jmeld.util;
 
-import java.io.*;
-
 public class StringUtil
 {
   private StringUtil()

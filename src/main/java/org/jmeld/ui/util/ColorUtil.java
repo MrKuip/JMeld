@@ -1,6 +1,6 @@
 package org.jmeld.ui.util;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ColorUtil
 {

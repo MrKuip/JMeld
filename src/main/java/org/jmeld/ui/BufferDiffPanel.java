@@ -16,21 +16,35 @@
  */
 package org.jmeld.ui;
 
-import com.jgoodies.forms.layout.*;
-
-import org.jmeld.*;
-import org.jmeld.diff.*;
-import org.jmeld.ui.search.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.util.*;
-import org.jmeld.util.node.*;
-
-import javax.swing.*;
-import javax.swing.text.*;
-
-import java.awt.*;
-import java.util.*;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.JViewport;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.PlainDocument;
+
+import org.jmeld.JMeldException;
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMDiff;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.ui.search.SearchCommand;
+import org.jmeld.ui.search.SearchHit;
+import org.jmeld.ui.search.SearchHits;
+import org.jmeld.ui.text.AbstractBufferDocument;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.ui.text.JMDocumentEvent;
+import org.jmeld.util.StringUtil;
+import org.jmeld.util.node.BufferNode;
+import org.jmeld.util.node.JMDiffNode;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class BufferDiffPanel
     extends AbstractContentPanel

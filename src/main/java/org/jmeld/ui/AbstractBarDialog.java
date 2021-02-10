@@ -16,13 +16,7 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.ui.*;
-import org.jmeld.ui.search.*;
-import org.jmeld.ui.swing.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
-
-import javax.swing.*;
+import javax.swing.JPanel;
 
 abstract public class AbstractBarDialog
     extends JPanel

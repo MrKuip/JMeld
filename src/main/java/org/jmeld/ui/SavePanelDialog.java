@@ -16,18 +16,23 @@
  */
 package org.jmeld.ui;
 
-import com.jgoodies.forms.layout.*;
-
-import org.jmeld.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.util.*;
-
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import org.jmeld.JMeldException;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.util.ObjectUtil;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class SavePanelDialog
 {

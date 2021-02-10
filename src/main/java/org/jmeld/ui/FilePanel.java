@@ -16,25 +16,50 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.diff.*;
-import org.jmeld.settings.JMeldSettings;
-import org.jmeld.ui.search.*;
-import org.jmeld.ui.swing.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.*;
-import org.jmeld.util.conf.*;
-import org.jmeld.util.prefs.*;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
+import javax.swing.border.Border;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.search.SearchCommand;
+import org.jmeld.ui.search.SearchHit;
+import org.jmeld.ui.search.SearchHits;
+import org.jmeld.ui.swing.DiffLabel;
+import org.jmeld.ui.swing.JMHighlightPainter;
+import org.jmeld.ui.swing.JMHighlighter;
+import org.jmeld.ui.swing.LeftScrollPaneLayout;
+import org.jmeld.ui.swing.LineNumberBorder;
+import org.jmeld.ui.text.BufferDocumentChangeListenerIF;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.ui.text.JMDocumentEvent;
+import org.jmeld.ui.util.FontUtil;
+import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.util.StringUtil;
+import org.jmeld.util.conf.ConfigurationListenerIF;
 
 public class FilePanel
     implements BufferDocumentChangeListenerIF, ConfigurationListenerIF

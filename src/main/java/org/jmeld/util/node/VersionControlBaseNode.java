@@ -16,11 +16,11 @@
  */
 package org.jmeld.util.node;
 
-import org.jmeld.vc.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.vc.*;
+import java.io.File;
 
-import java.io.*;
+import org.jmeld.ui.text.VersionControlBaseDocument;
+import org.jmeld.vc.StatusResult;
+import org.jmeld.vc.VersionControlIF;
 
 public class VersionControlBaseNode
     extends JMeldNode

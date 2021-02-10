@@ -1,11 +1,14 @@
 package org.jmeld.ui.swing;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
-import org.jmeld.ui.util.*;
+import javax.swing.JLabel;
 
-import java.awt.*;
+import org.jmeld.ui.util.Colors;
 
 public class GradientLabel
     extends JLabel

@@ -16,18 +16,25 @@
  */
 package org.jmeld.ui;
 
-import org.jmeld.ui.dnd.*;
-import org.jmeld.ui.swing.*;
-import org.jmeld.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.Timer;
-import javax.swing.border.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import org.jmeld.ui.dnd.DragAndDropPanel;
+import org.jmeld.ui.swing.BusyLabel;
 
 public class StatusBar
     extends JPanel

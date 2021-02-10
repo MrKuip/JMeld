@@ -4,18 +4,14 @@
  */
 package org.jmeld.ui.help;
 
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.util.*;
-import org.jmeld.util.conf.*;
-import org.jmeld.util.prefs.*;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JSplitPane;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import org.jmeld.ui.AbstractContentPanel;
+import org.jmeld.ui.JMeldPanel;
 
 /**
  *

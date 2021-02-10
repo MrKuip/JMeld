@@ -1,18 +1,24 @@
 package org.jmeld.util.node;
 
-import org.jmeld.*;
-import org.jmeld.diff.*;
-import org.jmeld.settings.*;
-import org.jmeld.ui.*;
-import org.jmeld.ui.text.*;
-import org.jmeld.util.*;
-import org.jmeld.util.file.*;
-import org.jmeld.util.file.cmd.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
-import javax.swing.tree.*;
+import javax.swing.tree.TreeNode;
 
-import java.util.*;
-import java.io.*;
+import org.jmeld.JMeldException;
+import org.jmeld.diff.JMDiff;
+import org.jmeld.diff.JMRevision;
+import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.StatusBar;
+import org.jmeld.ui.text.BufferDocumentIF;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.file.CompareUtil;
+import org.jmeld.util.file.cmd.AbstractCmd;
+import org.jmeld.util.file.cmd.CopyFileCmd;
+import org.jmeld.util.file.cmd.RemoveFileCmd;
 
 public class JMDiffNode
     implements TreeNode

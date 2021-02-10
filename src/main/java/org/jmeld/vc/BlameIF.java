@@ -1,6 +1,6 @@
 package org.jmeld.vc;
 
-import java.util.*;
+import java.util.List;
 
 public interface BlameIF
 {

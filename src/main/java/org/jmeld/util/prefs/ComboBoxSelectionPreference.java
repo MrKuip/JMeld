@@ -16,11 +16,10 @@
  */
 package org.jmeld.util.prefs;
 
-import javax.swing.*;
-import javax.swing.event.*;
-
-import java.io.*;
-import java.util.*;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 public class ComboBoxSelectionPreference
     extends Preference
