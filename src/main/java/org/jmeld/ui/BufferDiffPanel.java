@@ -485,9 +485,11 @@ public class BufferDiffPanel
     }
 
     searchHits = fp.doSearch();
-
-    scrollToSearch(fp,
-                   searchHits);
+    if (searchHits != null)
+    {
+      scrollToSearch(fp,
+                     searchHits);
+    }
 
     return searchHits;
   }
@@ -505,11 +507,14 @@ public class BufferDiffPanel
     }
 
     searchHits = fp.getSearchHits();
-    searchHits.next();
-    fp.reDisplay();
+    if (searchHits != null)
+    {
+      searchHits.next();
+      fp.reDisplay();
 
-    scrollToSearch(fp,
-                   searchHits);
+      scrollToSearch(fp,
+                     searchHits);
+    }
   }
 
   @Override
@@ -525,11 +530,14 @@ public class BufferDiffPanel
     }
 
     searchHits = fp.getSearchHits();
-    searchHits.previous();
-    fp.reDisplay();
+    if (searchHits != null)
+    {
+      searchHits.previous();
+      fp.reDisplay();
 
-    scrollToSearch(fp,
-                   searchHits);
+      scrollToSearch(fp,
+                     searchHits);
+    }
   }
 
   @Override
