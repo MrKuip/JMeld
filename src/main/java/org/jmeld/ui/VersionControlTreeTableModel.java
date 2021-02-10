@@ -62,6 +62,11 @@ public class VersionControlTreeTableModel
 
     if (column == statusColumn)
     {
+      if (!(diffNode.getBufferNodeLeft() instanceof VersionControlBaseNode))
+      {
+        return "";
+      }
+
       vcbNode = (VersionControlBaseNode) diffNode.getBufferNodeLeft();
       if (vcbNode == null)
       {
