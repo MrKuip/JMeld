@@ -32,7 +32,6 @@ import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.LookAndFeelManager;
 import org.jmeld.util.prefs.WindowPreference;
 
-
 public class JMeld
     implements Runnable
 {
@@ -65,7 +64,7 @@ public class JMeld
     jmeldPanel = new JMeldPanel();
     frame.add(jmeldPanel);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-    frame.setIconImage(ImageUtil.getImageIcon("jmeld-small").getImage());
+    frame.setIconImage(ImageUtil.createImageIcon(ImageUtil.getIcon("jmeld-small")).getImage());
     new WindowPreference(frame.getTitle(),
                          frame);
     frame.addWindowListener(jmeldPanel.getWindowListener());

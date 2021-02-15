@@ -331,7 +331,9 @@ public class JMeldPanel
     builder = new ToolBarBuilder(tb);
 
     button = WidgetFactory.getToolBarButton(getAction(actions.NEW));
+    System.out.println("button" + button.getText());
     builder.addButton(button);
+    System.out.println("button" + button.getText());
     button = WidgetFactory.getToolBarButton(getAction(actions.SAVE));
     builder.addButton(button);
 
@@ -808,7 +810,7 @@ public class JMeldPanel
     if (mergeMode)
     {
       StatusBar.getInstance().setNotification(actions.MERGEMODE.getName(),
-                                              ImageUtil.getSmallImageIcon("jmeld_mergemode-on"));
+                                              ImageUtil.getSmallIcon("jmeld_mergemode-on"));
     }
     else
     {
@@ -856,7 +858,7 @@ public class JMeldPanel
        * content = new HelpPanel(this);
        */
       tabbedPane.addTab("Help",
-                        Icons.HELP.getSmallIcon(),
+                        ImageUtil.createImageIcon(Icons.HELP.getSmallIcon()),
                         content);
       tabbedPane.setSelectedComponent(content);
     }
@@ -884,7 +886,7 @@ public class JMeldPanel
                 BorderLayout.CENTER);
 
     tabbedPane.addTab("About",
-                      Icons.ABOUT.getSmallIcon(),
+                      ImageUtil.createImageIcon(Icons.ABOUT.getSmallIcon()),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -939,7 +941,7 @@ public class JMeldPanel
     content = new SettingsPanel(this);
     content.setId(contentId);
     tabbedPane.addTab("Settings",
-                      Icons.SETTINGS.getSmallIcon(),
+                      ImageUtil.createImageIcon(Icons.SETTINGS.getSmallIcon()),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -1132,7 +1134,7 @@ public class JMeldPanel
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
             tabbedPane.addTab(panel.getTitle(),
-                              Icons.NEW.getSmallIcon(),
+                              ImageUtil.createImageIcon(Icons.NEW.getSmallIcon()),
                               panel);
             if (!openInBackground)
             {
@@ -1264,7 +1266,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab(panel.getTitle(),
-                              Icons.FOLDER.getSmallIcon(),
+                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }
@@ -1352,7 +1354,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab("TODO: Think of title!",
-                              Icons.FOLDER.getSmallIcon(),
+                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }

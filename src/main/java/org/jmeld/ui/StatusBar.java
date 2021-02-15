@@ -24,7 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -177,7 +177,7 @@ public class StatusBar
   }
 
   public void setNotification(String id,
-      ImageIcon icon)
+      Icon icon)
   {
     JLabel label;
 

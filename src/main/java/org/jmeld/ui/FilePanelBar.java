@@ -17,7 +17,6 @@
 package org.jmeld.ui;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -32,8 +31,8 @@ public class FilePanelBar
   private JLabel selected;
   private JLabel lineNumber;
   private JLabel columnNumber;
-  private ImageIcon iconSelected;
-  private ImageIcon iconNotSelected;
+  private Icon iconSelected;
+  private Icon iconNotSelected;
 
   public FilePanelBar(FilePanel filePanel)
   {
@@ -57,7 +56,7 @@ public class FilePanelBar
     builder.addSeparator();
     builder.addComponent(columnNumber);
 
-    iconSelected = ImageUtil.getImageIcon("panel-selected");
+    iconSelected = ImageUtil.getIcon("panel-selected");
     iconNotSelected = ImageUtil.createTransparentIcon(iconSelected);
 
     update();

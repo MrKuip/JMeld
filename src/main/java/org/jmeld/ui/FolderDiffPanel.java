@@ -31,7 +31,6 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.tree.TreePath;
@@ -85,22 +84,22 @@ public class FolderDiffPanel
     initActions();
 
     onlyRightButton.setText(null);
-    onlyRightButton.setIcon(ImageUtil.getImageIcon("jmeld_only-right"));
+    onlyRightButton.setIcon(ImageUtil.getIcon("jmeld_only-right"));
     onlyRightButton.setFocusable(false);
     onlyRightButton.setSelected(getFolderSettings().getOnlyRight());
 
     leftRightChangedButton.setText(null);
-    leftRightChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-changed"));
+    leftRightChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-changed"));
     leftRightChangedButton.setFocusable(false);
     leftRightChangedButton.setSelected(getFolderSettings().getLeftRightChanged());
 
     onlyLeftButton.setText(null);
-    onlyLeftButton.setIcon(ImageUtil.getImageIcon("jmeld_only-left"));
+    onlyLeftButton.setIcon(ImageUtil.getIcon("jmeld_only-left"));
     onlyLeftButton.setFocusable(false);
     onlyLeftButton.setSelected(getFolderSettings().getOnlyLeft());
 
     leftRightUnChangedButton.setText(null);
-    leftRightUnChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-unchanged"));
+    leftRightUnChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-unchanged"));
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(getFolderSettings().getLeftRightUnChanged());
 
@@ -111,7 +110,7 @@ public class FolderDiffPanel
     expandAllButton.setContentAreaFilled(false);
     expandAllButton.setText(null);
     expandAllButton.setIcon(Icons.EXPAND_ALL.getSmallIcon());
-    expandAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) expandAllButton.getIcon()));
+    expandAllButton.setPressedIcon(ImageUtil.createDarkerIcon(expandAllButton.getIcon()));
     expandAllButton.setFocusable(false);
 
     collapseAllButton.setBorder(BorderFactory.createEmptyBorder(2,
@@ -121,7 +120,7 @@ public class FolderDiffPanel
     collapseAllButton.setContentAreaFilled(false);
     collapseAllButton.setText(null);
     collapseAllButton.setIcon(Icons.COLLAPSE_ALL.getSmallIcon());
-    collapseAllButton.setPressedIcon(ImageUtil.createDarkerIcon((ImageIcon) collapseAllButton.getIcon()));
+    collapseAllButton.setPressedIcon(ImageUtil.createDarkerIcon(collapseAllButton.getIcon()));
     collapseAllButton.setFocusable(false);
 
     folder1Label.init();
@@ -184,7 +183,7 @@ public class FolderDiffPanel
     compareButton.setText(null);
     compareButton.setFocusable(false);
     compareButton.setIcon(action.getSmallIcon());
-    compareButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    compareButton.setDisabledIcon(action.getTransparentSmallIcon());
     installKey("ENTER",
                action);
 
@@ -209,7 +208,7 @@ public class FolderDiffPanel
     refreshButton.setText(null);
     refreshButton.setFocusable(false);
     refreshButton.setIcon(action.getSmallIcon());
-    refreshButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    refreshButton.setDisabledIcon(action.getTransparentSmallIcon());
 
     action = actionHandler.createAction(this,
                                         mainPanel.actions.FOLDER_REMOVE_RIGHT);
@@ -218,7 +217,7 @@ public class FolderDiffPanel
     deleteRightButton.setText(null);
     deleteRightButton.setFocusable(false);
     deleteRightButton.setIcon(action.getSmallIcon());
-    deleteRightButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    deleteRightButton.setDisabledIcon(action.getTransparentSmallIcon());
     installKey("ctrl alt RIGHT",
                action);
     installKey("ctrl alt KP_RIGHT",
@@ -231,7 +230,7 @@ public class FolderDiffPanel
     deleteLeftButton.setText(null);
     deleteLeftButton.setFocusable(false);
     deleteLeftButton.setIcon(action.getSmallIcon());
-    deleteLeftButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    deleteLeftButton.setDisabledIcon(action.getTransparentSmallIcon());
     installKey("ctrl alt LEFT",
                action);
     installKey("ctrl alt KP_LEFT",
@@ -244,7 +243,7 @@ public class FolderDiffPanel
     copyToLeftButton.setText(null);
     copyToLeftButton.setFocusable(false);
     copyToLeftButton.setIcon(action.getSmallIcon());
-    copyToLeftButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    copyToLeftButton.setDisabledIcon(action.getTransparentSmallIcon());
     installKey("alt LEFT",
                action);
     installKey("alt KP_LEFT",
@@ -257,7 +256,7 @@ public class FolderDiffPanel
     copyToRightButton.setText(null);
     copyToRightButton.setFocusable(false);
     copyToRightButton.setIcon(action.getSmallIcon());
-    copyToRightButton.setDisabledIcon(action.getTransparentSmallImageIcon());
+    copyToRightButton.setDisabledIcon(action.getTransparentSmallIcon());
     installKey("alt RIGHT",
                action);
     installKey("alt KP_RIGHT",

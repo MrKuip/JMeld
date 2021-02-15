@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
@@ -88,22 +88,22 @@ public class MeldAction
   public void setIcon(Icons icon)
   {
     putValue(SMALL_ICON,
-             icon.getSmallIcon());
+             ImageUtil.createImageIcon(icon.getSmallIcon()));
     putValue(LARGE_ICON_KEY,
-             icon.getLargeIcon());
+             ImageUtil.createImageIcon(icon.getLargeIcon()));
   }
 
-  public ImageIcon getSmallIcon()
+  public Icon getSmallIcon()
   {
-    return (ImageIcon) getValue(SMALL_ICON);
+    return (Icon) getValue(SMALL_ICON);
   }
 
-  public ImageIcon getLargeIcon()
+  public Icon getLargeIcon()
   {
-    return (ImageIcon) getValue(LARGE_ICON_KEY);
+    return (Icon) getValue(LARGE_ICON_KEY);
   }
 
-  public ImageIcon getTransparentSmallImageIcon()
+  public Icon getTransparentSmallIcon()
   {
     return ImageUtil.createTransparentIcon(getSmallIcon());
   }

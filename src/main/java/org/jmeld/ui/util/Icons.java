@@ -17,41 +17,41 @@
 package org.jmeld.ui.util;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.Icon;
+
+import org.jmeld.ui.util.IconComposer.Location;
 
 public enum Icons
 {
-  NEW("F0224"),
-  DELETE("F09E7"),
-  SAVE("F0818"),
-  SAVE_AS("F0E28"),
+  NEW("F0224", "F0214"),
+  DELETE("F09E7", "F01B4"),
+  SAVE("F0818", "F0193"),
+  SAVE_AS("F0E28", "F0E27"),
   RELOAD("F0453"),
   UNDO("F054C"),
   REDO("F044E"),
-  HELP("F0206"),
+  HELP("F02D7", "F0625"),
   SETTINGS("F1064"),
   REFRESH("F0450"),
   LEFT("F004D"),
   RIGHT("F0054"),
   COMPARE("F1492"),
-  EDIT("F11E8"),
-  FILTER("F0233"),
-  FOLDER("F0256"),
-  EXPAND_ALL("F1143"),
-  COLLAPSE_ALL("F1142"),
-  ABOUT("F02FC"),
-  FILE("F0214"),
-  FILE_OUTLINE("F0224"),
-  FILE_HIDDEN("F0613");
+  EDIT("F11E8", "F11E7"),
+  FILTER("F0233", "F0232"),
+  FOLDER("F0256", "F024B"),
+  EXPAND_ALL("F1143", "F0334"),
+  COLLAPSE_ALL("F1142", "F1141"),
+  ABOUT("F02FC", "F02FD");
 
-  static private Map<String, ImageIcon> m_iconImageMap = new HashMap<>();
+  static private Map<String, Icon> m_iconImageMap = new HashMap<>();
 
   public enum IconSize
   {
@@ -75,9 +75,10 @@ public enum Icons
 
   public enum IconColor
   {
-    DEFAULT(new Color(0,
-                      74,
-                      131)),
+    DEFAULT_OUTLINE(new Color(0,
+                              74,
+                              131)),
+    DEFAULT_FILL(Color.WHITE),
     WHITE(Color.WHITE),
     BLACK(Color.BLACK),
     RED(Color.RED),
@@ -97,44 +98,80 @@ public enum Icons
     }
   }
 
-  private final String m_codepoint;
-  private final IconColor m_color;
+  private final String m_outlineCodepoint;
+  private final String m_fillCodepoint;
+  private final IconColor m_outlineColor;
+  private final IconColor m_fillColor;
 
-  Icons(String codepoint)
+  Icons(String outlineCodepoint)
   {
-    this(codepoint,
-         IconColor.DEFAULT);
+    this(outlineCodepoint,
+         IconColor.DEFAULT_OUTLINE,
+         null,
+         null);
   }
 
-  Icons(String codepoint,
-      IconColor color)
+  Icons(String outlineCodepoint,
+      String fillCodepoint)
   {
-    m_codepoint = codepoint;
-    m_color = color;
+    this(outlineCodepoint,
+         IconColor.DEFAULT_OUTLINE,
+         fillCodepoint,
+         IconColor.DEFAULT_FILL);
   }
 
-  public ImageIcon getSmallIcon()
+  Icons(String outlineCodepoint,
+      IconColor outlineColor,
+      String fillCodepoint,
+      IconColor fillColor)
   {
-    return getIcon(m_color,
-                   IconSize.SMALL);
+    m_outlineCodepoint = outlineCodepoint;
+    m_outlineColor = outlineColor;
+    m_fillCodepoint = null;
+    m_fillColor = fillColor;
   }
 
-  public ImageIcon getLargeIcon()
+  public Icon getSmallIcon()
   {
-    return getIcon(m_color,
-                   IconSize.LARGE);
+    return getIcon(IconSize.SMALL);
   }
 
-  public ImageIcon getIcon(IconColor iconColor,
+  public Icon getLargeIcon()
+  {
+    return getIcon(IconSize.LARGE);
+  }
+
+  public Icon getIcon(IconSize iconSize)
+  {
+    IconComposer icon;
+
+    if (m_fillCodepoint == null)
+    {
+      icon = new IconComposer(getIcon(m_outlineCodepoint,
+                                      m_outlineColor,
+                                      iconSize));
+    }
+    else
+    {
+      icon = new IconComposer(getIcon(m_fillCodepoint,
+                                      m_fillColor,
+                                      iconSize));
+      icon.decorate(Location.CENTER,
+                    new IconComposer(getIcon(m_outlineCodepoint,
+                                             m_outlineColor,
+                                             iconSize)));
+    }
+
+    return icon;
+  }
+
+  private Icon getIcon(String codepointString,
+      IconColor iconColor,
       IconSize iconSize)
   {
-    JLabel label;
-    BufferedImage image;
-    Graphics2D g2d;
-    int codepoint;
     int size;
     Color color;
-    ImageIcon icon;
+    Icon icon;
     String key;
 
     color = iconColor.getColor();
@@ -147,37 +184,84 @@ public enum Icons
       return icon;
     }
 
-    codepoint = Integer.parseInt(m_codepoint,
-                                 16);
-    if (codepoint == 0)
-    {
-      codepoint = 0xfc8c; // a solid filled square to indicate that the icon is not yetdefined.
-      color = Color.RED;
-    }
+    icon = new MyIcon(codepointString,
+                      iconColor,
+                      iconSize);
 
-    label = new JLabel(new String(Character.toChars(Integer.parseInt(m_codepoint,
-                                                                     16))));
-
-    label.setForeground(color);
-    label.setFont(FontUtil.getIconFont(size));
-    label.setSize(size,
-                  size);
-
-    image = new BufferedImage(size,
-                              size,
-                              BufferedImage.TYPE_INT_ARGB);
-    g2d = image.createGraphics();
-    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
-                         RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-    label.print(g2d);
-    g2d.dispose();
-
-    icon = new ImageIcon(image);
     m_iconImageMap.put(key,
                        icon);
 
     return icon;
+  }
+
+  public static class MyIcon
+      implements Icon
+  {
+    private String mii_codepointString;
+    private IconColor mii_iconColor;
+    private IconSize mii_iconSize;
+
+    public MyIcon(String codepointString,
+        IconColor iconColor,
+        IconSize iconSize)
+    {
+      mii_codepointString = codepointString;
+      mii_iconColor = iconColor;
+      mii_iconSize = iconSize;
+    }
+
+    @Override
+    public int getIconWidth()
+    {
+      return mii_iconSize.getSize();
+    }
+
+    @Override
+    public int getIconHeight()
+    {
+      return mii_iconSize.getSize();
+    }
+
+    @Override
+    public void paintIcon(Component c,
+        Graphics g,
+        int x,
+        int y)
+    {
+      int codepoint;
+      String text;
+      Graphics2D g2d;
+      FontMetrics fm;
+      double xString;
+      double yString;
+
+      codepoint = Integer.parseInt(mii_codepointString,
+                                   16);
+      text = new String(Character.toChars(codepoint));
+
+      g2d = (Graphics2D) g;
+      g2d.setClip(0,
+                  0,
+                  getIconWidth(),
+                  getIconHeight());
+
+      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                           RenderingHints.VALUE_ANTIALIAS_ON);
+      g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                           RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+      g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                           RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+      g2d.setColor(mii_iconColor.getColor());
+      g2d.setFont(FontUtil.getIconFont(getIconHeight()));
+
+      fm = g2d.getFontMetrics();
+
+      xString = (x + (getIconWidth() - fm.stringWidth(text)) / 2.0);
+      yString = (y + ((getIconHeight() - fm.getHeight()) / 2.0) + fm.getAscent());
+
+      g2d.drawString(text,
+                     (float) xString,
+                     (float) yString);
+    }
   }
 }

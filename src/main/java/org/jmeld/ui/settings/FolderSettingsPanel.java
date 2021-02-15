@@ -41,25 +41,25 @@ public class FolderSettingsPanel
     hierarchyComboBox.addActionListener(getHierarchyAction());
 
     onlyLeftButton.setText(null);
-    onlyLeftButton.setIcon(ImageUtil.getImageIcon("jmeld_only-left"));
+    onlyLeftButton.setIcon(ImageUtil.getIcon("jmeld_only-left"));
     onlyLeftButton.setFocusable(false);
     onlyLeftButton.setSelected(settings.getOnlyLeft());
     onlyLeftButton.addActionListener(getOnlyLeftAction());
 
     leftRightChangedButton.setText(null);
-    leftRightChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-changed"));
+    leftRightChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-changed"));
     leftRightChangedButton.setFocusable(false);
     leftRightChangedButton.setSelected(settings.getLeftRightChanged());
     leftRightChangedButton.addActionListener(getLeftRightChangedAction());
 
     onlyRightButton.setText(null);
-    onlyRightButton.setIcon(ImageUtil.getImageIcon("jmeld_only-right"));
+    onlyRightButton.setIcon(ImageUtil.getIcon("jmeld_only-right"));
     onlyRightButton.setFocusable(false);
     onlyRightButton.setSelected(settings.getOnlyRight());
     onlyRightButton.addActionListener(getOnlyRightAction());
 
     leftRightUnChangedButton.setText(null);
-    leftRightUnChangedButton.setIcon(ImageUtil.getImageIcon("jmeld_left-right-unchanged"));
+    leftRightUnChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-unchanged"));
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(settings.getLeftRightUnChanged());
     leftRightUnChangedButton.addActionListener(getLeftRightUnChangedAction());

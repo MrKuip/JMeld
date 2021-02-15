@@ -13,7 +13,6 @@ import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
@@ -88,11 +87,9 @@ public class SettingsPanel
   }
 
   private void initButton(JButton button,
-      Icons imageIcon,
+      Icons icon,
       String toolTipText)
   {
-    ImageIcon icon;
-
     button.setText("");
     button.setToolTipText(toolTipText);
     button.setBorder(BorderFactory.createEmptyBorder(2,
@@ -100,10 +97,9 @@ public class SettingsPanel
                                                      2,
                                                      2));
     button.setContentAreaFilled(false);
-    icon = imageIcon.getSmallIcon();
-    button.setIcon(icon);
-    button.setDisabledIcon(ImageUtil.createTransparentIcon(icon));
-    button.setPressedIcon(ImageUtil.createDarkerIcon(icon));
+    button.setIcon(icon.getSmallIcon());
+    button.setDisabledIcon(ImageUtil.createTransparentIcon(icon.getSmallIcon()));
+    button.setPressedIcon(ImageUtil.createDarkerIcon(icon.getSmallIcon()));
     button.setFocusable(false);
   }
 

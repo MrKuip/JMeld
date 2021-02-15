@@ -83,7 +83,7 @@ public class FolderDiffTreeTableModel
 
     if (column == leftStateColumn)
     {
-      return ImageUtil.getSmallImageIcon(getLeftStateIconName(diffNode));
+      return ImageUtil.getSmallIcon(getLeftStateIconName(diffNode));
     }
 
     if (column == leftSizeColumn)
@@ -104,7 +104,7 @@ public class FolderDiffTreeTableModel
 
     if (column == rightStateColumn)
     {
-      return ImageUtil.getSmallImageIcon(getRightStateIconName(diffNode));
+      return ImageUtil.getSmallIcon(getRightStateIconName(diffNode));
     }
 
     if (column == rightSizeColumn)

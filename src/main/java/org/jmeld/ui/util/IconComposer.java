@@ -13,12 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.jmeld.ui.util.Icons.IconColor;
 import org.jmeld.ui.util.Icons.IconSize;
 
 public class IconComposer
     implements Icon
 {
+
   private Icon m_icon;
   private List<IconData> m_iconDataList;
   private Color m_background;
@@ -271,19 +271,7 @@ public class IconComposer
     panel = new JPanel();
     panel.setLayout(new FlowLayout());
 
-    icon = new IconComposer(Icons.FILE.getIcon(IconColor.YELLOW,
-                                               IconSize.LARGE));
-    icon.decorate(Location.CENTER,
-                  Icons.FILE_OUTLINE.getIcon(IconColor.DEFAULT,
-                                             IconSize.LARGE));
-    icon2 = new IconComposer(Icons.FILE.getIcon(IconColor.WHITE,
-                                                IconSize.LARGE));
-    icon2.decorate(Location.CENTER,
-                   Icons.FILE_HIDDEN.getIcon(IconColor.DEFAULT,
-                                             IconSize.LARGE));
-    icon.decorate(Location.RIGHT,
-                  icon2);
-
+    icon = new IconComposer(Icons.NEW.getIcon(IconSize.LARGE));
     // blender.setBackground(Color.orange);
     label = new JLabel(icon);
     panel.add(label);

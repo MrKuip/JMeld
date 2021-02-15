@@ -89,10 +89,10 @@ public class TabIcon
     height = 0;
     width = 0;
 
-    closeIcon = ImageUtil.getImageIcon("jmeld_close");
-    closeIcon_rollover = ImageUtil.getImageIcon("jmeld_close-rollover");
-    closeIcon_pressed = ImageUtil.getImageIcon("jmeld_close-pressed");
-    closeIcon_disabled = ImageUtil.getImageIcon("jmeld_close-disabled");
+    closeIcon = ImageUtil.getIcon("jmeld_close");
+    closeIcon_rollover = ImageUtil.getIcon("jmeld_close-rollover");
+    closeIcon_pressed = ImageUtil.getIcon("jmeld_close-pressed");
+    closeIcon_disabled = ImageUtil.getIcon("jmeld_close-disabled");
     if (closeIcon != null)
     {
       CLOSE_ICON_WIDTH = closeIcon.getIconWidth();

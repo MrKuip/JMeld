@@ -65,9 +65,9 @@ public class SearchBarDialog
     setLayout(new FlowLayout(FlowLayout.LEADING));
 
     // Close the search dialog:
-    closeButton = new JButton(ImageUtil.getImageIcon("jmeld_close"));
-    closeButton.setRolloverIcon(ImageUtil.getImageIcon("jmeld_close-rollover"));
-    closeButton.setPressedIcon(ImageUtil.getImageIcon("jmeld_close-pressed"));
+    closeButton = new JButton(ImageUtil.getIcon("jmeld_close"));
+    closeButton.setRolloverIcon(ImageUtil.getIcon("jmeld_close-rollover"));
+    closeButton.setPressedIcon(ImageUtil.getIcon("jmeld_close-pressed"));
     closeButton.addActionListener(getCloseAction());
     initButton(closeButton);
     closeButton.setBorder(null);
@@ -79,13 +79,13 @@ public class SearchBarDialog
 
     // Find previous match:
     previousButton = new JButton("Previous",
-                                 ImageUtil.getImageIcon("stock_data-previous"));
+                                 ImageUtil.getIcon("stock_data-previous"));
     previousButton.addActionListener(getPreviousAction());
     initButton(previousButton);
 
     // Find next match:
     nextButton = new JButton("Next",
-                             ImageUtil.getImageIcon("stock_data-next"));
+                             ImageUtil.getIcon("stock_data-next"));
     nextButton.addActionListener(getNextAction());
     initButton(nextButton);
 
@@ -208,7 +208,7 @@ public class SearchBarDialog
             searchField.setForeground(Color.red);
           }
 
-          searchResult.setIcon(ImageUtil.getImageIcon("bullet-warning"));
+          searchResult.setIcon(ImageUtil.getIcon("bullet-warning"));
           searchResult.setText("Phrase not found");
         }
         else

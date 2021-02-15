@@ -25,7 +25,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -95,7 +95,7 @@ public class FilePanel
 
   private void init()
   {
-    ImageIcon icon;
+    Icon icon;
 
     editor = new JTextArea();
     editor.setDragEnabled(true);
@@ -131,7 +131,7 @@ public class FilePanel
                                                          2,
                                                          2));
     saveButton.setContentAreaFilled(false);
-    icon = ImageUtil.getSmallImageIcon("stock_save");
+    icon = ImageUtil.getSmallIcon("stock_save");
     saveButton.setIcon(icon);
     saveButton.setDisabledIcon(ImageUtil.createTransparentIcon(icon));
     saveButton.addActionListener(getSaveButtonAction());
@@ -433,11 +433,11 @@ public class FilePanel
           // Mark the changes in a change in a different color.
           if (original.getSize() < MAXSIZE_CHANGE_DIFF && revised.getSize() < MAXSIZE_CHANGE_DIFF)
           {
-            if(!delta.isReallyChanged())
+            if (!delta.isReallyChanged())
             {
               continue;
             }
-            
+
             changeRev = delta.getChangeRevision();
             if (changeRev != null)
             {
@@ -497,11 +497,11 @@ public class FilePanel
         {
           if (original.getSize() < MAXSIZE_CHANGE_DIFF && revised.getSize() < MAXSIZE_CHANGE_DIFF)
           {
-            if(!delta.isReallyChanged())
+            if (!delta.isReallyChanged())
             {
               continue;
             }
-            
+
             changeRev = delta.getChangeRevision();
             if (changeRev != null)
             {
