@@ -65,7 +65,8 @@ public class JMDiff
 
     // EclipseDiff looks like Myersdiff but is slower.
     // It performs much better if the files are totally different
-    algorithms.add(new EclipseDiff());
+    //algorithms.add(new EclipseDiff());
+    algorithms.add(new Eclipse2Diff());
 
     // HuntDiff (from netbeans) is very, very slow
     // algorithms.add(new HuntDiff());
