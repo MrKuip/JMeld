@@ -36,6 +36,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jmeld.ui.AbstractBarDialog;
 import org.jmeld.ui.JMeldPanel;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.StringUtil;
 
@@ -65,9 +66,7 @@ public class SearchBarDialog
     setLayout(new FlowLayout(FlowLayout.LEADING));
 
     // Close the search dialog:
-    closeButton = new JButton(ImageUtil.getIcon("jmeld_close"));
-    closeButton.setRolloverIcon(ImageUtil.getIcon("jmeld_close-rollover"));
-    closeButton.setPressedIcon(ImageUtil.getIcon("jmeld_close-pressed"));
+    closeButton = new JButton(Icons.CLOSE.getSmallIcon());
     closeButton.addActionListener(getCloseAction());
     initButton(closeButton);
     closeButton.setBorder(null);
@@ -79,13 +78,13 @@ public class SearchBarDialog
 
     // Find previous match:
     previousButton = new JButton("Previous",
-                                 ImageUtil.getIcon("stock_data-previous"));
+                                 ImageUtil.createImageIcon(Icons.SEARCH_PREVIOUS.getSmallIcon()));
     previousButton.addActionListener(getPreviousAction());
     initButton(previousButton);
 
     // Find next match:
     nextButton = new JButton("Next",
-                             ImageUtil.getIcon("stock_data-next"));
+                             ImageUtil.createImageIcon(Icons.SEARCH_NEXT.getSmallIcon()));
     nextButton.addActionListener(getNextAction());
     initButton(nextButton);
 
@@ -208,7 +207,7 @@ public class SearchBarDialog
             searchField.setForeground(Color.red);
           }
 
-          searchResult.setIcon(ImageUtil.getIcon("bullet-warning"));
+          searchResult.setIcon(ImageUtil.createImageIcon(Icons.ALERT.getSmallIcon()));
           searchResult.setText("Phrase not found");
         }
         else

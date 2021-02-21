@@ -49,13 +49,44 @@ public enum Icons
   FOLDER("F0256", "F024B"),
   EXPAND_ALL("F1143", "F0334"),
   COLLAPSE_ALL("F1142", "F1141"),
-  ABOUT("F02FC", "F02FD");
+  ABOUT("F02FC", "F02FD"),
+  ALERT("F002A", IconColor.RED, null, null),
+  CLOSE("F0156"),
+  SEARCH_NEXT("F0140"),
+  SEARCH_PREVIOUS("F0143"),
+  FILE_EXIST_NOTEQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.LIGHT_BLUE_FILL),
+  FILE_EXIST_EQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE),
+  FILE_NOT_EXIST("F08A4", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE);
 
   static private Map<String, Icon> m_iconImageMap = new HashMap<>();
+  static public IconComposer ONLY_RIGHT;
+  static public IconComposer LEFT_RIGHT_CHANGED;
+  static public IconComposer ONLY_LEFT;
+  static public IconComposer LEFT_RIGHT_UNCHANGED;
+
+  static
+  {
+    ONLY_RIGHT = new IconComposer(Icons.FILE_NOT_EXIST.getSmallIcon());
+    ONLY_RIGHT = ONLY_RIGHT.decorate(Location.RIGHT,
+                                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+
+    LEFT_RIGHT_CHANGED = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    LEFT_RIGHT_CHANGED = LEFT_RIGHT_CHANGED.decorate(Location.RIGHT,
+                                                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+
+    ONLY_LEFT = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ONLY_LEFT = ONLY_LEFT.decorate(Location.RIGHT,
+                                   Icons.FILE_NOT_EXIST.getSmallIcon());
+
+    LEFT_RIGHT_UNCHANGED = new IconComposer(Icons.FILE_EXIST_EQUAL.getSmallIcon());
+    LEFT_RIGHT_UNCHANGED = LEFT_RIGHT_UNCHANGED.decorate(Location.RIGHT,
+                                                         Icons.FILE_EXIST_EQUAL.getSmallIcon());
+  }
 
   public enum IconSize
   {
     VERY_SMALL(12),
+    SMALLER(18),
     SMALL(24),
     LARGE(32),
     VERY_LARGE(64);
@@ -79,6 +110,9 @@ public enum Icons
                               74,
                               131)),
     DEFAULT_FILL(Color.WHITE),
+    LIGHT_BLUE_FILL(new Color(160,
+                              200,
+                              255)),
     WHITE(Color.WHITE),
     BLACK(Color.BLACK),
     RED(Color.RED),
@@ -127,8 +161,13 @@ public enum Icons
   {
     m_outlineCodepoint = outlineCodepoint;
     m_outlineColor = outlineColor;
-    m_fillCodepoint = null;
+    m_fillCodepoint = fillCodepoint;
     m_fillColor = fillColor;
+  }
+
+  public Icon getSmallerIcon()
+  {
+    return getIcon(IconSize.SMALLER);
   }
 
   public Icon getSmallIcon()

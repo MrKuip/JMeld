@@ -19,7 +19,7 @@ package org.jmeld.ui;
 import javax.swing.Icon;
 
 import org.jmeld.ui.swing.table.JMTreeTableModel;
-import org.jmeld.ui.util.ImageUtil;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.util.node.BufferNode;
 import org.jmeld.util.node.JMDiffNode;
 
@@ -83,7 +83,7 @@ public class FolderDiffTreeTableModel
 
     if (column == leftStateColumn)
     {
-      return ImageUtil.getSmallIcon(getLeftStateIconName(diffNode));
+      return getLeftStateIconName(diffNode);
     }
 
     if (column == leftSizeColumn)
@@ -104,7 +104,7 @@ public class FolderDiffTreeTableModel
 
     if (column == rightStateColumn)
     {
-      return ImageUtil.getSmallIcon(getRightStateIconName(diffNode));
+      return getRightStateIconName(diffNode);
     }
 
     if (column == rightSizeColumn)
@@ -132,41 +132,61 @@ public class FolderDiffTreeTableModel
   {
   }
 
-  private String getLeftStateIconName(JMDiffNode diffNode)
+  private Icon getLeftStateIconName(JMDiffNode diffNode)
   {
     if (diffNode != null)
     {
       if (diffNode.isCompareEqual(JMDiffNode.Compare.NotEqual))
       {
-        return "stock_changed2";
+        return Icons.FILE_EXIST_NOTEQUAL.getSmallerIcon();
+      }
+
+      if (diffNode.isCompareEqual(JMDiffNode.Compare.Equal))
+      {
+        return Icons.FILE_EXIST_EQUAL.getSmallerIcon();
       }
 
       if (diffNode.isCompareEqual(JMDiffNode.Compare.LeftMissing)
           || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
       {
-        return "stock_deleted3";
+        return Icons.FILE_NOT_EXIST.getSmallerIcon();
+      }
+
+      if (diffNode.isCompareEqual(JMDiffNode.Compare.RightMissing))
+      {
+        return Icons.FILE_EXIST_NOTEQUAL.getSmallerIcon();
       }
     }
 
-    return "stock_equal";
+    return Icons.FILE_EXIST_EQUAL.getSmallerIcon();
   }
 
-  private String getRightStateIconName(JMDiffNode diffNode)
+  private Icon getRightStateIconName(JMDiffNode diffNode)
   {
     if (diffNode != null)
     {
       if (diffNode.isCompareEqual(JMDiffNode.Compare.NotEqual))
       {
-        return "stock_changed2";
+        return Icons.FILE_EXIST_NOTEQUAL.getSmallerIcon();
+      }
+
+      if (diffNode.isCompareEqual(JMDiffNode.Compare.Equal))
+      {
+        return Icons.FILE_EXIST_EQUAL.getSmallerIcon();
       }
 
       if (diffNode.isCompareEqual(JMDiffNode.Compare.RightMissing)
           || diffNode.isCompareEqual(JMDiffNode.Compare.BothMissing))
       {
-        return "stock_deleted3";
+        return Icons.FILE_NOT_EXIST.getSmallerIcon();
+      }
+
+      if (diffNode.isCompareEqual(JMDiffNode.Compare.LeftMissing))
+      {
+        return Icons.FILE_EXIST_NOTEQUAL.getSmallerIcon();
       }
     }
 
-    return "stock_equal";
+    return Icons.FILE_EXIST_EQUAL.getSmallerIcon();
   }
 }

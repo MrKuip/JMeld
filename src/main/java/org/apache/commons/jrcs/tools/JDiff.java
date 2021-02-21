@@ -59,6 +59,8 @@ package org.apache.commons.jrcs.tools;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +79,12 @@ import org.apache.commons.jrcs.diff.Revision;
 public class JDiff
 {
   static final String[] loadFile(String name)
+      throws IOException
+  {
+    return Files.lines(Paths.get(name)).toArray(String[]::new);
+  }
+
+  static final String[] loadFile2(String name)
       throws IOException
   {
     BufferedReader data = new BufferedReader(new FileReader(name));

@@ -62,7 +62,7 @@ public class IconComposer
     m_minWidth = minWidth;
   }
 
-  public void decorate(Location location,
+  public IconComposer decorate(Location location,
       Icon icon)
   {
     int x;
@@ -73,7 +73,7 @@ public class IconComposer
 
     if (icon == null)
     {
-      return;
+      return this;
     }
 
     iconWidth = icon.getIconWidth();
@@ -160,6 +160,8 @@ public class IconComposer
       m_iconDataList = new ArrayList<IconData>();
     }
     m_iconDataList.add(iconData);
+
+    return this;
   }
 
   @Override

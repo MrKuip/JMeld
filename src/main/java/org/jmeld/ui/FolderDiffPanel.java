@@ -84,22 +84,22 @@ public class FolderDiffPanel
     initActions();
 
     onlyRightButton.setText(null);
-    onlyRightButton.setIcon(ImageUtil.getIcon("jmeld_only-right"));
+    onlyRightButton.setIcon(Icons.ONLY_RIGHT);
     onlyRightButton.setFocusable(false);
     onlyRightButton.setSelected(getFolderSettings().getOnlyRight());
 
     leftRightChangedButton.setText(null);
-    leftRightChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-changed"));
+    leftRightChangedButton.setIcon(Icons.LEFT_RIGHT_CHANGED);
     leftRightChangedButton.setFocusable(false);
     leftRightChangedButton.setSelected(getFolderSettings().getLeftRightChanged());
 
     onlyLeftButton.setText(null);
-    onlyLeftButton.setIcon(ImageUtil.getIcon("jmeld_only-left"));
+    onlyLeftButton.setIcon(Icons.ONLY_LEFT);
     onlyLeftButton.setFocusable(false);
     onlyLeftButton.setSelected(getFolderSettings().getOnlyLeft());
 
     leftRightUnChangedButton.setText(null);
-    leftRightUnChangedButton.setIcon(ImageUtil.getIcon("jmeld_left-right-unchanged"));
+    leftRightUnChangedButton.setIcon(Icons.LEFT_RIGHT_UNCHANGED);
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(getFolderSettings().getLeftRightUnChanged());
 
