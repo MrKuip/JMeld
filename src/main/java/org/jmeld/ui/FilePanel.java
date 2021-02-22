@@ -57,6 +57,7 @@ import org.jmeld.ui.text.BufferDocumentChangeListenerIF;
 import org.jmeld.ui.text.BufferDocumentIF;
 import org.jmeld.ui.text.JMDocumentEvent;
 import org.jmeld.ui.util.FontUtil;
+import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.StringUtil;
 import org.jmeld.util.conf.ConfigurationListenerIF;
@@ -131,7 +132,7 @@ public class FilePanel
                                                          2,
                                                          2));
     saveButton.setContentAreaFilled(false);
-    icon = ImageUtil.getSmallIcon("stock_save");
+    icon = Icons.SAVE.getSmallIcon();
     saveButton.setIcon(icon);
     saveButton.setDisabledIcon(ImageUtil.createTransparentIcon(icon));
     saveButton.addActionListener(getSaveButtonAction());

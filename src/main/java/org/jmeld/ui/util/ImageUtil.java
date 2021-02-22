@@ -41,11 +41,6 @@ public class ImageUtil
     return getIcon("16x16/" + iconName + "-16");
   }
 
-  public static synchronized Icon getLargeIcon(String iconName)
-  {
-    return getIcon("32x32/" + iconName);
-  }
-
   public static synchronized Icon getIcon(String iconName)
   {
     URL url;

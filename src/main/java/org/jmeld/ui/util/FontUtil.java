@@ -32,7 +32,6 @@ public class FontUtil
                                is);
         font = font.deriveFont(Font.PLAIN,
                                iconSize);
-        System.out.println("size=" + font.getSize());
       }
       catch (IOException | FontFormatException exp)
       {

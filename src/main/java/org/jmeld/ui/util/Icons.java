@@ -56,7 +56,8 @@ public enum Icons
   SEARCH_PREVIOUS("F0143"),
   FILE_EXIST_NOTEQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.LIGHT_BLUE_FILL),
   FILE_EXIST_EQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE),
-  FILE_NOT_EXIST("F08A4", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE);
+  FILE_NOT_EXIST("F08A4", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE),
+  PANEL_SELECTED("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.YELLOW);
 
   static private Map<String, Icon> m_iconImageMap = new HashMap<>();
   static public IconComposer ONLY_RIGHT;

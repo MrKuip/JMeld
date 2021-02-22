@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.ToolBarBuilder;
 
@@ -56,7 +57,7 @@ public class FilePanelBar
     builder.addSeparator();
     builder.addComponent(columnNumber);
 
-    iconSelected = ImageUtil.getIcon("panel-selected");
+    iconSelected = Icons.PANEL_SELECTED.getSmallerIcon();
     iconNotSelected = ImageUtil.createTransparentIcon(iconSelected);
 
     update();
