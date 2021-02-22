@@ -17,11 +17,8 @@
 package org.jmeld.ui.action;
 
 import java.awt.event.ActionEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
