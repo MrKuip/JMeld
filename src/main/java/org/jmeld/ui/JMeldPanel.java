@@ -395,13 +395,14 @@ public class JMeldPanel
 
     actionHandler = new ActionHandler();
 
-    action = actionHandler.createAction(this,
-                                        actions.NEW);
+    action = actionHandler.createAction(actions.NEW,
+                                        (ae) -> doNew(ae));
     action.setIcon(Icons.NEW);
     action.setToolTip("Merge 2 new files");
 
-    action = actionHandler.createAction(this,
-                                        actions.SAVE);
+    action = actionHandler.createAction(actions.SAVE,
+                                        (ae) -> doSave(ae),
+                                        () -> isSaveEnabled());
     action.setIcon(Icons.SAVE);
     action.setToolTip("Save the changed files");
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
@@ -410,8 +411,9 @@ public class JMeldPanel
                  action);
     }
 
-    action = actionHandler.createAction(this,
-                                        actions.UNDO);
+    action = actionHandler.createAction(actions.UNDO, 
+                                        (ae) -> doUndo(ae), 
+                                        () -> isUndoEnabled());
     action.setIcon(Icons.UNDO);
     action.setToolTip("Undo the latest change");
     installKey("control Z",
@@ -419,15 +421,16 @@ public class JMeldPanel
     installKey("control Y",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.REDO);
+    action = actionHandler.createAction(actions.REDO,
+                                        (ae) -> doRedo(ae), 
+                                        () -> isRedoEnabled());
     action.setIcon(Icons.REDO);
     action.setToolTip("Redo the latest change");
     installKey("control R",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.LEFT);
+    action = actionHandler.createAction(actions.LEFT,
+                                        (ae) -> doLeft(ae));
     installKey("LEFT",
                action);
     installKey("alt LEFT",
@@ -435,8 +438,8 @@ public class JMeldPanel
     installKey("alt KP_LEFT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.RIGHT);
+    action = actionHandler.createAction(actions.RIGHT,
+                                        (ae) -> doRight(ae));
     installKey("RIGHT",
                action);
     installKey("alt RIGHT",
@@ -444,8 +447,8 @@ public class JMeldPanel
     installKey("alt KP_RIGHT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.UP);
+    action = actionHandler.createAction(actions.UP,
+                                        (ae) -> doUp(ae));
     installKey("UP",
                action);
     installKey("alt UP",
@@ -455,8 +458,8 @@ public class JMeldPanel
     installKey("F7",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.DOWN);
+    action = actionHandler.createAction(actions.DOWN,
+                                        (ae) -> doDown(ae));
     installKey("DOWN",
                action);
     installKey("alt DOWN",
@@ -466,8 +469,8 @@ public class JMeldPanel
     installKey("F8",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.ZOOM_PLUS);
+    action = actionHandler.createAction(actions.ZOOM_PLUS,
+                                        (ae) -> doZoomPlus(ae));
     installKey("alt EQUALS",
                action);
     installKey("shift alt EQUALS",
@@ -475,8 +478,8 @@ public class JMeldPanel
     installKey("alt ADD",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.ZOOM_MIN);
+    action = actionHandler.createAction(actions.ZOOM_MIN,
+                                        (ae) -> doZoomMin(ae));
     installKey("alt MINUS",
                action);
     installKey("shift alt MINUS",
@@ -484,72 +487,72 @@ public class JMeldPanel
     installKey("alt SUBTRACT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_SELECTED);
+    action = actionHandler.createAction(actions.GOTO_SELECTED,
+                                        (ae) -> doGoToSelected(ae));
     installKey("alt ENTER",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_FIRST);
+    action = actionHandler.createAction(actions.GOTO_FIRST,
+                                        (ae) -> doGoToLast(ae));
     installKey("alt HOME",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_LAST);
+    action = actionHandler.createAction(actions.GOTO_LAST,
+                                        (ae) -> doGoToLast(ae));
     installKey("alt END",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_LINE);
+    action = actionHandler.createAction(actions.GOTO_LINE,
+                                        (ae) -> doGoToLine(ae));
     installKey("ctrl L",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.START_SEARCH);
+    action = actionHandler.createAction(actions.START_SEARCH,
+                                        (ae) -> doStartSearch(ae));
     installKey("ctrl F",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.NEXT_SEARCH);
+    action = actionHandler.createAction(actions.NEXT_SEARCH,
+                                        (ae) -> doNextSearch(ae));
     installKey("F3",
                action);
     installKey("ctrl G",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.PREVIOUS_SEARCH);
+    action = actionHandler.createAction(actions.PREVIOUS_SEARCH,
+                                        (ae) -> doPreviousSearch(ae));
     installKey("shift F3",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.REFRESH);
+    action = actionHandler.createAction(actions.REFRESH,
+                                        (ae) -> doRefresh(ae));
     installKey("F5",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.MERGEMODE);
+    action = actionHandler.createAction(actions.MERGEMODE,
+                                        (ae) -> doMergeMode(ae));
     installKey("F9",
                action);
 
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
-      action = actionHandler.createAction(this,
-                                          actions.HELP);
+      action = actionHandler.createAction(actions.HELP,
+                                          (ae) -> doHelp(ae));
       action.setIcon(Icons.HELP);
       installKey("F1",
                  action);
 
-      action = actionHandler.createAction(this,
-                                          actions.ABOUT);
+      action = actionHandler.createAction(actions.ABOUT,
+                                          (ae) -> doAbout(ae));
       action.setIcon(Icons.ABOUT);
 
-      action = actionHandler.createAction(this,
-                                          actions.SETTINGS);
+      action = actionHandler.createAction(actions.SETTINGS,
+                                          (ae) -> doSettings(ae));
       action.setIcon(Icons.SETTINGS);
       action.setToolTip("Settings");
 
-      action = actionHandler.createAction(this,
-                                          actions.EXIT);
+      action = actionHandler.createAction(actions.EXIT,
+                                          (ae) -> doExit(ae));
       installKey("ESCAPE",
                  action);
     }
@@ -822,7 +825,6 @@ public class JMeldPanel
   {
     try
     {
-      JPanel panel;
       AbstractContentPanel content;
       URL url;
       HelpSet helpSet;
