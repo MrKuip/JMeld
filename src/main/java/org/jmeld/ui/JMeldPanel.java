@@ -16,6 +16,9 @@
  */
 package org.jmeld.ui;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jidesoft.swing.JideTabbedPane;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -26,7 +29,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.help.HelpSet;
 import javax.help.JHelpContentViewer;
 import javax.help.JHelpNavigator;
@@ -44,7 +46,6 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.jdesktop.swingworker.SwingWorker;
 import org.jmeld.Version;
 import org.jmeld.settings.JMeldSettings;
@@ -71,10 +72,6 @@ import org.jmeld.util.file.VersionControlDiff;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
 import org.jmeld.vc.VersionControlUtil;
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jidesoft.swing.JideTabbedPane;
 
 public class JMeldPanel
     extends JPanel
@@ -331,9 +328,7 @@ public class JMeldPanel
     builder = new ToolBarBuilder(tb);
 
     button = WidgetFactory.getToolBarButton(getAction(actions.NEW));
-    System.out.println("button" + button.getText());
     builder.addButton(button);
-    System.out.println("button" + button.getText());
     button = WidgetFactory.getToolBarButton(getAction(actions.SAVE));
     builder.addButton(button);
 
@@ -860,7 +855,7 @@ public class JMeldPanel
        * content = new HelpPanel(this);
        */
       tabbedPane.addTab("Help",
-                        ImageUtil.createImageIcon(Icons.HELP.getSmallIcon()),
+                        Icons.HELP.getSmallIcon(),
                         content);
       tabbedPane.setSelectedComponent(content);
     }
@@ -888,7 +883,7 @@ public class JMeldPanel
                 BorderLayout.CENTER);
 
     tabbedPane.addTab("About",
-                      ImageUtil.createImageIcon(Icons.ABOUT.getSmallIcon()),
+                      Icons.ABOUT.getSmallIcon(),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -943,7 +938,7 @@ public class JMeldPanel
     content = new SettingsPanel(this);
     content.setId(contentId);
     tabbedPane.addTab("Settings",
-                      ImageUtil.createImageIcon(Icons.SETTINGS.getSmallIcon()),
+                      Icons.SETTINGS.getSmallIcon(),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -981,6 +976,7 @@ public class JMeldPanel
   {
     return new ChangeListener()
     {
+      @Override
       public void stateChanged(ChangeEvent e)
       {
         checkActions();
@@ -1136,7 +1132,7 @@ public class JMeldPanel
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
             tabbedPane.addTab(panel.getTitle(),
-                              ImageUtil.createImageIcon(Icons.NEW.getSmallIcon()),
+                              Icons.NEW.getSmallIcon(),
                               panel);
             if (!openInBackground)
             {
@@ -1162,6 +1158,7 @@ public class JMeldPanel
     {
       return new Runnable()
       {
+        @Override
         public void run()
         {
           panel.doGoToFirst();
@@ -1268,7 +1265,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab(panel.getTitle(),
-                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
+                              Icons.FOLDER.getSmallIcon(),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }
@@ -1356,7 +1353,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab("TODO: Think of title!",
-                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
+                              Icons.FOLDER.getSmallIcon(),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }
@@ -1473,6 +1470,7 @@ public class JMeldPanel
     }
   }
 
+  @Override
   public void configurationChanged()
   {
     checkActions();
@@ -1531,15 +1529,18 @@ public class JMeldPanel
   {
     return new AncestorListener()
     {
+      @Override
       public void ancestorAdded(AncestorEvent event)
       {
         start();
       }
 
+      @Override
       public void ancestorMoved(AncestorEvent event)
       {
       }
 
+      @Override
       public void ancestorRemoved(AncestorEvent event)
       {
       }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.jmeld.util.WeakHashSet;
 
 public class ConfigurationManager
@@ -13,13 +12,11 @@ public class ConfigurationManager
   private static ConfigurationManager instance = new ConfigurationManager();
 
   // instance variables:
-  private Map<String, AbstractConfiguration> configurations;
-  private Map<String, WeakHashSet<ConfigurationListenerIF>> listenerMap;
+  private Map<String, AbstractConfiguration> configurations = new HashMap<>();
+  private Map<String, WeakHashSet<ConfigurationListenerIF>> listenerMap = new HashMap<>();
 
   private ConfigurationManager()
   {
-    configurations = new HashMap<String, AbstractConfiguration>();
-    listenerMap = new HashMap<String, WeakHashSet<ConfigurationListenerIF>>();
   }
 
   public static ConfigurationManager getInstance()
@@ -28,7 +25,7 @@ public class ConfigurationManager
   }
 
   public boolean reload(File file,
-      Class clazz)
+      Class<? extends AbstractConfiguration> clazz)
   {
     AbstractConfiguration configuration;
 
@@ -51,7 +48,7 @@ public class ConfigurationManager
     return true;
   }
 
-  public AbstractConfiguration get(Class clazz)
+  public AbstractConfiguration get(Class<? extends AbstractConfiguration> clazz)
   {
     AbstractConfiguration configuration;
     String key;
@@ -66,7 +63,7 @@ public class ConfigurationManager
       {
         try
         {
-          configuration = (AbstractConfiguration) clazz.newInstance();
+          configuration = clazz.newInstance();
           configuration.disableFireChanged(true);
           configuration.init();
           configuration.disableFireChanged(false);
@@ -84,7 +81,7 @@ public class ConfigurationManager
     return configuration;
   }
 
-  private AbstractConfiguration load(Class clazz)
+  private AbstractConfiguration load(Class<? extends AbstractConfiguration> clazz)
   {
     ConfigurationPreference preference;
     File file;
@@ -96,7 +93,7 @@ public class ConfigurationManager
                 file);
   }
 
-  private AbstractConfiguration load(Class clazz,
+  private AbstractConfiguration load(Class<? extends AbstractConfiguration> clazz,
       File file)
   {
     if (file.exists())
@@ -115,7 +112,7 @@ public class ConfigurationManager
     return null;
   }
 
-  void addConfigurationListener(Class clazz,
+  void addConfigurationListener(Class<? extends AbstractConfiguration> clazz,
       ConfigurationListenerIF listener)
   {
     WeakHashSet<ConfigurationListenerIF> listeners;
@@ -134,7 +131,7 @@ public class ConfigurationManager
     listeners.add(listener);
   }
 
-  void removeConfigurationListener(Class clazz,
+  void removeConfigurationListener(Class<? extends AbstractConfiguration> clazz,
       ConfigurationListenerIF listener)
   {
     Set<ConfigurationListenerIF> listeners;
@@ -146,7 +143,7 @@ public class ConfigurationManager
     }
   }
 
-  void fireChanged(Class clazz)
+  void fireChanged(Class<? extends AbstractConfiguration> clazz)
   {
     Set<ConfigurationListenerIF> listeners;
 

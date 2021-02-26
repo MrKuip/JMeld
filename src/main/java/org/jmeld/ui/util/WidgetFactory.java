@@ -17,13 +17,11 @@
 package org.jmeld.ui.util;
 
 import java.awt.Dimension;
-
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
-
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.action.MeldAction;

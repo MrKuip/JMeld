@@ -64,9 +64,15 @@ public class MeldAction
   public void setIcon(Icons icon)
   {
     putValue(SMALL_ICON,
+             icon.getSmallIcon());
+    putValue(LARGE_ICON_KEY,
+             icon.getLargeIcon());
+    /*
+    putValue(SMALL_ICON,
              ImageUtil.createImageIcon(icon.getSmallIcon()));
     putValue(LARGE_ICON_KEY,
              ImageUtil.createImageIcon(icon.getLargeIcon()));
+             */
   }
 
   public Icon getSmallIcon()

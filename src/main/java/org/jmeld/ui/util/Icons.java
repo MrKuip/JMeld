@@ -24,9 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.Icon;
-
 import org.jmeld.ui.util.IconComposer.Location;
 
 public enum Icons
@@ -60,28 +58,34 @@ public enum Icons
   PANEL_SELECTED("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.YELLOW);
 
   static private Map<String, Icon> m_iconImageMap = new HashMap<>();
-  static public IconComposer ONLY_RIGHT;
-  static public IconComposer LEFT_RIGHT_CHANGED;
-  static public IconComposer ONLY_LEFT;
-  static public IconComposer LEFT_RIGHT_UNCHANGED;
+  static final public Icon ONLY_RIGHT;
+  static final public Icon LEFT_RIGHT_CHANGED;
+  static final public Icon ONLY_LEFT;
+  static final public Icon LEFT_RIGHT_UNCHANGED;
 
   static
   {
-    ONLY_RIGHT = new IconComposer(Icons.FILE_NOT_EXIST.getSmallIcon());
-    ONLY_RIGHT = ONLY_RIGHT.decorate(Location.RIGHT,
-                                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    IconComposer ic;
 
-    LEFT_RIGHT_CHANGED = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
-    LEFT_RIGHT_CHANGED = LEFT_RIGHT_CHANGED.decorate(Location.RIGHT,
-                                                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ic = new IconComposer(Icons.FILE_NOT_EXIST.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT,
+                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ONLY_RIGHT = ImageUtil.createImageIcon(ic);
 
-    ONLY_LEFT = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
-    ONLY_LEFT = ONLY_LEFT.decorate(Location.RIGHT,
-                                   Icons.FILE_NOT_EXIST.getSmallIcon());
+    ic = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT,
+                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    LEFT_RIGHT_CHANGED = ic;
 
-    LEFT_RIGHT_UNCHANGED = new IconComposer(Icons.FILE_EXIST_EQUAL.getSmallIcon());
-    LEFT_RIGHT_UNCHANGED = LEFT_RIGHT_UNCHANGED.decorate(Location.RIGHT,
-                                                         Icons.FILE_EXIST_EQUAL.getSmallIcon());
+    ic = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT,
+                     Icons.FILE_NOT_EXIST.getSmallIcon());
+    ONLY_LEFT = ic;
+
+    ic = new IconComposer(Icons.FILE_EXIST_EQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT,
+                     Icons.FILE_EXIST_EQUAL.getSmallIcon());
+    LEFT_RIGHT_UNCHANGED = ic;
   }
 
   public enum IconSize
@@ -187,9 +191,9 @@ public enum Icons
 
     if (m_fillCodepoint == null)
     {
-      icon = new IconComposer(getIcon(m_outlineCodepoint,
-                                      m_outlineColor,
-                                      iconSize));
+      return getIcon(m_outlineCodepoint,
+                     m_outlineColor,
+                     iconSize);
     }
     else
     {
@@ -200,9 +204,9 @@ public enum Icons
                     new IconComposer(getIcon(m_outlineCodepoint,
                                              m_outlineColor,
                                              iconSize)));
-    }
 
-    return icon;
+      return ImageUtil.createImageIcon(icon);
+    }
   }
 
   private Icon getIcon(String codepointString,
@@ -224,13 +228,12 @@ public enum Icons
       return icon;
     }
 
-    icon = new MyIcon(codepointString,
-                      iconColor,
-                      iconSize);
+    icon = ImageUtil.createImageIcon(new MyIcon(codepointString,
+                                                iconColor,
+                                                iconSize));
 
     m_iconImageMap.put(key,
                        icon);
-
     return icon;
   }
 
