@@ -32,9 +32,18 @@ public class FontUtil
                                is);
         font = font.deriveFont(Font.PLAIN,
                                iconSize);
-        System.out.println("size=" + font.getSize());
       }
       catch (IOException | FontFormatException exp)
+      {
+        System.out.println("Cannot create font[size=" + iconSize + ", resource=" + resourceName + "]");
+      }
+
+      try (InputStream is = ResourceLoader.getResourceAsStream(resourceName))
+      {
+        javafx.scene.text.Font.loadFont(is,
+                                        iconSize);
+      }
+      catch (IOException e)
       {
         System.out.println("Cannot create font[size=" + iconSize + ", resource=" + resourceName + "]");
       }
