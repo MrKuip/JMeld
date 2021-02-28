@@ -53,11 +53,6 @@ public class FilterSettingsMain
   {
     Canvas canvas;
     Graphics2D g2;
-    int codepoint;
-    String text;
-    FontMetrics fm;
-    double xString;
-    double yString;
 
     canvas = new Canvas(icon.getIconWidth(),
                         icon.getIconHeight());
@@ -67,35 +62,6 @@ public class FilterSettingsMain
                    g2,
                    0,
                    0);
-    /*
-    
-    codepoint = Integer.parseInt("F1064",
-                                 16);
-    text = new String(Character.toChars(codepoint));
-    
-    g2.setClip(0,
-               0,
-               icon.getIconWidth(),
-               icon.getIconHeight());
-    
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
-    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
-                        RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-    g2.setColor(Color.RED);
-    g2.setFont(FontUtil.getIconFont(Icons.IconSize.SMALL.getSize()));
-    
-    fm = g2.getFontMetrics();
-    
-    xString = (0 + (icon.getIconWidth() - fm.stringWidth(text)) / 2.0);
-    yString = (0 + ((icon.getIconHeight() - fm.getHeight()) / 2.0) + fm.getAscent());
-    
-    g2.drawString(text,
-                  (float) xString,
-                  (float) yString);
-                  */
 
     return canvas;
   }
