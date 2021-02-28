@@ -19,12 +19,10 @@ package org.jmeld.settings.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
@@ -140,6 +138,7 @@ public class Filter
     return result;
   }
 
+  @Override
   public String toString()
   {
     return name;
@@ -156,7 +155,7 @@ public class Filter
     List<FilterRule> getRules()
     {
       collectRules(Filter.this);
-      return new ArrayList(result);
+      return new ArrayList<>(result);
     }
 
     void collectRules(Filter filter)

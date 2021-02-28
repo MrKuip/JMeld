@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
 import javax.swing.tree.TreeNode;
-
 import org.jmeld.JMeldException;
 import org.jmeld.diff.JMDiff;
 import org.jmeld.diff.JMRevision;
@@ -55,7 +53,7 @@ public class JMDiffNode
 
     ignore = JMeldSettings.getInstance().getEditor().getIgnore();
 
-    children = new ArrayList();
+    children = new ArrayList<>();
     calculateNames();
   }
 
@@ -127,36 +125,43 @@ public class JMDiffNode
     return children;
   }
 
+  @Override
   public Enumeration<JMDiffNode> children()
   {
     return Collections.enumeration(children);
   }
 
+  @Override
   public boolean getAllowsChildren()
   {
     return isLeaf();
   }
 
+  @Override
   public JMDiffNode getChildAt(int childIndex)
   {
     return children.get(childIndex);
   }
 
+  @Override
   public int getChildCount()
   {
     return children.size();
   }
 
+  @Override
   public int getIndex(TreeNode node)
   {
     return children.indexOf(node);
   }
 
+  @Override
   public JMDiffNode getParent()
   {
     return parent;
   }
 
+  @Override
   public boolean isLeaf()
   {
     return leaf;

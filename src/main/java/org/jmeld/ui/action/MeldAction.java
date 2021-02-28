@@ -17,8 +17,8 @@
 package org.jmeld.ui.action;
 
 import java.awt.event.ActionEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -34,44 +34,20 @@ public class MeldAction
   public static String LARGE_ICON_KEY = "SwingLargeIconKey";
 
   // instance variables:
-  private Object object;
-  private Method actionMethod;
-  private Method isActionEnabledMethod;
   private ActionHandler actionHandler;
+  private Consumer<ActionEvent> doAction;
+  private BooleanSupplier enabler;
 
   MeldAction(ActionHandler actionHandler,
-      Object object,
-      String name)
+      String name,
+      Consumer<ActionEvent> doAction,
+      BooleanSupplier enabler)
   {
     super(name);
 
     this.actionHandler = actionHandler;
-    this.object = object;
-    initMethods();
-  }
-
-  private void initMethods()
-  {
-    try
-    {
-      actionMethod = object.getClass().getMethod("do" + getName(),
-                                                 ActionEvent.class);
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-      System.exit(1);
-    }
-
-    try
-    {
-      // This method is not mandatory!
-      // If it is not available the method is always enabled.
-      isActionEnabledMethod = object.getClass().getMethod("is" + getName() + "Enabled");
-    }
-    catch (NoSuchMethodException ex)
-    {
-    }
+    this.doAction = doAction;
+    this.enabler = enabler;
   }
 
   public String getName()
@@ -88,9 +64,9 @@ public class MeldAction
   public void setIcon(Icons icon)
   {
     putValue(SMALL_ICON,
-             ImageUtil.createImageIcon(icon.getSmallIcon()));
+             icon.getSmallIcon());
     putValue(LARGE_ICON_KEY,
-             ImageUtil.createImageIcon(icon.getLargeIcon()));
+             icon.getLargeIcon());
   }
 
   public Icon getSmallIcon()
@@ -110,57 +86,21 @@ public class MeldAction
 
   public void actionPerformed(ActionEvent ae)
   {
-    if (object == null || actionMethod == null)
+    if(doAction != null)
     {
-      System.out.println("setActionCommand() has not been executed!");
-      return;
-    }
-
-    try
-    {
-      actionMethod.invoke(object,
-                          ae);
-
+      doAction.accept(ae);
       actionHandler.checkActions();
-    }
-    catch (IllegalAccessException ex)
-    {
-      ex.printStackTrace();
-    }
-    catch (IllegalArgumentException ex)
-    {
-      ex.printStackTrace();
-    }
-    catch (InvocationTargetException ex)
-    {
-      ex.printStackTrace();
+      return;
     }
   }
 
   public boolean isActionEnabled()
   {
-    if (object == null || isActionEnabledMethod == null)
+    if(enabler != null)
     {
-      return true;
+      return enabler.getAsBoolean();
     }
-
-    try
-    {
-      return (Boolean) isActionEnabledMethod.invoke(object);
-    }
-    catch (IllegalAccessException ex)
-    {
-      ex.printStackTrace();
-    }
-    catch (IllegalArgumentException ex)
-    {
-      ex.printStackTrace();
-    }
-    catch (InvocationTargetException ex)
-    {
-      ex.printStackTrace();
-    }
-
+    
     return true;
   }
 }

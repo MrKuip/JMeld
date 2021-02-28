@@ -17,7 +17,6 @@
 package org.jmeld.ui.util;
 
 import java.awt.Color;
-
 import javax.swing.JList;
 import javax.swing.JPanel;
 

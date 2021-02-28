@@ -7,12 +7,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.jmeld.ui.util.Icons.IconSize;
 
 public class IconComposer
@@ -167,8 +165,8 @@ public class IconComposer
   @Override
   public void paintIcon(Component c,
       Graphics g,
-      int x,
-      int y)
+      final int x,
+      final int y)
   {
     int width;
     int height;

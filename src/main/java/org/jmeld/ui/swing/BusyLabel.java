@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -54,13 +53,14 @@ public class BusyLabel
 
   public void stop()
   {
-    // busy = false;
+    busy = false;
   }
 
   private ActionListener busy()
   {
     return new ActionListener()
     {
+      @Override
       public void actionPerformed(ActionEvent ae)
       {
         if (busy)
@@ -127,16 +127,19 @@ public class BusyLabel
       }
     }
 
+    @Override
     public int getIconWidth()
     {
       return 16;
     }
 
+    @Override
     public int getIconHeight()
     {
       return 16;
     }
 
+    @Override
     public void paintIcon(Component component,
         Graphics g,
         int x,

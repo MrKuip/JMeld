@@ -23,7 +23,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -33,11 +32,9 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import org.jmeld.ui.AbstractBarDialog;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.util.Icons;
-import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.StringUtil;
 
 public class SearchBarDialog
@@ -57,6 +54,7 @@ public class SearchBarDialog
     super(meldPanel);
   }
 
+  @Override
   protected void init()
   {
     JButton closeButton;
@@ -78,13 +76,13 @@ public class SearchBarDialog
 
     // Find previous match:
     previousButton = new JButton("Previous",
-                                 ImageUtil.createImageIcon(Icons.SEARCH_PREVIOUS.getSmallIcon()));
+                                 Icons.SEARCH_PREVIOUS.getSmallIcon());
     previousButton.addActionListener(getPreviousAction());
     initButton(previousButton);
 
     // Find next match:
     nextButton = new JButton("Next",
-                             ImageUtil.createImageIcon(Icons.SEARCH_NEXT.getSmallIcon()));
+                             Icons.SEARCH_NEXT.getSmallIcon());
     nextButton.addActionListener(getNextAction());
     initButton(nextButton);
 
@@ -140,6 +138,7 @@ public class SearchBarDialog
     searchField.setText(searchText);
   }
 
+  @Override
   public void _activate()
   {
     searchField.requestFocus();
@@ -151,6 +150,7 @@ public class SearchBarDialog
     }
   }
 
+  @Override
   public void _deactivate()
   {
   }
@@ -159,16 +159,19 @@ public class SearchBarDialog
   {
     return new DocumentListener()
     {
+      @Override
       public void changedUpdate(DocumentEvent e)
       {
         timer.restart();
       }
 
+      @Override
       public void insertUpdate(DocumentEvent e)
       {
         timer.restart();
       }
 
+      @Override
       public void removeUpdate(DocumentEvent e)
       {
         timer.restart();
@@ -180,6 +183,7 @@ public class SearchBarDialog
   {
     return new ActionListener()
     {
+      @Override
       public void actionPerformed(ActionEvent ae)
       {
         boolean notFound;
@@ -207,7 +211,7 @@ public class SearchBarDialog
             searchField.setForeground(Color.red);
           }
 
-          searchResult.setIcon(ImageUtil.createImageIcon(Icons.ALERT.getSmallIcon()));
+          searchResult.setIcon(Icons.ALERT.getSmallIcon());
           searchResult.setText("Phrase not found");
         }
         else
@@ -235,6 +239,7 @@ public class SearchBarDialog
   {
     return new KeyAdapter()
     {
+      @Override
       public void keyReleased(KeyEvent e)
       {
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -249,6 +254,7 @@ public class SearchBarDialog
   {
     return new ActionListener()
     {
+      @Override
       public void actionPerformed(ActionEvent ae)
       {
         getMeldPanel().doStopSearch(null);
@@ -260,6 +266,7 @@ public class SearchBarDialog
   {
     return new ActionListener()
     {
+      @Override
       public void actionPerformed(ActionEvent ae)
       {
         getMeldPanel().doPreviousSearch(null);
@@ -271,6 +278,7 @@ public class SearchBarDialog
   {
     return new ActionListener()
     {
+      @Override
       public void actionPerformed(ActionEvent ae)
       {
         getMeldPanel().doNextSearch(null);

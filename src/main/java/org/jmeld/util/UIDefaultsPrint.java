@@ -16,35 +16,22 @@
  */
 package org.jmeld.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-
+import java.util.Comparator;
 import javax.swing.UIManager;
 
 public class UIDefaultsPrint
 {
   public static void main(String[] args)
   {
-    ArrayList list;
-
     try
     {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-      list = new ArrayList();
-      for (Enumeration e = UIManager.getDefaults().keys(); e.hasMoreElements();)
-      {
-        list.add(e.nextElement().toString());
-      }
-
-      Collections.sort(list);
-      for (Object key : list)
-      {
-        System.out.printf("%-40.40s = %s\n",
-                          key,
-                          UIManager.get(key));
-      }
+      UIManager.getDefaults().entrySet().stream()
+          .sorted(Comparator.comparing(e -> e.getKey() == null ? "" : e.getKey().toString()))
+          .forEach(e -> System.out.printf("%-40.40s = %s\n",
+                                          e.getKey(),
+                                          e.getValue()));
     }
     catch (Exception ex)
     {

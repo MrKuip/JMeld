@@ -16,6 +16,9 @@
  */
 package org.jmeld.ui;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jidesoft.swing.JideTabbedPane;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -26,7 +29,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.help.HelpSet;
 import javax.help.JHelpContentViewer;
 import javax.help.JHelpNavigator;
@@ -44,7 +46,6 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.jdesktop.swingworker.SwingWorker;
 import org.jmeld.Version;
 import org.jmeld.settings.JMeldSettings;
@@ -71,10 +72,6 @@ import org.jmeld.util.file.VersionControlDiff;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
 import org.jmeld.vc.VersionControlUtil;
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jidesoft.swing.JideTabbedPane;
 
 public class JMeldPanel
     extends JPanel
@@ -331,9 +328,7 @@ public class JMeldPanel
     builder = new ToolBarBuilder(tb);
 
     button = WidgetFactory.getToolBarButton(getAction(actions.NEW));
-    System.out.println("button" + button.getText());
     builder.addButton(button);
-    System.out.println("button" + button.getText());
     button = WidgetFactory.getToolBarButton(getAction(actions.SAVE));
     builder.addButton(button);
 
@@ -395,13 +390,14 @@ public class JMeldPanel
 
     actionHandler = new ActionHandler();
 
-    action = actionHandler.createAction(this,
-                                        actions.NEW);
+    action = actionHandler.createAction(actions.NEW,
+                                        (ae) -> doNew(ae));
     action.setIcon(Icons.NEW);
     action.setToolTip("Merge 2 new files");
 
-    action = actionHandler.createAction(this,
-                                        actions.SAVE);
+    action = actionHandler.createAction(actions.SAVE,
+                                        (ae) -> doSave(ae),
+                                        () -> isSaveEnabled());
     action.setIcon(Icons.SAVE);
     action.setToolTip("Save the changed files");
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
@@ -410,8 +406,9 @@ public class JMeldPanel
                  action);
     }
 
-    action = actionHandler.createAction(this,
-                                        actions.UNDO);
+    action = actionHandler.createAction(actions.UNDO, 
+                                        (ae) -> doUndo(ae), 
+                                        () -> isUndoEnabled());
     action.setIcon(Icons.UNDO);
     action.setToolTip("Undo the latest change");
     installKey("control Z",
@@ -419,15 +416,16 @@ public class JMeldPanel
     installKey("control Y",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.REDO);
+    action = actionHandler.createAction(actions.REDO,
+                                        (ae) -> doRedo(ae), 
+                                        () -> isRedoEnabled());
     action.setIcon(Icons.REDO);
     action.setToolTip("Redo the latest change");
     installKey("control R",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.LEFT);
+    action = actionHandler.createAction(actions.LEFT,
+                                        (ae) -> doLeft(ae));
     installKey("LEFT",
                action);
     installKey("alt LEFT",
@@ -435,8 +433,8 @@ public class JMeldPanel
     installKey("alt KP_LEFT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.RIGHT);
+    action = actionHandler.createAction(actions.RIGHT,
+                                        (ae) -> doRight(ae));
     installKey("RIGHT",
                action);
     installKey("alt RIGHT",
@@ -444,8 +442,8 @@ public class JMeldPanel
     installKey("alt KP_RIGHT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.UP);
+    action = actionHandler.createAction(actions.UP,
+                                        (ae) -> doUp(ae));
     installKey("UP",
                action);
     installKey("alt UP",
@@ -455,8 +453,8 @@ public class JMeldPanel
     installKey("F7",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.DOWN);
+    action = actionHandler.createAction(actions.DOWN,
+                                        (ae) -> doDown(ae));
     installKey("DOWN",
                action);
     installKey("alt DOWN",
@@ -466,8 +464,8 @@ public class JMeldPanel
     installKey("F8",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.ZOOM_PLUS);
+    action = actionHandler.createAction(actions.ZOOM_PLUS,
+                                        (ae) -> doZoomPlus(ae));
     installKey("alt EQUALS",
                action);
     installKey("shift alt EQUALS",
@@ -475,8 +473,8 @@ public class JMeldPanel
     installKey("alt ADD",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.ZOOM_MIN);
+    action = actionHandler.createAction(actions.ZOOM_MIN,
+                                        (ae) -> doZoomMin(ae));
     installKey("alt MINUS",
                action);
     installKey("shift alt MINUS",
@@ -484,72 +482,72 @@ public class JMeldPanel
     installKey("alt SUBTRACT",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_SELECTED);
+    action = actionHandler.createAction(actions.GOTO_SELECTED,
+                                        (ae) -> doGoToSelected(ae));
     installKey("alt ENTER",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_FIRST);
+    action = actionHandler.createAction(actions.GOTO_FIRST,
+                                        (ae) -> doGoToLast(ae));
     installKey("alt HOME",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_LAST);
+    action = actionHandler.createAction(actions.GOTO_LAST,
+                                        (ae) -> doGoToLast(ae));
     installKey("alt END",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.GOTO_LINE);
+    action = actionHandler.createAction(actions.GOTO_LINE,
+                                        (ae) -> doGoToLine(ae));
     installKey("ctrl L",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.START_SEARCH);
+    action = actionHandler.createAction(actions.START_SEARCH,
+                                        (ae) -> doStartSearch(ae));
     installKey("ctrl F",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.NEXT_SEARCH);
+    action = actionHandler.createAction(actions.NEXT_SEARCH,
+                                        (ae) -> doNextSearch(ae));
     installKey("F3",
                action);
     installKey("ctrl G",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.PREVIOUS_SEARCH);
+    action = actionHandler.createAction(actions.PREVIOUS_SEARCH,
+                                        (ae) -> doPreviousSearch(ae));
     installKey("shift F3",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.REFRESH);
+    action = actionHandler.createAction(actions.REFRESH,
+                                        (ae) -> doRefresh(ae));
     installKey("F5",
                action);
 
-    action = actionHandler.createAction(this,
-                                        actions.MERGEMODE);
+    action = actionHandler.createAction(actions.MERGEMODE,
+                                        (ae) -> doMergeMode(ae));
     installKey("F9",
                action);
 
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
-      action = actionHandler.createAction(this,
-                                          actions.HELP);
+      action = actionHandler.createAction(actions.HELP,
+                                          (ae) -> doHelp(ae));
       action.setIcon(Icons.HELP);
       installKey("F1",
                  action);
 
-      action = actionHandler.createAction(this,
-                                          actions.ABOUT);
+      action = actionHandler.createAction(actions.ABOUT,
+                                          (ae) -> doAbout(ae));
       action.setIcon(Icons.ABOUT);
 
-      action = actionHandler.createAction(this,
-                                          actions.SETTINGS);
+      action = actionHandler.createAction(actions.SETTINGS,
+                                          (ae) -> doSettings(ae));
       action.setIcon(Icons.SETTINGS);
       action.setToolTip("Settings");
 
-      action = actionHandler.createAction(this,
-                                          actions.EXIT);
+      action = actionHandler.createAction(actions.EXIT,
+                                          (ae) -> doExit(ae));
       installKey("ESCAPE",
                  action);
     }
@@ -822,7 +820,6 @@ public class JMeldPanel
   {
     try
     {
-      JPanel panel;
       AbstractContentPanel content;
       URL url;
       HelpSet helpSet;
@@ -858,7 +855,7 @@ public class JMeldPanel
        * content = new HelpPanel(this);
        */
       tabbedPane.addTab("Help",
-                        ImageUtil.createImageIcon(Icons.HELP.getSmallIcon()),
+                        Icons.HELP.getSmallIcon(),
                         content);
       tabbedPane.setSelectedComponent(content);
     }
@@ -886,7 +883,7 @@ public class JMeldPanel
                 BorderLayout.CENTER);
 
     tabbedPane.addTab("About",
-                      ImageUtil.createImageIcon(Icons.ABOUT.getSmallIcon()),
+                      Icons.ABOUT.getSmallIcon(),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -941,7 +938,7 @@ public class JMeldPanel
     content = new SettingsPanel(this);
     content.setId(contentId);
     tabbedPane.addTab("Settings",
-                      ImageUtil.createImageIcon(Icons.SETTINGS.getSmallIcon()),
+                      Icons.SETTINGS.getSmallIcon(),
                       content);
     tabbedPane.setSelectedComponent(content);
   }
@@ -979,6 +976,7 @@ public class JMeldPanel
   {
     return new ChangeListener()
     {
+      @Override
       public void stateChanged(ChangeEvent e)
       {
         checkActions();
@@ -1134,7 +1132,7 @@ public class JMeldPanel
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
             tabbedPane.addTab(panel.getTitle(),
-                              ImageUtil.createImageIcon(Icons.NEW.getSmallIcon()),
+                              Icons.NEW.getSmallIcon(),
                               panel);
             if (!openInBackground)
             {
@@ -1160,6 +1158,7 @@ public class JMeldPanel
     {
       return new Runnable()
       {
+        @Override
         public void run()
         {
           panel.doGoToFirst();
@@ -1266,7 +1265,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab(panel.getTitle(),
-                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
+                              Icons.FOLDER.getSmallIcon(),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }
@@ -1354,7 +1353,7 @@ public class JMeldPanel
             panel.setId(contentId);
 
             tabbedPane.addTab("TODO: Think of title!",
-                              ImageUtil.createImageIcon(Icons.FOLDER.getSmallIcon()),
+                              Icons.FOLDER.getSmallIcon(),
                               panel);
             tabbedPane.setSelectedComponent(panel);
           }
@@ -1471,6 +1470,7 @@ public class JMeldPanel
     }
   }
 
+  @Override
   public void configurationChanged()
   {
     checkActions();
@@ -1529,15 +1529,18 @@ public class JMeldPanel
   {
     return new AncestorListener()
     {
+      @Override
       public void ancestorAdded(AncestorEvent event)
       {
         start();
       }
 
+      @Override
       public void ancestorMoved(AncestorEvent event)
       {
       }
 
+      @Override
       public void ancestorRemoved(AncestorEvent event)
       {
       }
