@@ -6,17 +6,20 @@ import org.jmeld.vc.BlameIF;
 import org.jmeld.vc.DiffIF;
 import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.VersionControlIF;
+import org.jmeld.vc.svn.BlameCmd;
 
 public class GitVersionControl
     implements VersionControlIF
 {
   private Boolean installed;
 
+  @Override
   public String getName()
   {
     return "git";
   }
 
+  @Override
   public boolean isInstalled()
   {
     InstalledCmd cmd;
@@ -31,6 +34,7 @@ public class GitVersionControl
     return installed.booleanValue();
   }
 
+  @Override
   public boolean isEnabled(File file)
   {
     ActiveCmd cmd;
@@ -61,6 +65,7 @@ public class GitVersionControl
     return cmd.getResultData();
   }
 
+  @Override
   public StatusResult executeStatus(File file)
   {
     StatusCmd cmd;
@@ -70,6 +75,7 @@ public class GitVersionControl
     return cmd.getResultData();
   }
 
+  @Override
   public BaseFile getBaseFile(File file)
   {
     CatCmd cmd;
@@ -79,6 +85,7 @@ public class GitVersionControl
     return cmd.getResultData();
   }
 
+  @Override
   public String toString()
   {
     return getName();

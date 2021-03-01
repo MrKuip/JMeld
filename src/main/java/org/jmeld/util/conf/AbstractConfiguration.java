@@ -1,13 +1,16 @@
 package org.jmeld.util.conf;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import java.io.File;
 import java.io.IOException;
 
+@JsonTypeInfo(use = Id.CLASS)
 public abstract class AbstractConfiguration
 {
-  private boolean changed;
-  private ConfigurationPreference preference;
-  private boolean disableFireChanged;
+  private transient boolean changed;
+  private transient ConfigurationPreference preference;
+  private transient boolean disableFireChanged;
 
   public AbstractConfiguration()
   {
@@ -42,7 +45,7 @@ public abstract class AbstractConfiguration
   {
     try
     {
-      ConfigurationPersister.getInstance().save(this,
+      ConfigurationPersister.getInstance().write(this,
                                                 preference.getFile());
       changed = false;
       fireChanged(changed);

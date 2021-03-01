@@ -24,11 +24,10 @@ import org.jmeld.vc.DiffIF;
 public class DiffData
     implements DiffIF
 {
-  private List<Target> targetList;
+  private List<Target> targetList = new ArrayList<>();
 
   public DiffData()
   {
-    targetList = new ArrayList<Target>();
   }
 
   public void addTarget(String path,
@@ -38,6 +37,7 @@ public class DiffData
                               revision));
   }
 
+  @Override
   public List<Target> getTargetList()
   {
     return targetList;
@@ -56,11 +56,13 @@ public class DiffData
       this.revision = revision;
     }
 
+    @Override
     public String getPath()
     {
       return path;
     }
 
+    @Override
     public JMRevision getRevision()
     {
       return revision;

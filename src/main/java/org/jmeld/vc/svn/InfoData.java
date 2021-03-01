@@ -16,21 +16,17 @@
  */
 package org.jmeld.vc.svn;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "info")
 public class InfoData
 {
-  @XmlElement(name = "entry")
-  private List<Entry> entryList;
+  @JacksonXmlElementWrapper(useWrapping = false)
+  @JacksonXmlProperty(localName = "entry")
+  private List<Entry> entryList = new ArrayList<>();
 
   public InfoData()
   {
@@ -44,23 +40,19 @@ public class InfoData
 
   static class Entry
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String path;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String dir;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String file;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
-    @XmlElement
     private String url;
-    @XmlElement
     private Repository repository;
-    @XmlElement(name = "wc-info")
+    @JacksonXmlProperty(localName = "wc-info")
     private WcInfo wcInfo;
-    @XmlElement
     private Commit commit;
-    @XmlElement
     private Lock lock;
 
     public Entry()
@@ -110,9 +102,7 @@ public class InfoData
 
   static class Repository
   {
-    @XmlElement
     private String root;
-    @XmlElement
     private String uuid;
 
     public Repository()
@@ -132,19 +122,16 @@ public class InfoData
 
   static class WcInfo
   {
-    @XmlElement
     private String schedule;
-    @XmlElement(name = "copy-from-url")
+    @JacksonXmlProperty(localName = "copy-from-url")
     private String copyFromUrl;
-    @XmlElement(name = "copy-from-rev")
+    @JacksonXmlProperty(localName = "copy-from-rev")
     private String copyFromRev;
-    @XmlElement(name = "text-updated")
+    @JacksonXmlProperty(localName = "text-updated")
     private Date textUpdated;
-    @XmlElement(name = "prop-updated")
+    @JacksonXmlProperty(localName = "prop-updated")
     private Date propUpdated;
-    @XmlElement
     private String checksum;
-    @XmlElement
     private Confict conflict;
 
     public WcInfo()
@@ -169,13 +156,13 @@ public class InfoData
 
   static class Confict
   {
-    @XmlElement(name = "prev-base-file")
+    @JacksonXmlProperty(localName = "prev-base-file")
     private String prevBaseFile;
-    @XmlElement(name = "prev-wc-file")
+    @JacksonXmlProperty(localName = "prev-wc-file")
     private String prevWcFile;
-    @XmlElement(name = "cur-base-file")
+    @JacksonXmlProperty(localName = "cur-base-file")
     private String curBaseFile;
-    @XmlElement(name = "prop-file")
+    @JacksonXmlProperty(localName = "prop-file")
     private String propFile;
 
     public Confict()
@@ -185,11 +172,9 @@ public class InfoData
 
   static class Commit
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
-    @XmlElement
     private String author;
-    @XmlElement
     private Date date;
 
     public Commit()
@@ -214,15 +199,10 @@ public class InfoData
 
   static class Lock
   {
-    @XmlElement
     private String token;
-    @XmlElement
     private String owner;
-    @XmlElement
     private String comment;
-    @XmlElement
     private Date created;
-    @XmlElement
     private Date expires;
 
     public Lock()

@@ -44,7 +44,7 @@ public class LogCmd
         System.out.println(entry.getRevision() + " : " + entry.getDate());
         for (LogData.Path path : entry.getPathList())
         {
-          System.out.println("  " + path.getPathName());
+          System.out.println(path.getAction() + "  " + path.getPathName());
         }
       }
     }

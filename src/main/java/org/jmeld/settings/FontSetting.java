@@ -17,21 +17,14 @@
 package org.jmeld.settings;
 
 import java.awt.Font;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import org.jmeld.util.StringUtil;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class FontSetting
     extends AbstractConfigurationElement
 {
-  @XmlAttribute
   private String name;
-  @XmlAttribute
   private int style;
-  @XmlAttribute
   private int size;
 
   private Font font;

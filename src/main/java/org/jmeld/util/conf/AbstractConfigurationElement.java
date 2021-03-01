@@ -2,7 +2,7 @@ package org.jmeld.util.conf;
 
 abstract public class AbstractConfigurationElement
 {
-  protected AbstractConfiguration configuration;
+  protected transient AbstractConfiguration configuration;
 
   public AbstractConfigurationElement()
   {

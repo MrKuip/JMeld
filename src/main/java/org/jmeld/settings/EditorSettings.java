@@ -18,54 +18,32 @@ package org.jmeld.settings;
 
 import java.awt.Color;
 import java.awt.Font;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import org.jmeld.ui.util.Colors;
 import org.jmeld.util.Ignore;
 import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class EditorSettings
     extends AbstractConfigurationElement
 {
-  @XmlElement
   private boolean showLineNumbers;
-  @XmlElement
   private int tabSize = 4;
-  @XmlElement
   private Ignore ignore = new Ignore();
-  @XmlElement
   private boolean leftsideReadonly;
-  @XmlElement
   private boolean rightsideReadonly;
-  @XmlElement
   private ColorSetting addedColor;
-  @XmlElement
   private ColorSetting changedColor;
-  @XmlElement
   private ColorSetting deletedColor;
-  @XmlElement
   private boolean customFont;
-  @XmlElement
   private FontSetting font;
-  @XmlElement
   private boolean antialias;
-  @XmlElement
   private boolean defaultFileEncodingEnabled = true;
-  @XmlElement
   private boolean detectFileEncodingEnabled;
-  @XmlElement
   private boolean specificFileEncodingEnabled;
-  @XmlElement
   private String specificFileEncodingName;
-  @XmlElement
   private String lookAndFeelName;
-  @XmlElement
   private ToolbarButtonIcon toolbarButtonIcon = ToolbarButtonIcon.LARGE;
-  @XmlElement
   private boolean toolbarButtonTextEnabled = true;
 
   public EditorSettings()
@@ -447,6 +425,7 @@ public class EditorSettings
       this.text = text;
     }
 
+    @Override
     public String toString()
     {
       return text;

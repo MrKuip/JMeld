@@ -44,7 +44,7 @@ public class BlameCmd
         for (BlameIF.EntryIF entry : target.getEntryList())
         {
           System.out.println(entry.getLineNumber() + " : " + entry.getCommit().getRevision() + " -> "
-              + entry.getCommit().getAuthor());
+              + entry.getCommit().getAuthor() + " " + entry.getCommit().getDate());
         }
       }
     }

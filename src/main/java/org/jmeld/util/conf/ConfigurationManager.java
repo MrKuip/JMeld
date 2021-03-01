@@ -100,7 +100,7 @@ public class ConfigurationManager
     {
       try
       {
-        return ConfigurationPersister.getInstance().load(clazz,
+        return ConfigurationPersister.getInstance().read(clazz,
                                                          file);
       }
       catch (Exception ex)

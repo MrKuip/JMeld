@@ -1,12 +1,8 @@
 package org.jmeld.util;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class Ignore
     extends AbstractConfigurationElement
 {
@@ -14,22 +10,15 @@ public class Ignore
   static public final Ignore NULL_IGNORE = new Ignore();
 
   // Instance variables:
-  @XmlElement
   public boolean ignoreWhitespaceAtBegin;
-  @XmlElement
   public boolean ignoreWhitespaceInBetween;
-  @XmlElement
   public boolean ignoreWhitespaceAtEnd;
-  @XmlElement
   public boolean ignoreEOL;
-  @XmlElement
   public boolean ignoreBlankLines;
-  @XmlElement
   public boolean ignoreCase;
-  @XmlElement
   // Transient:
-  public boolean ignore;
-  public boolean ignoreWhitespace;
+  public transient boolean ignore;
+  public transient boolean ignoreWhitespace;
 
   public Ignore(Ignore ignore)
   {

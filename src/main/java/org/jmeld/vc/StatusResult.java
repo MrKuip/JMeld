@@ -10,7 +10,7 @@ import java.util.Set;
 public class StatusResult
 {
   private File path;
-  private Set<Entry> entryList = new HashSet<Entry>();
+  private Set<Entry> entryList = new HashSet<>();
 
   public StatusResult(File path)
   {
@@ -70,16 +70,19 @@ public class StatusResult
       return status;
     }
 
+    @Override
     public int compareTo(Entry entry)
     {
       return name.compareTo(entry.name);
     }
 
+    @Override
     public String toString()
     {
       return name;
     }
 
+    @Override
     public boolean equals(Object o)
     {
       if (!(o instanceof Entry))
@@ -90,6 +93,7 @@ public class StatusResult
       return name.equals(((Entry) o).name);
     }
 
+    @Override
     public int hashCode()
     {
       return name.hashCode();
@@ -98,27 +102,27 @@ public class StatusResult
 
   public enum Status
   {
-    modified('M', "vcModified"),
-    added('A', "vcAdded"),
-    removed('D', "vcRemoved"),
-    clean(' ', "vcClean"),
-    conflicted('C', "vcConflicted"),
-    ignored('I', "vcIgnored"),
-    unversioned('?', "vcUnversioned"),
-    missing('!', "vcMissing"),
-    dontknow('#', "vcMissing");
+    modified("M", "vcModified"),
+    added("A", "vcAdded"),
+    removed("D", "vcRemoved"),
+    clean(" ", "vcClean"),
+    conflicted("C", "vcConflicted"),
+    ignored("I", "vcIgnored"),
+    unversioned("?", "vcUnversioned"),
+    missing("!", "vcMissing"),
+    dontknow("#", "vcMissing");
 
-    private char shortText;
+    private String shortText;
     private String iconName;
 
-    Status(char shortTexti,
+    Status(String shortText,
         String iconName)
     {
       this.shortText = shortText;
       this.iconName = iconName;
     }
 
-    public char getShortText()
+    public String getShortText()
     {
       return shortText;
     }

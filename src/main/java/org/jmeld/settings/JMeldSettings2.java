@@ -19,24 +19,24 @@ package org.jmeld.settings;
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.ConfigurationManager;
 
-public class JMeldSettings
+public class JMeldSettings2
     extends AbstractConfiguration
 {
   // class variables:
-  public static JMeldSettings instance;
+  public static JMeldSettings2 instance;
 
   // Instance variables:
   private EditorSettings editor = new EditorSettings();
   private FilterSettings filter = new FilterSettings();
   private FolderSettings folder = new FolderSettings();
 
-  public JMeldSettings()
+  public JMeldSettings2()
   {
   }
 
-  public static synchronized JMeldSettings getInstance()
+  public static synchronized JMeldSettings2 getInstance()
   {
-    return (JMeldSettings) ConfigurationManager.getInstance().get(JMeldSettings.class);
+    return (JMeldSettings2) ConfigurationManager.getInstance().get(JMeldSettings2.class);
   }
 
   @Override

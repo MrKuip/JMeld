@@ -18,19 +18,14 @@ package org.jmeld.settings;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
 import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class FilterSettings
     extends AbstractConfigurationElement
 {
-  @XmlElement
   private List<Filter> filters;
 
   public FilterSettings()

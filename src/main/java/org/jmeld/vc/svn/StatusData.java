@@ -16,25 +16,20 @@
  */
 package org.jmeld.vc.svn;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "status")
 public class StatusData
 {
-  @XmlElement(name = "target")
-  private List<Target> targetList;
+  @JacksonXmlElementWrapper(useWrapping = false)
+  @JacksonXmlProperty(localName = "target")
+  private List<Target> targetList = new ArrayList<>();
 
   public StatusData()
   {
-    targetList = new ArrayList<Target>();
   }
 
   public List<Target> getTargetList()
@@ -44,11 +39,11 @@ public class StatusData
 
   static class Target
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String path;
-    @XmlElement(name = "entry")
-    private List<Entry> entryList;
-    @XmlElement
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "entry")
+    private List<Entry> entryList = new ArrayList<>();
     private Against against;
 
     public Target()
@@ -68,11 +63,11 @@ public class StatusData
 
   static class Entry
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String path;
-    @XmlElement(name = "wc-status")
+    @JacksonXmlProperty(localName = "wc-status")
     private WcStatus wcStatus;
-    @XmlElement(name = "repos-status")
+    @JacksonXmlProperty(localName = "repos-status")
     private ReposStatus reposStatus;
 
     public Entry()
@@ -92,21 +87,19 @@ public class StatusData
 
   static class WcStatus
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private ItemStatus item;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String props;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
-    @XmlAttribute(name = "wc-locked")
+    @JacksonXmlProperty(localName = "wc-locked", isAttribute = true)
     private Boolean wcLocked;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Boolean copied;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Boolean switched;
-    @XmlElement
     private Commit commit;
-    @XmlElement
     private Lock lock;
 
     public WcStatus()
@@ -136,11 +129,10 @@ public class StatusData
 
   static class ReposStatus
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String item;
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String props;
-    @XmlElement
     private Lock lock;
 
     public ReposStatus()
@@ -160,7 +152,7 @@ public class StatusData
 
   static class Against
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
 
     public Against()
@@ -170,11 +162,9 @@ public class StatusData
 
   static class Commit
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
-    @XmlElement
     private String author;
-    @XmlElement
     private Date date;
 
     public Commit()
@@ -199,15 +189,10 @@ public class StatusData
 
   static class Lock
   {
-    @XmlElement
     private String token;
-    @XmlElement
     private String owner;
-    @XmlElement
     private String comment;
-    @XmlElement
     private Date created;
-    @XmlElement
     private Date expires;
 
     public Lock()

@@ -105,9 +105,10 @@ public class StatusCmd
     StatusCmd cmd;
     StatusResult result;
 
-    result = new SubversionVersionControl().executeStatus(new File(args[0]));
-    if (result != null)
+    cmd = new StatusCmd(new File(args[0]), true);
+    if (cmd.execute().isTrue())
     {
+      result = cmd.getStatusResult();
       for (StatusResult.Entry entry : result.getEntryList())
       {
         System.out.println(entry.getStatus().getShortText() + " " + entry.getName());

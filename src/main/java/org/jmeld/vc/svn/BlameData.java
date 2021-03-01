@@ -16,51 +16,50 @@
  */
 package org.jmeld.vc.svn;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.jmeld.vc.BlameIF;
 
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "blame")
 public class BlameData
     implements BlameIF
 {
-  @XmlElement(name = "target")
+  @JacksonXmlElementWrapper(useWrapping = false)
+  @JacksonXmlProperty(localName = "target")
   private List<Target> targetList;
 
   public BlameData()
   {
-    targetList = new ArrayList<Target>();
+    targetList = new ArrayList<>();
   }
 
+  @Override
   public List<Target> getTargetList()
   {
     return targetList;
   }
 
-  @XmlAccessorType(XmlAccessType.NONE)
   static class Target
       implements BlameIF.TargetIF
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private String path;
-    @XmlElement(name = "entry")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "entry")
     private List<Entry> entryList;
 
     public Target()
     {
     }
 
+    @Override
     public String getPath()
     {
       return path;
     }
 
+    @Override
     public List<Entry> getEntryList()
     {
       return entryList;
@@ -70,20 +69,21 @@ public class BlameData
   static class Entry
       implements BlameIF.EntryIF
   {
-    @XmlAttribute(name = "line-number")
+    @JacksonXmlProperty(localName = "line-number", isAttribute = true)
     private Integer lineNumber;
-    @XmlElement
     private Commit commit;
 
     public Entry()
     {
     }
 
+    @Override
     public Integer getLineNumber()
     {
       return lineNumber;
     }
 
+    @Override
     public Commit getCommit()
     {
       return commit;
@@ -93,27 +93,28 @@ public class BlameData
   static class Commit
       implements BlameIF.CommitIF
   {
-    @XmlAttribute
+    @JacksonXmlProperty(isAttribute = true)
     private Integer revision;
-    @XmlElement
     private String author;
-    @XmlElement
     private String date;
 
     public Commit()
     {
     }
 
+    @Override
     public Integer getRevision()
     {
       return revision;
     }
 
+    @Override
     public String getAuthor()
     {
       return author;
     }
 
+    @Override
     public String getDate()
     {
       return date;

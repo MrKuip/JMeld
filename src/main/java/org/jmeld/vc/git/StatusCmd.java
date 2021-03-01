@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import org.jmeld.util.Result;
 import org.jmeld.vc.StatusResult;
-import org.jmeld.vc.hg.MercurialVersionControl;
 import org.jmeld.vc.util.VcCmd;
 
 public class StatusCmd
@@ -32,6 +31,7 @@ public class StatusCmd
     return getResult();
   }
 
+  @Override
   protected void build(byte[] data)
   {
     StatusResult statusResult;
@@ -90,10 +90,9 @@ public class StatusCmd
 
   public static void main(String[] args)
   {
-    StatusCmd cmd;
     StatusResult result;
 
-    result = new MercurialVersionControl().executeStatus(new File(args[0]));
+    result = new GitVersionControl().executeStatus(new File(args[0]));
     if (result != null)
     {
       for (StatusResult.Entry entry : result.getEntryList())

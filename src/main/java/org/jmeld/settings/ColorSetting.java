@@ -17,22 +17,15 @@
 package org.jmeld.settings;
 
 import java.awt.Color;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class ColorSetting
     extends AbstractConfigurationElement
 {
-  @XmlAttribute
   private int b = -1;
-  @XmlAttribute
   private int g = -1;
-  @XmlAttribute
   private int r = -1;
-  private Color color;
+  private transient Color color;
 
   public ColorSetting()
   {
