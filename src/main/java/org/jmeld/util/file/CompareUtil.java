@@ -274,6 +274,11 @@ public class CompareUtil
     lineBuffer.clear();
     while ((c = reader.read()) != -1)
     {
+      if (lineBuffer.length() == 0)
+      {
+        throw new IOException("Line to long");
+      }
+
       lineBuffer.put((char) c);
 
       if (c == '\n')
