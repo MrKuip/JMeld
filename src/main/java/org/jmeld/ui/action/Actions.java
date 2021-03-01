@@ -3,7 +3,6 @@ package org.jmeld.ui.action;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.jmeld.util.Option;
 
 public class Actions

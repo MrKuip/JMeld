@@ -3,9 +3,7 @@ package org.jmeld.util.conf;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import javax.xml.bind.JAXBException;
-
 import org.jmeld.util.JaxbPersister;
 
 public class ConfigurationPersister

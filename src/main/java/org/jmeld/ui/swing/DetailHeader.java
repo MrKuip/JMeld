@@ -1,7 +1,6 @@
 package org.jmeld.ui.swing;
 
 import java.awt.Font;
-
 import javax.swing.JLabel;
 
 public class DetailHeader

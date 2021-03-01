@@ -18,7 +18,6 @@ package org.jmeld.util.prefs;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;

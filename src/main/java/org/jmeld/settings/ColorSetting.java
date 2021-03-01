@@ -17,11 +17,9 @@
 package org.jmeld.settings;
 
 import java.awt.Color;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
 @XmlAccessorType(XmlAccessType.NONE)

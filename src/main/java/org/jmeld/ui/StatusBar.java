@@ -22,7 +22,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -32,7 +31,6 @@ import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-
 import org.jmeld.ui.dnd.DragAndDropPanel;
 import org.jmeld.ui.swing.BusyLabel;
 

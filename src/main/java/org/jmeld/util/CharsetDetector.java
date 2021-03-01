@@ -1,15 +1,13 @@
 package org.jmeld.util;
 
+import com.ibm.icu.text.CharsetMatch;
 import java.io.BufferedInputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
-
-import com.ibm.icu.text.CharsetMatch;
 
 public class CharsetDetector
 {

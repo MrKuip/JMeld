@@ -18,10 +18,8 @@ package org.jmeld.ui.swing.table;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jmeld.ui.UINode;
 

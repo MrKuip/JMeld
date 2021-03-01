@@ -19,7 +19,6 @@ package org.jmeld.util.prefs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
-
 import org.jmeld.util.StringUtil;
 
 public abstract class Preference

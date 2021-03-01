@@ -2,7 +2,6 @@ package org.jmeld.ui.swing.table.util;
 
 import java.awt.Component;
 import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;

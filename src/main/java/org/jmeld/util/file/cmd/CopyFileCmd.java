@@ -3,7 +3,6 @@ package org.jmeld.util.file.cmd;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-
 import org.jmeld.util.file.FileUtil;
 import org.jmeld.util.node.FileNode;
 import org.jmeld.util.node.JMDiffNode;

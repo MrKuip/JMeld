@@ -1,7 +1,6 @@
 package org.jmeld.vc.git;
 
 import java.io.File;
-
 import org.jmeld.util.Result;
 
 public class LogCmd

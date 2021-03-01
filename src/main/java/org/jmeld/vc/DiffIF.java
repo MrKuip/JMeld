@@ -1,7 +1,6 @@
 package org.jmeld.vc;
 
 import java.util.List;
-
 import org.jmeld.diff.JMRevision;
 
 public interface DiffIF

@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
-
 import org.jmeld.JMeldException;
 import org.jmeld.util.CharsetDetector;
 import org.jmeld.util.node.FileNode;

@@ -19,7 +19,6 @@ package org.jmeld.diff;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.jmeld.util.DiffUtil;
 import org.jmeld.util.Ignore;
 

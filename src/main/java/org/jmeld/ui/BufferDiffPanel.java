@@ -16,18 +16,18 @@
  */
 package org.jmeld.ui;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
-
 import org.jmeld.JMeldException;
 import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
@@ -42,9 +42,6 @@ import org.jmeld.ui.text.JMDocumentEvent;
 import org.jmeld.util.StringUtil;
 import org.jmeld.util.node.BufferNode;
 import org.jmeld.util.node.JMDiffNode;
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 public class BufferDiffPanel
     extends AbstractContentPanel

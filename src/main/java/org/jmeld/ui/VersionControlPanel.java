@@ -17,10 +17,8 @@
 package org.jmeld.ui;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-
 import org.jmeld.ui.action.ActionHandler;
 import org.jmeld.ui.swing.table.JMTreeTableModel;
 import org.jmeld.util.conf.ConfigurationListenerIF;

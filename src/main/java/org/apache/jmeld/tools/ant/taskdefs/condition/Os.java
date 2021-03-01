@@ -17,7 +17,6 @@
 package org.apache.jmeld.tools.ant.taskdefs.condition;
 
 import java.util.Locale;
-
 import org.apache.jmeld.tools.ant.BuildException;
 
 /**

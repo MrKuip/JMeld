@@ -23,7 +23,6 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CompoundEdit;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
-
 import org.jmeld.ui.search.SearchHits;
 import org.jmeld.util.ObjectUtil;
 

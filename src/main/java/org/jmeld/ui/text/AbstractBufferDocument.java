@@ -21,7 +21,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -29,7 +28,6 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Element;
 import javax.swing.text.GapContent;
 import javax.swing.text.PlainDocument;
-
 import org.jmeld.JMeldException;
 import org.jmeld.util.StopWatch;
 import org.jmeld.util.StringUtil;

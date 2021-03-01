@@ -19,7 +19,6 @@ package org.jmeld.ui.settings;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.SaveSettingsPanel;

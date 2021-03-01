@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import org.jmeld.util.Result;
 import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.hg.MercurialVersionControl;

@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.JTextArea;
-
 import org.jmeld.util.ResourceLoader;
 
 public class FontUtil
@@ -38,6 +36,7 @@ public class FontUtil
         System.out.println("Cannot create font[size=" + iconSize + ", resource=" + resourceName + "]");
       }
 
+      /*
       try (InputStream is = ResourceLoader.getResourceAsStream(resourceName))
       {
         javafx.scene.text.Font.loadFont(is,
@@ -47,6 +46,7 @@ public class FontUtil
       {
         System.out.println("Cannot create font[size=" + iconSize + ", resource=" + resourceName + "]");
       }
+      */
 
       m_fontBySizeMap.put(iconSize,
                           font);

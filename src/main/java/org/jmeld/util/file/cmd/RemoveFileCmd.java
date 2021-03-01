@@ -1,9 +1,7 @@
 package org.jmeld.util.file.cmd;
 
 import java.io.File;
-
 import javax.swing.undo.CannotUndoException;
-
 import org.jmeld.util.file.FileUtil;
 import org.jmeld.util.node.FileNode;
 import org.jmeld.util.node.JMDiffNode;

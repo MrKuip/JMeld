@@ -3,7 +3,6 @@ package org.jmeld.vc.svn;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
 import org.jmeld.util.JaxbPersister;
 import org.jmeld.util.Result;
 import org.jmeld.vc.util.VcCmd;

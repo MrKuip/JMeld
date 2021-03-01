@@ -28,7 +28,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.jmeld.tools.ant.taskdefs.condition.Os;
 import org.apache.jmeld.tools.ant.types.Resource;
 import org.apache.jmeld.tools.ant.types.ResourceFactory;

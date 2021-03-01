@@ -16,12 +16,11 @@
  */
 package org.jmeld.ui.util;
 
+import com.jgoodies.forms.builder.AbstractFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JComponent;
-
-import com.jgoodies.forms.builder.AbstractFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 
 public class ToolBarBuilder
     extends AbstractFormBuilder

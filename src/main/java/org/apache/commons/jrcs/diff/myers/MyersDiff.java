@@ -58,7 +58,6 @@ package org.apache.commons.jrcs.diff.myers;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.jrcs.diff.Chunk;
 import org.apache.commons.jrcs.diff.Delta;
 import org.apache.commons.jrcs.diff.Diff;

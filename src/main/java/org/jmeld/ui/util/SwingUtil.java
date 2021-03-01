@@ -4,7 +4,6 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-
 import org.jmeld.ui.action.MeldAction;
 
 public class SwingUtil

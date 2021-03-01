@@ -17,7 +17,6 @@
 package org.jmeld.diff;
 
 import java.util.List;
-
 import org.jmeld.util.TokenizerFactory;
 import org.jmeld.util.WordTokenizer;
 

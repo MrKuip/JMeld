@@ -15,7 +15,6 @@ package org.eclipse.compare2.rangedifferencer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.compare2.internal.core.LCS;
 
 /* package */ class RangeComparatorLCS

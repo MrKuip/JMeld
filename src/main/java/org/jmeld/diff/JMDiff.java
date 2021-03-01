@@ -20,7 +20,6 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.jmeld.JMeldException;
 import org.jmeld.ui.text.AbstractBufferDocument;
 import org.jmeld.util.Ignore;

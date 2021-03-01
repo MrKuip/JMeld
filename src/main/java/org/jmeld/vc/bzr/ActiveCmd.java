@@ -1,7 +1,6 @@
 package org.jmeld.vc.bzr;
 
 import java.io.File;
-
 import org.jmeld.util.Result;
 import org.jmeld.vc.util.VcCmd;
 

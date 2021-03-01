@@ -61,7 +61,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.commons.jrcs.util.ToString;
 

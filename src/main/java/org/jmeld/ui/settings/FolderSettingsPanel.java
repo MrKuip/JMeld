@@ -6,9 +6,7 @@
 package org.jmeld.ui.settings;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
-
 import org.jmeld.settings.FolderSettings;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.util.Icons;

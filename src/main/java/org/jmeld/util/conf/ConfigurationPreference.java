@@ -18,7 +18,6 @@ package org.jmeld.util.conf;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.jmeld.util.prefs.Preference;
 
 public class ConfigurationPreference

@@ -1,7 +1,6 @@
 package org.jmeld.ui.swing;
 
 import java.awt.Component;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;

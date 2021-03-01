@@ -19,10 +19,8 @@ package org.jmeld.ui.action;
 import java.awt.event.ActionEvent;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
-
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 

@@ -19,7 +19,6 @@ package org.jmeld.util.prefs;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.jmeld.util.StringUtil;
 
 public class TabbedPanePreference

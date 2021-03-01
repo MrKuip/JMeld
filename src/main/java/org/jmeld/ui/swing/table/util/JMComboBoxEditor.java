@@ -1,7 +1,6 @@
 package org.jmeld.ui.swing.table.util;
 
 import java.util.List;
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 

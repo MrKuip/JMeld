@@ -18,7 +18,6 @@ package org.jmeld.vc.git;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jmeld.diff.JMRevision;
 import org.jmeld.vc.DiffIF;
 

@@ -17,7 +17,6 @@
 package org.jmeld.ui;
 
 import javax.swing.Icon;
-
 import org.jmeld.ui.swing.table.JMTreeTableModel;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.node.JMDiffNode;

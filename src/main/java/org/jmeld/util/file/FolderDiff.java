@@ -17,7 +17,6 @@
 package org.jmeld.util.file;
 
 import java.util.Collection;
-
 import org.jmeld.util.node.JMDiffNode;
 
 public abstract class FolderDiff

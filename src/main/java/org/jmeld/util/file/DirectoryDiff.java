@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.jmeld.tools.ant.DirectoryScanner;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;

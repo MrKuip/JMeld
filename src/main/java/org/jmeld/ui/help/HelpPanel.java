@@ -5,11 +5,9 @@
 package org.jmeld.ui.help;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JSplitPane;
-
 import org.jmeld.ui.AbstractContentPanel;
 import org.jmeld.ui.JMeldPanel;
 

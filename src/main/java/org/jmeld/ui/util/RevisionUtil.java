@@ -19,7 +19,6 @@ package org.jmeld.ui.util;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jmeld.diff.JMDelta;
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;

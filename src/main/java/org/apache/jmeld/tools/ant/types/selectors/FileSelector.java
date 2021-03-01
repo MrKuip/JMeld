@@ -17,7 +17,6 @@
 package org.apache.jmeld.tools.ant.types.selectors;
 
 import java.io.File;
-
 import org.apache.jmeld.tools.ant.BuildException;
 
 /**

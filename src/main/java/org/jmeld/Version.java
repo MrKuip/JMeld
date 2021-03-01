@@ -17,7 +17,6 @@
 package org.jmeld;
 
 import java.util.Properties;
-
 import org.jmeld.util.ResourceLoader;
 
 public class Version

@@ -1,7 +1,6 @@
 package org.jmeld.vc.svn;
 
 import java.io.File;
-
 import org.jmeld.vc.BaseFile;
 import org.jmeld.vc.BlameIF;
 import org.jmeld.vc.DiffIF;

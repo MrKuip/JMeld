@@ -18,7 +18,6 @@ package org.jmeld.ui.util;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import javax.swing.JComponent;
 
 public class ToolBarSeparator

@@ -1,7 +1,6 @@
 package org.jmeld.vc.hg;
 
 import java.io.File;
-
 import org.jmeld.vc.BaseFile;
 import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.VersionControlIF;

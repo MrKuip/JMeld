@@ -1,13 +1,6 @@
 package org.jmeld.ui.settings;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-
-import javax.swing.Icon;
-
-import org.jfree.fx.FXGraphics2D;
-import org.jmeld.ui.util.Icons;
-
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,6 +9,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javax.swing.Icon;
+import org.jfree.fx.FXGraphics2D;
+import org.jmeld.ui.util.Icons;
 
 public class FilterSettingsMain
     extends Application
@@ -24,6 +20,7 @@ public class FilterSettingsMain
   {
   }
 
+  @Override
   public void start(Stage stage)
   {
     TabPane tabPane;

@@ -24,7 +24,6 @@ import java.io.Reader;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
-
 import org.jmeld.util.Ignore;
 import org.jmeld.util.node.BufferNode;
 import org.jmeld.util.node.FileNode;

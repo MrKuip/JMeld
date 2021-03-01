@@ -20,7 +20,6 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.ToolBarBuilder;

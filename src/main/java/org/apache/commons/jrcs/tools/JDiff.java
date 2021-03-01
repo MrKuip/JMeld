@@ -64,7 +64,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.apache.commons.jrcs.diff.Diff;
 import org.apache.commons.jrcs.diff.Revision;
 

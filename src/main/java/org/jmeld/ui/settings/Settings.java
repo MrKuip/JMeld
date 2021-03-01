@@ -6,7 +6,6 @@
 package org.jmeld.ui.settings;
 
 import javax.swing.JPanel;
-
 import org.jmeld.ui.util.Icons;
 
 public enum Settings

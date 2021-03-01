@@ -17,7 +17,6 @@
 package org.jmeld.util.node;
 
 import java.io.File;
-
 import org.jmeld.ui.text.VersionControlBaseDocument;
 import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.VersionControlIF;

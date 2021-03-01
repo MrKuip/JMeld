@@ -34,7 +34,6 @@ import java.text.StringCharacterIterator;
 import java.util.Random;
 import java.util.Stack;
 import java.util.StringTokenizer;
-
 import org.apache.jmeld.tools.ant.BuildException;
 import org.apache.jmeld.tools.ant.taskdefs.condition.Os;
 

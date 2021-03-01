@@ -20,11 +20,9 @@ import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import org.jmeld.ui.AbstractBarDialog;
 import org.jmeld.ui.JMeldPanel;
 
