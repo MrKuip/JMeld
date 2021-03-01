@@ -18,19 +18,20 @@ repositories {
 //}
 
 dependencies {
-  compile group: 'org.swinglabs',                name: 'swing-layout',       version: '1.0.3'
-  compile group: 'org.swinglabs',                name: 'swingx',             version: '0.9.4'
-  compile group: 'com.jgoodies',                 name: 'forms',              version: '1.0.7'
-  compile group: 'com.ibm.icu',                  name: 'icu4j',              version: '4.0.1'
-  compile group: 'com.jidesoft',                 name: 'jide-oss',           version: '3.6.18'
-  compile group: 'com.jgoodies',                 name: 'looks',              version: '2.2.1'
-  compile group: 'eu.medsea.mimeutil',           name: 'mime-util',          version: '2.1.3'
-  compile group: 'javax.help',                   name: 'javahelp',                   version: '2.0.05'
-  compile group: 'com.l2fprod.common',           name: 'l2fprod-common-fontchooser', version: '6.9.1'
-  compile group: 'org.jfree',                    name: 'fxgraphics2d',               version: '1.8'
-  compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-  compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.2'
-  compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
+  implementation 'org.swinglabs:swing-layout:1.0.3'
+  implementation 'org.swinglabs:swingx:0.9.4'
+  implementation 'com.jgoodies:forms:1.0.7'
+  implementation 'com.ibm.icu:icu4j:4.0.1'
+  implementation 'com.jidesoft:jide-oss:3.6.18'
+  implementation 'com.jgoodies:looks:2.2.1'
+  implementation 'eu.medsea.mimeutil:mime-util:2.1.3'
+  implementation 'javax.help:javahelp:2.0.05'
+  implementation 'com.l2fprod.common:l2fprod-common-fontchooser:6.9.1'
+  implementation 'org.jfree:fxgraphics2d:1.8'
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.1'
+  implementation 'com.fasterxml.jackson.core:jackson-core:2.12.1'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
+  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1'
 }
 
 java {
@@ -38,26 +39,9 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-jar {
-  manifest {
-    attributes "Main-Class": "org.jmeld.Main"
-  }
-  from {
-    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-  }
-  exclude 'META-INF/**'
-}
-
-
-
 application {
-    mainClass = 'org.jmeld.JMeld'
-}
-
-task scripts(type: CreateStartScripts) {
-  outputDir = file('scripts')
   mainClass = 'org.jmeld.JMeld'
-  applicationName = 'JMeld'
+  applicationDefaultJvmArgs = ['-Xmx1000000000']
 }
 
 
