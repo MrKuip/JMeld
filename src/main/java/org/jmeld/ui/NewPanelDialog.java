@@ -21,7 +21,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -258,64 +257,60 @@ public class NewPanelDialog
 
   public ActionListener getFileBrowseAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      FileChooserPreference pref;
+      JFileChooser chooser;
+      int result;
+      String fileName;
+      JComboBox<String> comboBox;
+      Window ancestor;
+
+      // Don't allow accidentaly creation or rename of files.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.TRUE);
+      chooser = new JFileChooser();
+      // Reset the readOnly property as it is systemwide.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.FALSE);
+      chooser.setApproveButtonText("Choose");
+      chooser.setDialogTitle("Choose file");
+      chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      pref = new FileChooserPreference("Browse-" + e.getActionCommand(),
+                                       chooser);
+
+      ancestor = SwingUtilities.getWindowAncestor((Component) e.getSource());
+      result = chooser.showOpenDialog(ancestor);
+
+      if (result == JFileChooser.APPROVE_OPTION)
       {
-        FileChooserPreference pref;
-        JFileChooser chooser;
-        int result;
-        String fileName;
-        JComboBox<String> comboBox;
-        Window ancestor;
+        pref.save();
 
-        // Don't allow accidentaly creation or rename of files.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.TRUE);
-        chooser = new JFileChooser();
-        // Reset the readOnly property as it is systemwide.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.FALSE);
-        chooser.setApproveButtonText("Choose");
-        chooser.setDialogTitle("Choose file");
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        pref = new FileChooserPreference("Browse-" + ae.getActionCommand(),
-                                         chooser);
-
-        ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
-        result = chooser.showOpenDialog(ancestor);
-
-        if (result == JFileChooser.APPROVE_OPTION)
+        try
         {
-          pref.save();
+          fileName = chooser.getSelectedFile().getCanonicalPath();
 
-          try
+          comboBox = null;
+          if (e.getActionCommand().equals(LEFT_FILENAME))
           {
-            fileName = chooser.getSelectedFile().getCanonicalPath();
-
-            comboBox = null;
-            if (ae.getActionCommand().equals(LEFT_FILENAME))
-            {
-              comboBox = leftFileComboBox;
-            }
-            else if (ae.getActionCommand().equals(RIGHT_FILENAME))
-            {
-              comboBox = rightFileComboBox;
-            }
-
-            if (comboBox != null)
-            {
-              comboBox.insertItemAt(fileName,
-                                    0);
-              comboBox.setSelectedIndex(0);
-              dialog.pack();
-            }
+            comboBox = leftFileComboBox;
           }
-          catch (Exception ex)
+          else if (e.getActionCommand().equals(RIGHT_FILENAME))
           {
-            ex.printStackTrace();
+            comboBox = rightFileComboBox;
           }
+
+          if (comboBox != null)
+          {
+            comboBox.insertItemAt(fileName,
+                                  0);
+            comboBox.setSelectedIndex(0);
+            dialog.pack();
+          }
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
         }
       }
     };
@@ -323,22 +318,18 @@ public class NewPanelDialog
 
   public ActionListener getFileSelectAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        Object source;
+      Object source;
 
-        source = ae.getSource();
-        if (source == leftFileComboBox)
-        {
-          leftFileName = (String) leftFileComboBox.getSelectedItem();
-        }
-        else if (source == rightFileComboBox)
-        {
-          rightFileName = (String) rightFileComboBox.getSelectedItem();
-        }
+      source = e.getSource();
+      if (source == leftFileComboBox)
+      {
+        leftFileName = (String) leftFileComboBox.getSelectedItem();
+      }
+      else if (source == rightFileComboBox)
+      {
+        rightFileName = (String) rightFileComboBox.getSelectedItem();
       }
     };
   }
@@ -416,66 +407,62 @@ public class NewPanelDialog
 
   public ActionListener getDirectoryBrowseAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      DirectoryChooserPreference pref;
+      JFileChooser chooser;
+      int result;
+      String fileName;
+      JComboBox<String> comboBox;
+      Window ancestor;
+
+      // Don't allow accidentaly creation or rename of files.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.TRUE);
+      chooser = new JFileChooser();
+      // Reset the readOnly property as it is systemwide.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.FALSE);
+      chooser.setApproveButtonText("Choose");
+      chooser.setDialogTitle("Choose directory");
+      chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      pref = new DirectoryChooserPreference("Browse-" + e.getActionCommand(),
+                                            chooser,
+                                            previousDirectoryName);
+
+      ancestor = SwingUtilities.getWindowAncestor((Component) e.getSource());
+      result = chooser.showOpenDialog(ancestor);
+
+      if (result == JFileChooser.APPROVE_OPTION)
       {
-        DirectoryChooserPreference pref;
-        JFileChooser chooser;
-        int result;
-        String fileName;
-        JComboBox<String> comboBox;
-        Window ancestor;
+        pref.save();
 
-        // Don't allow accidentaly creation or rename of files.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.TRUE);
-        chooser = new JFileChooser();
-        // Reset the readOnly property as it is systemwide.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.FALSE);
-        chooser.setApproveButtonText("Choose");
-        chooser.setDialogTitle("Choose directory");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        pref = new DirectoryChooserPreference("Browse-" + ae.getActionCommand(),
-                                              chooser,
-                                              previousDirectoryName);
-
-        ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
-        result = chooser.showOpenDialog(ancestor);
-
-        if (result == JFileChooser.APPROVE_OPTION)
+        try
         {
-          pref.save();
+          fileName = chooser.getSelectedFile().getCanonicalPath();
+          previousDirectoryName = fileName;
 
-          try
+          comboBox = null;
+          if (e.getActionCommand().equals(LEFT_DIRECTORY))
           {
-            fileName = chooser.getSelectedFile().getCanonicalPath();
-            previousDirectoryName = fileName;
-
-            comboBox = null;
-            if (ae.getActionCommand().equals(LEFT_DIRECTORY))
-            {
-              comboBox = leftDirectoryComboBox;
-            }
-            else if (ae.getActionCommand().equals(RIGHT_DIRECTORY))
-            {
-              comboBox = rightDirectoryComboBox;
-            }
-
-            if (comboBox != null)
-            {
-              comboBox.insertItemAt(fileName,
-                                    0);
-              comboBox.setSelectedIndex(0);
-              dialog.pack();
-            }
+            comboBox = leftDirectoryComboBox;
           }
-          catch (Exception ex)
+          else if (e.getActionCommand().equals(RIGHT_DIRECTORY))
           {
-            ex.printStackTrace();
+            comboBox = rightDirectoryComboBox;
           }
+
+          if (comboBox != null)
+          {
+            comboBox.insertItemAt(fileName,
+                                  0);
+            comboBox.setSelectedIndex(0);
+            dialog.pack();
+          }
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
         }
       }
     };
@@ -483,22 +470,18 @@ public class NewPanelDialog
 
   public ActionListener getDirectorySelectAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        Object source;
+      Object source;
 
-        source = ae.getSource();
-        if (source == leftDirectoryComboBox)
-        {
-          leftDirectoryName = (String) leftDirectoryComboBox.getSelectedItem();
-        }
-        else if (source == rightDirectoryComboBox)
-        {
-          rightDirectoryName = (String) rightDirectoryComboBox.getSelectedItem();
-        }
+      source = e.getSource();
+      if (source == leftDirectoryComboBox)
+      {
+        leftDirectoryName = (String) leftDirectoryComboBox.getSelectedItem();
+      }
+      else if (source == rightDirectoryComboBox)
+      {
+        rightDirectoryName = (String) rightDirectoryComboBox.getSelectedItem();
       }
     };
   }
@@ -547,54 +530,50 @@ public class NewPanelDialog
 
   public ActionListener getVersionControlDirectoryBrowseAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      DirectoryChooserPreference pref;
+      JFileChooser chooser;
+      int result;
+      String fileName;
+      JComboBox<String> comboBox;
+      Window ancestor;
+
+      // Don't allow accidentaly creation or rename of files.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.TRUE);
+      chooser = new JFileChooser();
+      // Reset the readOnly property as it is systemwide.
+      UIManager.put("FileChooser.readOnly",
+                    Boolean.FALSE);
+      chooser.setApproveButtonText("Choose");
+      chooser.setDialogTitle("Choose directory");
+      chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      pref = new DirectoryChooserPreference("VersionControlBrowse",
+                                            chooser,
+                                            previousDirectoryName);
+
+      ancestor = SwingUtilities.getWindowAncestor((Component) e.getSource());
+      result = chooser.showOpenDialog(ancestor);
+
+      if (result == JFileChooser.APPROVE_OPTION)
       {
-        DirectoryChooserPreference pref;
-        JFileChooser chooser;
-        int result;
-        String fileName;
-        JComboBox<String> comboBox;
-        Window ancestor;
+        pref.save();
 
-        // Don't allow accidentaly creation or rename of files.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.TRUE);
-        chooser = new JFileChooser();
-        // Reset the readOnly property as it is systemwide.
-        UIManager.put("FileChooser.readOnly",
-                      Boolean.FALSE);
-        chooser.setApproveButtonText("Choose");
-        chooser.setDialogTitle("Choose directory");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        pref = new DirectoryChooserPreference("VersionControlBrowse",
-                                              chooser,
-                                              previousDirectoryName);
-
-        ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
-        result = chooser.showOpenDialog(ancestor);
-
-        if (result == JFileChooser.APPROVE_OPTION)
+        try
         {
-          pref.save();
+          fileName = chooser.getSelectedFile().getCanonicalPath();
+          previousDirectoryName = fileName;
 
-          try
-          {
-            fileName = chooser.getSelectedFile().getCanonicalPath();
-            previousDirectoryName = fileName;
-
-            comboBox = versionControlDirectoryComboBox;
-            comboBox.insertItemAt(fileName,
-                                  0);
-            comboBox.setSelectedIndex(0);
-            dialog.pack();
-          }
-          catch (Exception ex)
-          {
-            ex.printStackTrace();
-          }
+          comboBox = versionControlDirectoryComboBox;
+          comboBox.insertItemAt(fileName,
+                                0);
+          comboBox.setSelectedIndex(0);
+          dialog.pack();
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
         }
       }
     };
@@ -602,13 +581,9 @@ public class NewPanelDialog
 
   public ActionListener getVersionControlDirectorySelectAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        versionControlDirectoryName = (String) versionControlDirectoryComboBox.getSelectedItem();
-      }
+      versionControlDirectoryName = (String) versionControlDirectoryComboBox.getSelectedItem();
     };
   }
 

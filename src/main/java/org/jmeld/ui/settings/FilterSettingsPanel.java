@@ -5,7 +5,6 @@
  */
 package org.jmeld.ui.settings;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
@@ -91,6 +90,7 @@ public class FilterSettingsPanel
   {
     return new ListSelectionListener()
     {
+      @Override
       public void valueChanged(ListSelectionEvent e)
       {
         int rowIndex;
@@ -115,94 +115,83 @@ public class FilterSettingsPanel
 
   private ActionListener getNewFilterAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      public void actionPerformed(ActionEvent ae)
-      {
-        getFilterSettings().addFilter(new Filter("Untitled"));
-        filterTableModel.fireTableDataChanged();
-      }
+      getFilterSettings().addFilter(new Filter("Untitled"));
+      filterTableModel.fireTableDataChanged();
     };
   }
 
   private ActionListener getDeleteFilterAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      public void actionPerformed(ActionEvent ae)
-      {
-        getFilterSettings().removeFilter(getSelectedFilter());
-        filterTableModel.fireTableDataChanged();
-      }
+      getFilterSettings().removeFilter(getSelectedFilter());
+      filterTableModel.fireTableDataChanged();
     };
   }
 
   private ActionListener getNewFilterRuleAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      public void actionPerformed(ActionEvent ae)
+      Filter filter;
+      FilterRule newRule;
+      FilterRule selectedFilterRule;
+
+      filter = getSelectedFilter();
+      if (filter == null)
       {
-        Filter filter;
-        FilterRule newRule;
-        FilterRule selectedFilterRule;
-
-        filter = getSelectedFilter();
-        if (filter == null)
-        {
-          return;
-        }
-
-        newRule = new FilterRule("Untitled",
-                                 FilterRule.Rule.excludes,
-                                 "",
-                                 true);
-
-        selectedFilterRule = getSelectedFilterRule();
-        if (selectedFilterRule != null)
-        {
-          newRule.setDescription(selectedFilterRule.getDescription());
-          newRule.setRule(selectedFilterRule.getRule());
-          filter.insertRule(selectedFilterRule,
-                            newRule);
-        }
-        else
-        {
-          filter.addRule(newRule);
-        }
-
-        filterRuleTableModel.fireTableDataChanged();
+        return;
       }
+
+      newRule = new FilterRule("Untitled",
+                               FilterRule.Rule.excludes,
+                               "",
+                               true);
+
+      selectedFilterRule = getSelectedFilterRule();
+      if (selectedFilterRule != null)
+      {
+        newRule.setDescription(selectedFilterRule.getDescription());
+        newRule.setRule(selectedFilterRule.getRule());
+        filter.insertRule(selectedFilterRule,
+                          newRule);
+      }
+      else
+      {
+        filter.addRule(newRule);
+      }
+
+      filterRuleTableModel.fireTableDataChanged();
     };
   }
 
   private ActionListener getDeleteFilterRuleAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      public void actionPerformed(ActionEvent ae)
+      Filter filter;
+      FilterRule rule;
+
+      filter = getSelectedFilter();
+      if (filter == null)
       {
-        Filter filter;
-        FilterRule rule;
-
-        filter = getSelectedFilter();
-        if (filter == null)
-        {
-          return;
-        }
-
-        rule = getSelectedFilterRule();
-        if (rule == null)
-        {
-          return;
-        }
-
-        filter.removeRule(rule);
-        filterRuleTableModel.fireTableDataChanged();
+        return;
       }
+
+      rule = getSelectedFilterRule();
+      if (rule == null)
+      {
+        return;
+      }
+
+      filter.removeRule(rule);
+      filterRuleTableModel.fireTableDataChanged();
     };
   }
 
+  @Override
   public void configurationChanged()
   {
     initConfiguration();
@@ -227,11 +216,13 @@ public class FilterSettingsPanel
                              true);
     }
 
+    @Override
     public int getRowCount()
     {
       return getFilterSettings().getFilters().size();
     }
 
+    @Override
     public void setValueAt(Object value,
         int rowIndex,
         Column column)
@@ -248,6 +239,7 @@ public class FilterSettingsPanel
       }
     }
 
+    @Override
     public Object getValueAt(int rowIndex,
         Column column)
     {
@@ -315,11 +307,13 @@ public class FilterSettingsPanel
                                 true);
     }
 
+    @Override
     public int getRowCount()
     {
       return getRules(filterIndex).size();
     }
 
+    @Override
     public void setValueAt(Object value,
         int rowIndex,
         Column column)
@@ -358,6 +352,7 @@ public class FilterSettingsPanel
       }
     }
 
+    @Override
     public Object getValueAt(int rowIndex,
         Column column)
     {
@@ -395,6 +390,7 @@ public class FilterSettingsPanel
       return "??";
     }
 
+    @Override
     public Class getColumnClass(int rowIndex,
         Column column)
     {

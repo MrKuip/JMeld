@@ -19,7 +19,6 @@ package org.jmeld.ui.swing;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,22 +57,18 @@ public class BusyLabel
 
   private ActionListener busy()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      if (busy)
       {
-        if (busy)
-        {
-          icon.roll();
-          repaint();
-          timer.restart();
-        }
-        else
-        {
-          icon.stop();
-          repaint();
-        }
+        icon.roll();
+        repaint();
+        timer.restart();
+      }
+      else
+      {
+        icon.stop();
+        repaint();
       }
     };
   }

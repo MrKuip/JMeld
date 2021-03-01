@@ -60,7 +60,7 @@ public class ConfigurationPreference
     {
       ex.printStackTrace();
     }
-    defaultFileName += ".xml";
+    defaultFileName += ".json";
 
     fileName = getString(FILENAME,
                          defaultFileName);

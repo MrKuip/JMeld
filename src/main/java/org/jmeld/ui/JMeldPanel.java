@@ -391,13 +391,13 @@ public class JMeldPanel
     actionHandler = new ActionHandler();
 
     action = actionHandler.createAction(actions.NEW,
-                                        (ae) -> doNew(ae));
+                                        this::doNew);
     action.setIcon(Icons.NEW);
     action.setToolTip("Merge 2 new files");
 
     action = actionHandler.createAction(actions.SAVE,
-                                        (ae) -> doSave(ae),
-                                        () -> isSaveEnabled());
+                                        this::doSave,
+                                        this::isSaveEnabled);
     action.setIcon(Icons.SAVE);
     action.setToolTip("Save the changed files");
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
@@ -406,9 +406,9 @@ public class JMeldPanel
                  action);
     }
 
-    action = actionHandler.createAction(actions.UNDO, 
-                                        (ae) -> doUndo(ae), 
-                                        () -> isUndoEnabled());
+    action = actionHandler.createAction(actions.UNDO,
+                                        this::doUndo,
+                                        this::isUndoEnabled);
     action.setIcon(Icons.UNDO);
     action.setToolTip("Undo the latest change");
     installKey("control Z",
@@ -417,15 +417,15 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.REDO,
-                                        (ae) -> doRedo(ae), 
-                                        () -> isRedoEnabled());
+                                        this::doRedo,
+                                        this::isRedoEnabled);
     action.setIcon(Icons.REDO);
     action.setToolTip("Redo the latest change");
     installKey("control R",
                action);
 
     action = actionHandler.createAction(actions.LEFT,
-                                        (ae) -> doLeft(ae));
+                                        this::doLeft);
     installKey("LEFT",
                action);
     installKey("alt LEFT",
@@ -434,7 +434,7 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.RIGHT,
-                                        (ae) -> doRight(ae));
+                                        this::doRight);
     installKey("RIGHT",
                action);
     installKey("alt RIGHT",
@@ -443,7 +443,7 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.UP,
-                                        (ae) -> doUp(ae));
+                                        this::doUp);
     installKey("UP",
                action);
     installKey("alt UP",
@@ -454,7 +454,7 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.DOWN,
-                                        (ae) -> doDown(ae));
+                                        this::doDown);
     installKey("DOWN",
                action);
     installKey("alt DOWN",
@@ -465,7 +465,7 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.ZOOM_PLUS,
-                                        (ae) -> doZoomPlus(ae));
+                                        this::doZoomPlus);
     installKey("alt EQUALS",
                action);
     installKey("shift alt EQUALS",
@@ -474,7 +474,7 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.ZOOM_MIN,
-                                        (ae) -> doZoomMin(ae));
+                                        this::doZoomMin);
     installKey("alt MINUS",
                action);
     installKey("shift alt MINUS",
@@ -483,71 +483,71 @@ public class JMeldPanel
                action);
 
     action = actionHandler.createAction(actions.GOTO_SELECTED,
-                                        (ae) -> doGoToSelected(ae));
+                                        this::doGoToSelected);
     installKey("alt ENTER",
                action);
 
     action = actionHandler.createAction(actions.GOTO_FIRST,
-                                        (ae) -> doGoToLast(ae));
+                                        this::doGoToLast);
     installKey("alt HOME",
                action);
 
     action = actionHandler.createAction(actions.GOTO_LAST,
-                                        (ae) -> doGoToLast(ae));
+                                        this::doGoToLast);
     installKey("alt END",
                action);
 
     action = actionHandler.createAction(actions.GOTO_LINE,
-                                        (ae) -> doGoToLine(ae));
+                                        this::doGoToLine);
     installKey("ctrl L",
                action);
 
     action = actionHandler.createAction(actions.START_SEARCH,
-                                        (ae) -> doStartSearch(ae));
+                                        this::doStartSearch);
     installKey("ctrl F",
                action);
 
     action = actionHandler.createAction(actions.NEXT_SEARCH,
-                                        (ae) -> doNextSearch(ae));
+                                        this::doNextSearch);
     installKey("F3",
                action);
     installKey("ctrl G",
                action);
 
     action = actionHandler.createAction(actions.PREVIOUS_SEARCH,
-                                        (ae) -> doPreviousSearch(ae));
+                                        this::doPreviousSearch);
     installKey("shift F3",
                action);
 
     action = actionHandler.createAction(actions.REFRESH,
-                                        (ae) -> doRefresh(ae));
+                                        this::doRefresh);
     installKey("F5",
                action);
 
     action = actionHandler.createAction(actions.MERGEMODE,
-                                        (ae) -> doMergeMode(ae));
+                                        this::doMergeMode);
     installKey("F9",
                action);
 
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
       action = actionHandler.createAction(actions.HELP,
-                                          (ae) -> doHelp(ae));
+                                          this::doHelp);
       action.setIcon(Icons.HELP);
       installKey("F1",
                  action);
 
       action = actionHandler.createAction(actions.ABOUT,
-                                          (ae) -> doAbout(ae));
+                                          this::doAbout);
       action.setIcon(Icons.ABOUT);
 
       action = actionHandler.createAction(actions.SETTINGS,
-                                          (ae) -> doSettings(ae));
+                                          this::doSettings);
       action.setIcon(Icons.SETTINGS);
       action.setToolTip("Settings");
 
       action = actionHandler.createAction(actions.EXIT,
-                                          (ae) -> doExit(ae));
+                                          this::doExit);
       installKey("ESCAPE",
                  action);
     }

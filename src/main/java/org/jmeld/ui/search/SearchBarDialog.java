@@ -18,7 +18,6 @@ package org.jmeld.ui.search;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -65,7 +64,9 @@ public class SearchBarDialog
 
     // Close the search dialog:
     closeButton = new JButton(Icons.CLOSE.getSmallIcon());
-    closeButton.addActionListener(getCloseAction());
+    closeButton.addActionListener((e) -> {
+      getMeldPanel().doStopSearch(null);
+    });
     initButton(closeButton);
     closeButton.setBorder(null);
 
@@ -181,55 +182,51 @@ public class SearchBarDialog
 
   private ActionListener executeSearch()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      boolean notFound;
+      Color color;
+      String searchText;
+      SearchHits searchHits;
+
+      searchText = searchField.getText();
+
+      searchHits = getMeldPanel().doSearch(null);
+      notFound = (searchHits == null || searchHits.getSearchHits().size() == 0);
+
+      if (notFound)
       {
-        boolean notFound;
-        Color color;
-        String searchText;
-        SearchHits searchHits;
-
-        searchText = searchField.getText();
-
-        searchHits = getMeldPanel().doSearch(null);
-        notFound = (searchHits == null || searchHits.getSearchHits().size() == 0);
-
-        if (notFound)
+        // I would love to set the background to red and foreground
+        //   to white but the jdk won't let me set the background if
+        //   GTK look&feel is chosen.
+        if (searchField.getForeground() != Color.red)
         {
-          // I would love to set the background to red and foreground
-          //   to white but the jdk won't let me set the background if
-          //   GTK look&feel is chosen.
-          if (searchField.getForeground() != Color.red)
-          {
-            // Remember the original colors:
-            searchField.putClientProperty(CP_FOREGROUND,
-                                          searchField.getForeground());
+          // Remember the original colors:
+          searchField.putClientProperty(CP_FOREGROUND,
+                                        searchField.getForeground());
 
-            // Set the new colors:
-            searchField.setForeground(Color.red);
-          }
-
-          searchResult.setIcon(Icons.ALERT.getSmallIcon());
-          searchResult.setText("Phrase not found");
+          // Set the new colors:
+          searchField.setForeground(Color.red);
         }
-        else
-        {
-          // Set the original colors:
-          color = (Color) searchField.getClientProperty(CP_FOREGROUND);
-          if (color != null)
-          {
-            searchField.setForeground(color);
-            searchField.putClientProperty(CP_FOREGROUND,
-                                          null);
-          }
 
-          if (!StringUtil.isEmpty(searchResult.getText()))
-          {
-            searchResult.setIcon(null);
-            searchResult.setText("");
-          }
+        searchResult.setIcon(Icons.ALERT.getSmallIcon());
+        searchResult.setText("Phrase not found");
+      }
+      else
+      {
+        // Set the original colors:
+        color = (Color) searchField.getClientProperty(CP_FOREGROUND);
+        if (color != null)
+        {
+          searchField.setForeground(color);
+          searchField.putClientProperty(CP_FOREGROUND,
+                                        null);
+        }
+
+        if (!StringUtil.isEmpty(searchResult.getText()))
+        {
+          searchResult.setIcon(null);
+          searchResult.setText("");
         }
       }
     };
@@ -252,37 +249,25 @@ public class SearchBarDialog
 
   private ActionListener getCloseAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        getMeldPanel().doStopSearch(null);
-      }
+      getMeldPanel().doStopSearch(null);
     };
   }
 
   private ActionListener getPreviousAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        getMeldPanel().doPreviousSearch(null);
-      }
+      getMeldPanel().doPreviousSearch(null);
     };
   }
 
   private ActionListener getNextAction()
   {
-    return new ActionListener()
+    return (e) ->
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
-      {
-        getMeldPanel().doNextSearch(null);
-      }
+      getMeldPanel().doNextSearch(null);
     };
   }
 }
