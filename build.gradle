@@ -2,7 +2,7 @@
 plugins {
   id 'java-library'
   id 'eclipse'
-  //id 'org.openjfx.javafxplugin' version '0.0.8'
+  id 'org.openjfx.javafxplugin' version '0.0.8'
   id 'application'
 }
 
@@ -12,10 +12,10 @@ repositories {
   mavenCentral()
 }
 
-//javafx {
-    //version = "11"
-    //modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
-//}
+javafx {
+  version = "13"
+  modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
+}
 
 dependencies {
   implementation 'org.swinglabs:swing-layout:1.0.3'
@@ -32,6 +32,14 @@ dependencies {
   implementation 'com.fasterxml.jackson.core:jackson-core:2.12.1'
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
   implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1'
+  implementation group: 'com.miglayout', name: 'miglayout-javafx', version: '5.2'
+
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+  runtimeOnly "org.openjfx:javafx-swing:$javafx.version:win"
+  runtimeOnly "org.openjfx:javafx-swing:$javafx.version:linux"
+  runtimeOnly "org.openjfx:javafx-swing:$javafx.version:mac"
 }
 
 java {
@@ -39,9 +47,18 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-application {
-  mainClass = 'org.jmeld.JMeld'
-  applicationDefaultJvmArgs = ['-Xmx1000000000']
-}
+//application {
+  //mainClass = 'org.jmeld.ui.settings.FilterSettingsMain'
+  //applicationDefaultJvmArgs = ['-Xmx1000000000']
+//}
 
+mainClassName = 'org.jmeld.ui.settings.FilterSettingsMain'
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.jmeld.JMeldFX'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
