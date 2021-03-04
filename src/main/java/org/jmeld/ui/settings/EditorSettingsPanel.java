@@ -79,14 +79,14 @@ public class EditorSettingsPanel
     fontChooserButton.addActionListener(getFontChooserAction());
 
     // File encoding:
-    defaultEncodingRadioButton
-        .setText(defaultEncodingRadioButton.getText() + " (" + CharsetDetector.getInstance().getDefaultCharset() + ")");
+    defaultEncodingRadioButton.setText(defaultEncodingRadioButton.getText() + " (" + CharsetDetector.getInstance()
+        .getDefaultCharset() + ")");
 
     defaultEncodingRadioButton.addActionListener(getDefaultEncodingAction());
     detectEncodingRadioButton.addActionListener(getDetectEncodingAction());
     specificEncodingRadioButton.addActionListener(getSpecificEncodingAction());
-    specificEncodingComboBox
-        .setModel(new DefaultComboBoxModel(CharsetDetector.getInstance().getCharsetNameList().toArray()));
+    specificEncodingComboBox.setModel(new DefaultComboBoxModel(CharsetDetector.getInstance().getCharsetNameList()
+        .toArray()));
     specificEncodingComboBox.setSelectedItem(getEditorSettings().getSpecificFileEncodingName());
     specificEncodingComboBox.addActionListener(getSpecificEncodingNameAction());
 
@@ -111,8 +111,7 @@ public class EditorSettingsPanel
 
   private ActionListener getColorAddedAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Color color;
 
       color = chooseColor(getEditorSettings().getAddedColor());
@@ -125,8 +124,7 @@ public class EditorSettingsPanel
 
   private ActionListener getColorDeletedAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Color color;
 
       color = chooseColor(getEditorSettings().getDeletedColor());
@@ -139,8 +137,7 @@ public class EditorSettingsPanel
 
   private ActionListener getColorChangedAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Color color;
 
       color = chooseColor(getEditorSettings().getChangedColor());
@@ -153,96 +150,84 @@ public class EditorSettingsPanel
 
   private ActionListener getShowLineNumbersAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setShowLineNumbers(showLineNumbersCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreWhitespaceAtBeginAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreWhitespaceAtBegin(ignoreWhitespaceAtBeginCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreWhitespaceInBetweenAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreWhitespaceInBetween(ignoreWhitespaceInBetweenCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreWhitespaceAtEndAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreWhitespaceAtEnd(ignoreWhitespaceAtEndCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreEOLAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreEOL(ignoreEOLCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreBlankLinesAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreBlankLines(ignoreBlankLinesCheckBox.isSelected());
     };
   }
 
   private ActionListener getIgnoreCaseAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setIgnoreCase(ignoreCaseCheckBox.isSelected());
     };
   }
 
   private ActionListener getLeftsideReadonlyAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setLeftsideReadonly(leftsideReadonlyCheckBox.isSelected());
     };
   }
 
   private ActionListener getRightsideReadonlyAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setRightsideReadonly(rightsideReadonlyCheckBox.isSelected());
     };
   }
 
   private ActionListener getAntialiasAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().enableAntialias(antialiasCheckBox.isSelected());
     };
   }
 
   private ActionListener getRestoreOriginalColorsAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().restoreColors();
     };
   }
 
   private ActionListener getDefaultEncodingAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setDefaultFileEncodingEnabled(true);
       getEditorSettings().setDetectFileEncodingEnabled(false);
       getEditorSettings().setSpecificFileEncodingEnabled(false);
@@ -251,8 +236,7 @@ public class EditorSettingsPanel
 
   private ActionListener getDetectEncodingAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setDefaultFileEncodingEnabled(false);
       getEditorSettings().setDetectFileEncodingEnabled(true);
       getEditorSettings().setSpecificFileEncodingEnabled(false);
@@ -261,8 +245,7 @@ public class EditorSettingsPanel
 
   private ActionListener getSpecificEncodingAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setDefaultFileEncodingEnabled(false);
       getEditorSettings().setDetectFileEncodingEnabled(false);
       getEditorSettings().setSpecificFileEncodingEnabled(true);
@@ -271,16 +254,14 @@ public class EditorSettingsPanel
 
   private ActionListener getSpecificEncodingNameAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setSpecificFileEncodingName((String) specificEncodingComboBox.getSelectedItem());
     };
   }
 
   private ActionListener getLookAndFeelAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setLookAndFeelName((String) lookAndFeelComboBox.getSelectedItem());
       LookAndFeelManager.getInstance().install();
     };
@@ -288,18 +269,16 @@ public class EditorSettingsPanel
 
   private ActionListener getToolbarButtonIconAction()
   {
-    return (e) ->
-    {
-      getEditorSettings()
-          .setToolbarButtonIcon((EditorSettings.ToolbarButtonIcon) toolbarButtonIconComboBox.getSelectedItem());
+    return (e) -> {
+      getEditorSettings().setToolbarButtonIcon(
+          (EditorSettings.ToolbarButtonIcon) toolbarButtonIconComboBox.getSelectedItem());
       JMeld.getJMeldPanel().addToolBar();
     };
   }
 
   private ActionListener getToolbarButtonTextEnabledAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().setToolbarButtonTextEnabled(toolbarButtonTextEnabledCheckBox.isSelected());
       JMeld.getJMeldPanel().addToolBar();
     };
@@ -307,24 +286,21 @@ public class EditorSettingsPanel
 
   private ActionListener getDefaultFontAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().enableCustomFont(!defaultFontRadioButton.isSelected());
     };
   }
 
   private ActionListener getCustomFontAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getEditorSettings().enableCustomFont(customFontRadioButton.isSelected());
     };
   }
 
   private ActionListener getFontChooserAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Font font;
 
       font = chooseFont(getEditorFont());
@@ -342,12 +318,7 @@ public class EditorSettingsPanel
     if (colorDialog == null)
     {
       colorChooser = new JColorChooser(initialColor);
-      colorDialog = JColorChooser.createDialog(null,
-                                               "Choose color",
-                                               true,
-                                               colorChooser,
-                                               null,
-                                               null);
+      colorDialog = JColorChooser.createDialog(null, "Choose color", true, colorChooser, null, null);
     }
 
     colorChooser.setColor(initialColor);
@@ -363,8 +334,7 @@ public class EditorSettingsPanel
     fontChooser = new JFontChooser();
     fontChooser.setSelectedFont(initialFont);
 
-    return fontChooser.showFontDialog(this,
-                                      "");
+    return fontChooser.showFontDialog(this, "");
   }
 
   private ComboBoxModel getLookAndFeelModel()
@@ -404,12 +374,12 @@ public class EditorSettingsPanel
                                              20));
     colorChangedButton.setText("");
     showLineNumbersCheckBox.setSelected(settings.getShowLineNumbers());
-    ignoreWhitespaceAtBeginCheckBox.setSelected(ignore.ignoreWhitespaceAtBegin);
-    ignoreWhitespaceInBetweenCheckBox.setSelected(ignore.ignoreWhitespaceInBetween);
-    ignoreWhitespaceAtEndCheckBox.setSelected(ignore.ignoreWhitespaceAtEnd);
-    ignoreEOLCheckBox.setSelected(ignore.ignoreEOL);
-    ignoreBlankLinesCheckBox.setSelected(ignore.ignoreBlankLines);
-    ignoreCaseCheckBox.setSelected(ignore.ignoreCase);
+    ignoreWhitespaceAtBeginCheckBox.setSelected(ignore.getIgnoreWhitespaceAtBegin());
+    ignoreWhitespaceInBetweenCheckBox.setSelected(ignore.getIgnoreWhitespaceInBetween());
+    ignoreWhitespaceAtEndCheckBox.setSelected(ignore.getIgnoreWhitespaceAtEnd());
+    ignoreEOLCheckBox.setSelected(ignore.getIgnoreEOL());
+    ignoreBlankLinesCheckBox.setSelected(ignore.getIgnoreBlankLines());
+    ignoreCaseCheckBox.setSelected(ignore.getIgnoreCase());
     leftsideReadonlyCheckBox.setSelected(settings.getLeftsideReadonly());
     rightsideReadonlyCheckBox.setSelected(settings.getRightsideReadonly());
     antialiasCheckBox.setSelected(settings.isAntialiasEnabled());

@@ -1,5 +1,7 @@
 package org.jmeld.fx.ui.settings;
 
+import static org.jmeld.fx.util.FxCss.header1;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -45,7 +47,6 @@ public class FilterSettingsPanel
   {
     MigPane panel;
     Label label;
-    Text text;
     ToggleButton toggleButton;
     Button button;
     ComboBox<FolderView> comboBox;
@@ -56,12 +57,10 @@ public class FilterSettingsPanel
     gap1 = "30";
     gap2 = "10";
 
-    text = new Text("Filter settings");
-    text.setStyle("-fx-font-size:20; ");
-    add(text, new CC().dockNorth().wrap().span(3).gapLeft("10"));
-
     panel = new MigPane(null,
                         "[pref][pref][grow,fill]");
+
+    add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span(3).gapLeft("10"));
     add(panel, "west");
 
     label = new Label("Font");

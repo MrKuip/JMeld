@@ -14,43 +14,38 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.fx;
+package org.jmeld.fx.settings;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.util.ResourceLoader;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 
-public class JMeldFx
-    extends Application
+public class ColorSettingFx
+    extends AbstractConfigurationElement
 {
-  static
+  public SimpleObjectProperty<Color> colorProperty = new SimpleObjectProperty<>();
+
+  public ColorSettingFx()
   {
-    System.setProperty("prism.lcdtext", "false");
   }
 
-  @Override
-  public void start(Stage stage)
-      throws Exception
+  public ColorSettingFx(Color color)
   {
-    Scene scene;
-
-    scene = new Scene(new SettingsPanel(),
-                      300,
-                      300);
-    scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());
-
-    stage.setTitle("JMeld");
-    stage.setScene(scene);
-    stage.setWidth(1000);
-    stage.setHeight(750);
-
-    stage.show();
+    setColor(color);
   }
 
-  static public void main(String[] args)
+  public SimpleObjectProperty<Color> colorProperty()
   {
-    JMeldFx.launch(args);
+    return colorProperty;
+  }
+
+  public Color getColor()
+  {
+    return colorProperty.get();
+  }
+
+  public void setColor(Color color)
+  {
+    colorProperty.set(color);
   }
 }

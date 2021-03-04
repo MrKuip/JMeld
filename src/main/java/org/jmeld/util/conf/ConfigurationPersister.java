@@ -21,19 +21,18 @@ public class ConfigurationPersister
   /**
    * Read a configuration of type 'clazz' from a file.
    */
-  public <T extends AbstractConfiguration> T read(Class<T> clazz,
-      File file)
+  public <T extends AbstractConfiguration> T read(Class<T> clazz, File file)
       throws FileNotFoundException
   {
     T configuration;
 
     try
     {
-      configuration = JsonPersister.getInstance().read(clazz,
-                                                       file);
+      configuration = JsonPersister.getInstance().read(file, clazz);
     }
     catch (Exception ex)
     {
+      ex.printStackTrace();
       return null;
     }
 
@@ -45,11 +44,9 @@ public class ConfigurationPersister
   /**
    * Write a configuration to a file.
    */
-  public void write(AbstractConfiguration configuration,
-      File file)
+  public void write(AbstractConfiguration configuration, File file)
       throws Exception
   {
-    JsonPersister.getInstance().write(configuration,
-                                     file);
+    JsonPersister.getInstance().write(file, configuration);
   }
 }

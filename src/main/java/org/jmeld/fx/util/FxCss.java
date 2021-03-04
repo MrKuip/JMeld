@@ -14,43 +14,21 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.fx;
+package org.jmeld.fx.util;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.util.ResourceLoader;
+import javafx.scene.Node;
 
-public class JMeldFx
-    extends Application
+public class FxCss
 {
-  static
+  public static <T extends Node> T header1(T node)
   {
-    System.setProperty("prism.lcdtext", "false");
+    node.getStyleClass().add("header1");
+    return node;
   }
 
-  @Override
-  public void start(Stage stage)
-      throws Exception
+  public static <T extends Node> T header2(T node)
   {
-    Scene scene;
-
-    scene = new Scene(new SettingsPanel(),
-                      300,
-                      300);
-    scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());
-
-    stage.setTitle("JMeld");
-    stage.setScene(scene);
-    stage.setWidth(1000);
-    stage.setHeight(750);
-
-    stage.show();
-  }
-
-  static public void main(String[] args)
-  {
-    JMeldFx.launch(args);
+    node.getStyleClass().add("header2");
+    return node;
   }
 }

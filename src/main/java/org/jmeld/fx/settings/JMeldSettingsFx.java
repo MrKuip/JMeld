@@ -14,29 +14,29 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.settings;
+package org.jmeld.fx.settings;
 
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.ConfigurationManager;
 
-public class JMeldSettings2
+public class JMeldSettingsFx
     extends AbstractConfiguration
 {
   // class variables:
-  public static JMeldSettings2 instance;
+  public static JMeldSettingsFx instance;
 
   // Instance variables:
-  private EditorSettings editor = new EditorSettings();
-  private FilterSettings filter = new FilterSettings();
-  private FolderSettings folder = new FolderSettings();
+  private EditorSettingsFx editor = new EditorSettingsFx();
+  private FilterSettingsFx filter = new FilterSettingsFx();
+  private FolderSettingsFx folder = new FolderSettingsFx();
 
-  public JMeldSettings2()
+  public JMeldSettingsFx()
   {
   }
 
-  public static synchronized JMeldSettings2 getInstance()
+  public static synchronized JMeldSettingsFx getInstance()
   {
-    return (JMeldSettings2) ConfigurationManager.getInstance().get(JMeldSettings2.class);
+    return (JMeldSettingsFx) ConfigurationManager.getInstance().get(JMeldSettingsFx.class);
   }
 
   @Override
@@ -47,17 +47,17 @@ public class JMeldSettings2
     folder.init(this);
   }
 
-  public EditorSettings getEditor()
+  public EditorSettingsFx getEditor()
   {
     return editor;
   }
 
-  public FilterSettings getFilter()
+  public FilterSettingsFx getFilter()
   {
     return filter;
   }
 
-  public FolderSettings getFolder()
+  public FolderSettingsFx getFolder()
   {
     return folder;
   }

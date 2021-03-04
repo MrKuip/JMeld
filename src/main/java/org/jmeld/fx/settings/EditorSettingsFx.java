@@ -14,39 +14,44 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.settings;
+package org.jmeld.fx.settings;
 
-import java.awt.Color;
-import java.awt.Font;
-import org.jmeld.ui.util.Colors;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import org.jmeld.fx.util.FxColors;
 import org.jmeld.util.Ignore;
-import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-public class EditorSettings
+public class EditorSettingsFx
     extends AbstractConfigurationElement
 {
-  private boolean showLineNumbers;
-  private int tabSize = 4;
-  private Ignore ignore = new Ignore();
-  private boolean leftsideReadonly;
-  private boolean rightsideReadonly;
-  private ColorSetting addedColor;
-  private ColorSetting changedColor;
-  private ColorSetting deletedColor;
-  private boolean customFont;
-  private FontSetting font;
-  private boolean antialias;
-  private boolean defaultFileEncodingEnabled = true;
-  private boolean detectFileEncodingEnabled;
-  private boolean specificFileEncodingEnabled;
-  private String specificFileEncodingName;
-  private String lookAndFeelName;
-  private ToolbarButtonIcon toolbarButtonIcon = ToolbarButtonIcon.LARGE;
-  private boolean toolbarButtonTextEnabled = true;
+  public SimpleBooleanProperty showLineNumbersProperty = new SimpleBooleanProperty();
+  public SimpleIntegerProperty tabSizeProperty = new SimpleIntegerProperty(4);
+  public Ignore ignore = new Ignore();
+  public SimpleBooleanProperty leftsideReadonlyProperty = new SimpleBooleanProperty();
+  public SimpleBooleanProperty rightsideReadonlyProperty = new SimpleBooleanProperty();
+  public ColorSettingFx addedColor;
+  public ColorSettingFx changedColor;
+  public ColorSettingFx deletedColor;
+  public SimpleBooleanProperty defaultFontProperty = new SimpleBooleanProperty();
+  public SimpleBooleanProperty customFontProperty = new SimpleBooleanProperty();
+  public FontSettingFx font;
+  public SimpleBooleanProperty antialiasProperty = new SimpleBooleanProperty();
+  public SimpleBooleanProperty defaultFileEncodingEnabledProperty = new SimpleBooleanProperty(true);
+  public SimpleBooleanProperty detectFileEncodingEnabledProperty = new SimpleBooleanProperty();
+  public SimpleBooleanProperty specificFileEncodingEnabledProperty = new SimpleBooleanProperty();
+  public SimpleStringProperty specificFileEncodingNameProperty = new SimpleStringProperty();
+  public SimpleStringProperty lookAndFeelNameProperty = new SimpleStringProperty();
+  public SimpleObjectProperty<ToolbarButtonIcon> toolbarButtonIconProperty = new SimpleObjectProperty<>(ToolbarButtonIcon.LARGE);
+  public SimpleBooleanProperty toolbarButtonTextEnabledProperty = new SimpleBooleanProperty(true);
+  public SimpleBooleanProperty toolbarButtonIconEnabledProperty = new SimpleBooleanProperty(true);
 
-  public EditorSettings()
+  public EditorSettingsFx()
   {
   }
 
@@ -60,28 +65,23 @@ public class EditorSettings
 
   public boolean getShowLineNumbers()
   {
-    return showLineNumbers;
+    return showLineNumbersProperty.get();
   }
 
   public void setShowLineNumbers(boolean showLineNumbers)
   {
-    this.showLineNumbers = showLineNumbers;
+    this.showLineNumbersProperty.set(showLineNumbers);
     fireChanged();
   }
 
   public int getTabSize()
   {
-    return tabSize;
+    return tabSizeProperty.get();
   }
 
   public void setTabSize(int tabSize)
   {
-    if (tabSize == this.tabSize)
-    {
-      return;
-    }
-
-    this.tabSize = tabSize;
+    this.tabSizeProperty.set(tabSize);
     fireChanged();
   }
 
@@ -93,7 +93,7 @@ public class EditorSettings
   public void setIgnoreWhitespaceAtBegin(boolean ignoreWhitespaceAtBegin)
   {
     ignore.setIgnoreWhitespaceAtBegin(ignoreWhitespaceAtBegin);
-    //fireChanged();
+    fireChanged();
   }
 
   public void setIgnoreWhitespaceInBetween(boolean ignoreWhitespaceInBetween)
@@ -128,97 +128,67 @@ public class EditorSettings
 
   public boolean getLeftsideReadonly()
   {
-    return leftsideReadonly;
+    return leftsideReadonlyProperty.get();
   }
 
   public void setLeftsideReadonly(boolean leftsideReadonly)
   {
-    if (this.leftsideReadonly == leftsideReadonly)
-    {
-      return;
-    }
-
-    this.leftsideReadonly = leftsideReadonly;
+    this.leftsideReadonlyProperty.set(leftsideReadonly);
     fireChanged();
   }
 
   public boolean getRightsideReadonly()
   {
-    return rightsideReadonly;
+    return rightsideReadonlyProperty.get();
   }
 
   public void setRightsideReadonly(boolean rightsideReadonly)
   {
-    if (this.rightsideReadonly == rightsideReadonly)
-    {
-      return;
-    }
-
-    this.rightsideReadonly = rightsideReadonly;
+    this.rightsideReadonlyProperty.set(rightsideReadonly);
     fireChanged();
   }
 
   public boolean getDefaultFileEncodingEnabled()
   {
-    return defaultFileEncodingEnabled;
+    return defaultFileEncodingEnabledProperty.get();
   }
 
   public void setDefaultFileEncodingEnabled(boolean encoding)
   {
-    if (this.defaultFileEncodingEnabled == encoding)
-    {
-      return;
-    }
-
-    this.defaultFileEncodingEnabled = encoding;
+    this.defaultFileEncodingEnabledProperty.set(encoding);
     fireChanged();
   }
 
   public boolean getDetectFileEncodingEnabled()
   {
-    return detectFileEncodingEnabled;
+    return detectFileEncodingEnabledProperty.get();
   }
 
   public void setDetectFileEncodingEnabled(boolean encoding)
   {
-    if (this.detectFileEncodingEnabled == encoding)
-    {
-      return;
-    }
-
-    this.detectFileEncodingEnabled = encoding;
+    this.detectFileEncodingEnabledProperty.set(encoding);
     fireChanged();
   }
 
   public boolean getSpecificFileEncodingEnabled()
   {
-    return specificFileEncodingEnabled;
+    return specificFileEncodingEnabledProperty.get();
   }
 
   public void setSpecificFileEncodingEnabled(boolean encoding)
   {
-    if (this.specificFileEncodingEnabled == encoding)
-    {
-      return;
-    }
-
-    this.specificFileEncodingEnabled = encoding;
+    this.specificFileEncodingEnabledProperty.set(encoding);
     fireChanged();
   }
 
   public String getSpecificFileEncodingName()
   {
-    return specificFileEncodingName;
+    return specificFileEncodingNameProperty.get();
   }
 
   public void setSpecificFileEncodingName(String encodingName)
   {
-    if (ObjectUtil.equals(this.specificFileEncodingName, encodingName))
-    {
-      return;
-    }
-
-    this.specificFileEncodingName = encodingName;
+    this.specificFileEncodingNameProperty.set(encodingName);
     fireChanged();
   }
 
@@ -232,124 +202,117 @@ public class EditorSettings
 
   public void setAddedColor(Color color)
   {
-    addedColor = new ColorSetting(color);
+    addedColor = new ColorSettingFx(color);
     fireChanged();
   }
 
   public Color getAddedColor()
   {
-    return getColor(addedColor, Colors.ADDED);
+    return getColor(addedColor, FxColors.ADDED);
   }
 
   public void setChangedColor(Color color)
   {
-    changedColor = new ColorSetting(color);
+    changedColor = new ColorSettingFx(color);
     fireChanged();
   }
 
   public Color getChangedColor()
   {
-    return getColor(changedColor, Colors.CHANGED);
+    return getColor(changedColor, FxColors.CHANGED);
   }
 
   public void setDeletedColor(Color color)
   {
-    deletedColor = new ColorSetting(color);
+    deletedColor = new ColorSettingFx(color);
     fireChanged();
   }
 
   public Color getDeletedColor()
   {
-    return getColor(deletedColor, Colors.DELETED);
+    return getColor(deletedColor, FxColors.DELETED);
   }
 
   public void setLookAndFeelName(String lookAndFeelName)
   {
-    this.lookAndFeelName = lookAndFeelName;
+    this.lookAndFeelNameProperty.set(lookAndFeelName);
     fireChanged();
   }
 
   public String getLookAndFeelName()
   {
-    return lookAndFeelName;
+    return lookAndFeelNameProperty.get();
   }
 
   public void setToolbarButtonIcon(ToolbarButtonIcon toolbarButtonIcon)
   {
-    if (this.toolbarButtonIcon == toolbarButtonIcon)
-    {
-      return;
-    }
-
-    this.toolbarButtonIcon = toolbarButtonIcon;
-
-    // Don't allow the buttons to disappear!
-    if (toolbarButtonIcon == ToolbarButtonIcon.NO)
-    {
-      toolbarButtonTextEnabled = true;
-    }
-
+    this.toolbarButtonIconProperty.set(toolbarButtonIcon);
     fireChanged();
   }
 
   public ToolbarButtonIcon getToolbarButtonIcon()
   {
-    return toolbarButtonIcon;
+    return toolbarButtonIconProperty.get();
   }
 
   public void setToolbarButtonTextEnabled(boolean toolbarButtonTextEnabled)
   {
-    if (this.toolbarButtonTextEnabled == toolbarButtonTextEnabled)
-    {
-      return;
-    }
-
-    this.toolbarButtonTextEnabled = toolbarButtonTextEnabled;
-
-    // Don't allow the buttons to disappear!
-    if (!toolbarButtonTextEnabled && toolbarButtonIcon == ToolbarButtonIcon.NO)
-    {
-      toolbarButtonIcon = ToolbarButtonIcon.LARGE;
-    }
-
+    this.toolbarButtonTextEnabledProperty.set(toolbarButtonTextEnabled);
     fireChanged();
   }
 
-  public ToolbarButtonIcon[] getToolbarButtonIcons()
+  public boolean getToolbarButtonTextEnabled()
   {
-    return ToolbarButtonIcon.values();
+    return toolbarButtonTextEnabledProperty.get();
   }
 
-  public boolean isToolbarButtonTextEnabled()
+  public void setToolbarButtonIconEnabled(boolean toolbarButtonIconEnabled)
   {
-    return toolbarButtonTextEnabled;
-  }
-
-  public void enableCustomFont(boolean customFont)
-  {
-    this.customFont = customFont;
+    this.toolbarButtonIconEnabledProperty.set(toolbarButtonIconEnabled);
     fireChanged();
   }
 
-  public boolean isCustomFontEnabled()
+  public boolean getToolbarButtonIconEnabled()
   {
-    return customFont;
+    return toolbarButtonIconEnabledProperty.get();
   }
 
-  public void enableAntialias(boolean antialias)
+  public void setDefaultFont(boolean defaultFont)
   {
-    this.antialias = antialias;
+    this.defaultFontProperty.set(defaultFont);
     fireChanged();
   }
 
-  public boolean isAntialiasEnabled()
+  public boolean getDefaultFont()
   {
-    return antialias;
+    return defaultFontProperty.get();
+  }
+
+  public void setCustomFont(boolean customFont)
+  {
+    this.customFontProperty.set(customFont);
+    fireChanged();
+  }
+
+  public boolean getCustomFont()
+  {
+    return customFontProperty.get();
+  }
+
+  public void setAntialias(boolean antialias)
+  {
+    this.antialiasProperty.set(antialias);
+    fireChanged();
+  }
+
+  public boolean getAntialias()
+  {
+    return antialiasProperty.get();
   }
 
   public void setFont(Font f)
   {
-    font = new FontSetting(f);
+    font = new FontSettingFx(f);
     fireChanged();
   }
 
@@ -358,7 +321,7 @@ public class EditorSettings
     return font == null ? null : font.getFont();
   }
 
-  private Color getColor(ColorSetting cc, Color defaultColor)
+  private Color getColor(ColorSettingFx cc, Color defaultColor)
   {
     Color c;
 

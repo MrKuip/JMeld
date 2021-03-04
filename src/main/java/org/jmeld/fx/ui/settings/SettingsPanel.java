@@ -1,15 +1,23 @@
 package org.jmeld.fx.ui.settings;
 
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxUtils;
+import org.jmeld.ui.util.Icons;
 import org.tbee.javafx.scene.layout.MigPane;
 
 public class SettingsPanel
@@ -18,7 +26,7 @@ public class SettingsPanel
 
   public SettingsPanel()
   {
-    super(new LC().noGrid());
+    super(new LC().noGrid().fill());
 
     init();
   }
@@ -27,7 +35,11 @@ public class SettingsPanel
   {
     StackPane contentPanel;
     ListView<ListItem> listPanel;
-    MigPane toolbarPanel;
+    ToolBar toolbarPanel;
+    Button saveButton;
+    Button saveAsButton;
+    Button reloadButton;
+    Label settingsLocationLabel;
 
     contentPanel = new StackPane();
 
@@ -42,12 +54,31 @@ public class SettingsPanel
 
     listPanel.setCellFactory((l) -> new SettingsCell());
     listPanel.getSelectionModel().selectFirst();
-    listPanel.setPrefHeight(80);
-    listPanel.setPrefWidth(80);
+    listPanel.setPrefHeight(100);
+    listPanel.setPrefWidth(75);
 
-    toolbarPanel = new MigPane();
+    toolbarPanel = new ToolBar();
 
-    add(toolbarPanel, new CC().dockNorth().wrap());
+    saveButton = new Button();
+    saveButton.setGraphic(FxUtils.getIcon(Icons.SAVE.getSmallIcon()));
+    saveButton.setTooltip(new Tooltip("Save settings"));
+    saveButton.setOnAction((ae) -> JMeldSettingsFx.getInstance().save());
+
+    settingsLocationLabel = new Label("");
+    settingsLocationLabel.setText(JMeldSettingsFx.getInstance().getConfigurationFileName());
+
+    saveAsButton = new Button();
+    saveAsButton.setGraphic(FxUtils.getIcon(Icons.SAVE_AS.getSmallIcon()));
+    saveAsButton.setTooltip(new Tooltip("Save settings to a different file"));
+
+    reloadButton = new Button();
+    reloadButton.setGraphic(FxUtils.getIcon(Icons.RELOAD.getSmallIcon()));
+    reloadButton.setTooltip(new Tooltip("Reload settings from a different file"));
+
+    toolbarPanel.getItems().addAll(saveButton, FxUtils.getWidthSpacer(10), settingsLocationLabel, FxUtils.getSpacer(),
+        saveAsButton, reloadButton);
+
+    add(toolbarPanel, new CC().dockNorth());
     add(listPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10").gapBottom("20").width("pref!").height("100%"));
     add(contentPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10"));
   }
@@ -114,6 +145,7 @@ public class SettingsPanel
       setText(item.getText());
       setContentDisplay(ContentDisplay.TOP);
       setTextAlignment(TextAlignment.CENTER);
+      setAlignment(Pos.CENTER);
       setGraphic(item.getImage());
     }
   }

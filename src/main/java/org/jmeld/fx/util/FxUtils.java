@@ -3,6 +3,8 @@ package org.jmeld.fx.util;
 import java.awt.Graphics2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -19,6 +21,16 @@ public class FxUtils
     region.setPrefWidth(width);
 
     return region;
+  }
+
+  static public Node getSpacer()
+  {
+    Node spacer;
+
+    spacer = new Region();
+    HBox.setHgrow(spacer, Priority.SOMETIMES);
+
+    return spacer;
   }
 
   static public Font boldFont(Font font)
