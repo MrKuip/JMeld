@@ -16,6 +16,7 @@
  */
 package org.jmeld.fx.settings;
 
+import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -30,26 +31,26 @@ import org.jmeld.util.conf.AbstractConfigurationElement;
 public class EditorSettingsFx
     extends AbstractConfigurationElement
 {
-  public SimpleBooleanProperty showLineNumbersProperty = new SimpleBooleanProperty();
-  public SimpleIntegerProperty tabSizeProperty = new SimpleIntegerProperty(4);
-  public Ignore ignore = new Ignore();
-  public SimpleBooleanProperty leftsideReadonlyProperty = new SimpleBooleanProperty();
-  public SimpleBooleanProperty rightsideReadonlyProperty = new SimpleBooleanProperty();
-  public ColorSettingFx addedColor;
-  public ColorSettingFx changedColor;
-  public ColorSettingFx deletedColor;
-  public SimpleBooleanProperty defaultFontProperty = new SimpleBooleanProperty();
-  public SimpleBooleanProperty customFontProperty = new SimpleBooleanProperty();
-  public FontSettingFx font;
-  public SimpleBooleanProperty antialiasProperty = new SimpleBooleanProperty();
-  public SimpleBooleanProperty defaultFileEncodingEnabledProperty = new SimpleBooleanProperty(true);
-  public SimpleBooleanProperty detectFileEncodingEnabledProperty = new SimpleBooleanProperty();
-  public SimpleBooleanProperty specificFileEncodingEnabledProperty = new SimpleBooleanProperty();
-  public SimpleStringProperty specificFileEncodingNameProperty = new SimpleStringProperty();
-  public SimpleStringProperty lookAndFeelNameProperty = new SimpleStringProperty();
-  public SimpleObjectProperty<ToolbarButtonIcon> toolbarButtonIconProperty = new SimpleObjectProperty<>(ToolbarButtonIcon.LARGE);
-  public SimpleBooleanProperty toolbarButtonTextEnabledProperty = new SimpleBooleanProperty(true);
-  public SimpleBooleanProperty toolbarButtonIconEnabledProperty = new SimpleBooleanProperty(true);
+  public final SimpleBooleanProperty showLineNumbersProperty = new SimpleBooleanProperty();
+  public final SimpleIntegerProperty tabSizeProperty = new SimpleIntegerProperty(4);
+  public final Ignore ignore = new Ignore();
+  public final SimpleBooleanProperty leftsideReadonlyProperty = new SimpleBooleanProperty();
+  public final SimpleBooleanProperty rightsideReadonlyProperty = new SimpleBooleanProperty();
+  public final SimpleObjectProperty<Color> addedColorProperty = new SimpleObjectProperty<>(FxColors.ADDED);
+  public final SimpleObjectProperty<Color> changedColorProperty = new SimpleObjectProperty<>(FxColors.CHANGED);
+  public final SimpleObjectProperty<Color> deletedColorProperty = new SimpleObjectProperty<>(FxColors.DELETED);
+  public final SimpleBooleanProperty defaultFontProperty = new SimpleBooleanProperty();
+  public final SimpleBooleanProperty customFontProperty = new SimpleBooleanProperty();
+  public final SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<>();
+  public final SimpleBooleanProperty antialiasProperty = new SimpleBooleanProperty();
+  public final SimpleBooleanProperty defaultFileEncodingEnabledProperty = new SimpleBooleanProperty(true);
+  public final SimpleBooleanProperty detectFileEncodingEnabledProperty = new SimpleBooleanProperty();
+  public final SimpleBooleanProperty specificFileEncodingEnabledProperty = new SimpleBooleanProperty();
+  public final SimpleStringProperty specificFileEncodingNameProperty = new SimpleStringProperty();
+  public final SimpleStringProperty lookAndFeelNameProperty = new SimpleStringProperty(Application.STYLESHEET_MODENA);
+  public final SimpleObjectProperty<ToolbarButtonIcon> toolbarButtonIconProperty = new SimpleObjectProperty<>(ToolbarButtonIcon.LARGE);
+  public final SimpleBooleanProperty toolbarButtonTextEnabledProperty = new SimpleBooleanProperty(true);
+  public final SimpleBooleanProperty toolbarButtonIconEnabledProperty = new SimpleBooleanProperty(true);
 
   public EditorSettingsFx()
   {
@@ -194,43 +195,43 @@ public class EditorSettingsFx
 
   public void restoreColors()
   {
-    addedColor = null;
-    changedColor = null;
-    deletedColor = null;
+    addedColorProperty.set(FxColors.ADDED);
+    changedColorProperty.set(FxColors.CHANGED);
+    deletedColorProperty.set(FxColors.DELETED);
     fireChanged();
   }
 
   public void setAddedColor(Color color)
   {
-    addedColor = new ColorSettingFx(color);
+    addedColorProperty.set(color);
     fireChanged();
   }
 
   public Color getAddedColor()
   {
-    return getColor(addedColor, FxColors.ADDED);
+    return addedColorProperty.get();
   }
 
   public void setChangedColor(Color color)
   {
-    changedColor = new ColorSettingFx(color);
+    changedColorProperty.set(color);
     fireChanged();
   }
 
   public Color getChangedColor()
   {
-    return getColor(changedColor, FxColors.CHANGED);
+    return changedColorProperty.get();
   }
 
   public void setDeletedColor(Color color)
   {
-    deletedColor = new ColorSettingFx(color);
+    deletedColorProperty.set(color);
     fireChanged();
   }
 
   public Color getDeletedColor()
   {
-    return getColor(deletedColor, FxColors.DELETED);
+    return deletedColorProperty.get();
   }
 
   public void setLookAndFeelName(String lookAndFeelName)
@@ -312,31 +313,13 @@ public class EditorSettingsFx
 
   public void setFont(Font f)
   {
-    font = new FontSettingFx(f);
+    fontProperty.set(f);
     fireChanged();
   }
 
   public Font getFont()
   {
-    return font == null ? null : font.getFont();
-  }
-
-  private Color getColor(ColorSettingFx cc, Color defaultColor)
-  {
-    Color c;
-
-    c = null;
-    if (cc != null)
-    {
-      c = cc.getColor();
-    }
-
-    if (c == null)
-    {
-      c = defaultColor;
-    }
-
-    return c;
+    return fontProperty.get();
   }
 
   public enum ToolbarButtonIcon

@@ -67,8 +67,7 @@ public class FilterSettings
   {
     for (Filter f : filters)
     {
-      if (ObjectUtil.equals(f.getName(),
-                            name))
+      if (ObjectUtil.equals(f.getName(), name))
       {
         return f;
       }
@@ -138,6 +137,10 @@ public class FilterSettings
     filter.addRule(new FilterRule("Versioncontrol",
                                   FilterRule.Rule.excludes,
                                   "**/.SYNC",
+                                  true));
+    filter.addRule(new FilterRule("Versioncontrol",
+                                  FilterRule.Rule.excludes,
+                                  "**/.git",
                                   true));
     filter.addRule(new FilterRule("Mac",
                                   FilterRule.Rule.excludes,

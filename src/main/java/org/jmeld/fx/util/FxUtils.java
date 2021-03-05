@@ -3,9 +3,12 @@ package org.jmeld.fx.util;
 import java.awt.Graphics2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javax.swing.Icon;
@@ -50,5 +53,12 @@ public class FxUtils
     icon.paintIcon(null, g2, 0, 0);
 
     return canvas;
+  }
+
+  static public Background getBackgroundColor(Color color)
+  {
+    return new Background(new BackgroundFill(color,
+                                             null,
+                                             null));
   }
 }
