@@ -19,15 +19,20 @@ package org.jmeld.settings.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
+
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Filter
     extends AbstractConfigurationElement
 {
   private Boolean includeDefault;
   private String name;
-  private List<FilterRule> rules = new ArrayList<FilterRule>();
+  public final SimpleObjectProperty<ObservableList<FilterRule>> rules = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
   public Filter(String name)
   {
@@ -43,7 +48,7 @@ public class Filter
   {
     super.init(root);
 
-    for (FilterRule rule : rules)
+    for (FilterRule rule : getRules())
     {
       rule.init(root);
     }
@@ -72,15 +77,15 @@ public class Filter
 
     rule.init(configuration);
 
-    index = rules.indexOf(ruleToInsertAfter);
+    index = getRules().indexOf(ruleToInsertAfter);
     if (index != -1)
     {
-      rules.add(index + 1,
+      getRules().add(index + 1,
                 rule);
     }
     else
     {
-      rules.add(rule);
+      getRules().add(rule);
     }
 
     fireChanged();
@@ -89,19 +94,19 @@ public class Filter
   public void addRule(FilterRule rule)
   {
     rule.init(configuration);
-    rules.add(rule);
+    getRules().add(rule);
     fireChanged();
   }
 
   public void removeRule(FilterRule rule)
   {
-    rules.remove(rule);
+    getRules().remove(rule);
     fireChanged();
   }
 
   public List<FilterRule> getRules()
   {
-    return rules;
+    return rules.get();
   }
 
   public List<String> getExcludes()

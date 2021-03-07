@@ -1,24 +1,30 @@
 package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
+import static org.jmeld.fx.util.FxCss.header2;
 
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Separator;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.text.Text;
-import net.miginfocom.layout.CC;
-import net.miginfocom.layout.LC;
+import org.jmeld.fx.settings.FilterSettingsFx;
+import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxUtils;
-import org.jmeld.settings.FolderSettings;
-import org.jmeld.settings.FolderSettings.FolderView;
+import org.jmeld.settings.util.Filter;
+import org.jmeld.settings.util.FilterRule;
 import org.jmeld.ui.util.Icons;
 import org.tbee.javafx.scene.layout.MigPane;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
+import net.miginfocom.layout.AC;
+import net.miginfocom.layout.CC;
+import net.miginfocom.layout.LC;
 
 public class FilterSettingsPanel
     extends MigPane
@@ -26,7 +32,7 @@ public class FilterSettingsPanel
 {
   public FilterSettingsPanel()
   {
-    super(new LC().noGrid());
+    super(new LC().fill());
 
     init();
   }
@@ -40,134 +46,128 @@ public class FilterSettingsPanel
   @Override
   public Node getIcon()
   {
-    return FxUtils.getIcon(Icons.FILTER.getLargeIcon());
+    return FxUtils.getIcon(Icons.FILTER.getSmallerIcon());
   }
 
   private void init()
   {
     MigPane panel;
-    Label label;
-    ToggleButton toggleButton;
-    Button button;
-    ComboBox<FolderView> comboBox;
-    Separator separator;
+    TableView<Filter> filterTable;
+    TableView<FilterRule> filterRuleTable;
+    Button filterNewButton;
+    Button filterDeleteButton;
+    Button filterRuleNewButton;
+    Button filterRuleDeleteButton;
     String gap1;
     String gap2;
 
     gap1 = "30";
     gap2 = "10";
 
-    panel = new MigPane(null,
-                        "[pref][pref][grow,fill]");
+    panel = new MigPane(new LC(), new AC().index(0).grow().fill().index(1).fill());
 
-    add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span(3).gapLeft("10"));
-    add(panel, "west");
+    add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span().gapLeft("10"));
+    add(panel, "grow");
 
-    label = new Label("Font");
-    label.setFont(FxUtils.boldFont(label.getFont()));
-    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
-    separator = new Separator();
-    panel.add(separator, new CC().wrap().gapLeft(gap2).span(2).grow());
+    // Creation:
+    filterTable = new TableView<>();
+    filterNewButton = new Button("New");
+    filterDeleteButton = new Button("Delete");
+    filterRuleTable = new TableView<>();
+    filterRuleNewButton = new Button("New");
+    filterRuleDeleteButton = new Button("Delete");
 
-    toggleButton = new RadioButton("Use default font");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2).wrap());
+    // Initialization:
+    filterNewButton.setAlignment(Pos.BASELINE_LEFT);
+    filterNewButton.setGraphic(FxUtils.getIcon(Icons.NEW.getSmallIcon()));
+    filterDeleteButton.setAlignment(Pos.BASELINE_LEFT);
+    filterDeleteButton.setGraphic(FxUtils.getIcon(Icons.DELETE.getSmallIcon()));
+    filterRuleNewButton.setAlignment(Pos.BASELINE_LEFT);
+    filterRuleNewButton.setGraphic(FxUtils.getIcon(Icons.NEW.getSmallIcon()));
+    filterRuleDeleteButton.setAlignment(Pos.BASELINE_LEFT);
+    filterRuleDeleteButton.setGraphic(FxUtils.getIcon(Icons.DELETE.getSmallIcon()));
+    
+    TableColumn<Filter, String> column1 = new TableColumn<>("Name");
+    column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+    filterTable.getColumns().add(column1);
+   
+    TableColumn<FilterRule, String> column2 = new TableColumn<>("Description");
+    column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+    filterRuleTable.getColumns().add(column2);
+    column2 = new TableColumn<>("Pattern");
+    column2.setCellValueFactory(new PropertyValueFactory<>("pattern"));
+    filterRuleTable.getColumns().add(column2);
+    
+    // Layout:
+    panel.add(header2(new Label("Filters:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(filterTable, new CC().gapLeft(gap2).spanY(3).grow());
+    panel.add(filterNewButton, new CC().wrap());
+    panel.add(filterDeleteButton, new CC().wrap());
+    panel.add(new Region(), new CC().wrap());
+   
+    panel.add(header2(new Label("Filterrules for:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(filterRuleTable, new CC().gapLeft(gap2).spanY(3).grow());
+    panel.add(filterRuleNewButton, new CC().wrap());
+    panel.add(filterRuleDeleteButton, new CC().wrap());
+    panel.add(new Region(), new CC().wrap());
+    
+    // Binding:
+    filterTable.itemsProperty().bind(getSettings().filters);
+	
+    filterTable.getSelectionModel().selectedItemProperty().addListener((obs, deselectedFilter, selectedFilter) -> {
+        if (selectedFilter != null) {
+          filterRuleTable.itemsProperty().bind(selectedFilter.rules);
+        }
+    });
+    
+  }
+  
+  private void init2()
+  {
+    MigPane panel;
+    TableView filterTable;
+    TableView filterRuleTable;
+    Button filterNewButton;
+    Button filterDeleteButton;
+    Button filterRuleNewButton;
+    Button filterRuleDeleteButton;
+    String gap1;
+    String gap2;
 
-    toggleButton = new RadioButton("Use custom font");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2));
-    button = new Button("Dialog (12)");
-    panel.add(button, new CC().wrap());
+    gap1 = "30";
+    gap2 = "10";
 
-    label = new Label("Miscelaneous");
-    label.setFont(FxUtils.boldFont(label.getFont()));
-    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
-    separator = new Separator();
-    panel.add(separator, new CC().wrap().gapLeft(gap2).span(2).grow());
+    panel = new MigPane(new LC().fill());
 
-    panel.add(new Label("Tab size"), new CC().gapLeft(gap1).split(3));
-    panel.add(new Spinner(), new CC().wrap());
+    add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span().gapLeft("10"));
+    add(panel, new CC().grow());
 
-    panel.add(new Label("Look and feel"), new CC().gapLeft(gap1).split(3));
-    comboBox = new ComboBox<>();
-    comboBox.getItems().addAll(FolderSettings.FolderView.values());
-    panel.add(comboBox, new CC().wrap());
+    // Creation:
+    filterTable = new TableView();
+    filterNewButton = new Button("New");
+    filterDeleteButton = new Button("Delete");
+    filterRuleTable = new TableView();
+    filterRuleNewButton = new Button("New");
+    filterRuleDeleteButton = new Button("Delete");
 
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Show line numbers"), new CC().wrap());
+    // Layout:
+    panel.add(header2(new Label("Filters:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(filterTable, new CC().gapLeft(gap2).spanY(3).height("100%").width("100%"));
+    panel.add(filterNewButton, new CC().wrap().minWidth("pref").endGroupX("lala"));
+    panel.add(filterDeleteButton, new CC().wrap().minWidth("pref").endGroupX("lala"));
+   
+    /*
+    panel.add(header2(new Label("Filterrules for:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(filterRuleTable, new CC().gapLeft(gap1).spanY(3).growX().growY());
+    panel.add(filterRuleNewButton, new CC().wrap());
+    panel.add(filterRuleDeleteButton, new CC().wrap());
+    panel.add(new Label(""), new CC().gapLeft(gap1).wrap());
+    */
 
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Rightside readonly"), new CC().wrap());
+  }
 
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Leftside readonly"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("antialias on"), new CC().wrap());
-
-    panel = new MigPane(null,
-                        "[pref][pref][grow,fill]");
-    add(panel, "west");
-
-    label = new Label("Ignore");
-    label.setFont(FxUtils.boldFont(label.getFont()));
-    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
-    separator = new Separator();
-    panel.add(separator, new CC().wrap().gapLeft(gap2).span(2).grow());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Ignore whitespace at begin of a line"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Ignore whitespace betweene begin and end of a line"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Ignore whitespace at the end of a line"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("ignore EOL (End of line markers)"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Ignore blank lines"), new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Ignore case"), new CC().wrap());
-
-    label = new Label("File encoding");
-    label.setFont(FxUtils.boldFont(label.getFont()));
-    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
-    separator = new Separator();
-    panel.add(separator, new CC().wrap().gapLeft(gap2).span(2).grow());
-
-    toggleButton = new RadioButton("Default encoding on this computer (UTF-8)");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2).wrap());
-
-    toggleButton = new RadioButton("Try to detect encoding");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2).wrap());
-
-    toggleButton = new RadioButton("Use encoding:");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2));
-    comboBox = new ComboBox<>();
-    comboBox.getItems().addAll(FolderSettings.FolderView.values());
-    panel.add(comboBox, new CC().wrap());
-
-    label = new Label("Toolbar appearance");
-    label.setFont(FxUtils.boldFont(label.getFont()));
-    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
-    separator = new Separator();
-    panel.add(separator, new CC().wrap().gapLeft(gap2).span(2).grow());
-
-    toggleButton = new RadioButton("Icon in button:");
-    toggleButton.setOnAction((ae) -> System.out.println("Pressed:" + ae.getSource()));
-    panel.add(toggleButton, new CC().gapLeft(gap1).split(2));
-    comboBox = new ComboBox<>();
-    comboBox.getItems().addAll(FolderSettings.FolderView.values());
-    panel.add(comboBox, new CC().wrap());
-
-    panel.add(new CheckBox(), new CC().gapLeft(gap1).split(2));
-    panel.add(new Label("Text in button"), new CC().wrap());
+  private FilterSettingsFx getSettings()
+  {
+    return JMeldSettingsFx.getInstance().getFilter();
   }
 }

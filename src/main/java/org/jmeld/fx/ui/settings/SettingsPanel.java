@@ -1,5 +1,10 @@
 package org.jmeld.fx.ui.settings;
 
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxUtils;
+import org.jmeld.ui.util.Icons;
+import org.tbee.javafx.scene.layout.MigPane;
+
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,15 +15,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxUtils;
-import org.jmeld.ui.util.Icons;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class SettingsPanel
     extends MigPane
@@ -79,8 +80,9 @@ public class SettingsPanel
         saveAsButton, reloadButton);
 
     add(toolbarPanel, new CC().dockNorth());
-    add(listPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10").gapBottom("20").width("pref!").height("100%"));
-    add(contentPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10"));
+    add(new Region(), new CC().dockSouth().wrap().gapTop("20"));
+    add(listPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10").width("pref!").height("100%"));
+    add(contentPanel, new CC().wrap().gapTop("20").gapLeft("20").height("100%").width("100%"));
   }
 
   private void listSelectionChanged(ObservableValue<?> property, ListItem oldValue, ListItem newValue)
@@ -100,7 +102,7 @@ public class SettingsPanel
   {
     private String text;
     private Node image;
-    private Pane content;
+    private Node content;
 
     public ListItem(StackPane stackPane,
         SettingsPanelIF panel)
@@ -118,7 +120,7 @@ public class SettingsPanel
       return text;
     }
 
-    public Pane getContent()
+    public Node getContent()
     {
       return content;
     }
@@ -144,7 +146,6 @@ public class SettingsPanel
 
       setText(item.getText());
       setContentDisplay(ContentDisplay.TOP);
-      setTextAlignment(TextAlignment.CENTER);
       setAlignment(Pos.CENTER);
       setGraphic(item.getImage());
     }

@@ -1,7 +1,6 @@
 package org.jmeld.fx.ui.settings;
 
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 
 public interface SettingsPanelIF
 {
@@ -9,8 +8,8 @@ public interface SettingsPanelIF
 
   public Node getIcon();
 
-  default public Pane getContent()
+  default public Node getContent()
   {
-    return (Pane) this;
+    return (Node) this;
   }
 }

@@ -16,28 +16,31 @@
  */
 package org.jmeld.fx.settings;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
 import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FilterSettingsFx
     extends AbstractConfigurationElement
 {
-  private List<Filter> filters;
+  public final SimpleObjectProperty<ObservableList<Filter>> filters = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
   public FilterSettingsFx()
   {
-    filters = new ArrayList<Filter>();
   }
 
   public void init(JMeldSettingsFx parent)
   {
     super.init(parent);
 
-    for (Filter f : filters)
+    for (Filter f : filters.get())
     {
       f.init(parent);
     }
@@ -48,24 +51,24 @@ public class FilterSettingsFx
   public void addFilter(Filter filter)
   {
     filter.init(configuration);
-    filters.add(filter);
+    getFilters().add(filter);
     fireChanged();
   }
 
   public void removeFilter(Filter filter)
   {
-    filters.remove(filter);
+    getFilters().remove(filter);
     fireChanged();
   }
 
   public List<Filter> getFilters()
   {
-    return filters;
+    return filters.get();
   }
 
   public Filter getFilter(String name)
   {
-    for (Filter f : filters)
+    for (Filter f : getFilters())
     {
       if (ObjectUtil.equals(f.getName(),
                             name))
@@ -216,6 +219,25 @@ public class FilterSettingsFx
                                   "**/*.jar",
                                   true));
 
+    addFilter(filter);
+    
+    filter = new Filter("default2");
+    filter.addRule(new FilterRule("haha files",
+                                  FilterRule.Rule.excludes,
+                                  "**/*~",
+                                  true));
+    filter.addRule(new FilterRule("Binaries",
+                                  FilterRule.Rule.excludes,
+                                  "**/.dll",
+                                  true));
+    filter.addRule(new FilterRule("Java",
+                                  FilterRule.Rule.excludes,
+                                  "**/*.class",
+                                  true));
+    filter.addRule(new FilterRule("Java",
+                                  FilterRule.Rule.excludes,
+                                  "**/*.jar",
+                                  true));
     addFilter(filter);
   }
 }

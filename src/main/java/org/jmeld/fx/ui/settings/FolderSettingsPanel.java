@@ -41,7 +41,7 @@ public class FolderSettingsPanel
   @Override
   public Node getIcon()
   {
-    return FxUtils.getIcon(Icons.FOLDER.getLargeIcon());
+    return FxUtils.getIcon(Icons.FOLDER.getSmallerIcon());
   }
 
   private void init()

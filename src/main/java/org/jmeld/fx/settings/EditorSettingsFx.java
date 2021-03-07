@@ -23,6 +23,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import org.jmeld.fx.util.FxColors;
 import org.jmeld.util.Ignore;
 import org.jmeld.util.conf.AbstractConfiguration;
@@ -41,7 +43,7 @@ public class EditorSettingsFx
   public final SimpleObjectProperty<Color> deletedColorProperty = new SimpleObjectProperty<>(FxColors.DELETED);
   public final SimpleBooleanProperty defaultFontProperty = new SimpleBooleanProperty();
   public final SimpleBooleanProperty customFontProperty = new SimpleBooleanProperty();
-  public final SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<>();
+  public final SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<>(new Text().getFont());
   public final SimpleBooleanProperty antialiasProperty = new SimpleBooleanProperty();
   public final SimpleBooleanProperty defaultFileEncodingEnabledProperty = new SimpleBooleanProperty(true);
   public final SimpleBooleanProperty detectFileEncodingEnabledProperty = new SimpleBooleanProperty();

@@ -52,7 +52,7 @@ public class EditorSettingsPanel
   @Override
   public Node getIcon()
   {
-    return FxUtils.getIcon(Icons.EDIT.getLargeIcon());
+    return FxUtils.getIcon(Icons.EDIT.getSmallerIcon());
   }
 
   private void init()
@@ -91,7 +91,7 @@ public class EditorSettingsPanel
     gap1 = "30";
     gap2 = "10";
 
-    panel = new MigPane(null,
+    panel = new MigPane("",
                         "[pref][pref][grow,fill]");
 
     add(header1(new Text("Editor settings")), new CC().dockNorth().wrap().span(3).gapLeft("10"));
