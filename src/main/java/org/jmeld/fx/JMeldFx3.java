@@ -16,13 +16,12 @@
  */
 package org.jmeld.fx;
 
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.util.ResourceLoader;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.settings.SettingsPanel;
+import org.jmeld.util.ResourceLoader;
 
 public class JMeldFx
     extends Application
