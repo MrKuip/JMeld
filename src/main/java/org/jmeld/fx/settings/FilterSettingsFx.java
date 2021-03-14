@@ -17,20 +17,19 @@
 package org.jmeld.fx.settings;
 
 import java.util.List;
-
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
 import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class FilterSettingsFx
     extends AbstractConfigurationElement
 {
-  public final SimpleObjectProperty<ObservableList<Filter>> filters = new SimpleObjectProperty<>(FXCollections.observableArrayList());
+  public final SimpleObjectProperty<ObservableList<Filter>> filters = new SimpleObjectProperty<>(FXCollections
+      .observableArrayList());
 
   public FilterSettingsFx()
   {
@@ -70,8 +69,7 @@ public class FilterSettingsFx
   {
     for (Filter f : getFilters())
     {
-      if (ObjectUtil.equals(f.getName(),
-                            name))
+      if (ObjectUtil.equals(f.getName(), name))
       {
         return f;
       }
@@ -220,7 +218,7 @@ public class FilterSettingsFx
                                   true));
 
     addFilter(filter);
-    
+
     filter = new Filter("default2");
     filter.addRule(new FilterRule("haha files",
                                   FilterRule.Rule.excludes,

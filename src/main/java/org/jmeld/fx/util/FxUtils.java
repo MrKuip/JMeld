@@ -1,8 +1,10 @@
 package org.jmeld.fx.util;
 
-import java.awt.Graphics2D;
+import java.util.stream.Stream;
+
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -11,8 +13,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javax.swing.Icon;
-import org.jfree.fx.FXGraphics2D;
 
 public class FxUtils
 {
@@ -41,24 +41,25 @@ public class FxUtils
     return Font.font(font.getFamily(), FontWeight.BOLD, font.getSize());
   }
 
-  static public Node getIcon(Icon icon)
-  {
-    Canvas canvas;
-    Graphics2D g2;
-
-    canvas = new Canvas(icon.getIconWidth(),
-                        icon.getIconHeight());
-    g2 = new FXGraphics2D(canvas.getGraphicsContext2D());
-
-    icon.paintIcon(null, g2, 0, 0);
-
-    return canvas;
-  }
-
   static public Background getBackgroundColor(Color color)
   {
     return new Background(new BackgroundFill(color,
                                              null,
                                              null));
+  }
+  
+  static public Node createImageNode(Image... images)
+  {
+	if(images == null)
+	{
+	  return new ImageView();
+	}
+	
+	if(images.length == 1)
+	{
+	  return new ImageView(images[0]);
+	}
+
+    return new HBox(Stream.of(images).map(image -> new ImageView(image)).toArray(ImageView[]::new));
   }
 }

@@ -16,12 +16,13 @@
  */
 package org.jmeld.fx;
 
+import org.jmeld.fx.ui.settings.SettingsPanel;
+import org.jmeld.fx.util.FxIcon;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.fx.util.FxUtils;
-import org.jmeld.ui.util.Icons;
 
 public class JMeldFxPanel
     extends BorderPane
@@ -34,7 +35,7 @@ public class JMeldFxPanel
     tabPane = new TabPane();
 
     tab = new Tab("Settings1");
-    tab.setGraphic(FxUtils.getIcon(Icons.SETTINGS.getSmallIcon()));
+    tab.setGraphic(new ImageView(FxIcon.SETTINGS.getSmallImage()));
     tabPane.getTabs().add(tab);
 
     tab.setContent(new SettingsPanel());

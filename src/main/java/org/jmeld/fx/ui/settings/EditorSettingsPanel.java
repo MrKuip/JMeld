@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
@@ -18,6 +17,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
@@ -27,8 +27,7 @@ import org.controlsfx.dialog.FontSelectorDialog;
 import org.jmeld.fx.settings.EditorSettingsFx;
 import org.jmeld.fx.settings.EditorSettingsFx.ToolbarButtonIcon;
 import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxUtils;
-import org.jmeld.ui.util.Icons;
+import org.jmeld.fx.util.FxIcon;
 import org.jmeld.util.CharsetDetector;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -50,9 +49,9 @@ public class EditorSettingsPanel
   }
 
   @Override
-  public Node getIcon()
+  public Image getImage()
   {
-    return FxUtils.getIcon(Icons.EDIT.getSmallerIcon());
+    return FxIcon.EDIT.getLargeImage();
   }
 
   private void init()

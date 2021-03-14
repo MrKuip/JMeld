@@ -53,6 +53,7 @@ public class JsonPersister
     m_objectMapper.enable(MapperFeature.AUTO_DETECT_SETTERS);
     m_objectMapper.enable(MapperFeature.AUTO_DETECT_IS_GETTERS);
     m_objectMapper.disable(MapperFeature.AUTO_DETECT_FIELDS);
+    m_objectMapper.disable(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS);
     m_objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NONE);
     m_objectMapper.setVisibility(PropertyAccessor.GETTER, Visibility.ANY);
     m_objectMapper.setVisibility(PropertyAccessor.SETTER, Visibility.ANY);

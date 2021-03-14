@@ -34,6 +34,7 @@ public class JsonFxModule
     addDeserializer(Font.class, new SimpleFxFontDeserializer(Font.class));
 
     addSerializer(new SimplePropertySerializer(Property.class));
+
     addDeserializer(SimpleBooleanProperty.class,
         new PropertyDeserializer<SimpleBooleanProperty>(SimpleBooleanProperty.class,
                                                         JsonNode::asBoolean));

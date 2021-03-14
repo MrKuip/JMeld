@@ -68,23 +68,19 @@ public enum Icons
     IconComposer ic;
 
     ic = new IconComposer(Icons.FILE_NOT_EXIST.getSmallIcon());
-    ic = ic.decorate(Location.RIGHT,
-                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT, Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
     ONLY_RIGHT = ImageUtil.createImageIcon(ic);
 
     ic = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
-    ic = ic.decorate(Location.RIGHT,
-                     Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT, Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
     LEFT_RIGHT_CHANGED = ic;
 
     ic = new IconComposer(Icons.FILE_EXIST_NOTEQUAL.getSmallIcon());
-    ic = ic.decorate(Location.RIGHT,
-                     Icons.FILE_NOT_EXIST.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT, Icons.FILE_NOT_EXIST.getSmallIcon());
     ONLY_LEFT = ic;
 
     ic = new IconComposer(Icons.FILE_EXIST_EQUAL.getSmallIcon());
-    ic = ic.decorate(Location.RIGHT,
-                     Icons.FILE_EXIST_EQUAL.getSmallIcon());
+    ic = ic.decorate(Location.RIGHT, Icons.FILE_EXIST_EQUAL.getSmallIcon());
     LEFT_RIGHT_UNCHANGED = ic;
   }
 
@@ -191,27 +187,18 @@ public enum Icons
 
     if (m_fillCodepoint == null)
     {
-      return getIcon(m_outlineCodepoint,
-                     m_outlineColor,
-                     iconSize);
+      return getIcon(m_outlineCodepoint, m_outlineColor, iconSize);
     }
     else
     {
-      icon = new IconComposer(getIcon(m_fillCodepoint,
-                                      m_fillColor,
-                                      iconSize));
-      icon.decorate(Location.CENTER,
-                    new IconComposer(getIcon(m_outlineCodepoint,
-                                             m_outlineColor,
-                                             iconSize)));
+      icon = new IconComposer(getIcon(m_fillCodepoint, m_fillColor, iconSize));
+      icon.decorate(Location.CENTER, new IconComposer(getIcon(m_outlineCodepoint, m_outlineColor, iconSize)));
 
       return ImageUtil.createImageIcon(icon);
     }
   }
 
-  private Icon getIcon(String codepointString,
-      IconColor iconColor,
-      IconSize iconSize)
+  private Icon getIcon(String codepointString, IconColor iconColor, IconSize iconSize)
   {
     int size;
     Color color;
@@ -232,8 +219,7 @@ public enum Icons
                                                 iconColor,
                                                 iconSize));
 
-    m_iconImageMap.put(key,
-                       icon);
+    m_iconImageMap.put(key, icon);
     return icon;
   }
 
@@ -266,10 +252,7 @@ public enum Icons
     }
 
     @Override
-    public void paintIcon(Component c,
-        Graphics g,
-        int x,
-        int y)
+    public void paintIcon(Component c, Graphics g, int x, int y)
     {
       int codepoint;
       String text;
@@ -278,22 +261,15 @@ public enum Icons
       double xString;
       double yString;
 
-      codepoint = Integer.parseInt(mii_codepointString,
-                                   16);
+      codepoint = Integer.parseInt(mii_codepointString, 16);
       text = new String(Character.toChars(codepoint));
 
       g2d = (Graphics2D) g;
-      g2d.setClip(0,
-                  0,
-                  getIconWidth(),
-                  getIconHeight());
+      g2d.setClip(0, 0, getIconWidth(), getIconHeight());
 
-      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                           RenderingHints.VALUE_ANTIALIAS_ON);
-      g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                           RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-      g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
-                           RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+      g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
       g2d.setColor(mii_iconColor.getColor());
       g2d.setFont(FontUtil.getIconFont(getIconHeight()));
 
@@ -302,9 +278,7 @@ public enum Icons
       xString = (x + (getIconWidth() - fm.stringWidth(text)) / 2.0);
       yString = (y + ((getIconHeight() - fm.getHeight()) / 2.0) + fm.getAscent());
 
-      g2d.drawString(text,
-                     (float) xString,
-                     (float) yString);
+      g2d.drawString(text, (float) xString, (float) yString);
     }
   }
 }

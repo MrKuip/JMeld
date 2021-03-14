@@ -16,44 +16,18 @@
  */
 package org.jmeld.fx;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.settings.SettingsPanel;
 import org.jmeld.util.ResourceLoader;
 
-public class JMeldFx
-    extends Application
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class JMeldFx3
 {
-  static
-  {
-    System.setProperty("prism.lcdtext", "false");
-  }
-
-  @Override
-  public void start(Stage stage)
-      throws Exception
-  {
-    Scene scene;
-
-    setUserAgentStylesheet(JMeldSettingsFx.getInstance().getEditor().getLookAndFeelName());
-
-    scene = new Scene(new SettingsPanel(),
-                      300,
-                      300);
-    scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());
-
-    stage.setTitle("JMeld");
-    stage.setScene(scene);
-    stage.setWidth(1000);
-    stage.setHeight(750);
-
-    stage.show();
-  }
-
   static public void main(String[] args)
   {
-    JMeldFx.launch(args);
+    JMeldFx.main(args);
   }
 }
