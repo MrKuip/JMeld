@@ -3,7 +3,6 @@ package org.jmeld.fx.ui.settings;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
-import org.jmeld.ui.util.Icons;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import javafx.beans.value.ObservableValue;

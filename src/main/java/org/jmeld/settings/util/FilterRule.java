@@ -18,6 +18,10 @@ package org.jmeld.settings.util;
 
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class FilterRule
     extends AbstractConfigurationElement
 {
@@ -41,10 +45,10 @@ public class FilterRule
       return text;
     }
   }
-  private boolean active;
-  private String pattern;
-  private Rule rule;
-  private String description;
+  public SimpleBooleanProperty active = new SimpleBooleanProperty(false);
+  public SimpleStringProperty pattern = new SimpleStringProperty();
+  public SimpleObjectProperty<Rule> rule = new SimpleObjectProperty<>();
+  public SimpleStringProperty description = new SimpleStringProperty();
 
   public FilterRule(String description,
       Rule rule,
@@ -63,45 +67,45 @@ public class FilterRule
 
   public void setDescription(String description)
   {
-    this.description = description;
+    this.description.set(description);
     fireChanged();
   }
 
   public String getDescription()
   {
-    return description;
+    return description.get();
   }
 
   public void setRule(Rule rule)
   {
-    this.rule = rule;
+    this.rule.set(rule);
     fireChanged();
   }
 
   public Rule getRule()
   {
-    return rule;
+    return rule.get();
   }
 
   public void setPattern(String pattern)
   {
-    this.pattern = pattern;
+    this.pattern.set(pattern);
     fireChanged();
   }
 
   public String getPattern()
   {
-    return pattern;
+    return pattern.get();
   }
 
   public void setActive(boolean active)
   {
-    this.active = active;
+    this.active.set(active);
     fireChanged();
   }
 
   public boolean isActive()
   {
-    return active;
+    return active.get();
   }
 }

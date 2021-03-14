@@ -6,11 +6,8 @@ import static org.jmeld.fx.util.FxCss.header2;
 import org.jmeld.fx.settings.FilterSettingsFx;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
-import org.jmeld.fx.util.FxIcon.IconSize;
-import org.jmeld.fx.util.FxUtils;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
-import org.jmeld.ui.util.Icons;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import javafx.geometry.Pos;
@@ -18,7 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
@@ -52,17 +50,6 @@ public class FilterSettingsPanel
     return FxIcon.FILTER.getLargeImage();
   }
 
-  private void init2()
-  {
-    MigPane panel;
-    panel = new MigPane(new LC().noGrid());
-
-    for (FxIcon text : FxIcon.values())
-    {
-      panel.add(new ImageView(text.getImage(IconSize.LARGE)));
-    }
-  }
-
   private void init()
   {
     MigPane panel;
@@ -74,11 +61,16 @@ public class FilterSettingsPanel
     Button filterRuleDeleteButton;
     String gap1;
     String gap2;
+    TableColumn<Filter, String> nameColumn;
+    TableColumn<FilterRule, Boolean> activeColumn;
+    TableColumn<FilterRule, String> descriptionColumn;
+    TableColumn<FilterRule, FilterRule.Rule> ruleColumn;
+    TableColumn<FilterRule, String> patternColumn;
 
     gap1 = "30";
     gap2 = "10";
 
-    panel = new MigPane(new LC().debug(),
+    panel = new MigPane(new LC(),
                         new AC().index(0).grow().fill().index(1).fill());
 
     add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span().gapLeft("10"));
@@ -102,26 +94,38 @@ public class FilterSettingsPanel
     filterRuleDeleteButton.setAlignment(Pos.BASELINE_LEFT);
     filterRuleDeleteButton.setGraphic(new ImageView(FxIcon.DELETE.getSmallImage()));
 
-    TableColumn<Filter, String> column1 = new TableColumn<>("Name");
-    column1.setCellValueFactory(new PropertyValueFactory<>("name"));
-    filterTable.getColumns().add(column1);
+    nameColumn = new TableColumn<>("Name");
+    nameColumn.setMinWidth(200);
+    nameColumn.setCellValueFactory(field -> field.getValue().name);
+    filterTable.getColumns().add(nameColumn);
 
     filterNewButton.setOnAction((ae) -> filterTable.itemsProperty().get().add(new Filter("haha")));
     filterDeleteButton.setOnAction((ae) -> filterTable.itemsProperty().get().remove(
         filterTable.getSelectionModel().selectedItemProperty().get()));
 
-    TableColumn<FilterRule, String> column2 = new TableColumn<>("Description");
-    column2.setCellValueFactory(new PropertyValueFactory<>("active"));
-    filterRuleTable.getColumns().add(column2);
-    TableColumn<FilterRule, String> column3 = new TableColumn<>("Description");
-    column3.setCellValueFactory(new PropertyValueFactory<>("description"));
-    filterRuleTable.getColumns().add(column3);
-    column3 = new TableColumn<>("Rule");
-    column3.setCellValueFactory(new PropertyValueFactory<>("rule"));
-    filterRuleTable.getColumns().add(column3);
-    column3 = new TableColumn<>("Pattern");
-    column3.setCellValueFactory(new PropertyValueFactory<>("pattern"));
-    filterRuleTable.getColumns().add(column3);
+    filterRuleTable.setEditable(true);
+    
+    activeColumn = new TableColumn<>("Active");
+    activeColumn.setCellValueFactory(f -> f.getValue().active);
+    activeColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
+    filterRuleTable.getColumns().add(activeColumn);
+    
+    descriptionColumn = new TableColumn<>("Description");
+    descriptionColumn.setCellValueFactory(f -> f.getValue().description);
+    descriptionColumn.setMinWidth(200);
+    filterRuleTable.getColumns().add(descriptionColumn);
+    descriptionColumn = new TableColumn<>("Rule");
+    
+    ruleColumn = new TableColumn<>("Rule");
+    ruleColumn.setMinWidth(150);
+    ruleColumn.setCellValueFactory(f -> f.getValue().rule);
+    ruleColumn.setCellFactory(tc -> new ComboBoxTableCell<>(FilterRule.Rule.values()));
+    filterRuleTable.getColumns().add(ruleColumn);
+    
+    patternColumn = new TableColumn<>("Pattern");
+    patternColumn.setMinWidth(200);
+    descriptionColumn.setCellValueFactory(f -> f.getValue().pattern);
+    filterRuleTable.getColumns().add(patternColumn);
 
     filterRuleNewButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get().add(new FilterRule()));
     filterRuleDeleteButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get().remove(

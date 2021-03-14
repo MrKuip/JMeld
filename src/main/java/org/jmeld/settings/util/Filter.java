@@ -19,17 +19,20 @@ package org.jmeld.settings.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
+
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Filter
     extends AbstractConfigurationElement
 {
   private Boolean includeDefault;
-  private String name;
+  public SimpleStringProperty name = new SimpleStringProperty();
   public final SimpleObjectProperty<ObservableList<FilterRule>> rules = new SimpleObjectProperty<>(FXCollections
       .observableArrayList());
 
@@ -60,13 +63,13 @@ public class Filter
 
   public void setName(String name)
   {
-    this.name = name;
+    this.name.set(name);
     fireChanged();
   }
 
   public String getName()
   {
-    return name;
+    return name.get();
   }
 
   public void insertRule(FilterRule ruleToInsertAfter, FilterRule rule)
@@ -135,7 +138,7 @@ public class Filter
   @Override
   public String toString()
   {
-    return name;
+    return getName();
   }
 
   /**
