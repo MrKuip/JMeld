@@ -3,7 +3,7 @@ package org.jmeld.fx.ui.settings;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
-public interface SettingsPanelIF
+public interface SettingsPaneIF
 {
   public String getText();
 

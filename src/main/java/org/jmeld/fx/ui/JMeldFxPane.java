@@ -14,30 +14,196 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.fx;
+package org.jmeld.fx.ui;
 
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.fx.util.FxIcon;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
+import net.miginfocom.layout.CC;
+import net.miginfocom.layout.LC;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.settings.SettingsPane;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.fx.util.FxUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 
-public class JMeldFxPanel
-    extends BorderPane
+public class JMeldFxPane
+    extends MigPane
 {
-  JMeldFxPanel()
+  private TabPane tabPane;
+  private Map<String, Tab> openTabs = new HashMap<>();
+
+  public JMeldFxPane()
   {
-    TabPane tabPane;
-    Tab tab;
+    super(new LC().noGrid().fill());
+
+    init();
+  }
+
+  private void init2()
+  {
+    TextArea textArea;
+    Path path;
+    String text;
+
+    //path = Paths.get("build.gradle");
+    path = Paths.get("/projecten/jmeld/PhysicalModelConfiguration.xml");
+    try
+    {
+      text = Files.lines(path).collect(Collectors.joining("\n"));
+      textArea = new TextArea(text);
+      //add(textArea, new CC().height("100%").width("100%"));
+      CodeArea sta;
+      VirtualizedScrollPane<CodeArea> sp;
+
+      sta = new CodeArea(text);
+      sp = new VirtualizedScrollPane(sta);
+
+      add(sp, new CC().height("100%").width("100%"));
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+  }
+
+  private void init()
+  {
+    ToolBar toolbarPanel;
+    Button newButton;
+    Button saveButton;
+    Button undoButton;
+    Button redoButton;
+    Button settingsButton;
+    Button helpButton;
+    Button aboutButton;
 
     tabPane = new TabPane();
 
-    tab = new Tab("Settings1");
-    tab.setGraphic(new ImageView(FxIcon.SETTINGS.getSmallImage()));
-    tabPane.getTabs().add(tab);
+    newButton = new Button("New");
+    newButton.setOnAction((ae) -> showTab(TabId.NEW, "7_2 - 7.4"));
+    newButton.setContentDisplay(ContentDisplay.TOP);
+    newButton.setGraphic(new ImageView(FxIcon.NEW.getLargeImage()));
 
-    tab.setContent(new SettingsPanel());
+    saveButton = new Button("Save");
+    saveButton.setContentDisplay(ContentDisplay.TOP);
+    saveButton.setAlignment(Pos.CENTER);
+    saveButton.setGraphic(new ImageView(FxIcon.SAVE.getLargeImage()));
+    saveButton.setOnAction((ae) -> JMeldSettingsFx.getInstance().save());
+
+    undoButton = new Button("Undo");
+    undoButton.setContentDisplay(ContentDisplay.TOP);
+    undoButton.setAlignment(Pos.CENTER);
+    undoButton.setGraphic(new ImageView(FxIcon.UNDO.getLargeImage()));
+
+    redoButton = new Button("Redo");
+    redoButton.setContentDisplay(ContentDisplay.TOP);
+    redoButton.setAlignment(Pos.CENTER);
+    redoButton.setGraphic(new ImageView(FxIcon.REDO.getLargeImage()));
+
+    settingsButton = new Button("Settings");
+    settingsButton.setOnAction((ae) -> showTab(TabId.SETTINGS));
+    settingsButton.setContentDisplay(ContentDisplay.TOP);
+    settingsButton.setAlignment(Pos.CENTER);
+    settingsButton.setGraphic(new ImageView(FxIcon.SETTINGS.getLargeImage()));
+
+    helpButton = new Button("Help");
+    helpButton.setOnAction((ae) -> showTab(TabId.HELP));
+    helpButton.setContentDisplay(ContentDisplay.TOP);
+    helpButton.setAlignment(Pos.CENTER);
+    helpButton.setGraphic(new ImageView(FxIcon.HELP.getLargeImage()));
+
+    aboutButton = new Button("About");
+    aboutButton.setOnAction((ae) -> showTab(TabId.ABOUT));
+    aboutButton.setContentDisplay(ContentDisplay.TOP);
+    aboutButton.setAlignment(Pos.CENTER);
+    aboutButton.setGraphic(new ImageView(FxIcon.ABOUT.getLargeImage()));
+
+    toolbarPanel = new ToolBar();
+    toolbarPanel.getItems().addAll(newButton, saveButton, undoButton, redoButton, FxUtils.getSpacer(), settingsButton,
+        helpButton, aboutButton);
+
+    add(toolbarPanel, new CC().dockNorth());
+    add(new Region(), new CC().dockSouth().wrap().gapTop("20"));
+    add(tabPane, new CC().height("100%").width("100%"));
+  }
+
+  private enum TabId
+  {
+    NEW("diff", FxIcon.FOLDER, () -> new FileDiffPanel()),
+    SETTINGS("Settings", FxIcon.SETTINGS, () -> new SettingsPane()),
+    HELP("Help", FxIcon.HELP, () -> new Button("Help")),
+    ABOUT("About", FxIcon.ABOUT, () -> new Button("About"));
+
+    private final String mi_description;
+    private final FxIcon mi_icon;
+    private final Supplier<Node> mi_createNode;
+
+    TabId(String description,
+        FxIcon icon,
+        Supplier<Node> createNode)
+    {
+      mi_description = description;
+      mi_icon = icon;
+      mi_createNode = createNode;
+    }
+
+    public String getDescription()
+    {
+      return mi_description;
+    }
+
+    public FxIcon getIcon()
+    {
+      return mi_icon;
+    }
+
+    public Node getNode()
+    {
+      return mi_createNode.get();
+    }
+  }
+
+  private void showTab(TabId tabId)
+  {
+    showTab(tabId, tabId.getDescription());
+  }
+
+  private void showTab(TabId tabId, String description)
+  {
+    Tab tab;
+    String tabKey;
+
+    tabKey = tabId.name() + "-" + description;
+
+    tab = openTabs.get(tabKey);
+    if (tab == null)
+    {
+      tab = new Tab(description);
+      tab.setOnClosed((e) -> openTabs.remove(tabKey));
+      tabPane.getTabs().add(tab);
+      openTabs.put(tabKey, tab);
+
+      tab.setGraphic(new ImageView(tabId.getIcon().getSmallImage()));
+      tab.setContent(tabId.getNode());
+    }
+
+    tabPane.getSelectionModel().select(tab);
   }
 }

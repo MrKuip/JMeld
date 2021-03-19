@@ -3,29 +3,25 @@ package org.jmeld.fx.ui.settings;
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
 
-import org.jmeld.fx.settings.FolderSettingsFx;
-import org.jmeld.fx.settings.FolderSettingsFx.FolderView;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.fx.util.FxUtils;
-import org.jmeld.ui.util.Icons;
-import org.tbee.javafx.scene.layout.MigPane;
-
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import net.miginfocom.layout.CC;
+import org.jmeld.fx.settings.FolderSettingsFx;
+import org.jmeld.fx.settings.FolderSettingsFx.FolderView;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.fx.util.FxUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 
-public class FolderSettingsPanel
+public class FolderSettingsPane
     extends MigPane
-    implements SettingsPanelIF
+    implements SettingsPaneIF
 {
 
-  public FolderSettingsPanel()
+  public FolderSettingsPane()
   {
     super(null,
           "[pref][pref][grow,fill]");
@@ -86,10 +82,14 @@ public class FolderSettingsPanel
     add(viewComboBox, new CC().wrap());
 
     // Initialization
-    onlyLeftButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage(), FxIcon.FILE_NOT_EXIST.getSmallImage()));
-    leftRightChangedButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage(), FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage()));
-    onlyRightButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_NOT_EXIST.getSmallImage(), FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage()));
-    leftRightUnChangedButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_EQUAL.getSmallImage(), FxIcon.FILE_EXIST_EQUAL.getSmallImage()));
+    onlyLeftButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage(), FxIcon.FILE_NOT_EXIST
+        .getSmallImage()));
+    leftRightChangedButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage(),
+        FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage()));
+    onlyRightButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_NOT_EXIST.getSmallImage(),
+        FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage()));
+    leftRightUnChangedButton.setGraphic(FxUtils.createImageNode(FxIcon.FILE_EXIST_EQUAL.getSmallImage(),
+        FxIcon.FILE_EXIST_EQUAL.getSmallImage()));
     viewComboBox.getItems().addAll(FolderSettingsFx.FolderView.values());
 
     // Binding

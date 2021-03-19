@@ -1,10 +1,5 @@
 package org.jmeld.fx.ui.settings;
 
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.fx.util.FxUtils;
-import org.tbee.javafx.scene.layout.MigPane;
-
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,12 +16,16 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.fx.util.FxUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 
-public class SettingsPanel
+public class SettingsPane
     extends MigPane
 {
 
-  public SettingsPanel()
+  public SettingsPane()
   {
     super(new LC().noGrid().fill());
 
@@ -42,18 +41,18 @@ public class SettingsPanel
     Button saveAsButton;
     Button reloadButton;
     Label settingsLocationLabel;
-    SettingsPanelIF panel;
+    SettingsPaneIF panel;
 
     contentPanel = new StackPane();
 
     listPanel = new ListView<>();
-    panel = new FilterSettingsPanel();
+    panel = new FilterSettingsPane();
     listPanel.getItems().add(new ListItem(contentPanel,
                                           panel));
-    panel = new EditorSettingsPanel();
+    panel = new EditorSettingsPane();
     listPanel.getItems().add(new ListItem(contentPanel,
                                           panel));
-    panel = new FolderSettingsPanel();
+    panel = new FolderSettingsPane();
     listPanel.getItems().add(new ListItem(contentPanel,
                                           panel));
     listPanel.getSelectionModel().selectedItemProperty().addListener(this::listSelectionChanged);
@@ -110,7 +109,7 @@ public class SettingsPanel
     private Node content;
 
     public ListItem(StackPane stackPane,
-        SettingsPanelIF panel)
+        SettingsPaneIF panel)
     {
       this.text = panel.getText();
       this.content = panel.getContent();

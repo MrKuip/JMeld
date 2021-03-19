@@ -16,13 +16,12 @@
  */
 package org.jmeld.fx;
 
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.settings.SettingsPanel;
-import org.jmeld.util.ResourceLoader;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.JMeldFxPane;
+import org.jmeld.util.ResourceLoader;
 
 public class JMeldFx
     extends Application
@@ -40,7 +39,7 @@ public class JMeldFx
 
     setUserAgentStylesheet(JMeldSettingsFx.getInstance().getEditor().getLookAndFeelName());
 
-    scene = new Scene(new SettingsPanel(),
+    scene = new Scene(new JMeldFxPane(),
                       300,
                       300);
     scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());

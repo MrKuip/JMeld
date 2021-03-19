@@ -3,13 +3,6 @@ package org.jmeld.fx.ui.settings;
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
 
-import org.jmeld.fx.settings.FilterSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.settings.util.Filter;
-import org.jmeld.settings.util.FilterRule;
-import org.tbee.javafx.scene.layout.MigPane;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,12 +17,18 @@ import javafx.scene.text.Text;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
+import org.jmeld.fx.settings.FilterSettingsFx;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.util.Filter;
+import org.jmeld.settings.util.FilterRule;
+import org.tbee.javafx.scene.layout.MigPane;
 
-public class FilterSettingsPanel
+public class FilterSettingsPane
     extends MigPane
-    implements SettingsPanelIF
+    implements SettingsPaneIF
 {
-  public FilterSettingsPanel()
+  public FilterSettingsPane()
   {
     super(new LC().fill(),
           new AC().fill().grow(),
@@ -104,24 +103,24 @@ public class FilterSettingsPanel
         filterTable.getSelectionModel().selectedItemProperty().get()));
 
     filterRuleTable.setEditable(true);
-    
+
     activeColumn = new TableColumn<>("Active");
     activeColumn.setCellValueFactory(f -> f.getValue().active);
     activeColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
     filterRuleTable.getColumns().add(activeColumn);
-    
+
     descriptionColumn = new TableColumn<>("Description");
     descriptionColumn.setCellValueFactory(f -> f.getValue().description);
     descriptionColumn.setMinWidth(200);
     filterRuleTable.getColumns().add(descriptionColumn);
     descriptionColumn = new TableColumn<>("Rule");
-    
+
     ruleColumn = new TableColumn<>("Rule");
     ruleColumn.setMinWidth(150);
     ruleColumn.setCellValueFactory(f -> f.getValue().rule);
     ruleColumn.setCellFactory(tc -> new ComboBoxTableCell<>(FilterRule.Rule.values()));
     filterRuleTable.getColumns().add(ruleColumn);
-    
+
     patternColumn = new TableColumn<>("Pattern");
     patternColumn.setMinWidth(200);
     descriptionColumn.setCellValueFactory(f -> f.getValue().pattern);

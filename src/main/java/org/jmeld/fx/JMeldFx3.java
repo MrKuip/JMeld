@@ -17,7 +17,7 @@
 package org.jmeld.fx;
 
 import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.settings.SettingsPanel;
+import org.jmeld.fx.ui.settings.SettingsPane;
 import org.jmeld.util.ResourceLoader;
 
 import javafx.application.Application;

@@ -31,11 +31,11 @@ import org.jmeld.fx.util.FxIcon;
 import org.jmeld.util.CharsetDetector;
 import org.tbee.javafx.scene.layout.MigPane;
 
-public class EditorSettingsPanel
+public class EditorSettingsPane
     extends MigPane
-    implements SettingsPanelIF
+    implements SettingsPaneIF
 {
-  public EditorSettingsPanel()
+  public EditorSettingsPane()
   {
     super(new LC().noGrid());
 
