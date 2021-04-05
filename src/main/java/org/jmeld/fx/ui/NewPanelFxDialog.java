@@ -27,7 +27,6 @@ import org.jmeld.util.prefs.TabPanePreference;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
@@ -43,7 +42,7 @@ public class NewPanelFxDialog
 {
   // Class variables:
   // File comparison:
-  public enum Function
+  public enum Comparison
   {
     FILE_COMPARISON("File comparison", () -> new FileComparisonNode()),
     DIRECTORY_COMPARISON("Directory comparison", () -> new DirectoryComparisonNode());
@@ -51,7 +50,7 @@ public class NewPanelFxDialog
     private final String description;
     private final Supplier<Node> node;
 
-    Function(String description, Supplier<Node> node)
+    Comparison(String description, Supplier<Node> node)
     {
       this.description = description;
       this.node = node;
@@ -74,16 +73,27 @@ public class NewPanelFxDialog
 
   public void show()
   {
-    Dialog<?> dialog;
+    Dialog<ButtonType> dialog;
+    TabPane tabPane;
+
+    tabPane = getTabPane();
 
     dialog = new Dialog<>();
     dialog.setTitle("Choose files");
     dialog.initStyle(StageStyle.UTILITY);
-    dialog.getDialogPane().setContent(getTabPane());
-    dialog.getDialogPane().getButtonTypes().add(new ButtonType("OK", ButtonData.OK_DONE));
-    dialog.getDialogPane().getButtonTypes().add(new ButtonType("Cancel", ButtonData.CANCEL_CLOSE));
+    dialog.getDialogPane().setContent(tabPane);
+    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+    dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
-    dialog.showAndWait();
+    if (dialog.showAndWait().get() == ButtonType.OK)
+    {
+      ((NewPanelIF) tabPane.getSelectionModel().getSelectedItem().getContent()).show();
+    }
+  }
+
+  public interface NewPanelIF
+  {
+    void show();
   }
 
   private TabPane getTabPane()
@@ -91,7 +101,7 @@ public class NewPanelFxDialog
     TabPane tabPane;
 
     tabPane = new TabPane();
-    Stream.of(Function.values()).forEach(f -> {
+    Stream.of(Comparison.values()).forEach(f -> {
       Tab tab;
 
       tab = new Tab(f.getDescription());
@@ -106,6 +116,7 @@ public class NewPanelFxDialog
 
   static class FileComparisonNode
     extends MigPane
+      implements NewPanelIF
   {
     private ComboBox<String> leftFileComboBox;
     private ComboBox<String> rightFileComboBox;
@@ -171,10 +182,19 @@ public class NewPanelFxDialog
         comboBox.getSelectionModel().select(index);
       }
     }
+
+    @Override
+    public void show()
+    {
+      System.out.println("Show file diff [filter=" + filterComboBox.getSelectionModel().getSelectedItem() + "] : "
+          + leftFileComboBox.getSelectionModel().getSelectedItem() + " -> "
+          + rightFileComboBox.getSelectionModel().getSelectedItem());
+    }
   }
 
   static class DirectoryComparisonNode
     extends MigPane
+      implements NewPanelIF
   {
     private ComboBox<String> leftDirectoryComboBox;
     private ComboBox<String> rightDirectoryComboBox;
@@ -232,5 +252,11 @@ public class NewPanelFxDialog
       }
     }
 
+    @Override
+    public void show()
+    {
+      System.out.println("Show directory diff: " + leftDirectoryComboBox.getSelectionModel().getSelectedItem() + " -> "
+          + rightDirectoryComboBox.getSelectionModel().getSelectedItem());
+    }
   }
 }
