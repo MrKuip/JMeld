@@ -18,104 +18,48 @@ package org.jmeld.util.prefs;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
+import javafx.scene.control.ComboBox;
 
 public class ComboBoxPreference
-    extends Preference
+  extends Preference
 {
   // Class variables:
   private static String ITEMS = "ITEMS";
 
   // Instance variables:
-  private JComboBox target;
   private int maxItems = 10;
 
-  public ComboBoxPreference(String preferenceName,
-      JComboBox target)
+  public ComboBoxPreference(String preferenceName, ComboBox<String> target)
   {
     super("ComboBox-" + preferenceName);
-
-    this.target = target;
-
-    init();
+    init(target);
   }
 
-  private void init()
+  private void init(ComboBox<String> target)
   {
-    DefaultComboBoxModel model;
+    getListOfString(ITEMS, maxItems).forEach(item -> target.getItems().add(item));
+    target.getSelectionModel().select(0);
+    target.setOnAction((e) -> {
+      List<String> list;
+      String item;
 
-    model = new DefaultComboBoxModel();
-    for (String item : getListOfString(ITEMS,
-                                       maxItems))
-    {
-      model.addElement(item);
-    }
+      list = new ArrayList<String>();
 
-    target.setModel(model);
-    model.addListDataListener(getListDataListener());
-    if (target.getItemCount() > 0)
-    {
-      target.setSelectedIndex(0);
-    }
-  }
-
-  private void save()
-  {
-    List<String> list;
-    ComboBoxModel model;
-    String item;
-
-    list = new ArrayList<String>();
-
-    model = target.getModel();
-
-    // Put the selectedItem on top.
-    item = (String) model.getSelectedItem();
-    if (item != null)
-    {
-      list.add(item);
-    }
-
-    for (int i = 0; i < model.getSize(); i++)
-    {
-      item = (String) model.getElementAt(i);
-
-      // Don't save items twice.
-      if (list.contains(item))
+      // Put the selectedItem on top.
+      item = target.getSelectionModel().getSelectedItem();
+      if (item != null)
       {
-        continue;
+        list.add(item);
       }
 
-      list.add(item);
-    }
+      target.getItems().forEach(i -> {
+        if (!list.contains(i))
+        {
+          list.add(i);
+        }
+      });
 
-    putListOfString(ITEMS,
-                    maxItems,
-                    list);
-  }
-
-  private ListDataListener getListDataListener()
-  {
-    return new ListDataListener()
-    {
-      public void contentsChanged(ListDataEvent e)
-      {
-        save();
-      }
-
-      public void intervalAdded(ListDataEvent e)
-      {
-        save();
-      }
-
-      public void intervalRemoved(ListDataEvent e)
-      {
-        save();
-      }
-    };
+      putListOfString(ITEMS, maxItems, list);
+    });
   }
 }

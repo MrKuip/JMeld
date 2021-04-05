@@ -38,8 +38,8 @@ import javax.swing.UIManager;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.util.ObjectUtil;
-import org.jmeld.util.prefs.ComboBoxPreference;
-import org.jmeld.util.prefs.ComboBoxSelectionPreference;
+import org.jmeld.util.prefs.JComboBoxPreference;
+import org.jmeld.util.prefs.JComboBoxSelectionPreference;
 import org.jmeld.util.prefs.DirectoryChooserPreference;
 import org.jmeld.util.prefs.FileChooserPreference;
 import org.jmeld.util.prefs.TabbedPanePreference;
@@ -218,7 +218,7 @@ public class NewPanelDialog
     leftFileComboBox = new JComboBox<>();
     leftFileComboBox.setEditable(false);
     leftFileComboBox.addActionListener(getFileSelectAction());
-    new ComboBoxPreference("LeftFile",
+    new JComboBoxPreference("LeftFile",
                            leftFileComboBox);
 
     button.setActionCommand(LEFT_FILENAME);
@@ -240,7 +240,7 @@ public class NewPanelDialog
     rightFileComboBox = new JComboBox<>();
     rightFileComboBox.setEditable(false);
     rightFileComboBox.addActionListener(getFileSelectAction());
-    new ComboBoxPreference("RightFile",
+    new JComboBoxPreference("RightFile",
                            rightFileComboBox);
     panel.add(label,
               cc.xy(2,
@@ -357,7 +357,7 @@ public class NewPanelDialog
     leftDirectoryComboBox = new JComboBox<>();
     leftDirectoryComboBox.setEditable(false);
     leftDirectoryComboBox.addActionListener(getDirectorySelectAction());
-    new ComboBoxPreference("LeftDirectory",
+    new JComboBoxPreference("LeftDirectory",
                            leftDirectoryComboBox);
 
     button.setActionCommand(LEFT_DIRECTORY);
@@ -379,7 +379,7 @@ public class NewPanelDialog
     rightDirectoryComboBox = new JComboBox<>();
     rightDirectoryComboBox.setEditable(false);
     rightDirectoryComboBox.addActionListener(getDirectorySelectAction());
-    new ComboBoxPreference("RightDirectory",
+    new JComboBoxPreference("RightDirectory",
                            rightDirectoryComboBox);
     panel.add(label,
               cc.xy(2,
@@ -399,7 +399,7 @@ public class NewPanelDialog
     panel.add(filterComboBox,
               cc.xy(4,
                     6));
-    new ComboBoxSelectionPreference("Filter",
+    new JComboBoxSelectionPreference("Filter",
                                     filterComboBox);
 
     return panel;
@@ -510,7 +510,7 @@ public class NewPanelDialog
     versionControlDirectoryComboBox = new JComboBox<>();
     versionControlDirectoryComboBox.setEditable(false);
     versionControlDirectoryComboBox.addActionListener(getVersionControlDirectorySelectAction());
-    new ComboBoxPreference("VersionControlDirectory",
+    new JComboBoxPreference("VersionControlDirectory",
                            versionControlDirectoryComboBox);
 
     button.setActionCommand(VERSION_CONTROL_DIRECTORY);

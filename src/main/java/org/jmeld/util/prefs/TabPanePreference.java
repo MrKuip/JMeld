@@ -16,41 +16,44 @@
  */
 package org.jmeld.util.prefs;
 
-import java.util.Optional;
-import javafx.scene.control.ComboBox;
+import org.jmeld.util.StringUtil;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
-public class ComboBoxSelectionPreference
+public class TabPanePreference
   extends Preference
 {
   // Class variables:
-  private static String SELECTED_ITEM = "SELECTED_ITEM";
+  private static String TEXT = "TEXT";
 
-  public ComboBoxSelectionPreference(String preferenceName, ComboBox<String> target)
+  // Instance variables:
+
+  public TabPanePreference(String preferenceName, TabPane tabPane)
   {
-    super("ComboBoxSelection-" + preferenceName);
-    init(target);
+    super("TabPane-" + preferenceName);
+    init(tabPane);
   }
 
-  private void init(ComboBox<String> target)
+  private void init(TabPane tabPane)
   {
-    String selectedItem;
+    String text;
 
-    selectedItem = getString(SELECTED_ITEM, null);
-    if (selectedItem != null)
+    text = getString(TEXT, "");
+
+    if (!StringUtil.isEmpty(text))
     {
-      Optional<String> item;
-
-      item = target.getItems().stream().filter(o -> o.toString().contentEquals(selectedItem)).findFirst();
-      item.ifPresent(o -> target.getSelectionModel().select(o));
+      tabPane.getTabs().stream().filter(tab -> tab.getText().contentEquals(text)).findFirst().ifPresent(tab -> {
+        tabPane.getSelectionModel().select(tab);
+      });
     }
 
-    target.setOnAction((e) -> {
-      Object selected;
+    tabPane.getSelectionModel().selectedItemProperty().addListener((e) -> {
+      Tab tab;
 
-      selected = ((ComboBox<?>) e.getSource()).getSelectionModel().getSelectedItem();
-      if (selected != null)
+      tab = tabPane.getSelectionModel().getSelectedItem();
+      if (tab != null)
       {
-        putString(SELECTED_ITEM, selected.toString());
+        putString(TEXT, tab.getText());
       }
     });
   }

@@ -18,6 +18,7 @@ package org.jmeld.fx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.JMeldFxPane;
@@ -29,6 +30,7 @@ public class JMeldFx
   static
   {
     System.setProperty("prism.lcdtext", "false");
+    //System.setProperty("prism.text", "t2k");
   }
 
   @Override
@@ -48,7 +50,6 @@ public class JMeldFx
     stage.setScene(scene);
     stage.setWidth(1000);
     stage.setHeight(750);
-
     stage.show();
   }
 

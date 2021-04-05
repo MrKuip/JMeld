@@ -1,16 +1,14 @@
 package org.jmeld.fx.ui;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import net.miginfocom.layout.CC;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -19,8 +17,8 @@ public class FileDiffPanel
     extends MigPane
 {
   private JMDiffNode m_diffNode;
-  private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty("/usr/local/kees/projecten/Standard/branches/7_3/bin/backupDb");
-  private SimpleStringProperty m_fileNameRight = new SimpleStringProperty("/usr/local/kees/projecten/Standard/branches/7_4/bin/backupDb");
+  private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty("/lala/local/kees/projecten/Standard/branches/7_3/bin/backupDb");
+  private SimpleStringProperty m_fileNameRight = new SimpleStringProperty("\\usr/local/marijke/projecten/Standard/branches/7_4/bin/backupDb");
 
   public FileDiffPanel()
   {
@@ -37,7 +35,7 @@ public class FileDiffPanel
     File leftFile;
     File rightFile;
 
-    leftFile = new File("/usr/local/kees/projecten/Standard/branches/7_3/bin/backupDb");
+    leftFile = new File("/lala/local/marijke/projecten/Standard/branches/7_3/bin/backupDb");
     rightFile = new File("/usr/local/kees/projecten/Standard/branches/7_4/bin/backupDb");
 
     setDiffNode(JMDiffNodeFactory.create(leftFile.getName(), leftFile, rightFile.getName(), rightFile));
@@ -54,33 +52,38 @@ public class FileDiffPanel
   private void init()
   {
     Button saveLeftButton;
-    Label fileNameLeftLabel;
+    DiffLabel fileNameLeftLabel;
     CodeArea fileContentLeftCodeArea;
     VirtualizedScrollPane<CodeArea> fileContentLeftScrollPane;
-
     Button saveRightButton;
-    Label fileNameRightLabel;
+    DiffLabel fileNameRightLabel;
     CodeArea fileContentRightCodeArea;
     VirtualizedScrollPane<CodeArea> fileContentRightScrollPane;
+
+    String leftText = "/usr/local/marijke/projecten/Standard/branches/7_3/bin/backupDb";
+    String rightText = "\\usr/local/kees/projecten/Standard/branches/7_4:bin/backupbD";
 
     saveLeftButton = new Button();
     saveLeftButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
 
-    fileNameLeftLabel = new Label();
-    fileNameLeftLabel.textProperty().bind(m_fileNameLeft);
+    fileNameLeftLabel = new DiffLabel();
+    fileNameLeftLabel.setText(leftText, rightText);
 
-    fileContentLeftCodeArea = new CodeArea(Arrays.stream(m_diffNode.getBufferNodeLeft().getDocument().getLines()).map(
-        line -> line.toString()).collect(Collectors.joining()));
+    //fileContentLeftCodeArea = new CodeArea(Arrays.stream(m_diffNode.getBufferNodeLeft().getDocument().getLines()).map(
+    //    line -> line.toString()).collect(Collectors.joining()));
+    fileContentLeftCodeArea = new CodeArea("lala");
     fileContentLeftScrollPane = new VirtualizedScrollPane(fileContentLeftCodeArea);
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
 
-    fileNameRightLabel = new Label();
-    fileNameRightLabel.textProperty().bind(m_fileNameRight);
+    fileNameRightLabel = new DiffLabel();
+    //fileNameRightLabel.textProperty().bind(m_fileNameRight);
+    fileNameRightLabel.setText(rightText, leftText);
 
-    fileContentRightCodeArea = new CodeArea(Arrays.stream(m_diffNode.getBufferNodeRight().getDocument().getLines())
-        .map(line -> line.toString()).collect(Collectors.joining()));
+    fileContentRightCodeArea = new CodeArea("haha");
+    //fileContentRightCodeArea = new CodeArea(Arrays.stream(m_diffNode.getBufferNodeRight().getDocument().getLines())
+    //.map(line -> line.toString()).collect(Collectors.joining()));
     fileContentRightScrollPane = new VirtualizedScrollPane(fileContentRightCodeArea);
 
     add(saveLeftButton, new CC());

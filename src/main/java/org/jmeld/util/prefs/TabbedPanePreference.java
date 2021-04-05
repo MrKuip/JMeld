@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import org.jmeld.util.StringUtil;
 
 public class TabbedPanePreference
-    extends Preference
+  extends Preference
 {
   // Class variables:
   private static String TITLE = "TITLE";
@@ -30,8 +30,7 @@ public class TabbedPanePreference
   // Instance variables:
   private JTabbedPane target;
 
-  public TabbedPanePreference(String preferenceName,
-      JTabbedPane target)
+  public TabbedPanePreference(String preferenceName, JTabbedPane target)
   {
     super("TabbedPane-" + preferenceName);
 
@@ -44,8 +43,7 @@ public class TabbedPanePreference
   {
     String title;
 
-    title = getString(TITLE,
-                      "");
+    title = getString(TITLE, "");
 
     if (!StringUtil.isEmpty(title))
     {
@@ -69,8 +67,7 @@ public class TabbedPanePreference
 
     index = target.getSelectedIndex();
     title = index == -1 ? null : target.getTitleAt(index);
-    putString(TITLE,
-              title);
+    putString(TITLE, title);
   }
 
   private ChangeListener getChangeListener()

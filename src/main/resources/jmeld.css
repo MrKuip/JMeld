@@ -6,3 +6,23 @@
   -fx-font-size:20;
 }
 
+.readonly {
+  -fx-control-inner-background: yellow;
+}
+
+.diffLabel {
+  -fx-font-size:14;
+}
+
+.diffLabel-bold {
+  -fx-font-weight: bold;
+  -fx-font-size:14;
+}
+
+.text {
+    -fx-font-family: "FreeSans"; 
+}
+
+.text-area > .scroll-pane {
+    -fx-padding: 0;
+}

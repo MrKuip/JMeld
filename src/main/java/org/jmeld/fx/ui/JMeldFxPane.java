@@ -23,6 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.settings.SettingsPane;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.fx.util.FxUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -35,16 +42,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.settings.SettingsPane;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.fx.util.FxUtils;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class JMeldFxPane
-    extends MigPane
+  extends MigPane
 {
   private TabPane tabPane;
   private Map<String, Tab> openTabs = new HashMap<>();
@@ -62,13 +62,13 @@ public class JMeldFxPane
     Path path;
     String text;
 
-    //path = Paths.get("build.gradle");
+    // path = Paths.get("build.gradle");
     path = Paths.get("/projecten/jmeld/PhysicalModelConfiguration.xml");
     try
     {
       text = Files.lines(path).collect(Collectors.joining("\n"));
       textArea = new TextArea(text);
-      //add(textArea, new CC().height("100%").width("100%"));
+      // add(textArea, new CC().height("100%").width("100%"));
       CodeArea sta;
       VirtualizedScrollPane<CodeArea> sp;
 
@@ -97,7 +97,7 @@ public class JMeldFxPane
     tabPane = new TabPane();
 
     newButton = new Button("New");
-    newButton.setOnAction((ae) -> showTab(TabId.NEW, "7_2 - 7.4"));
+    newButton.setOnAction((ae) -> new NewPanelFxDialog().show()/* showTab(TabId.NEW, "7_2 - 7.4") */);
     newButton.setContentDisplay(ContentDisplay.TOP);
     newButton.setGraphic(new ImageView(FxIcon.NEW.getLargeImage()));
 
@@ -155,9 +155,7 @@ public class JMeldFxPane
     private final FxIcon mi_icon;
     private final Supplier<Node> mi_createNode;
 
-    TabId(String description,
-        FxIcon icon,
-        Supplier<Node> createNode)
+    TabId(String description, FxIcon icon, Supplier<Node> createNode)
     {
       mi_description = description;
       mi_icon = icon;
@@ -178,6 +176,11 @@ public class JMeldFxPane
     {
       return mi_createNode.get();
     }
+  }
+
+  private void showNewChooser()
+  {
+
   }
 
   private void showTab(TabId tabId)
