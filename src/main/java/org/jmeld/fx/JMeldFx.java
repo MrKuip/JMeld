@@ -16,37 +16,37 @@
  */
 package org.jmeld.fx;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.JMeldFxPane;
+import org.jmeld.fx.util.FxIcon;
 import org.jmeld.util.ResourceLoader;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class JMeldFx
-    extends Application
+  extends Application
 {
   static
   {
     System.setProperty("prism.lcdtext", "false");
-    //System.setProperty("prism.text", "t2k");
+    // System.setProperty("prism.text", "t2k");
   }
 
   @Override
-  public void start(Stage stage)
-      throws Exception
+  public void start(Stage stage) throws Exception
   {
     Scene scene;
 
     setUserAgentStylesheet(JMeldSettingsFx.getInstance().getEditor().getLookAndFeelName());
 
-    scene = new Scene(new JMeldFxPane(),
-                      300,
-                      300);
+    scene = new Scene(new JMeldFxPane(), 300, 300);
     scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());
 
     stage.setTitle("JMeld");
+    stage.getIcons().add(FxIcon.TULIP.getSmallImage());
+    stage.getIcons().add(FxIcon.TULIP.getLargeImage());
+    stage.getIcons().add(FxIcon.TULIP.getVeryLargeImage());
     stage.setScene(scene);
     stage.setWidth(1000);
     stage.setHeight(750);

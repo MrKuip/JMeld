@@ -21,6 +21,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.util.StringUtil;
+import org.jmeld.util.node.JMDiffNode;
+import org.jmeld.util.node.JMDiffNodeFactory;
 import org.jmeld.util.prefs.ComboBoxPreference;
 import org.jmeld.util.prefs.ComboBoxSelectionPreference;
 import org.jmeld.util.prefs.TabPanePreference;
@@ -33,6 +37,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
@@ -71,7 +76,7 @@ public class NewPanelFxDialog
   {
   }
 
-  public void show()
+  public NewPanelIF getNewPanel()
   {
     Dialog<ButtonType> dialog;
     TabPane tabPane;
@@ -80,6 +85,8 @@ public class NewPanelFxDialog
 
     dialog = new Dialog<>();
     dialog.setTitle("Choose files");
+    dialog.setGraphic(new ImageView(FxIcon.FILE_COMPARE.getLargeImage()));
+    dialog.setHeaderText("Choose files/directories to compare");
     dialog.initStyle(StageStyle.UTILITY);
     dialog.getDialogPane().setContent(tabPane);
     dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -87,13 +94,17 @@ public class NewPanelFxDialog
 
     if (dialog.showAndWait().get() == ButtonType.OK)
     {
-      ((NewPanelIF) tabPane.getSelectionModel().getSelectedItem().getContent()).show();
+      return (NewPanelIF) tabPane.getSelectionModel().getSelectedItem().getContent();
     }
+
+    return null;
   }
 
   public interface NewPanelIF
   {
-    void show();
+    Node getNode();
+
+    String getShortDescription();
   }
 
   private TabPane getTabPane()
@@ -120,11 +131,10 @@ public class NewPanelFxDialog
   {
     private ComboBox<String> leftFileComboBox;
     private ComboBox<String> rightFileComboBox;
-    private ComboBox<String> filterComboBox;
 
     FileComparisonNode()
     {
-      super("fill", "[p][fill, grow][p]", "[p][p][p][fill, grow]");
+      super("fill", "[p][fill, grow][p]", "[p][p][fill, grow]");
       init();
     }
 
@@ -145,11 +155,6 @@ public class NewPanelFxDialog
       rightFileComboBox.setEditable(false);
       new ComboBoxPreference("RightFile", rightFileComboBox);
 
-      filterComboBox = new ComboBox<>();
-      filterComboBox.getItems().addAll(JMeldSettingsFx.getInstance().getFilter().getFilters().stream()
-          .map(filter -> filter.getName()).collect(Collectors.toList()));
-      new ComboBoxSelectionPreference("Filter", filterComboBox);
-
       add(new Label("Left"), new CC());
       add(leftFileComboBox, new CC());
       add(leftFileBrowseButton, new CC().wrap());
@@ -157,9 +162,6 @@ public class NewPanelFxDialog
       add(new Label("Right"), new CC());
       add(rightFileComboBox, new CC());
       add(rightFileBrowseButton, new CC().wrap());
-
-      add(new Label("Filter"), new CC());
-      add(filterComboBox, new CC().wrap());
     }
 
     private void setOnAction(ComboBox<String> comboBox)
@@ -183,12 +185,78 @@ public class NewPanelFxDialog
       }
     }
 
-    @Override
-    public void show()
+    private File getLeftFile()
     {
-      System.out.println("Show file diff [filter=" + filterComboBox.getSelectionModel().getSelectedItem() + "] : "
-          + leftFileComboBox.getSelectionModel().getSelectedItem() + " -> "
-          + rightFileComboBox.getSelectionModel().getSelectedItem());
+      return new File(leftFileComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    private File getRightFile()
+    {
+      return new File(rightFileComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    @Override
+    public Node getNode()
+    {
+      try
+      {
+        File leftFile;
+        File rightFile;
+        JMDiffNode diffNode;
+        FileDiffPanel fileDiffPanel;
+
+        leftFile = getLeftFile();
+        rightFile = getRightFile();
+
+        if (StringUtil.isEmpty(leftFile.getName()))
+        {
+          showAlert("left filename is empty");
+        }
+
+        if (!leftFile.exists())
+        {
+          showAlert("left filename(" + leftFile.getAbsolutePath() + ") doesn't exist");
+        }
+
+        if (StringUtil.isEmpty(rightFile.getName()))
+        {
+          showAlert("right filename is empty");
+        }
+
+        if (!rightFile.exists())
+        {
+          showAlert("right filename(" + rightFile.getAbsolutePath() + ") doesn't exist");
+        }
+
+        diffNode = JMDiffNodeFactory.create(leftFile.getAbsolutePath(), leftFile, rightFile.getAbsolutePath(),
+            rightFile);
+
+        diffNode.diff();
+
+        fileDiffPanel = new FileDiffPanel(diffNode);
+
+        return fileDiffPanel;
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+        showAlert(ex);
+      }
+
+      return null;
+    }
+
+    public String getShortDescription()
+    {
+      return getLeftFile().getName() + "-" + getRightFile().getName();
+    }
+
+    private void showAlert(Exception ex)
+    {
+    }
+
+    private void showAlert(String string)
+    {
     }
   }
 
@@ -198,10 +266,11 @@ public class NewPanelFxDialog
   {
     private ComboBox<String> leftDirectoryComboBox;
     private ComboBox<String> rightDirectoryComboBox;
+    private ComboBox<String> filterComboBox;
 
     DirectoryComparisonNode()
     {
-      super("fill", "[p][fill, grow][p]", "[p][p][fill, grow]");
+      super("fill", "[p][fill, grow][p]", "[p][p][p][fill, grow]");
       init();
     }
 
@@ -222,6 +291,11 @@ public class NewPanelFxDialog
       rightDirectoryComboBox.setEditable(false);
       new ComboBoxPreference("RightDirectory", rightDirectoryComboBox);
 
+      filterComboBox = new ComboBox<>();
+      filterComboBox.getItems().addAll(JMeldSettingsFx.getInstance().getFilter().getFilters().stream()
+          .map(filter -> filter.getName()).collect(Collectors.toList()));
+      new ComboBoxSelectionPreference("Filter", filterComboBox);
+
       add(new Label("Left"), new CC());
       add(leftDirectoryComboBox, new CC());
       add(leftDirectoryBrowseButton, new CC().wrap());
@@ -229,6 +303,9 @@ public class NewPanelFxDialog
       add(new Label("Right"), new CC());
       add(rightDirectoryComboBox, new CC());
       add(rightDirectoryBrowseButton, new CC().wrap());
+
+      add(new Label("Filter"), new CC());
+      add(filterComboBox, new CC().wrap());
     }
 
     private void setOnAction(ComboBox<String> comboBox)
@@ -253,10 +330,26 @@ public class NewPanelFxDialog
     }
 
     @Override
-    public void show()
+    public Node getNode()
     {
-      System.out.println("Show directory diff: " + leftDirectoryComboBox.getSelectionModel().getSelectedItem() + " -> "
+      return new Button("Show directory diff [filter=" + filterComboBox.getSelectionModel().getSelectedItem() + "] : "
+          + leftDirectoryComboBox.getSelectionModel().getSelectedItem() + " -> "
           + rightDirectoryComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    private File getLeftDirectory()
+    {
+      return new File(leftDirectoryComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    private File getRightDirectory()
+    {
+      return new File(rightDirectoryComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    public String getShortDescription()
+    {
+      return getLeftDirectory().getName() + "-" + getRightDirectory().getName();
     }
   }
 }

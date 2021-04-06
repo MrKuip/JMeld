@@ -19,18 +19,13 @@ package org.jmeld.fx.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import org.jmeld.fx.util.FxFontUtil.FontMetrics;
-
-import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
@@ -51,6 +46,7 @@ public enum FxIcon
   LEFT(() -> new IconBuilder("F004D")),
   RIGHT(() -> new IconBuilder("F0054")),
   COMPARE(() -> new IconBuilder("F1492")),
+  FILE_COMPARE(() -> new IconBuilder("F08AA")),
   EDIT(() -> new IconBuilder("F11E8").fill("F11E7")),
   FILTER(() -> new IconBuilder("F0233").fill("F0232")),
   FOLDER(() -> new IconBuilder("F0256").fill("F024B")),
@@ -59,11 +55,13 @@ public enum FxIcon
   ABOUT(() -> new IconBuilder("F02FC").fill("F02FD")),
   ALERT(() -> new IconBuilder("F002A").color(IconColor.RED)),
   CLOSE(() -> new IconBuilder("F0156")),
+  TULIP(() -> new IconBuilder("F09F1").color(IconColor.RED)),
   SEARCH_NEXT(() -> new IconBuilder("F0140")),
   SEARCH_PREVIOUS(() -> new IconBuilder("F0143")),
-  FILE_EXIST_NOTEQUAL(() -> new IconBuilder("F08A1").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(
-      IconColor.LIGHT_BLUE_FILL)),
-  FILE_EXIST_EQUAL(() -> new IconBuilder("F08A1").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(IconColor.WHITE)),
+  FILE_EXIST_NOTEQUAL(
+      () -> new IconBuilder("F08A1").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(IconColor.LIGHT_BLUE_FILL)),
+  FILE_EXIST_EQUAL(
+      () -> new IconBuilder("F08A1").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(IconColor.WHITE)),
   FILE_NOT_EXIST(() -> new IconBuilder("F08A4").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(IconColor.WHITE)),
   PANEL_SELECTED(() -> new IconBuilder("F08A1").color(IconColor.DEFAULT_OUTLINE).fill("F0764").color(IconColor.YELLOW));
 
@@ -104,7 +102,7 @@ public enum FxIcon
     IconColor(Color color)
     {
       m_color = color;
-      System.out.println(name() + " opacity=" +   color.getOpacity());
+      System.out.println(name() + " opacity=" + color.getOpacity());
     }
 
     public Color getColor()
@@ -197,8 +195,7 @@ public enum FxIcon
 
     public Canvas build()
     {
-      return build(new Canvas(mi_size.getSize(),
-                              mi_size.getSize()), 0.0f, 0.0f);
+      return build(new Canvas(mi_size.getSize(), mi_size.getSize()), 0.0f, 0.0f);
     }
 
     private Canvas build(Canvas canvas, double x, double y)
@@ -210,18 +207,17 @@ public enum FxIcon
       Icon icon;
       InnerShadow effect;
       double correction;
-     
+
       // Correction because we do not have access to real FontMetrics
       correction = 2.0;
 
       gc = canvas.getGraphicsContext2D();
 
       /*
-      gc.setFill(Color.YELLOW);
-      gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-      gc.setStroke(Color.PURPLE);
-      gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-      */
+       * gc.setFill(Color.YELLOW); gc.fillRect(0, 0, canvas.getWidth(),
+       * canvas.getHeight()); gc.setStroke(Color.PURPLE); gc.strokeRect(0, 0,
+       * canvas.getWidth(), canvas.getHeight());
+       */
 
       if (mi_icon.fill != null)
       {
@@ -247,13 +243,13 @@ public enum FxIcon
       x = (canvas.getWidth() - fontMetrics.computeStringWidth(text)) / 2.0;
       y = (canvas.getHeight() + fontMetrics.getAscent()) / 2 - correction;
 
-      //effect = new InnerShadow();
-      //effect.setOffsetX(mi_size.getSize() / 16);
-      //effect.setOffsetY(effect.getOffsetX());
-      //effect.setColor(icon.getColor().brighter().desaturate());
+      // effect = new InnerShadow();
+      // effect.setOffsetX(mi_size.getSize() / 16);
+      // effect.setOffsetY(effect.getOffsetX());
+      // effect.setColor(icon.getColor().brighter().desaturate());
 
       gc.setFont(font);
-      //gc.setEffect(effect);
+      // gc.setEffect(effect);
       gc.setStroke(icon.getColor());
       gc.setFill(icon.getColor());
       gc.setFontSmoothingType(FontSmoothingType.GRAY);

@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.NewPanelFxDialog.NewPanelIF;
 import org.jmeld.fx.ui.settings.SettingsPane;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
@@ -97,7 +98,15 @@ public class JMeldFxPane
     tabPane = new TabPane();
 
     newButton = new Button("New");
-    newButton.setOnAction((ae) -> new NewPanelFxDialog().show()/* showTab(TabId.NEW, "7_2 - 7.4") */);
+    newButton.setOnAction((ae) -> {
+      NewPanelIF newPanel;
+
+      newPanel = new NewPanelFxDialog().getNewPanel();
+      if (newPanel != null)
+      {
+        showTab(TabId.NEW, newPanel.getShortDescription(), () -> newPanel.getNode());
+      }
+    });
     newButton.setContentDisplay(ContentDisplay.TOP);
     newButton.setGraphic(new ImageView(FxIcon.NEW.getLargeImage()));
 
@@ -118,19 +127,19 @@ public class JMeldFxPane
     redoButton.setGraphic(new ImageView(FxIcon.REDO.getLargeImage()));
 
     settingsButton = new Button("Settings");
-    settingsButton.setOnAction((ae) -> showTab(TabId.SETTINGS));
+    settingsButton.setOnAction((ae) -> showTab(TabId.SETTINGS, () -> new SettingsPane()));
     settingsButton.setContentDisplay(ContentDisplay.TOP);
     settingsButton.setAlignment(Pos.CENTER);
     settingsButton.setGraphic(new ImageView(FxIcon.SETTINGS.getLargeImage()));
 
     helpButton = new Button("Help");
-    helpButton.setOnAction((ae) -> showTab(TabId.HELP));
+    helpButton.setOnAction((ae) -> showTab(TabId.HELP, () -> new Button("Help")));
     helpButton.setContentDisplay(ContentDisplay.TOP);
     helpButton.setAlignment(Pos.CENTER);
     helpButton.setGraphic(new ImageView(FxIcon.HELP.getLargeImage()));
 
     aboutButton = new Button("About");
-    aboutButton.setOnAction((ae) -> showTab(TabId.ABOUT));
+    aboutButton.setOnAction((ae) -> showTab(TabId.ABOUT, () -> new Button("About")));
     aboutButton.setContentDisplay(ContentDisplay.TOP);
     aboutButton.setAlignment(Pos.CENTER);
     aboutButton.setGraphic(new ImageView(FxIcon.ABOUT.getLargeImage()));
@@ -146,20 +155,18 @@ public class JMeldFxPane
 
   private enum TabId
   {
-    NEW("diff", FxIcon.FOLDER, () -> new FileDiffPanel()),
-    SETTINGS("Settings", FxIcon.SETTINGS, () -> new SettingsPane()),
-    HELP("Help", FxIcon.HELP, () -> new Button("Help")),
-    ABOUT("About", FxIcon.ABOUT, () -> new Button("About"));
+    NEW("diff", FxIcon.FOLDER),
+    SETTINGS("Settings", FxIcon.SETTINGS),
+    HELP("Help", FxIcon.HELP),
+    ABOUT("About", FxIcon.ABOUT);
 
     private final String mi_description;
     private final FxIcon mi_icon;
-    private final Supplier<Node> mi_createNode;
 
-    TabId(String description, FxIcon icon, Supplier<Node> createNode)
+    TabId(String description, FxIcon icon)
     {
       mi_description = description;
       mi_icon = icon;
-      mi_createNode = createNode;
     }
 
     public String getDescription()
@@ -171,24 +178,14 @@ public class JMeldFxPane
     {
       return mi_icon;
     }
-
-    public Node getNode()
-    {
-      return mi_createNode.get();
-    }
   }
 
-  private void showNewChooser()
+  private void showTab(TabId tabId, Supplier<Node> nodeSupplier)
   {
-
+    showTab(tabId, tabId.getDescription(), nodeSupplier);
   }
 
-  private void showTab(TabId tabId)
-  {
-    showTab(tabId, tabId.getDescription());
-  }
-
-  private void showTab(TabId tabId, String description)
+  private void showTab(TabId tabId, String description, Supplier<Node> nodeSupplier)
   {
     Tab tab;
     String tabKey;
@@ -198,13 +195,19 @@ public class JMeldFxPane
     tab = openTabs.get(tabKey);
     if (tab == null)
     {
-      tab = new Tab(description);
-      tab.setOnClosed((e) -> openTabs.remove(tabKey));
-      tabPane.getTabs().add(tab);
-      openTabs.put(tabKey, tab);
+      Node node;
 
-      tab.setGraphic(new ImageView(tabId.getIcon().getSmallImage()));
-      tab.setContent(tabId.getNode());
+      node = nodeSupplier.get();
+      if (node != null)
+      {
+        tab = new Tab(description);
+        tab.setOnClosed((e) -> openTabs.remove(tabKey));
+        tabPane.getTabs().add(tab);
+        openTabs.put(tabKey, tab);
+
+        tab.setGraphic(new ImageView(tabId.getIcon().getSmallImage()));
+        tab.setContent(node);
+      }
     }
 
     tabPane.getSelectionModel().select(tab);
