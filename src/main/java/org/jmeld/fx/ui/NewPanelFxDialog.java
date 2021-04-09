@@ -134,7 +134,7 @@ public class NewPanelFxDialog
 
     FileComparisonNode()
     {
-      super("fill", "[p][fill, grow][p]", "[p][p][fill, grow]");
+      super("fill", "[p, shrink 0][fill, grow][p, shrink 0]", "[p][p][fill, grow]");
       init();
     }
 
@@ -270,7 +270,7 @@ public class NewPanelFxDialog
 
     DirectoryComparisonNode()
     {
-      super("fill", "[p][fill, grow][p]", "[p][p][p][fill, grow]");
+      super("fill", "[p, shrink 0][fill, grow][p, shrink 0]", "[p][p][p][fill, grow]");
       init();
     }
 
