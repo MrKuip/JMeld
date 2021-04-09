@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Reader;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
@@ -94,17 +95,15 @@ public class CompareUtil
       }
 
       // In practice most files that have the same length will
-      //   be equal. So eventhough some ignore feature is activated
-      //   we will examine if the files are equal. If they are
-      //   equal we won't have to execute the expensive 
-      //   contentEquals method below. This should speed up directory
-      //   comparisons quite a bit.
+      // be equal. So eventhough some ignore feature is activated
+      // we will examine if the files are equal. If they are
+      // equal we won't have to execute the expensive
+      // contentEquals method below. This should speed up directory
+      // comparisons quite a bit.
       if (!ignore.getIgnore() || fileLeft.length() == fileRight.length())
       {
-        fLeft = new RandomAccessFile(fileLeft,
-                                     "r");
-        fRight = new RandomAccessFile(fileRight,
-                                      "r");
+        fLeft = new RandomAccessFile(fileLeft, "r");
+        fRight = new RandomAccessFile(fileRight, "r");
         fcLeft = fLeft.getChannel();
         fcRight = fRight.getChannel();
 
@@ -169,8 +168,8 @@ public class CompareUtil
   }
 
   /**
-   * Test if 2 readers are equals (with ignore possibilities). Synchronized because leftLine and rightLine are static
-   * variables for performance reasons.
+   * Test if 2 readers are equals (with ignore possibilities). Synchronized
+   * because leftLine and rightLine are static variables for performance reasons.
    */
   private static synchronized boolean contentEquals(Reader readerLeft, Reader readerRight, Ignore ignore)
       throws IOException
@@ -239,12 +238,11 @@ public class CompareUtil
     }
   }
 
-  private static boolean readLine(Reader reader, CharBuffer lineBuffer)
-      throws IOException
+  private static boolean readLine(Reader reader, CharBuffer lineBuffer) throws IOException
   {
     int c, nextChar;
 
-    lineBuffer.clear();
+    clear(lineBuffer);
     while ((c = reader.read()) != -1)
     {
       if (lineBuffer.length() == 0)
@@ -286,8 +284,8 @@ public class CompareUtil
   }
 
   /**
-   * Test if 2 readers are equals (with ignore possibilities). Synchronized because leftLine and rightLine are static
-   * variables for performance reasons.
+   * Test if 2 readers are equals (with ignore possibilities). Synchronized
+   * because leftLine and rightLine are static variables for performance reasons.
    */
   private static synchronized boolean contentEquals_old(Reader readerLeft, Reader readerRight, Ignore ignore)
       throws IOException
@@ -551,13 +549,11 @@ public class CompareUtil
   /**
    * Remove all characters from the 'line' that can be ignored.
    * 
-   * @param inputLine
-   *          char[] representing a line.
-   * @param ignore
-   *          an object with the ignore options.
-   * @param outputLine
-   *          return value which contains all characters from line that cannot be ignored. It is a parameter that can be
-   *          reused (which is important for performance)
+   * @param inputLine  char[] representing a line.
+   * @param ignore     an object with the ignore options.
+   * @param outputLine return value which contains all characters from line that
+   *                   cannot be ignored. It is a parameter that can be reused
+   *                   (which is important for performance)
    */
   public static void removeIgnoredChars(CharBuffer inputLine, Ignore ignore, CharBuffer outputLine)
   {
@@ -569,8 +565,8 @@ public class CompareUtil
     char c;
     boolean whiteSpaceInBetweenIgnored;
 
-    inputLine.flip();
-    outputLine.clear();
+    flip(inputLine);
+    clear(outputLine);
 
     length = inputLine.remaining();
     lineEndingEndIndex = length;
@@ -657,7 +653,7 @@ public class CompareUtil
 
       if (whiteSpaceInBetweenIgnored)
       {
-        //outputLine.put(' ');
+        // outputLine.put(' ');
         whiteSpaceInBetweenIgnored = false;
       }
       outputLine.put(c);
@@ -670,10 +666,36 @@ public class CompareUtil
 
     if (blankLine && ignore.getIgnoreBlankLines())
     {
-      outputLine.clear();
+      clear(outputLine);
     }
 
-    outputLine.flip();
+    flip(outputLine);
   }
 
+  /**
+   * Workaround for compatibility bug (?) in java. <br>
+   *
+   * The cast to Buffer workaround a bug that throws an NoSuchMethodError if this
+   * code is compiled with java11 and run on java8
+   * 
+   * @param buffer
+   */
+
+  public static void clear(Buffer buffer)
+  {
+    buffer.clear();
+  }
+
+  /**
+   * Workaround for compatibility bug (?) in java. <br>
+   *
+   * The cast to Buffer workaround a bug that throws an NoSuchMethodError if this
+   * code is compiled with java11 and run on java8
+   * 
+   * @param buffer
+   */
+  public static void flip(Buffer buffer)
+  {
+    buffer.flip();
+  }
 }

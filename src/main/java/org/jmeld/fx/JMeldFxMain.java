@@ -16,18 +16,12 @@
  */
 package org.jmeld.fx;
 
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.settings.SettingsPane;
-import org.jmeld.util.ResourceLoader;
-
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class JMeldFx3
+public class JMeldFxMain
 {
   static public void main(String[] args)
   {
-    JMeldFx.main(args);
+    Application.launch(JMeldFx.class, args);
   }
 }

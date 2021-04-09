@@ -64,17 +64,14 @@ public class JMDiff
 
     // EclipseDiff looks like Myersdiff but is slower.
     // It performs much better if the files are totally different
-    //algorithms.add(new EclipseDiff());
+    // algorithms.add(new EclipseDiff());
     algorithms.add(new Eclipse2Diff());
 
     // HuntDiff (from netbeans) is very, very slow
     // algorithms.add(new HuntDiff());
   }
 
-  public JMRevision diff(List<String> a,
-      List<String> b,
-      Ignore ignore)
-      throws JMeldException
+  public JMRevision diff(List<String> a, List<String> b, Ignore ignore) throws JMeldException
   {
     if (a == null)
     {
@@ -84,15 +81,10 @@ public class JMDiff
     {
       b = Collections.emptyList();
     }
-    return diff(a.toArray(),
-                b.toArray(),
-                ignore);
+    return diff(a.toArray(), b.toArray(), ignore);
   }
 
-  public JMRevision diff(Object[] a,
-      Object[] b,
-      Ignore ignore)
-      throws JMeldException
+  public JMRevision diff(Object[] a, Object[] b, Ignore ignore) throws JMeldException
   {
     JMRevision revision;
     StopWatch sp;
@@ -106,12 +98,14 @@ public class JMDiff
 
     if (org == null)
     {
-      org = new Object[]{};
+      org = new Object[]
+      {};
     }
 
     if (rev == null)
     {
-      rev = new Object[]{};
+      rev = new Object[]
+      {};
     }
 
     if (ignore != Ignore.NULL_IGNORE
@@ -129,10 +123,8 @@ public class JMDiff
 
     if (filtered)
     {
-      org = filter(ignore,
-                   org);
-      rev = filter(ignore,
-                   rev);
+      org = filter(ignore, org);
+      rev = filter(ignore, rev);
     }
 
     filteredTime = sp.getElapsedTime();
@@ -141,19 +133,13 @@ public class JMDiff
     {
       try
       {
-        revision = algorithm.diff(org,
-                                  rev);
+        revision = algorithm.diff(org, rev);
         revision.setIgnore(ignore);
-        revision.update(a,
-                        b);
-        //revision.filter();
+        revision.update(a, b);
+        // revision.filter();
         if (filtered)
         {
-          adjustRevision(revision,
-                         a,
-                         (JMString[]) org,
-                         b,
-                         (JMString[]) rev);
+          adjustRevision(revision, a, (JMString[]) org, b, (JMString[]) rev);
         }
 
         if (a.length > 1000)
@@ -180,10 +166,7 @@ public class JMDiff
     return null;
   }
 
-  private void adjustRevision(JMRevision revision,
-      Object[] orgArray,
-      JMString[] orgArrayFiltered,
-      Object[] revArray,
+  private void adjustRevision(JMRevision revision, Object[] orgArray, JMString[] orgArrayFiltered, Object[] revArray,
       JMString[] revArrayFiltered)
   {
     JMChunk chunk;
@@ -254,8 +237,7 @@ public class JMDiff
     }
   }
 
-  private JMString[] filter(Ignore ignore,
-      Object[] array)
+  private JMString[] filter(Ignore ignore, Object[] array)
   {
     List<JMString> result;
     JMString jms;
@@ -270,11 +252,12 @@ public class JMDiff
       {
         lineNumber++;
 
-        inputLine.clear();
+        // Workaround for compatibility bug (?) in java.
+        // If compiled with java11 and run on java8 this will throw a NoSuchMethodError
+        // if the cast is not there
+        CompareUtil.clear(inputLine);
         inputLine.put(o.toString());
-        CompareUtil.removeIgnoredChars(inputLine,
-                                       ignore,
-                                       outputLine);
+        CompareUtil.removeIgnoredChars(inputLine, ignore, outputLine);
         if (outputLine.remaining() == 0)
         {
           continue;

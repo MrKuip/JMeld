@@ -2,8 +2,8 @@
 plugins {
   id 'java-library'
   id 'eclipse'
-  //id 'org.openjfx.javafxplugin' version '0.0.8'
-  //id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.9'
+  id 'application'
 }
 
 defaultTasks 'jar'
@@ -12,10 +12,10 @@ repositories {
   mavenCentral()
 }
 
-//javafx {
-  //version = "13"
-  //modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
-//}
+javafx {
+  version = "11"
+  modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
+}
 
 dependencies {
   implementation 'org.swinglabs:swing-layout:1.0.3'
@@ -32,18 +32,36 @@ dependencies {
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
   implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1'
   implementation 'com.miglayout:miglayout-javafx:5.2'
-  //implementation 'org.controlsfx:controlsfx:11.1.0'
   implementation 'org.controlsfx:controlsfx:8.40.18'
-  implementation "org.openjfx:javafx-base:13:linux"
-  implementation "org.openjfx:javafx-graphics:13:linux"
-  implementation "org.openjfx:javafx-controls:13:linux"
-  implementation "org.openjfx:javafx-swing:13:linux"
-  implementation group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.6'
+  implementation 'org.fxmisc.richtext:richtextfx:0.10.6'
+
+  //implementation 'org.openjfx:javafx:13'
+
+  //implementation "org.openjfx:javafx-base:13"
+  //implementation "org.openjfx:javafx-graphics:13"
+  //implementation "org.openjfx:javafx-controls:13"
+
+  //implementation "org.openjfx:javafx-base:13:linux"
+  //implementation "org.openjfx:javafx-graphics:13:linux"
+  //implementation "org.openjfx:javafx-controls:13:linux"
+  //implementation "org.openjfx:javafx-swing:13:linux"
 
   //implementation "org.openjfx:javafx-graphics:$javafx.version:win"
   //implementation "org.openjfx:javafx-graphics:$javafx.version:mac"
   //implementation "org.openjfx:javafx-swing:$javafx.version:win"
   //implementation "org.openjfx:javafx-swing:$javafx.version:mac"
+
+  runtimeOnly "org.openjfx:javafx-base:$javafx.version:win"
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+  runtimeOnly "org.openjfx:javafx-controls:$javafx.version:win"
+
+  runtimeOnly "org.openjfx:javafx-base:$javafx.version:linux"
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+  runtimeOnly "org.openjfx:javafx-controls:$javafx.version:linux"
+
+  runtimeOnly "org.openjfx:javafx-base:$javafx.version:mac"
+  runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+  runtimeOnly "org.openjfx:javafx-controls:$javafx.version:mac"
 }
 
 java {
@@ -51,15 +69,13 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-//application {
-  //mainClass = 'org.jmeld.ui.settings.FilterSettingsMain'
-  //applicationDefaultJvmArgs = ['-Xmx1000000000']
-//}
+//mainClassName = 'org.jmeld.JMeld'
+//mainClassName = 'org.jmeld.fx.JMeldFxMain'
 
-//mainClassName = 'org.jmeld.fx.CanvasExample'
 jar {
     manifest {
         attributes 'Main-Class': 'org.jmeld.JMeld'
+        //attributes 'Main-Class': 'org.jmeld.fx.JMeldFxMain'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
