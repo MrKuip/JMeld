@@ -3,7 +3,7 @@
 }
 
 .header1 {
-  -fx-font-size:20;
+  -fx-font-size: 20;
 }
 
 .readonly {
@@ -11,12 +11,12 @@
 }
 
 .diffLabel {
-  -fx-font-size:14;
+  -fx-font-size: 14;
 }
 
 .diffLabel-bold {
   -fx-font-weight: bold;
-  -fx-font-size:14;
+  -fx-font-size: 14;
 }
 
 .text {

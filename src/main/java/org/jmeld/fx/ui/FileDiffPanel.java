@@ -1,12 +1,11 @@
 package org.jmeld.fx.ui;
 
-import java.io.File;
+import java.util.stream.Stream;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.util.node.JMDiffNode;
-import org.jmeld.util.node.JMDiffNodeFactory;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
@@ -19,12 +18,6 @@ public class FileDiffPanel
   private JMDiffNode m_diffNode;
   private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty();
   private SimpleStringProperty m_fileNameRight = new SimpleStringProperty();
-  /*
-   * private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty(
-   * "/lala/local/kees/projecten/Standard/branches/7_3/bin/backupDb"); private
-   * SimpleStringProperty m_fileNameRight = new SimpleStringProperty(
-   * "\\usr/local/marijke/projecten/Standard/branches/7_4/bin/backupDb");
-   */
 
   public FileDiffPanel(JMDiffNode diffNode)
   {
@@ -33,20 +26,6 @@ public class FileDiffPanel
     setDiffNode(diffNode);
 
     init();
-  }
-
-  private void test()
-  {
-    File leftFile;
-    File rightFile;
-
-    leftFile = new File("/lala/local/marijke/projecten/Standard/branches/7_3/bin/backupDb");
-    rightFile = new File("/usr/local/kees/projecten/Standard/branches/7_4/bin/backupDb");
-
-    setDiffNode(JMDiffNodeFactory.create(leftFile.getName(), leftFile, rightFile.getName(), rightFile));
-
-    m_fileNameLeft.set(leftFile.getAbsolutePath());
-    m_fileNameRight.set(rightFile.getAbsolutePath());
   }
 
   public void setDiffNode(JMDiffNode diffNode)
@@ -67,13 +46,11 @@ public class FileDiffPanel
     DiffLabel fileNameRightLabel;
     CodeArea fileContentRightCodeArea;
     VirtualizedScrollPane<CodeArea> fileContentRightScrollPane;
+    String leftText;
+    String rightText;
 
-    // String leftText =
-    // "/usr/local/marijke/projecten/Standard/branches/7_3/bin/backupDb";
-    // String rightText =
-    // "\\usr/local/kees/projecten/Standard/branches/7_4:bin/backupbD";
-    String leftText = m_diffNode.getBufferNodeLeft().getName();
-    String rightText = m_diffNode.getBufferNodeRight().getName();
+    leftText = m_diffNode.getBufferNodeLeft().getName();
+    rightText = m_diffNode.getBufferNodeRight().getName();
 
     saveLeftButton = new Button();
     saveLeftButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
@@ -84,7 +61,11 @@ public class FileDiffPanel
     // fileContentLeftCodeArea = new
     // CodeArea(Arrays.stream(m_diffNode.getBufferNodeLeft().getDocument().getLines()).map(
     // line -> line.toString()).collect(Collectors.joining()));
-    fileContentLeftCodeArea = new CodeArea("lala");
+    fileContentLeftCodeArea = new CodeArea();
+
+    Stream.of(m_diffNode.getBufferNodeLeft().getDocument().getLines())
+        .forEach(line -> fileContentLeftCodeArea.appendText(line.toString()));
+
     fileContentLeftScrollPane = new VirtualizedScrollPane(fileContentLeftCodeArea);
 
     saveRightButton = new Button();
@@ -94,10 +75,11 @@ public class FileDiffPanel
     // fileNameRightLabel.textProperty().bind(m_fileNameRight);
     fileNameRightLabel.setText(rightText, leftText);
 
-    fileContentRightCodeArea = new CodeArea("haha");
-    // fileContentRightCodeArea = new
-    // CodeArea(Arrays.stream(m_diffNode.getBufferNodeRight().getDocument().getLines())
-    // .map(line -> line.toString()).collect(Collectors.joining()));
+    fileContentRightCodeArea = new CodeArea();
+
+    Stream.of(m_diffNode.getBufferNodeRight().getDocument().getLines())
+        .forEach(line -> fileContentRightCodeArea.appendText(line.toString()));
+
     fileContentRightScrollPane = new VirtualizedScrollPane(fileContentRightCodeArea);
 
     add(saveLeftButton, new CC());

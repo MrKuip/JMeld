@@ -1,13 +1,13 @@
 package org.jmeld.util;
 
-import com.ibm.icu.text.CharsetMatch;
 import java.io.BufferedInputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.jmeld.settings.EditorSettings;
-import org.jmeld.settings.JMeldSettings;
+import org.jmeld.fx.settings.EditorSettingsFx;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import com.ibm.icu.text.CharsetMatch;
 
 public class CharsetDetector
 {
@@ -31,9 +31,9 @@ public class CharsetDetector
   public Charset getCharset(BufferedInputStream bis)
   {
     Charset charset;
-    EditorSettings settings;
+    EditorSettingsFx settings;
 
-    settings = JMeldSettings.getInstance().getEditor();
+    settings = JMeldSettingsFx.getInstance().getEditor();
 
     charset = null;
     if (settings.getDefaultFileEncodingEnabled())
