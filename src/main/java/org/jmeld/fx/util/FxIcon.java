@@ -102,7 +102,6 @@ public enum FxIcon
     IconColor(Color color)
     {
       m_color = color;
-      System.out.println(name() + " opacity=" + color.getOpacity());
     }
 
     public Color getColor()

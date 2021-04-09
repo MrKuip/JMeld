@@ -1,11 +1,11 @@
 package org.jmeld.util;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.AbstractConfigurationElement;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class Ignore
-    extends AbstractConfigurationElement
+  extends AbstractConfigurationElement
 {
   // Class variables:
   static public final Ignore NULL_IGNORE = new Ignore();
@@ -20,39 +20,23 @@ public class Ignore
 
   public Ignore(Ignore ignore)
   {
-    this(ignore.ignoreWhitespaceAtBegin.get(),
-         ignore.ignoreWhitespaceInBetween.get(),
-         ignore.ignoreWhitespaceAtEnd.get(),
-         ignore.ignoreEOL.get(),
-         ignore.ignoreBlankLines.get(),
-         ignore.ignoreCase.get());
+    this(ignore.ignoreWhitespaceAtBegin.get(), ignore.ignoreWhitespaceInBetween.get(),
+        ignore.ignoreWhitespaceAtEnd.get(), ignore.ignoreEOL.get(), ignore.ignoreBlankLines.get(),
+        ignore.ignoreCase.get());
   }
 
   public Ignore()
   {
-    this(false,
-         false,
-         false);
+    this(false, false, false);
   }
 
-  public Ignore(boolean ignoreWhitespace,
-      boolean ignoreEOL,
-      boolean ignoreBlankLines)
+  public Ignore(boolean ignoreWhitespace, boolean ignoreEOL, boolean ignoreBlankLines)
   {
-    this(ignoreWhitespace,
-         ignoreWhitespace,
-         ignoreWhitespace,
-         ignoreEOL,
-         ignoreBlankLines,
-         false);
+    this(ignoreWhitespace, ignoreWhitespace, ignoreWhitespace, ignoreEOL, ignoreBlankLines, false);
   }
 
-  public Ignore(boolean ignoreWhitespaceAtBegin,
-      boolean ignoreWhitespaceInBetween,
-      boolean ignoreWhitespaceAtEnd,
-      boolean ignoreEOL,
-      boolean ignoreBlankLines,
-      boolean ignoreCase)
+  public Ignore(boolean ignoreWhitespaceAtBegin, boolean ignoreWhitespaceInBetween, boolean ignoreWhitespaceAtEnd,
+      boolean ignoreEOL, boolean ignoreBlankLines, boolean ignoreCase)
   {
     this.ignoreWhitespaceAtBegin.set(ignoreWhitespaceAtBegin);
     this.ignoreWhitespaceInBetween.set(ignoreWhitespaceInBetween);
@@ -61,11 +45,8 @@ public class Ignore
     this.ignoreBlankLines.set(ignoreBlankLines);
     this.ignoreCase.set(ignoreCase);
 
-    System.out.println("new ignoreWhitespaceAtBegin = " + System.identityHashCode(this.ignoreWhitespaceAtBegin));
-    this.ignoreWhitespaceAtBegin.addListener((observable, oldValue, newValue) -> System.out
-        .println("Changed " + oldValue + " -> " + newValue));
-    this.ignoreBlankLines.addListener((observable, oldValue, newValue) -> System.out
-        .println("Changed " + oldValue + " -> " + newValue));
+    this.ignoreWhitespaceAtBegin.addListener((observable, oldValue, newValue) -> fireChanged());
+    this.ignoreBlankLines.addListener((observable, oldValue, newValue) -> fireChanged());
     this.ignoreWhitespaceInBetween.addListener((observable, oldValue, newValue) -> fireChanged());
     this.ignoreWhitespaceAtEnd.addListener((observable, oldValue, newValue) -> fireChanged());
     this.ignoreEOL.addListener((observable, oldValue, newValue) -> fireChanged());
@@ -92,7 +73,6 @@ public class Ignore
 
   public void setIgnoreWhitespaceAtBegin(boolean ignoreWhitespaceAtBegin)
   {
-    System.out.println("setIgnoreWhitespaceAtBegin = " + System.identityHashCode(this.ignoreWhitespaceAtBegin));
     this.ignoreWhitespaceAtBegin.set(ignoreWhitespaceAtBegin);
   }
 
