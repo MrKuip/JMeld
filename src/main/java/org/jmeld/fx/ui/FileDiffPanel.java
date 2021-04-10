@@ -75,8 +75,6 @@ public class FileDiffPanel
     fileContentLeftCodeArea.setWrapText(true);
     fileContentLeftCodeArea.replace(m_diffNode.getBufferNodeLeft().getDocument().getRichDocument());
     fileContentLeftScrollPane = new VirtualizedScrollPane<>(fileContentLeftCodeArea);
-    // fileContentLeftCodeArea.setParagraphGraphicFactory(new
-    // LineNumberFactory(fileContentLeftCodeArea));
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
@@ -91,18 +89,9 @@ public class FileDiffPanel
     fileContentRightCodeArea.setWrapText(true);
     fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
     fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
-    // fileContentLeftCodeArea.setParagraphGraphicFactory(new
-    // LineNumberFactory(fileContentLeftCodeArea));
     fileContentRightCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentRightCodeArea)).otherwise((LineNumberFactory) null));
-    /*
-     * fileContentRightCodeArea.paragraphGraphicFactoryProperty()
-     * .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().
-     * showLineNumbersProperty)
-     * .then(LineNumberFactory.get(fileContentRightCodeArea)).otherwise((IntFunction
-     * <Node>) null));
-     */
 
     add(saveLeftButton, new CC());
     add(fileNameLeftLabel, new CC().spanX(2).grow());
