@@ -17,7 +17,12 @@
 package org.jmeld.ui.text;
 
 import java.io.Reader;
+import java.util.Collection;
+
 import javax.swing.text.PlainDocument;
+
+import org.fxmisc.richtext.model.EditableStyledDocument;
+import org.fxmisc.richtext.model.StyledDocument;
 import org.jmeld.JMeldException;
 import org.jmeld.vc.BlameIF;
 
@@ -38,6 +43,8 @@ public interface BufferDocumentIF
   public boolean isChanged();
 
   public PlainDocument getDocument();
+  
+  public StyledDocument<Collection<String>, String, Collection<String>> getRichDocument();
 
   public BlameIF getVersionControlBlame();
 

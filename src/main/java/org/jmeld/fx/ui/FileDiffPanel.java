@@ -1,15 +1,28 @@
 package org.jmeld.fx.ui;
 
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.IntFunction;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.util.node.JMDiffNode;
 import org.tbee.javafx.scene.layout.MigPane;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import net.miginfocom.layout.CC;
 
 public class FileDiffPanel
@@ -58,29 +71,38 @@ public class FileDiffPanel
     fileNameLeftLabel = new DiffLabel();
     fileNameLeftLabel.setText(leftText, rightText);
 
-    // fileContentLeftCodeArea = new
-    // CodeArea(Arrays.stream(m_diffNode.getBufferNodeLeft().getDocument().getLines()).map(
-    // line -> line.toString()).collect(Collectors.joining()));
     fileContentLeftCodeArea = new CodeArea();
-
-    Stream.of(m_diffNode.getBufferNodeLeft().getDocument().getLines())
-        .forEach(line -> fileContentLeftCodeArea.appendText(line.toString()));
-
-    fileContentLeftScrollPane = new VirtualizedScrollPane(fileContentLeftCodeArea);
+    fileContentLeftCodeArea.setWrapText(true);
+    fileContentLeftCodeArea.replace(m_diffNode.getBufferNodeLeft().getDocument().getRichDocument());
+    fileContentLeftScrollPane = new VirtualizedScrollPane<>(fileContentLeftCodeArea);
+    // fileContentLeftCodeArea.setParagraphGraphicFactory(new
+    // LineNumberFactory(fileContentLeftCodeArea));
+    fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
+        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+            .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
 
     fileNameRightLabel = new DiffLabel();
-    // fileNameRightLabel.textProperty().bind(m_fileNameRight);
     fileNameRightLabel.setText(rightText, leftText);
 
     fileContentRightCodeArea = new CodeArea();
-
-    Stream.of(m_diffNode.getBufferNodeRight().getDocument().getLines())
-        .forEach(line -> fileContentRightCodeArea.appendText(line.toString()));
-
-    fileContentRightScrollPane = new VirtualizedScrollPane(fileContentRightCodeArea);
+    fileContentRightCodeArea.setWrapText(true);
+    fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
+    fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
+    // fileContentLeftCodeArea.setParagraphGraphicFactory(new
+    // LineNumberFactory(fileContentLeftCodeArea));
+    fileContentRightCodeArea.paragraphGraphicFactoryProperty()
+        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+            .then(new LineNumberFactory(fileContentRightCodeArea)).otherwise((LineNumberFactory) null));
+    /*
+     * fileContentRightCodeArea.paragraphGraphicFactoryProperty()
+     * .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().
+     * showLineNumbersProperty)
+     * .then(LineNumberFactory.get(fileContentRightCodeArea)).otherwise((IntFunction
+     * <Node>) null));
+     */
 
     add(saveLeftButton, new CC());
     add(fileNameLeftLabel, new CC().spanX(2).grow());
@@ -112,5 +134,41 @@ public class FileDiffPanel
     add(new Button("k"), new CC());
     add(new Button("l"), new CC().skip());
     add(new Button("m"), new CC());
+  }
+
+  private class LineNumberFactory
+      implements IntFunction<Node>
+  {
+    private CodeArea codeArea;
+    private Map<Integer, Double> m_minSizeByLength = new HashMap<>();
+
+    public LineNumberFactory(CodeArea codeArea)
+    {
+      this.codeArea = codeArea;
+    }
+
+    @Override
+    public Node apply(int value)
+    {
+      Label label;
+
+      label = new Label(String.valueOf(value));
+      label.setAlignment(Pos.CENTER_RIGHT);
+      label.setPadding(new Insets(0, 5, 0, 0));
+      label.setPrefWidth(getMinSize(label, codeArea.getParagraphs().size()));
+      label
+          .setBackground(new Background(new BackgroundFill(Color.rgb(240, 240, 240), CornerRadii.EMPTY, Insets.EMPTY)));
+      label.getStyleClass().add("lineno");
+
+      return label;
+    }
+
+    private double getMinSize(Label label, int size)
+    {
+      return m_minSizeByLength.computeIfAbsent(size, (s) -> {
+        return (double) FxFontUtil.getFontMetrics(label.getFont()).computeStringWidth("" + size)
+            + label.getPadding().getRight();
+      });
+    }
   }
 }
