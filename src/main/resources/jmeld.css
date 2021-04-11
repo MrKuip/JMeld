@@ -20,7 +20,7 @@
 }
 
 .text {
-    -fx-font-family: "FreeSans"; 
+  -fx-font-family: "FreeSans"; 
 }
 
 .text-area > .scroll-pane {
@@ -31,5 +31,19 @@
   -fx-font-size: 12;
   -fx-text-fill: black;
   -fx-background-color: f0f0f0;
+}
+
+#diffPanel .delta-add {
+  -fx-background-color: yellow;
+}
+
+#diffPanel .delta-delete {
+  -fx-background-color: purple;
+  -fx-text-fill: white;
+}
+
+#diffPanel .delta-change {
+  -fx-background-color: blue;
+  -fx-text-fill: white;
 }
 

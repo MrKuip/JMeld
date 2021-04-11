@@ -23,11 +23,23 @@ import org.jmeld.util.WordTokenizer;
 public class JMDelta
 {
   // Class variables:
-  enum Type
+  public enum Type
   {
-    ADD,
-    DELETE,
-    CHANGE;
+    ADD("delta-add"),
+    DELETE("delta-delete"),
+    CHANGE("delta-change");
+
+    private final String style;
+
+    Type(String style)
+    {
+      this.style = style;
+    }
+
+    public String getStyle()
+    {
+      return style;
+    }
   }
 
   private static boolean debug = false;
@@ -40,8 +52,7 @@ public class JMDelta
   private boolean changeRevisionEvaluated;
   private JMRevision changeRevision;
 
-  public JMDelta(JMChunk original,
-      JMChunk revised)
+  public JMDelta(JMChunk original, JMChunk revised)
   {
     this.original = original;
     this.revised = revised;
@@ -62,6 +73,11 @@ public class JMDelta
   public JMChunk getRevised()
   {
     return revised;
+  }
+
+  public Type getType()
+  {
+    return type;
   }
 
   public boolean isAdd()
@@ -143,9 +159,7 @@ public class JMDelta
       o2 = wt.getTokens(revision.getOriginalString(original));
       r2 = wt.getTokens(revision.getRevisedString(revised));
 
-      rev = new JMDiff().diff(o2,
-                              r2,
-                              revision.getIgnore());
+      rev = new JMDiff().diff(o2, r2, revision.getIgnore());
 
       oIndex = new int[o2.size()];
       for (int i = 0; i < o2.size(); i++)
@@ -169,8 +183,7 @@ public class JMDelta
         debug("rIndex[" + i + "] = " + rIndex[i] + " \"" + r2.get(i) + "\"");
       }
 
-      rev2 = new JMRevision(original2,
-                            revised2);
+      rev2 = new JMRevision(original2, revised2);
       rev2.setIgnore(revision.getIgnore());
       for (JMDelta d : rev.getDeltas())
       {
@@ -187,10 +200,7 @@ public class JMDelta
         rAnchor = anchor == 0 ? 0 : rIndex[anchor - 1];
         rLength = size > 0 ? (rIndex[anchor + size - 1] - rAnchor) : 0;
 
-        d2 = new JMDelta(new JMChunk(oAnchor,
-                                     oLength),
-                         new JMChunk(rAnchor,
-                                     rLength));
+        d2 = new JMDelta(new JMChunk(oAnchor, oLength), new JMChunk(rAnchor, rLength));
         rev2.add(d2);
 
         debug("delta = " + d + " -> " + d2);

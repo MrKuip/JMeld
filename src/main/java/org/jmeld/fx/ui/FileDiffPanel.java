@@ -1,10 +1,18 @@
 package org.jmeld.fx.ui;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.stream.IntStream;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.model.SimpleEditableStyledDocument;
+import org.jmeld.diff.JMChunk;
+import org.jmeld.diff.JMDelta;
+import org.jmeld.diff.JMRevision;
 import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
@@ -23,6 +31,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import net.miginfocom.layout.CC;
 
 public class FileDiffPanel
@@ -72,12 +81,14 @@ public class FileDiffPanel
     fileNameLeftLabel.setText(leftText, rightText);
 
     fileContentLeftCodeArea = new CodeArea();
+    fileContentLeftCodeArea.setId("diffPanel");
     fileContentLeftCodeArea.setWrapText(true);
     fileContentLeftCodeArea.replace(m_diffNode.getBufferNodeLeft().getDocument().getRichDocument());
     fileContentLeftScrollPane = new VirtualizedScrollPane<>(fileContentLeftCodeArea);
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
+    fileContentLeftCodeArea.setStyle(new FontStyle(JMeldSettingsFx.getInstance().getEditor().getFont()).toCss());
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
@@ -86,6 +97,7 @@ public class FileDiffPanel
     fileNameRightLabel.setText(rightText, leftText);
 
     fileContentRightCodeArea = new CodeArea();
+    fileContentRightCodeArea.setId("diffPanel");
     fileContentRightCodeArea.setWrapText(true);
     fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
     fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
@@ -106,6 +118,31 @@ public class FileDiffPanel
     add(new Button("k"), new CC());
     add(new Button("l"), new CC().skip());
     add(new Button("m"), new CC());
+
+    paintRevisionHighlights(fileContentLeftCodeArea, (JMDelta delta) -> delta.getOriginal());
+    paintRevisionHighlights(fileContentRightCodeArea, (JMDelta delta) -> delta.getRevised());
+  }
+
+  private void paintRevisionHighlights(CodeArea area, Function<JMDelta, JMChunk> chunkFunction)
+  {
+    JMRevision revision;
+
+    revision = m_diffNode.getRevision();
+    for (JMDelta delta : revision.getDeltas())
+    {
+      JMChunk chunk;
+      List<String> style;
+
+      chunk = chunkFunction.apply(delta);
+      style = Arrays.asList(delta.getType().getStyle());
+
+      IntStream.range(chunk.getAnchor(), chunk.getAnchor() + chunk.getSize()).forEach(index -> {
+        SimpleEditableStyledDocument doc;
+
+        doc = (SimpleEditableStyledDocument) area.getDocument();
+        doc.setParagraphStyle(index, style);
+      });
+    }
   }
 
   private void init2()
@@ -123,6 +160,22 @@ public class FileDiffPanel
     add(new Button("k"), new CC());
     add(new Button("l"), new CC().skip());
     add(new Button("m"), new CC());
+  }
+
+  class FontStyle
+  {
+    private Font font;
+
+    FontStyle(Font font)
+    {
+      this.font = font;
+    }
+
+    public String toCss()
+    {
+      return "-fx-font-style: " + font.getStyle() + "; -fx-font-size: " + font.getSize() + "; -font-family: "
+          + font.getFamily() + ";";
+    }
   }
 
   private class LineNumberFactory
@@ -148,6 +201,12 @@ public class FileDiffPanel
       label
           .setBackground(new Background(new BackgroundFill(Color.rgb(240, 240, 240), CornerRadii.EMPTY, Insets.EMPTY)));
       label.getStyleClass().add("lineno");
+      codeArea.getParagraph(value).getParagraphStyle().forEach(style -> {
+        if (style.startsWith("delta"))
+        {
+          label.getStyleClass().add(style);
+        }
+      });
 
       return label;
     }
