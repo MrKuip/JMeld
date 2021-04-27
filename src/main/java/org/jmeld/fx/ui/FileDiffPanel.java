@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
+import org.fxmisc.flowless.Virtualized;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.SimpleEditableStyledDocument;
@@ -26,6 +27,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -82,9 +84,10 @@ public class FileDiffPanel
 
     fileContentLeftCodeArea = new CodeArea();
     fileContentLeftCodeArea.setId("diffPanel");
-    fileContentLeftCodeArea.setWrapText(true);
+    fileContentLeftCodeArea.setStyle("-delta-change-color-fg: red");
+    // fileContentLeftCodeArea.setWrapText(true);
     fileContentLeftCodeArea.replace(m_diffNode.getBufferNodeLeft().getDocument().getRichDocument());
-    fileContentLeftScrollPane = new VirtualizedScrollPane<>(fileContentLeftCodeArea);
+    fileContentLeftScrollPane = new MyScrollPane<>(fileContentLeftCodeArea);
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
@@ -98,7 +101,7 @@ public class FileDiffPanel
 
     fileContentRightCodeArea = new CodeArea();
     fileContentRightCodeArea.setId("diffPanel");
-    fileContentRightCodeArea.setWrapText(true);
+    // fileContentRightCodeArea.setWrapText(true);
     fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
     fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
     fileContentRightCodeArea.paragraphGraphicFactoryProperty()
@@ -121,6 +124,52 @@ public class FileDiffPanel
 
     paintRevisionHighlights(fileContentLeftCodeArea, (JMDelta delta) -> delta.getOriginal());
     paintRevisionHighlights(fileContentRightCodeArea, (JMDelta delta) -> delta.getRevised());
+  }
+
+  /**
+   * Hack to place the scrollbar on the left side
+   * 
+   * @author 'Kees Kuip'
+   *
+   * @param <V>
+   */
+  private class MyScrollPane<V extends Node & Virtualized>
+    extends VirtualizedScrollPane<V>
+  {
+    public MyScrollPane(V content)
+    {
+      super(content);
+    }
+
+    @Override
+    protected void layoutChildren()
+    {
+      ScrollBar vbar;
+
+      super.layoutChildren();
+
+      vbar = getVerticalBar();
+      if (vbar.isVisible())
+      {
+        ScrollBar hbar;
+
+        hbar = getHorizontalBar();
+
+        vbar.relocate(0, 0);
+        getContent().relocate(vbar.getWidth(), 0);
+        hbar.relocate(vbar.getWidth(), hbar.getLayoutY());
+      }
+    }
+
+    private ScrollBar getVerticalBar()
+    {
+      return (ScrollBar) getChildren().get(2);
+    }
+
+    private ScrollBar getHorizontalBar()
+    {
+      return (ScrollBar) getChildren().get(1);
+    }
   }
 
   private void paintRevisionHighlights(CodeArea area, Function<JMDelta, JMChunk> chunkFunction)

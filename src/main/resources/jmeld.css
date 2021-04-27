@@ -1,3 +1,12 @@
+#diffPanel {
+  -delta-add-color-bg: yellow;
+  -delta-add-color-fg: black;
+  -delta-delete-color-bg: purple;
+  -delta-delete-color-fg: white;
+  -delta-change-color-bg: blue;
+  -delta-change-color-fg: white;
+}
+
 .header2 {
   -fx-font-weight: bold;
 }
@@ -33,17 +42,26 @@
   -fx-background-color: f0f0f0;
 }
 
-#diffPanel .delta-add {
-  -fx-background-color: yellow;
+.delta-add {
+  -fx-background-color: -delta-add-color-bg;
 }
 
-#diffPanel .delta-delete {
-  -fx-background-color: purple;
-  -fx-text-fill: white;
+.delta-add .text {
+  -fx-fill: -delta-add-color-fg;
 }
 
-#diffPanel .delta-change {
-  -fx-background-color: blue;
-  -fx-text-fill: white;
+.delta-delete {
+  -fx-background-color: -delta-delete-color-bg;
 }
 
+.delta-delete .text {
+  -fx-fill: -delta-delete-color-fg;
+}
+
+.delta-change {
+  -fx-background-color: -delta-change-color-bg;
+}
+
+.delta-change .text {
+  -fx-fill: -delta-change-color-fg;
+}
