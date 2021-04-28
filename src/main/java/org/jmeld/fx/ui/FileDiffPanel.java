@@ -1,16 +1,23 @@
 package org.jmeld.fx.ui;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 import org.fxmisc.flowless.Virtualized;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.GenericStyledArea;
+import org.fxmisc.richtext.model.Paragraph;
 import org.fxmisc.richtext.model.SimpleEditableStyledDocument;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
 import org.jmeld.diff.JMRevision;
@@ -19,9 +26,12 @@ import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.util.node.JMDiffNode;
+import org.reactfx.collection.ListModification;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,7 +43,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import net.miginfocom.layout.CC;
 
 public class FileDiffPanel
@@ -84,14 +93,18 @@ public class FileDiffPanel
 
     fileContentLeftCodeArea = new CodeArea();
     fileContentLeftCodeArea.setId("diffPanel");
-    fileContentLeftCodeArea.setStyle("-delta-change-color-fg: red");
+
     // fileContentLeftCodeArea.setWrapText(true);
     fileContentLeftCodeArea.replace(m_diffNode.getBufferNodeLeft().getDocument().getRichDocument());
     fileContentLeftScrollPane = new MyScrollPane<>(fileContentLeftCodeArea);
+    // fileContentLeftScrollPane.onScrollProperty().addListener(new
+    // MyScrollListener());
+    fileContentLeftScrollPane.estimatedScrollXProperty().addListener(new MyScrollListener());
+    fileContentLeftScrollPane.estimatedScrollYProperty().addListener(new MyScrollListener());
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
-    fileContentLeftCodeArea.setStyle(new FontStyle(JMeldSettingsFx.getInstance().getEditor().getFont()).toCss());
+    fileContentLeftCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
@@ -107,6 +120,16 @@ public class FileDiffPanel
     fileContentRightCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentRightCodeArea)).otherwise((LineNumberFactory) null));
+    fileContentRightCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
+
+    fileContentLeftScrollPane.estimatedScrollXProperty()
+        .addListener((a, b, c) -> fileContentRightScrollPane.scrollXToPixel(c));
+    fileContentRightScrollPane.estimatedScrollXProperty()
+        .addListener((a, b, c) -> fileContentLeftScrollPane.scrollXToPixel(c));
+    fileContentLeftScrollPane.estimatedScrollYProperty()
+        .addListener((a, b, c) -> fileContentRightScrollPane.scrollYToPixel(c));
+    fileContentRightScrollPane.estimatedScrollYProperty()
+        .addListener((a, b, c) -> fileContentLeftScrollPane.scrollYToPixel(c));
 
     add(saveLeftButton, new CC());
     add(fileNameLeftLabel, new CC().spanX(2).grow());
@@ -124,6 +147,16 @@ public class FileDiffPanel
 
     paintRevisionHighlights(fileContentLeftCodeArea, (JMDelta delta) -> delta.getOriginal());
     paintRevisionHighlights(fileContentRightCodeArea, (JMDelta delta) -> delta.getRevised());
+  }
+
+  class MyScrollListener
+      implements ChangeListener
+  {
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue)
+    {
+      // System.out.println(oldValue + " -> " + newValue);
+    }
   }
 
   /**
@@ -172,7 +205,7 @@ public class FileDiffPanel
     }
   }
 
-  private void paintRevisionHighlights(CodeArea area, Function<JMDelta, JMChunk> chunkFunction)
+  private void paintRevisionHighlights(CodeArea codeArea, Function<JMDelta, JMChunk> chunkFunction)
   {
     JMRevision revision;
 
@@ -185,12 +218,81 @@ public class FileDiffPanel
       chunk = chunkFunction.apply(delta);
       style = Arrays.asList(delta.getType().getStyle());
 
+      SimpleEditableStyledDocument lala = (SimpleEditableStyledDocument) codeArea.getDocument();
+
       IntStream.range(chunk.getAnchor(), chunk.getAnchor() + chunk.getSize()).forEach(index -> {
         SimpleEditableStyledDocument doc;
 
-        doc = (SimpleEditableStyledDocument) area.getDocument();
+        doc = (SimpleEditableStyledDocument) codeArea.getDocument();
         doc.setParagraphStyle(index, style);
+
       });
+    }
+
+    /*
+     * codeArea.getVisibleParagraphs() .addModificationObserver(new
+     * VisibleParagraphStyler<>(codeArea, this::computeHighlighting));
+     */
+
+  }
+
+  private StyleSpans<Collection<String>> computeHighlighting(String text)
+  {
+    StyleSpansBuilder<Collection<String>> spansBuilder;
+    int index;
+
+    spansBuilder = new StyleSpansBuilder<>();
+    index = text.indexOf("bb");
+    if (index != -1)
+    {
+      spansBuilder.add(Collections.singleton("delta-change"), text.length());
+    }
+    else
+    {
+      spansBuilder.add(Collections.singleton("delta-delete"), text.length());
+    }
+
+    return spansBuilder.create();
+  }
+
+  private class VisibleParagraphStyler<PS, SEG, S>
+      implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>>
+  {
+    private final GenericStyledArea<PS, SEG, S> area;
+    private final Function<String, StyleSpans<S>> computeStyles;
+    private int prevParagraph, prevTextLength;
+
+    public VisibleParagraphStyler(GenericStyledArea<PS, SEG, S> area, Function<String, StyleSpans<S>> computeStyles)
+    {
+      this.computeStyles = computeStyles;
+      this.area = area;
+    }
+
+    @Override
+    public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm)
+    {
+      if (lm.getAddedSize() > 0)
+      {
+        int paragraph = Math.min(area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size() - 1);
+        String text = area.getText(paragraph, 0, paragraph, area.getParagraphLength(paragraph));
+
+        System.out.println("paragraph=" + paragraph + ", added=" + lm.getAddedSize());
+        if (paragraph != prevParagraph || text.length() != prevTextLength)
+        {
+          int startPos = area.getAbsolutePosition(paragraph, 0);
+          // Platform.runLater(() -> {
+          {
+            List<String> style;
+
+            style = Arrays.asList("delta-change");
+            // area.setStyleSpans(startPos, computeStyles.apply(text));
+            area.setParagraphStyle(paragraph, (PS) style);
+          }
+          // );
+          prevTextLength = text.length();
+          prevParagraph = paragraph;
+        }
+      }
     }
   }
 
@@ -209,22 +311,6 @@ public class FileDiffPanel
     add(new Button("k"), new CC());
     add(new Button("l"), new CC().skip());
     add(new Button("m"), new CC());
-  }
-
-  class FontStyle
-  {
-    private Font font;
-
-    FontStyle(Font font)
-    {
-      this.font = font;
-    }
-
-    public String toCss()
-    {
-      return "-fx-font-style: " + font.getStyle() + "; -fx-font-size: " + font.getSize() + "; -font-family: "
-          + font.getFamily() + ";";
-    }
   }
 
   private class LineNumberFactory

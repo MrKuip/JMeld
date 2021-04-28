@@ -16,6 +16,11 @@
  */
 package org.jmeld.fx.settings;
 
+import java.util.Locale;
+import org.jmeld.fx.util.FxColors;
+import org.jmeld.util.Ignore;
+import org.jmeld.util.conf.AbstractConfiguration;
+import org.jmeld.util.conf.AbstractConfigurationElement;
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -25,13 +30,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import org.jmeld.fx.util.FxColors;
-import org.jmeld.util.Ignore;
-import org.jmeld.util.conf.AbstractConfiguration;
-import org.jmeld.util.conf.AbstractConfigurationElement;
-
 public class EditorSettingsFx
-    extends AbstractConfigurationElement
+  extends AbstractConfigurationElement
 {
   public final SimpleBooleanProperty showLineNumbersProperty = new SimpleBooleanProperty();
   public final SimpleIntegerProperty tabSizeProperty = new SimpleIntegerProperty(4);
@@ -50,9 +50,11 @@ public class EditorSettingsFx
   public final SimpleBooleanProperty specificFileEncodingEnabledProperty = new SimpleBooleanProperty();
   public final SimpleStringProperty specificFileEncodingNameProperty = new SimpleStringProperty();
   public final SimpleStringProperty lookAndFeelNameProperty = new SimpleStringProperty(Application.STYLESHEET_MODENA);
-  public final SimpleObjectProperty<ToolbarButtonIcon> toolbarButtonIconProperty = new SimpleObjectProperty<>(ToolbarButtonIcon.LARGE);
+  public final SimpleObjectProperty<ToolbarButtonIcon> toolbarButtonIconProperty = new SimpleObjectProperty<>(
+      ToolbarButtonIcon.LARGE);
   public final SimpleBooleanProperty toolbarButtonTextEnabledProperty = new SimpleBooleanProperty(true);
   public final SimpleBooleanProperty toolbarButtonIconEnabledProperty = new SimpleBooleanProperty(true);
+  public final SimpleStringProperty styleProperty = new SimpleStringProperty();
 
   public EditorSettingsFx()
   {
@@ -64,6 +66,67 @@ public class EditorSettingsFx
     super.init(configuration);
 
     ignore.init(configuration);
+
+    fontProperty.addListener((a) -> initStyleProperty());
+    addedColorProperty.addListener((a) -> initStyleProperty());
+    changedColorProperty.addListener((a) -> initStyleProperty());
+    deletedColorProperty.addListener((a) -> initStyleProperty());
+    initStyleProperty();
+  }
+
+  private void initStyleProperty()
+  {
+    Style style;
+    Font font;
+
+    style = new Style();
+
+    font = getFont();
+
+    style.append("-fx-font-style", font.getStyle());
+    style.append("-fx-font-size", font.getSize());
+    style.append("-fx-font-family", font.getFamily());
+    style.append("-delta-add-color-bg", addedColorProperty.getValue());
+    style.append("-delta-delete-color-bg", deletedColorProperty.getValue());
+    style.append("-delta-change-color-bg", changedColorProperty.getValue());
+    style.append("-delta-add-color-fg", "black");
+    style.append("-delta-delete-color-fg", "black");
+    style.append("-delta-change-color-fg", "black");
+
+    styleProperty.set(style.toString());
+  }
+
+  private static class Style
+  {
+    StringBuilder builder = new StringBuilder();
+
+    public Style()
+    {
+    }
+
+    public void append(String property, Color value)
+    {
+      append(property, String.format((Locale) null, "#%02x%02x%02x", Math.round(value.getRed() * 255),
+          Math.round(value.getGreen() * 255), Math.round(value.getBlue() * 255)));
+    }
+
+    public void append(String property, Double value)
+    {
+      append(property, value.toString());
+    }
+
+    public void append(String property, String value)
+    {
+      builder.append(property);
+      builder.append(":");
+      builder.append(value);
+      builder.append(";");
+    }
+
+    public String toString()
+    {
+      return builder.toString();
+    }
   }
 
   public boolean getShowLineNumbers()

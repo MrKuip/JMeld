@@ -1,4 +1,5 @@
-#diffPanel {
+  
+.code-area {
   -delta-add-color-bg: yellow;
   -delta-add-color-fg: black;
   -delta-delete-color-bg: purple;
@@ -42,26 +43,26 @@
   -fx-background-color: f0f0f0;
 }
 
-.delta-add {
+.code-area .delta-add {
   -fx-background-color: -delta-add-color-bg;
 }
 
-.delta-add .text {
+.code-area .delta-add .text {
   -fx-fill: -delta-add-color-fg;
 }
 
-.delta-delete {
+.code-area .delta-delete {
   -fx-background-color: -delta-delete-color-bg;
 }
 
-.delta-delete .text {
+.code-area .delta-delete .text {
   -fx-fill: -delta-delete-color-fg;
 }
 
-.delta-change {
+.code-area .delta-change {
   -fx-background-color: -delta-change-color-bg;
 }
 
-.delta-change .text {
+.code-area .delta-change .text {
   -fx-fill: -delta-change-color-fg;
 }

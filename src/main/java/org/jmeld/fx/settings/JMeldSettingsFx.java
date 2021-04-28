@@ -20,7 +20,7 @@ import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.ConfigurationManager;
 
 public class JMeldSettingsFx
-    extends AbstractConfiguration
+  extends AbstractConfiguration
 {
   // class variables:
   public static JMeldSettingsFx instance;
