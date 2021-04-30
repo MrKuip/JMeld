@@ -1,5 +1,5 @@
   
-.code-area {
+. {
   -delta-add-color-bg: yellow;
   -delta-add-color-fg: black;
   -delta-delete-color-bg: purple;
@@ -29,22 +29,18 @@
   -fx-font-size: 14;
 }
 
-.text {
-  -fx-font-family: "FreeSans"; 
-}
-
 .text-area > .scroll-pane {
     -fx-padding: 0;
 }
 
 .lineno {
-  -fx-font-size: 12;
   -fx-text-fill: black;
   -fx-background-color: f0f0f0;
 }
 
 .code-area .delta-add {
   -fx-background-color: -delta-add-color-bg;
+  -rtfx-background-color: -delta-add-color-bg;
 }
 
 .code-area .delta-add .text {
@@ -53,6 +49,7 @@
 
 .code-area .delta-delete {
   -fx-background-color: -delta-delete-color-bg;
+  -rtfx-background-color: -delta-delete-color-bg;
 }
 
 .code-area .delta-delete .text {
@@ -61,8 +58,10 @@
 
 .code-area .delta-change {
   -fx-background-color: -delta-change-color-bg;
+  -rtfx-background-color: -delta-change-color-bg;
 }
 
 .code-area .delta-change .text {
   -fx-fill: -delta-change-color-fg;
 }
+

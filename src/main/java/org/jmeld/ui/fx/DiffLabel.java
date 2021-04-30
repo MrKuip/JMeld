@@ -16,10 +16,11 @@
  */
 package org.jmeld.ui.fx;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
-import javafx.scene.layout.Background;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.model.Paragraph;
 import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
 import org.jmeld.diff.JMDiff;
@@ -27,9 +28,10 @@ import org.jmeld.diff.JMRevision;
 import org.jmeld.util.Ignore;
 import org.jmeld.util.TokenizerFactory;
 import org.jmeld.util.WordTokenizer;
+import javafx.scene.layout.Background;
 
 public class DiffLabel
-    extends CodeArea
+  extends CodeArea
 {
   public DiffLabel()
   {
@@ -46,8 +48,8 @@ public class DiffLabel
   }
 
   /**
-   * Set the text on this label. Some parts of the text will be displayed in bold-style. These parts are the differences
-   * between text and otherText.
+   * Set the text on this label. Some parts of the text will be displayed in
+   * bold-style. These parts are the differences between text and otherText.
    */
   public void setText(String text, String otherText)
   {
@@ -86,6 +88,19 @@ public class DiffLabel
           setStyleClass(index, index + textList.get(chunk.getAnchor()).length(), "diffLabel-bold");
           previousAnchor = chunk.getAnchor();
           previousIndex = index;
+
+          System.out.println("Start");
+          for (Paragraph<Collection<String>, String, Collection<String>> par : getParagraphs())
+          {
+            System.out.println(par);
+            System.out.println(">>" + par.getStyleSpans());
+            System.out.println(">>" + par.getStyleSpans().getClass());
+            for (int i = 0; i < par.getStyleSpans().getSpanCount(); i++)
+            {
+              System.out.println(">>>>" + par.getStyleSpans().getStyleSpan(i));
+            }
+          }
+          System.out.println("End");
         }
       }
     }

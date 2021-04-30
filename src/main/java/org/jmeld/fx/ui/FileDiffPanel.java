@@ -30,8 +30,6 @@ import org.reactfx.collection.ListModification;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -39,10 +37,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import net.miginfocom.layout.CC;
 
 public class FileDiffPanel
@@ -99,8 +93,6 @@ public class FileDiffPanel
     fileContentLeftScrollPane = new MyScrollPane<>(fileContentLeftCodeArea);
     // fileContentLeftScrollPane.onScrollProperty().addListener(new
     // MyScrollListener());
-    fileContentLeftScrollPane.estimatedScrollXProperty().addListener(new MyScrollListener());
-    fileContentLeftScrollPane.estimatedScrollYProperty().addListener(new MyScrollListener());
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
         .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
@@ -147,16 +139,6 @@ public class FileDiffPanel
 
     paintRevisionHighlights(fileContentLeftCodeArea, (JMDelta delta) -> delta.getOriginal());
     paintRevisionHighlights(fileContentRightCodeArea, (JMDelta delta) -> delta.getRevised());
-  }
-
-  class MyScrollListener
-      implements ChangeListener
-  {
-    @Override
-    public void changed(ObservableValue observable, Object oldValue, Object newValue)
-    {
-      // System.out.println(oldValue + " -> " + newValue);
-    }
   }
 
   /**
@@ -224,16 +206,13 @@ public class FileDiffPanel
         SimpleEditableStyledDocument doc;
 
         doc = (SimpleEditableStyledDocument) codeArea.getDocument();
-        doc.setParagraphStyle(index, style);
-
+        doc.getParagraph(index).replaceParagraphStyle(style);
+        if (doc.getParagraph(index).length() > 10)
+        {
+          doc.getParagraph(index).replaceStyle(2, doc.getParagraph(index).length() - 5, "delta-delete");
+        }
       });
     }
-
-    /*
-     * codeArea.getVisibleParagraphs() .addModificationObserver(new
-     * VisibleParagraphStyler<>(codeArea, this::computeHighlighting));
-     */
-
   }
 
   private StyleSpans<Collection<String>> computeHighlighting(String text)
@@ -332,10 +311,9 @@ public class FileDiffPanel
       label = new Label(String.valueOf(value));
       label.setAlignment(Pos.CENTER_RIGHT);
       label.setPadding(new Insets(0, 5, 0, 0));
-      label.setPrefWidth(getMinSize(label, codeArea.getParagraphs().size()));
-      label
-          .setBackground(new Background(new BackgroundFill(Color.rgb(240, 240, 240), CornerRadii.EMPTY, Insets.EMPTY)));
+      // label.setPrefWidth(getMinSize(label, codeArea.getParagraphs().size()));
       label.getStyleClass().add("lineno");
+
       codeArea.getParagraph(value).getParagraphStyle().forEach(style -> {
         if (style.startsWith("delta"))
         {

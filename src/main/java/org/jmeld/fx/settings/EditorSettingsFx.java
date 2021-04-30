@@ -76,32 +76,37 @@ public class EditorSettingsFx
 
   private void initStyleProperty()
   {
-    Style style;
+    CssStyle style;
     Font font;
 
-    style = new Style();
+    style = new CssStyle();
 
     font = getFont();
 
-    style.append("-fx-font-style", font.getStyle());
-    style.append("-fx-font-size", font.getSize());
-    style.append("-fx-font-family", font.getFamily());
     style.append("-delta-add-color-bg", addedColorProperty.getValue());
     style.append("-delta-delete-color-bg", deletedColorProperty.getValue());
     style.append("-delta-change-color-bg", changedColorProperty.getValue());
     style.append("-delta-add-color-fg", "black");
     style.append("-delta-delete-color-fg", "black");
     style.append("-delta-change-color-fg", "black");
+    style.append(font);
 
-    styleProperty.set(style.toString());
+    styleProperty.set(style.getStyle());
   }
 
-  private static class Style
+  private static class CssStyle
   {
-    StringBuilder builder = new StringBuilder();
+    private StringBuilder builder = new StringBuilder();
 
-    public Style()
+    public CssStyle()
     {
+    }
+
+    public void append(Font font)
+    {
+      append("-fx-font-size", font.getSize());
+      append("-fx-font-style", font.getStyle());
+      append("-fx-font-family", font.getFamily());
     }
 
     public void append(String property, Color value)
@@ -110,7 +115,7 @@ public class EditorSettingsFx
           Math.round(value.getGreen() * 255), Math.round(value.getBlue() * 255)));
     }
 
-    public void append(String property, Double value)
+    public void append(String property, Number value)
     {
       append(property, value.toString());
     }
@@ -123,10 +128,11 @@ public class EditorSettingsFx
       builder.append(";");
     }
 
-    public String toString()
+    public String getStyle()
     {
       return builder.toString();
     }
+
   }
 
   public boolean getShowLineNumbers()
