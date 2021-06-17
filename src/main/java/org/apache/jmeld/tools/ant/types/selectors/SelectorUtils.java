@@ -1,11 +1,12 @@
 /*
- * Copyright  2002-2004 The Apache Software Foundation
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,18 +15,20 @@
  *  limitations under the License.
  *
  */
+
 package org.apache.jmeld.tools.ant.types.selectors;
 
 import java.io.File;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import org.apache.jmeld.tools.ant.types.Resource;
+import org.apache.jmeld.tools.ant.util.FileUtils;
 
 /**
  * <p>
- * This is a utility class used by selectors and DirectoryScanner. The functionality more properly belongs just to
- * selectors, but unfortunately DirectoryScanner exposed these as protected methods. Thus we have to support any
- * subclasses of DirectoryScanner that may access these methods.
+ * This is a utility class used by selectors and DirectoryScanner. The
+ * functionality more properly belongs just to selectors, but unfortunately
+ * DirectoryScanner exposed these as protected methods. Thus we have to support
+ * any subclasses of DirectoryScanner that may access these methods.
  * </p>
  * <p>
  * This is a Singleton.
@@ -35,7 +38,16 @@ import org.apache.jmeld.tools.ant.types.Resource;
  */
 public final class SelectorUtils
 {
-  private static SelectorUtils instance = new SelectorUtils();
+
+  /**
+   * The pattern that matches an arbitrary number of directories.
+   * 
+   * @since Ant 1.8.0
+   */
+  public static final String DEEP_TREE_MATCH = "**";
+
+  private static final SelectorUtils instance = new SelectorUtils();
+  private static final FileUtils FILE_UTILS = FileUtils.getFileUtils();
 
   /**
    * Private Constructor
@@ -55,44 +67,43 @@ public final class SelectorUtils
   }
 
   /**
-   * Tests whether or not a given path matches the start of a given pattern up to the first "**".
+   * Tests whether or not a given path matches the start of a given pattern up to
+   * the first "**".
    * <p>
-   * This is not a general purpose test and should only be used if you can live with false positives. For example,
-   * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+   * This is not a general purpose test and should only be used if you can live
+   * with false positives. For example, <code>pattern=**\a</code> and
+   * <code>str=b</code> will yield <code>true</code>.
    *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The path to match, as a String. Must not be <code>null</code>.
+   * @param pattern The pattern to match against. Must not be <code>null</code>.
+   * @param str     The path to match, as a String. Must not be <code>null</code>.
    *
-   * @return whether or not a given path matches the start of a given pattern up to the first "**".
+   * @return whether or not a given path matches the start of a given pattern up
+   *         to the first "**".
    */
-  public static boolean matchPatternStart(String pattern,
-      String str)
+  public static boolean matchPatternStart(String pattern, String str)
   {
-    return matchPatternStart(pattern,
-                             str,
-                             true);
+    return matchPatternStart(pattern, str, true);
   }
 
   /**
-   * Tests whether or not a given path matches the start of a given pattern up to the first "**".
+   * Tests whether or not a given path matches the start of a given pattern up to
+   * the first "**".
    * <p>
-   * This is not a general purpose test and should only be used if you can live with false positives. For example,
-   * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+   * This is not a general purpose test and should only be used if you can live
+   * with false positives. For example, <code>pattern=**\a</code> and
+   * <code>str=b</code> will yield <code>true</code>.
    *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The path to match, as a String. Must not be <code>null</code>.
-   * @param isCaseSensitive
-   *          Whether or not matching should be performed case sensitively.
+   * @param pattern         The pattern to match against. Must not be
+   *                        <code>null</code>.
+   * @param str             The path to match, as a String. Must not be
+   *                        <code>null</code>.
+   * @param isCaseSensitive Whether or not matching should be performed case
+   *                        sensitively.
    *
-   * @return whether or not a given path matches the start of a given pattern up to the first "**".
+   * @return whether or not a given path matches the start of a given pattern up
+   *         to the first "**".
    */
-  public static boolean matchPatternStart(String pattern,
-      String str,
-      boolean isCaseSensitive)
+  public static boolean matchPatternStart(String pattern, String str, boolean isCaseSensitive)
   {
     // When str starts with a File.separator, pattern has to start with a
     // File.separator.
@@ -105,7 +116,29 @@ public final class SelectorUtils
 
     String[] patDirs = tokenizePathAsArray(pattern);
     String[] strDirs = tokenizePathAsArray(str);
+    return matchPatternStart(patDirs, strDirs, isCaseSensitive);
+  }
 
+  /**
+   * Tests whether or not a given path matches the start of a given pattern up to
+   * the first "**".
+   * <p>
+   * This is not a general purpose test and should only be used if you can live
+   * with false positives. For example, <code>pattern=**\a</code> and
+   * <code>str=b</code> will yield <code>true</code>.
+   *
+   * @param patDirs         The tokenized pattern to match against. Must not be
+   *                        <code>null</code>.
+   * @param strDirs         The tokenized path to match. Must not be
+   *                        <code>null</code>.
+   * @param isCaseSensitive Whether or not matching should be performed case
+   *                        sensitively.
+   *
+   * @return whether or not a given path matches the start of a given pattern up
+   *         to the first "**".
+   */
+  static boolean matchPatternStart(String[] patDirs, String[] strDirs, boolean isCaseSensitive)
+  {
     int patIdxStart = 0;
     int patIdxEnd = patDirs.length - 1;
     int strIdxStart = 0;
@@ -115,13 +148,11 @@ public final class SelectorUtils
     while (patIdxStart <= patIdxEnd && strIdxStart <= strIdxEnd)
     {
       String patDir = patDirs[patIdxStart];
-      if (patDir.equals("**"))
+      if (patDir.equals(DEEP_TREE_MATCH))
       {
         break;
       }
-      if (!match(patDir,
-                 strDirs[strIdxStart],
-                 isCaseSensitive))
+      if (!match(patDir, strDirs[strIdxStart], isCaseSensitive))
       {
         return false;
       }
@@ -129,89 +160,77 @@ public final class SelectorUtils
       strIdxStart++;
     }
 
-    if (strIdxStart > strIdxEnd)
-    {
-      // String is exhausted
-      return true;
-    }
-    else if (patIdxStart > patIdxEnd)
-    {
-      // String not exhausted, but pattern is. Failure.
-      return false;
-    }
-    else
-    {
-      // pattern now holds ** while string is not exhausted
-      // this will generate false positives but we can live with that.
-      return true;
-    }
+    // Fail if string is not exhausted or pattern is exhausted
+    // Otherwise the pattern now holds ** while string is not exhausted
+    // this will generate false positives but we can live with that.
+    return strIdxStart > strIdxEnd || patIdxStart <= patIdxEnd;
   }
 
   /**
    * Tests whether or not a given path matches a given pattern.
    *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The path to match, as a String. Must not be <code>null</code>.
+   * If you need to call this method multiple times with the same pattern you
+   * should rather use TokenizedPath
    *
-   * @return <code>true</code> if the pattern matches against the string, or <code>false</code> otherwise.
+   * @see TokenizedPath
+   *
+   * @param pattern The pattern to match against. Must not be <code>null</code>.
+   * @param str     The path to match, as a String. Must not be <code>null</code>.
+   *
+   * @return <code>true</code> if the pattern matches against the string, or
+   *         <code>false</code> otherwise.
    */
-  public static boolean matchPath(String pattern,
-      String str)
+  public static boolean matchPath(String pattern, String str)
   {
-    return matchPath(pattern,
-                     str,
-                     true);
-  }
-
-  /**
-   * Tests whether or not a given path matches a given pattern.
-   *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The path to match, as a String. Must not be <code>null</code>.
-   * @param isCaseSensitive
-   *          Whether or not matching should be performed case sensitively.
-   *
-   * @return <code>true</code> if the pattern matches against the string, or <code>false</code> otherwise.
-   */
-  public static boolean matchPath(String pattern,
-      String str,
-      boolean isCaseSensitive)
-  {
-    // When str starts with a File.separator, pattern has to start with a
-    // File.separator.
-    // When pattern starts with a File.separator, str has to start with a
-    // File.separator.
-    if (str.startsWith(File.separator) != pattern.startsWith(File.separator))
-    {
-      return false;
-    }
-
     String[] patDirs = tokenizePathAsArray(pattern);
-    String[] strDirs = tokenizePathAsArray(str);
+    return matchPath(patDirs, tokenizePathAsArray(str), true);
+  }
 
+  /**
+   * Tests whether or not a given path matches a given pattern.
+   *
+   * If you need to call this method multiple times with the same pattern you
+   * should rather use TokenizedPattern
+   *
+   * @see TokenizedPattern
+   *
+   * @param pattern         The pattern to match against. Must not be
+   *                        <code>null</code>.
+   * @param str             The path to match, as a String. Must not be
+   *                        <code>null</code>.
+   * @param isCaseSensitive Whether or not matching should be performed case
+   *                        sensitively.
+   *
+   * @return <code>true</code> if the pattern matches against the string, or
+   *         <code>false</code> otherwise.
+   */
+  public static boolean matchPath(String pattern, String str, boolean isCaseSensitive)
+  {
+    String[] patDirs = tokenizePathAsArray(pattern);
+    return matchPath(patDirs, tokenizePathAsArray(str), isCaseSensitive);
+  }
+
+  /**
+   * Core implementation of matchPath. It is isolated so that it can be called
+   * from TokenizedPattern.
+   */
+  static boolean matchPath(String[] tokenizedPattern, String[] strDirs, boolean isCaseSensitive)
+  {
     int patIdxStart = 0;
-    int patIdxEnd = patDirs.length - 1;
+    int patIdxEnd = tokenizedPattern.length - 1;
     int strIdxStart = 0;
     int strIdxEnd = strDirs.length - 1;
 
     // up to first '**'
     while (patIdxStart <= patIdxEnd && strIdxStart <= strIdxEnd)
     {
-      String patDir = patDirs[patIdxStart];
-      if (patDir.equals("**"))
+      String patDir = tokenizedPattern[patIdxStart];
+      if (patDir.equals(DEEP_TREE_MATCH))
       {
         break;
       }
-      if (!match(patDir,
-                 strDirs[strIdxStart],
-                 isCaseSensitive))
+      if (!match(patDir, strDirs[strIdxStart], isCaseSensitive))
       {
-        patDirs = null;
-        strDirs = null;
         return false;
       }
       patIdxStart++;
@@ -222,40 +241,29 @@ public final class SelectorUtils
       // String is exhausted
       for (int i = patIdxStart; i <= patIdxEnd; i++)
       {
-        if (!patDirs[i].equals("**"))
+        if (!tokenizedPattern[i].equals(DEEP_TREE_MATCH))
         {
-          patDirs = null;
-          strDirs = null;
           return false;
         }
       }
       return true;
     }
-    else
+    if (patIdxStart > patIdxEnd)
     {
-      if (patIdxStart > patIdxEnd)
-      {
-        // String not exhausted, but pattern is. Failure.
-        patDirs = null;
-        strDirs = null;
-        return false;
-      }
+      // String not exhausted, but pattern is. Failure.
+      return false;
     }
 
     // up to last '**'
     while (patIdxStart <= patIdxEnd && strIdxStart <= strIdxEnd)
     {
-      String patDir = patDirs[patIdxEnd];
-      if (patDir.equals("**"))
+      String patDir = tokenizedPattern[patIdxEnd];
+      if (patDir.equals(DEEP_TREE_MATCH))
       {
         break;
       }
-      if (!match(patDir,
-                 strDirs[strIdxEnd],
-                 isCaseSensitive))
+      if (!match(patDir, strDirs[strIdxEnd], isCaseSensitive))
       {
-        patDirs = null;
-        strDirs = null;
         return false;
       }
       patIdxEnd--;
@@ -266,10 +274,8 @@ public final class SelectorUtils
       // String is exhausted
       for (int i = patIdxStart; i <= patIdxEnd; i++)
       {
-        if (!patDirs[i].equals("**"))
+        if (!tokenizedPattern[i].equals(DEEP_TREE_MATCH))
         {
-          patDirs = null;
-          strDirs = null;
           return false;
         }
       }
@@ -281,7 +287,7 @@ public final class SelectorUtils
       int patIdxTmp = -1;
       for (int i = patIdxStart + 1; i <= patIdxEnd; i++)
       {
-        if (patDirs[i].equals("**"))
+        if (tokenizedPattern[i].equals(DEEP_TREE_MATCH))
         {
           patIdxTmp = i;
           break;
@@ -293,34 +299,28 @@ public final class SelectorUtils
         patIdxStart++;
         continue;
       }
-
       // Find the pattern between padIdxStart & padIdxTmp in str between
       // strIdxStart & strIdxEnd
       int patLength = (patIdxTmp - patIdxStart - 1);
       int strLength = (strIdxEnd - strIdxStart + 1);
       int foundIdx = -1;
-      strLoop: for (int i = 0; i <= strLength - patLength; i++)
+      strLoop:
+      for (int i = 0; i <= strLength - patLength; i++)
       {
         for (int j = 0; j < patLength; j++)
         {
-          String subPat = patDirs[patIdxStart + j + 1];
+          String subPat = tokenizedPattern[patIdxStart + j + 1];
           String subStr = strDirs[strIdxStart + i + j];
-          if (!match(subPat,
-                     subStr,
-                     isCaseSensitive))
+          if (!match(subPat, subStr, isCaseSensitive))
           {
             continue strLoop;
           }
         }
-
         foundIdx = strIdxStart + i;
         break;
       }
-
       if (foundIdx == -1)
       {
-        patDirs = null;
-        strDirs = null;
         return false;
       }
 
@@ -330,55 +330,50 @@ public final class SelectorUtils
 
     for (int i = patIdxStart; i <= patIdxEnd; i++)
     {
-      if (!patDirs[i].equals("**"))
+      if (!DEEP_TREE_MATCH.equals(tokenizedPattern[i]))
       {
-        patDirs = null;
-        strDirs = null;
         return false;
       }
     }
-
     return true;
   }
 
   /**
-   * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:<br>
+   * Tests whether or not a string matches against a pattern. The pattern may
+   * contain two special characters:<br>
    * '*' means zero or more characters<br>
    * '?' means one and only one character
    *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The string which must be matched against the pattern. Must not be <code>null</code>.
+   * @param pattern The pattern to match against. Must not be <code>null</code>.
+   * @param str     The string which must be matched against the pattern. Must not
+   *                be <code>null</code>.
    *
-   * @return <code>true</code> if the string matches against the pattern, or <code>false</code> otherwise.
+   * @return <code>true</code> if the string matches against the pattern, or
+   *         <code>false</code> otherwise.
    */
-  public static boolean match(String pattern,
-      String str)
+  public static boolean match(String pattern, String str)
   {
-    return match(pattern,
-                 str,
-                 true);
+    return match(pattern, str, true);
   }
 
   /**
-   * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:<br>
+   * Tests whether or not a string matches against a pattern. The pattern may
+   * contain two special characters:<br>
    * '*' means zero or more characters<br>
    * '?' means one and only one character
    *
-   * @param pattern
-   *          The pattern to match against. Must not be <code>null</code>.
-   * @param str
-   *          The string which must be matched against the pattern. Must not be <code>null</code>.
-   * @param isCaseSensitive
-   *          Whether or not matching should be performed case sensitively.
+   * @param pattern       The pattern to match against. Must not be
+   *                      <code>null</code>.
+   * @param str           The string which must be matched against the pattern.
+   *                      Must not be <code>null</code>.
+   * @param caseSensitive Whether or not matching should be performed case
+   *                      sensitively.
    *
    *
-   * @return <code>true</code> if the string matches against the pattern, or <code>false</code> otherwise.
+   * @return <code>true</code> if the string matches against the pattern, or
+   *         <code>false</code> otherwise.
    */
-  public static boolean match(String pattern,
-      String str,
-      boolean isCaseSensitive)
+  public static boolean match(String pattern, String str, boolean caseSensitive)
   {
     char[] patArr = pattern.toCharArray();
     char[] strArr = str.toCharArray();
@@ -386,12 +381,11 @@ public final class SelectorUtils
     int patIdxEnd = patArr.length - 1;
     int strIdxStart = 0;
     int strIdxEnd = strArr.length - 1;
-    char ch;
 
     boolean containsStar = false;
-    for (int i = 0; i < patArr.length; i++)
+    for (char ch : patArr)
     {
-      if (patArr[i] == '*')
+      if (ch == '*')
       {
         containsStar = true;
         break;
@@ -407,17 +401,10 @@ public final class SelectorUtils
       }
       for (int i = 0; i <= patIdxEnd; i++)
       {
-        ch = patArr[i];
-        if (ch != '?')
+        char ch = patArr[i];
+        if (ch != '?' && different(caseSensitive, ch, strArr[i]))
         {
-          if (isCaseSensitive && ch != strArr[i])
-          {
-            return false; // Character mismatch
-          }
-          if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[i]))
-          {
-            return false; // Character mismatch
-          }
+          return false; // Character mismatch
         }
       }
       return true; // String matches against pattern
@@ -429,18 +416,16 @@ public final class SelectorUtils
     }
 
     // Process characters before first star
-    while ((ch = patArr[patIdxStart]) != '*' && strIdxStart <= strIdxEnd)
+    while (true)
     {
-      if (ch != '?')
+      char ch = patArr[patIdxStart];
+      if (ch == '*' || strIdxStart > strIdxEnd)
       {
-        if (isCaseSensitive && ch != strArr[strIdxStart])
-        {
-          return false; // Character mismatch
-        }
-        if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart]))
-        {
-          return false; // Character mismatch
-        }
+        break;
+      }
+      if (ch != '?' && different(caseSensitive, ch, strArr[strIdxStart]))
+      {
+        return false; // Character mismatch
       }
       patIdxStart++;
       strIdxStart++;
@@ -449,29 +434,20 @@ public final class SelectorUtils
     {
       // All characters in the string are used. Check if only '*'s are
       // left in the pattern. If so, we succeeded. Otherwise failure.
-      for (int i = patIdxStart; i <= patIdxEnd; i++)
-      {
-        if (patArr[i] != '*')
-        {
-          return false;
-        }
-      }
-      return true;
+      return allStars(patArr, patIdxStart, patIdxEnd);
     }
 
     // Process characters after last star
-    while ((ch = patArr[patIdxEnd]) != '*' && strIdxStart <= strIdxEnd)
+    while (true)
     {
-      if (ch != '?')
+      char ch = patArr[patIdxEnd];
+      if (ch == '*' || strIdxStart > strIdxEnd)
       {
-        if (isCaseSensitive && ch != strArr[strIdxEnd])
-        {
-          return false; // Character mismatch
-        }
-        if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxEnd]))
-        {
-          return false; // Character mismatch
-        }
+        break;
+      }
+      if (ch != '?' && different(caseSensitive, ch, strArr[strIdxEnd]))
+      {
+        return false; // Character mismatch
       }
       patIdxEnd--;
       strIdxEnd--;
@@ -480,14 +456,7 @@ public final class SelectorUtils
     {
       // All characters in the string are used. Check if only '*'s are
       // left in the pattern. If so, we succeeded. Otherwise failure.
-      for (int i = patIdxStart; i <= patIdxEnd; i++)
-      {
-        if (patArr[i] != '*')
-        {
-          return false;
-        }
-      }
-      return true;
+      return allStars(patArr, patIdxStart, patIdxEnd);
     }
 
     // process pattern between stars. padIdxStart and patIdxEnd point
@@ -509,30 +478,22 @@ public final class SelectorUtils
         patIdxStart++;
         continue;
       }
-
       // Find the pattern between padIdxStart & padIdxTmp in str between
       // strIdxStart & strIdxEnd
       int patLength = (patIdxTmp - patIdxStart - 1);
       int strLength = (strIdxEnd - strIdxStart + 1);
       int foundIdx = -1;
-      strLoop: for (int i = 0; i <= strLength - patLength; i++)
+      strLoop:
+      for (int i = 0; i <= strLength - patLength; i++)
       {
         for (int j = 0; j < patLength; j++)
         {
-          ch = patArr[patIdxStart + j + 1];
-          if (ch != '?')
+          char ch = patArr[patIdxStart + j + 1];
+          if (ch != '?' && different(caseSensitive, ch, strArr[strIdxStart + i + j]))
           {
-            if (isCaseSensitive && ch != strArr[strIdxStart + i + j])
-            {
-              continue strLoop;
-            }
-            if (!isCaseSensitive && Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart + i + j]))
-            {
-              continue strLoop;
-            }
+            continue strLoop;
           }
         }
-
         foundIdx = strIdxStart + i;
         break;
       }
@@ -541,16 +502,20 @@ public final class SelectorUtils
       {
         return false;
       }
-
       patIdxStart = patIdxTmp;
       strIdxStart = foundIdx + patLength;
     }
 
     // All characters in the string are used. Check if only '*'s are left
     // in the pattern. If so, we succeeded. Otherwise failure.
-    for (int i = patIdxStart; i <= patIdxEnd; i++)
+    return allStars(patArr, patIdxStart, patIdxEnd);
+  }
+
+  private static boolean allStars(char[] chars, int start, int end)
+  {
+    for (int i = start; i <= end; ++i)
     {
-      if (patArr[i] != '*')
+      if (chars[i] != '*')
       {
         return false;
       }
@@ -558,37 +523,43 @@ public final class SelectorUtils
     return true;
   }
 
+  private static boolean different(boolean caseSensitive, char ch, char other)
+  {
+    return caseSensitive ? ch != other : Character.toUpperCase(ch) != Character.toUpperCase(other);
+  }
+
   /**
-   * Breaks a path up into a Vector of path elements, tokenizing on <code>File.separator</code>.
+   * Breaks a path up into a Vector of path elements, tokenizing on
+   * <code>File.separator</code>.
    *
-   * @param path
-   *          Path to tokenize. Must not be <code>null</code>.
+   * @param path Path to tokenize. Must not be <code>null</code>.
    *
    * @return a Vector of path elements from the tokenized path
    */
-  public static Vector tokenizePath(String path)
+  public static Vector<String> tokenizePath(String path)
   {
-    return tokenizePath(path,
-                        File.separator);
+    return tokenizePath(path, File.separator);
   }
 
   /**
    * Breaks a path up into a Vector of path elements, tokenizing on
    *
-   * @param path
-   *          Path to tokenize. Must not be <code>null</code>.
-   * @param separator
-   *          the separator against which to tokenize.
+   * @param path      Path to tokenize. Must not be <code>null</code>.
+   * @param separator the separator against which to tokenize.
    *
    * @return a Vector of path elements from the tokenized path
    * @since Ant 1.6
    */
-  public static Vector tokenizePath(String path,
-      String separator)
+  public static Vector<String> tokenizePath(String path, String separator)
   {
-    Vector ret = new Vector();
-    StringTokenizer st = new StringTokenizer(path,
-                                             separator);
+    Vector<String> ret = new Vector<>();
+    if (FileUtils.isAbsolutePath(path))
+    {
+      String[] s = FILE_UTILS.dissect(path);
+      ret.add(s[0]);
+      path = s[1];
+    }
+    StringTokenizer st = new StringTokenizer(path, separator);
     while (st.hasMoreTokens())
     {
       ret.addElement(st.nextToken());
@@ -599,8 +570,16 @@ public final class SelectorUtils
   /**
    * Same as {@link #tokenizePath tokenizePath} but hopefully faster.
    */
-  private static String[] tokenizePathAsArray(String path)
+  /* package */
+  static String[] tokenizePathAsArray(String path)
   {
+    String root = null;
+    if (FileUtils.isAbsolutePath(path))
+    {
+      String[] s = FILE_UTILS.dissect(path);
+      root = s[0];
+      path = s[1];
+    }
     char sep = File.separatorChar;
     int start = 0;
     int len = path.length();
@@ -620,8 +599,17 @@ public final class SelectorUtils
     {
       count++;
     }
-    String[] l = new String[count];
-    count = 0;
+    String[] l = new String[count + ((root == null) ? 0 : 1)];
+
+    if (root != null)
+    {
+      l[0] = root;
+      count = 1;
+    }
+    else
+    {
+      count = 0;
+    }
     start = 0;
     for (int pos = 0; pos < len; pos++)
     {
@@ -629,8 +617,7 @@ public final class SelectorUtils
       {
         if (pos != start)
         {
-          String tok = path.substring(start,
-                                      pos);
+          String tok = path.substring(start, pos);
           l[count++] = tok;
         }
         start = pos + 1;
@@ -639,88 +626,40 @@ public final class SelectorUtils
     if (len != start)
     {
       String tok = path.substring(start);
-      l[count /*++*/] = tok;
+      l[count/* ++ */] = tok;
     }
     return l;
   }
 
   /**
-   * Returns dependency information on these two files. If src has been modified later than target, it returns true. If
-   * target doesn't exist, it likewise returns true. Otherwise, target is newer than src and is not out of date, thus
-   * the method returns false. It also returns false if the src file doesn't even exist, since how could the target then
-   * be out of date.
+   * Returns dependency information on these two files. If src has been modified
+   * later than target, it returns true. If target doesn't exist, it likewise
+   * returns true. Otherwise, target is newer than src and is not out of date,
+   * thus the method returns false. It also returns false if the src file doesn't
+   * even exist, since how could the target then be out of date.
    *
-   * @param src
-   *          the original file
-   * @param target
-   *          the file being compared against
-   * @param granularity
-   *          the amount in seconds of slack we will give in determining out of dateness
+   * @param src         the original file
+   * @param target      the file being compared against
+   * @param granularity the amount in seconds of slack we will give in determining
+   *                    out of dateness
    * @return whether the target is out of date
    */
-  public static boolean isOutOfDate(File src,
-      File target,
-      int granularity)
+  public static boolean isOutOfDate(File src, File target, int granularity)
   {
-    if (!src.exists())
-    {
-      return false;
-    }
-    if (!target.exists())
-    {
-      return true;
-    }
-    if ((src.lastModified() - granularity) > target.lastModified())
-    {
-      return true;
-    }
-    return false;
+    return src.exists() && (!target.exists() || (src.lastModified() - granularity) > target.lastModified());
   }
 
   /**
-   * Returns dependency information on these two resources. If src has been modified later than target, it returns true.
-   * If target doesn't exist, it likewise returns true. Otherwise, target is newer than src and is not out of date, thus
-   * the method returns false. It also returns false if the src file doesn't even exist, since how could the target then
-   * be out of date.
+   * "Flattens" a string by removing all whitespace (space, tab, linefeed,
+   * carriage return, and formfeed). This uses StringTokenizer and the default set
+   * of tokens as documented in the single argument constructor.
    *
-   * @param src
-   *          the original resource
-   * @param target
-   *          the resource being compared against
-   * @param granularity
-   *          the amount in seconds of slack we will give in determining out of dateness
-   * @return whether the target is out of date
-   */
-  public static boolean isOutOfDate(Resource src,
-      Resource target,
-      int granularity)
-  {
-    if (!src.isExists())
-    {
-      return false;
-    }
-    if (!target.isExists())
-    {
-      return true;
-    }
-    if ((src.getLastModified() - granularity) > target.getLastModified())
-    {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * "Flattens" a string by removing all whitespace (space, tab, linefeed, carriage return, and formfeed). This uses
-   * StringTokenizer and the default set of tokens as documented in the single arguement constructor.
-   *
-   * @param input
-   *          a String to remove all whitespace.
+   * @param input a String to remove all whitespace.
    * @return a String that has had all whitespace removed.
    */
   public static String removeWhitespace(String input)
   {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     if (input != null)
     {
       StringTokenizer st = new StringTokenizer(input);
@@ -735,39 +674,22 @@ public final class SelectorUtils
   /**
    * Tests if a string contains stars or question marks
    * 
-   * @param input
-   *          a String which one wants to test for containing wildcard
+   * @param input a String which one wants to test for containing wildcard
    * @return true if the string contains at least a star or a question mark
    */
   public static boolean hasWildcards(String input)
   {
-    return (input.indexOf('*') != -1 || input.indexOf('?') != -1);
+    return input.contains("*") || input.contains("?");
   }
 
   /**
    * removes from a pattern all tokens to the right containing wildcards
    * 
-   * @param input
-   *          the input string
+   * @param input the input string
    * @return the leftmost part of the pattern without wildcards
    */
   public static String rtrimWildcardTokens(String input)
   {
-    Vector v = tokenizePath(input,
-                            File.separator);
-    StringBuffer sb = new StringBuffer();
-    for (int counter = 0; counter < v.size(); counter++)
-    {
-      if (hasWildcards((String) v.elementAt(counter)))
-      {
-        break;
-      }
-      if (counter > 0)
-      {
-        sb.append(File.separator);
-      }
-      sb.append((String) v.elementAt(counter));
-    }
-    return sb.toString();
+    return new TokenizedPattern(input).rtrimWildcardTokens().toString();
   }
 }

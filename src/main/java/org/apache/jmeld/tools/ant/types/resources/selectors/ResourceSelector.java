@@ -15,24 +15,22 @@
  *  limitations under the License.
  *
  */
-package org.apache.jmeld.tools.ant.types;
+package org.apache.jmeld.tools.ant.types.resources.selectors;
 
 /**
- * this interface should be implemented by classes (Scanners) needing to deliver
- * information about resources.
- *
- * @since Ant 1.5.2
+ * Interface for a Resource selector.
+ * 
+ * @since Ant 1.7
  */
-public interface ResourceFactory
+public interface ResourceSelector
 {
 
   /**
-   * Query a resource (file, zipentry, ...) by name
-   *
-   * @param name relative path of the resource about which information is sought.
-   *             Expects &quot;/&quot; to be used as the directory separator.
-   * @return instance of Resource; the exists attribute of Resource will tell
-   *         whether the sought resource exists
+   * Return true if this Resource is selected.
+   * 
+   * @param r the Resource to check.
+   * @return whether the Resource was selected.
    */
-  // Resource getResource(String name);
+  // boolean isSelected(Resource r);
+
 }

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.jmeld.tools.ant.types;
+package org.apache.jmeld2.tools.ant.types;
 
 /**
  * Describes a File or a ZipEntry.

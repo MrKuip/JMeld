@@ -15,24 +15,22 @@
  *  limitations under the License.
  *
  */
-package org.apache.jmeld.tools.ant.types;
+
+package org.apache.jmeld.tools.ant.types.resources;
+
+import java.io.File;
 
 /**
- * this interface should be implemented by classes (Scanners) needing to deliver
- * information about resources.
- *
- * @since Ant 1.5.2
+ * This is an interface that resources that can provide a file should implement.
+ * This is a refactoring of {@link FileResource}, to allow other resources
+ * to act as sources of files (and to make components that only support
+ * file-based resources from only support FileResource resources.
+ * @since Ant 1.8
  */
-public interface ResourceFactory
-{
-
-  /**
-   * Query a resource (file, zipentry, ...) by name
-   *
-   * @param name relative path of the resource about which information is sought.
-   *             Expects &quot;/&quot; to be used as the directory separator.
-   * @return instance of Resource; the exists attribute of Resource will tell
-   *         whether the sought resource exists
-   */
-  // Resource getResource(String name);
+public interface FileProvider {
+    /**
+     * Get the file represented by this Resource.
+     * @return the file.
+     */
+    File getFile();
 }

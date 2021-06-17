@@ -1,11 +1,12 @@
 /*
- * Copyright  2000-2004 The Apache Software Foundation
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,18 +17,14 @@
  */
 package org.apache.jmeld.tools.ant;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-
 /**
  * Signals an error condition during a build
- *
  */
 public class BuildException
-    extends RuntimeException
+  extends RuntimeException
 {
-  /** Exception that might have caused this one. */
-  private Throwable cause;
+
+  private static final long serialVersionUID = -5419014565354664240L;
 
   /**
    * Constructs a build exception with no descriptive information.
@@ -40,8 +37,8 @@ public class BuildException
   /**
    * Constructs an exception with the given descriptive message.
    *
-   * @param message
-   *          A description of or information about the exception. Should not be <code>null</code>.
+   * @param message A description of or information about the exception. Should
+   *                not be {@code null}.
    */
   public BuildException(String message)
   {
@@ -49,106 +46,64 @@ public class BuildException
   }
 
   /**
+   * Constructs an exception with the given format pattern and arguments.
+   *
+   * @param pattern         A description of or information about the exception.
+   *                        Should not be {@code null}.
+   * @param formatArguments ditto
+   * @see String#format(String, Object...)
+   * @since Ant 1.10.2
+   */
+  public BuildException(String pattern, Object... formatArguments)
+  {
+    super(String.format(pattern, formatArguments));
+  }
+
+  /**
    * Constructs an exception with the given message and exception as a root cause.
    *
-   * @param message
-   *          A description of or information about the exception. Should not be <code>null</code> unless a cause is
-   *          specified.
-   * @param cause
-   *          The exception that might have caused this one. May be <code>null</code>.
+   * @param message A description of or information about the exception. Should
+   *                not be <code>null</code> unless a cause is specified.
+   * @param cause   The exception that might have caused this one. May be
+   *                <code>null</code>.
    */
-  public BuildException(String message,
-      Throwable cause)
+  public BuildException(String message, Throwable cause)
   {
-    super(message);
-    this.cause = cause;
+    super(message, cause);
   }
 
   /**
    * Constructs an exception with the given exception as a root cause.
    *
-   * @param cause
-   *          The exception that might have caused this one. Should not be <code>null</code>.
+   * @param cause The exception that might have caused this one. Should not be
+   *              <code>null</code>.
    */
   public BuildException(Throwable cause)
   {
-    super(cause.toString());
-    this.cause = cause;
+    super(cause);
   }
 
   /**
    * Returns the nested exception, if any.
    *
-   * @return the nested exception, or <code>null</code> if no exception is associated with this one
+   * @return the nested exception, or <code>null</code> if no exception is
+   *         associated with this one
+   * @deprecated Use {@link #getCause} instead.
    */
+  @Deprecated
   public Throwable getException()
   {
-    return cause;
+    return getCause();
   }
 
   /**
-   * Returns the nested exception, if any.
+   * Returns the location of the error and the error message.
    *
-   * @return the nested exception, or <code>null</code> if no exception is associated with this one
-   */
-  public Throwable getCause()
-  {
-    return getException();
-  }
-
-  /**
-   * Returns the error message.
-   *
-   * @return the error message
+   * @return the location of the error and the error message
    */
   public String toString()
   {
     return getMessage();
   }
 
-  /**
-   * Prints the stack trace for this exception and any nested exception to <code>System.err</code>.
-   */
-  public void printStackTrace()
-  {
-    printStackTrace(System.err);
-  }
-
-  /**
-   * Prints the stack trace of this exception and any nested exception to the specified PrintStream.
-   *
-   * @param ps
-   *          The PrintStream to print the stack trace to. Must not be <code>null</code>.
-   */
-  public void printStackTrace(PrintStream ps)
-  {
-    synchronized (ps)
-    {
-      super.printStackTrace(ps);
-      if (cause != null)
-      {
-        ps.println("--- Nested Exception ---");
-        cause.printStackTrace(ps);
-      }
-    }
-  }
-
-  /**
-   * Prints the stack trace of this exception and any nested exception to the specified PrintWriter.
-   *
-   * @param pw
-   *          The PrintWriter to print the stack trace to. Must not be <code>null</code>.
-   */
-  public void printStackTrace(PrintWriter pw)
-  {
-    synchronized (pw)
-    {
-      super.printStackTrace(pw);
-      if (cause != null)
-      {
-        pw.println("--- Nested Exception ---");
-        cause.printStackTrace(pw);
-      }
-    }
-  }
 }
