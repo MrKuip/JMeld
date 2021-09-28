@@ -20,19 +20,19 @@ import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
 import org.jmeld.diff.JMRevision;
 import org.jmeld.fx.settings.FxRevisionUtil;
-import org.jmeld.scene.JavaFxComponent;
+import org.jmeld.scene.ComponentFx;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNode.Location;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class RevisionBar
-  extends JavaFxComponent
+public class RevisionBarFx
+  extends ComponentFx
 {
   private final Location m_location;
   private final JMDiffNode m_diffNode;
 
-  public RevisionBar(Location location, JMDiffNode diffNode)
+  public RevisionBarFx(Location location, JMDiffNode diffNode)
   {
     m_location = location;
     m_diffNode = diffNode;
@@ -46,8 +46,6 @@ public class RevisionBar
     double y;
     double height;
     int numberOfLines;
-
-    gc.clearRect(0, 0, getWidth(), getHeight());
 
     gc.setFill(Color.WHITE);
     gc.fillRect(0, 0, getWidth(), getHeight());

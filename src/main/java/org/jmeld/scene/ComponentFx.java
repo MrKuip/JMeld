@@ -21,16 +21,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 
 /**
- * Override this component to allow custom painting modelled after swing.
+ * Override this component to allow custom painting modeled after swing.
  * 
  * @author kees
  */
-public abstract class JavaFxComponent
+public abstract class ComponentFx
   extends Pane
 {
   private final Canvas canvas;
 
-  public JavaFxComponent()
+  public ComponentFx()
   {
     canvas = new Canvas(getWidth(), getHeight());
 
