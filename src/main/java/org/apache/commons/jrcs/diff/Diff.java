@@ -401,7 +401,7 @@ public class Diff
 
     for (int i = 0; i < result.length; i++)
     {
-      result[i] = new Integer(r.nextInt(size));
+      result[i] = Integer.valueOf(r.nextInt(size));
     }
 
     return result;

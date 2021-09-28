@@ -143,20 +143,21 @@ public class JMDelta
     original2 = new Character[original1.length];
     for (int j = 0; j < original1.length; j++)
     {
-      original2[j] = new Character(original1[j]);
+      original2[j] = Character.valueOf(original1[j]);
     }
 
     revised1 = revision.getRevisedString(revised).toCharArray();
     revised2 = new Character[revised1.length];
     for (int j = 0; j < revised1.length; j++)
     {
-      revised2[j] = new Character(revised1[j]);
+      revised2[j] = Character.valueOf(revised1[j]);
     }
 
     try
     {
       wt = TokenizerFactory.getInnerDiffTokenizer();
       o2 = wt.getTokens(revision.getOriginalString(original));
+
       r2 = wt.getTokens(revision.getRevisedString(revised));
 
       rev = new JMDiff().diff(o2, r2, revision.getIgnore());

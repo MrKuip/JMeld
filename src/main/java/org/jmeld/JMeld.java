@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.LookAndFeelManager;
@@ -63,10 +62,9 @@ public class JMeld
     frame.add(jmeldPanel);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.setIconImage(ImageUtil.createImageIcon(ImageUtil.getIcon("jmeld-small")).getImage());
-    new WindowPreference(frame.getTitle(),
-                         frame);
+    new WindowPreference(frame.getTitle(), frame);
     frame.addWindowListener(jmeldPanel.getWindowListener());
-    //frame.getRootPane().setTransferHandler(new FileDropHandler());
+    // frame.getRootPane().setTransferHandler(new FileDropHandler());
     frame.setVisible(true);
 
     // Just to keep the damned metacity happy
@@ -82,34 +80,31 @@ public class JMeld
       @Override
       public boolean dispatchKeyEvent(KeyEvent e)
       {
-        //System.out.println("dispatch: " + KeyStroke.getKeyStrokeForEvent(e));
-        //System.out.println("   event: " + e);
+        // System.out.println("dispatch: " + KeyStroke.getKeyStrokeForEvent(e));
+        // System.out.println(" event: " + e);
         return super.dispatchKeyEvent(e);
       }
 
       @Override
-      public void processKeyEvent(Component focusedComponent,
-          KeyEvent e)
+      public void processKeyEvent(Component focusedComponent, KeyEvent e)
       {
-        //System.out.println("processKeyEvent[" + focusedComponent.getClass()
-        //+ "] : " + KeyStroke.getKeyStrokeForEvent(e));
-        super.processKeyEvent(focusedComponent,
-                              e);
+        // System.out.println("processKeyEvent[" + focusedComponent.getClass()
+        // + "] : " + KeyStroke.getKeyStrokeForEvent(e));
+        super.processKeyEvent(focusedComponent, e);
       }
     });
   }
 
   public static void main(String[] args)
   {
-    //e.debug.EventDispatchThreadHangMonitor.initMonitoring();
-    if (JMeldSettings.getInstance().getEditor().isAntialiasEnabled())
-    {
-      System.setProperty("swing.aatext",
-                         "true");
-    }
+    // e.debug.EventDispatchThreadHangMonitor.initMonitoring();
+    /*
+     * if (JMeldSettings.getInstance().getEditor().isAntialiasEnabled()) {
+     * System.setProperty("swing.aatext", "true"); }
+     */
 
     // According to the latest news EVERYTHING regarding swing should
-    //   be executed on the EventDispatchThread
+    // be executed on the EventDispatchThread
     SwingUtilities.invokeLater(new JMeld(args));
   }
 }

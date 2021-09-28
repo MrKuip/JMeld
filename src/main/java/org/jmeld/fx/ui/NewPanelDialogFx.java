@@ -43,7 +43,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 import net.miginfocom.layout.CC;
 
-public class NewPanelFxDialog
+public class NewPanelDialogFx
 {
   // Class variables:
   // File comparison:
@@ -72,7 +72,7 @@ public class NewPanelFxDialog
     }
   }
 
-  public NewPanelFxDialog()
+  public NewPanelDialogFx()
   {
   }
 
@@ -203,7 +203,7 @@ public class NewPanelFxDialog
         File leftFile;
         File rightFile;
         JMDiffNode diffNode;
-        FileDiffPanel fileDiffPanel;
+        FileDiffPanelFx fileDiffPanel;
 
         leftFile = getLeftFile();
         rightFile = getRightFile();
@@ -233,7 +233,7 @@ public class NewPanelFxDialog
 
         diffNode.diff();
 
-        fileDiffPanel = new FileDiffPanel(diffNode);
+        fileDiffPanel = new FileDiffPanelFx(diffNode);
 
         return fileDiffPanel;
       }

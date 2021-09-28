@@ -19,22 +19,21 @@ package org.jmeld.settings.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
+import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
-
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Filter
-    extends AbstractConfigurationElement
+  extends AbstractConfigurationElement
 {
   private Boolean includeDefault;
   public SimpleStringProperty name = new SimpleStringProperty();
-  public final SimpleObjectProperty<ObservableList<FilterRule>> rules = new SimpleObjectProperty<>(FXCollections
-      .observableArrayList());
+  public final SimpleObjectProperty<ObservableList<FilterRule>> rules = new SimpleObjectProperty<>(
+      FXCollections.observableArrayList());
 
   public Filter(String name)
   {
@@ -142,7 +141,8 @@ public class Filter
   }
 
   /**
-   * Recursively get all rules. Recursively because the rule 'importFilter' will import all rules from that filter!
+   * Recursively get all rules. Recursively because the rule 'importFilter' will
+   * import all rules from that filter!
    */
   class GetRules
   {
@@ -172,10 +172,10 @@ public class Filter
         // Rule 'importFilter' will add it's own rules to the result.
         if (rule.getRule() == FilterRule.Rule.importFilter)
         {
-          nextFilter = JMeldSettings.getInstance().getFilter().getFilter(rule.getPattern());
+          nextFilter = JMeldSettingsFx.getInstance().getFilter().getFilter(rule.getPattern());
 
           // Don't evaluate a filter twice! (otherwise there will be a never
-          //   ending recursive loop)
+          // ending recursive loop)
           if (nextFilter != null && !evaluatedFilters.contains(nextFilter))
           {
             collectRules(nextFilter);

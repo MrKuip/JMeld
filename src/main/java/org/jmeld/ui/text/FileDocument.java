@@ -33,7 +33,7 @@ import org.jmeld.JMeldException;
 import org.jmeld.util.CharsetDetector;
 
 public class FileDocument
-    extends AbstractBufferDocument
+  extends AbstractBufferDocument
 {
   // instance variables:
   private File file;
@@ -61,8 +61,7 @@ public class FileDocument
     return (int) file.length();
   }
 
-  public Reader getReader()
-      throws JMeldException
+  public Reader getReader() throws JMeldException
   {
     BufferedInputStream bis;
 
@@ -75,34 +74,29 @@ public class FileDocument
     {
       // Try to create a reader that has the right charset.
       // If you use new FileReader(file) you get a reader
-      //   with the default charset. 
+      // with the default charset.
       bis = new BufferedInputStream(new FileInputStream(file));
       charset = CharsetDetector.getInstance().getCharset(bis);
-      return new BufferedReader(new InputStreamReader(bis,
-                                                      charset));
+      return new BufferedReader(new InputStreamReader(bis, charset));
     }
     catch (Exception ex)
     {
-      throw new JMeldException("Could not create FileReader for : " + file.getName(),
-                               ex);
+      throw new JMeldException("Could not create FileReader for : " + file.getName(), ex);
     }
   }
 
-  protected Writer getWriter()
-      throws JMeldException
+  protected Writer getWriter() throws JMeldException
   {
     BufferedOutputStream bos;
 
     try
     {
       bos = new BufferedOutputStream(new FileOutputStream(file));
-      return new BufferedWriter(new OutputStreamWriter(bos,
-                                                       charset));
+      return new BufferedWriter(new OutputStreamWriter(bos, charset));
     }
     catch (IOException ex)
     {
-      throw new JMeldException("Cannot create FileWriter for file: " + file.getName(),
-                               ex);
+      throw new JMeldException("Cannot create FileWriter for file: " + file.getName(), ex);
     }
   }
 

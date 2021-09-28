@@ -14,19 +14,41 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA  02110-1301  USA
  */
-package org.jmeld.util.node;
+package org.jmeld.scene;
 
-import org.jmeld.ui.text.BufferDocumentIF;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 
-public interface BufferNode
+/**
+ * Override this component to allow custom painting modelled after swing.
+ * 
+ * @author kees
+ */
+public abstract class JavaFxComponent
+  extends Pane
 {
-  public String getName();
+  private final Canvas canvas;
 
-  public long getSize();
+  public JavaFxComponent()
+  {
+    canvas = new Canvas(getWidth(), getHeight());
 
-  public BufferDocumentIF getDocument();
+    getChildren().add(canvas);
+    widthProperty().addListener(e -> canvas.setWidth(getWidth()));
+    heightProperty().addListener(e -> canvas.setHeight(getHeight()));
+  }
 
-  public boolean exists();
+  @Override
+  protected void layoutChildren()
+  {
+    super.layoutChildren();
 
-  public boolean isSameNode(BufferNode nodeRight);
+    if (isVisible())
+    {
+      paintComponent(canvas.getGraphicsContext2D());
+    }
+  }
+
+  protected abstract void paintComponent(GraphicsContext gc);
 }

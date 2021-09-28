@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.ui.NewPanelFxDialog.NewPanelIF;
+import org.jmeld.fx.ui.NewPanelDialogFx.NewPanelIF;
 import org.jmeld.fx.ui.settings.SettingsPane;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
@@ -44,13 +44,13 @@ import javafx.scene.layout.Region;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
 
-public class JMeldFxPane
+public class JMeldPaneFx
   extends MigPane
 {
   private TabPane tabPane;
   private Map<String, Tab> openTabs = new HashMap<>();
 
-  public JMeldFxPane()
+  public JMeldPaneFx()
   {
     super(new LC().noGrid().fill());
 
@@ -101,7 +101,7 @@ public class JMeldFxPane
     newButton.setOnAction((ae) -> {
       NewPanelIF newPanel;
 
-      newPanel = new NewPanelFxDialog().getNewPanel();
+      newPanel = new NewPanelDialogFx().getNewPanel();
       if (newPanel != null)
       {
         showTab(TabId.NEW, newPanel.getShortDescription(), () -> newPanel.getNode());

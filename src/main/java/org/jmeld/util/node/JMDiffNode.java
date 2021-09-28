@@ -3,6 +3,7 @@ package org.jmeld.util.node;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.tree.TreeNode;
@@ -37,13 +38,18 @@ public class JMDiffNode
   private String parentName;
   private JMDiffNode parent;
   private List<JMDiffNode> children;
-  private BufferNode nodeLeft;
-  private BufferNode nodeRight;
+  private EnumMap<Location, BufferNode> bufferNodeByLocationMap = new EnumMap<>(Location.class);
   private boolean leaf;
   private Compare compareState;
   private JMDiff diff;
   private JMRevision revision;
   private Ignore ignore;
+
+  public enum Location
+  {
+    LEFT,
+    RIGHT;
+  }
 
   public JMDiffNode(String name, boolean leaf)
   {
@@ -64,7 +70,8 @@ public class JMDiffNode
 
   private void initId()
   {
-    id = (nodeLeft != null ? nodeLeft.getName() : "x") + (nodeRight != null ? nodeRight.getName() : "x");
+    id = (getBufferNodeLeft() != null ? getBufferNodeLeft().getName() : "x")
+        + (getBufferNodeRight() != null ? getBufferNodeRight().getName() : "x");
   }
 
   public String getName()
@@ -100,24 +107,24 @@ public class JMDiffNode
 
   public void setBufferNodeLeft(BufferNode bufferNode)
   {
-    nodeLeft = bufferNode;
+    bufferNodeByLocationMap.put(Location.LEFT, bufferNode);
     initId();
   }
 
   public BufferNode getBufferNodeLeft()
   {
-    return nodeLeft;
+    return bufferNodeByLocationMap.get(Location.LEFT);
   }
 
   public void setBufferNodeRight(BufferNode bufferNode)
   {
-    nodeRight = bufferNode;
+    bufferNodeByLocationMap.put(Location.RIGHT, bufferNode);
     initId();
   }
 
   public BufferNode getBufferNodeRight()
   {
-    return nodeRight;
+    return bufferNodeByLocationMap.get(Location.RIGHT);
   }
 
   public List<JMDiffNode> getChildren()
@@ -185,9 +192,10 @@ public class JMDiffNode
   public AbstractCmd getCopyToRightCmd() throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeLeft.exists() && nodeLeft instanceof FileNode && nodeRight instanceof FileNode)
+    if (getBufferNodeLeft().exists() && getBufferNodeLeft() instanceof FileNode
+        && getBufferNodeRight() instanceof FileNode)
     {
-      return new CopyFileCmd(this, (FileNode) nodeLeft, (FileNode) nodeRight);
+      return new CopyFileCmd(this, (FileNode) getBufferNodeLeft(), (FileNode) getBufferNodeRight());
     }
 
     return null;
@@ -196,9 +204,10 @@ public class JMDiffNode
   public AbstractCmd getCopyToLeftCmd() throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeRight.exists() && nodeLeft instanceof FileNode && nodeRight instanceof FileNode)
+    if (getBufferNodeRight().exists() && getBufferNodeLeft() instanceof FileNode
+        && getBufferNodeRight() instanceof FileNode)
     {
-      return new CopyFileCmd(this, (FileNode) nodeRight, (FileNode) nodeLeft);
+      return new CopyFileCmd(this, (FileNode) getBufferNodeRight(), (FileNode) getBufferNodeLeft());
     }
 
     return null;
@@ -207,9 +216,9 @@ public class JMDiffNode
   public AbstractCmd getRemoveLeftCmd() throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeLeft instanceof FileNode)
+    if (getBufferNodeLeft() instanceof FileNode)
     {
-      return new RemoveFileCmd(this, (FileNode) nodeLeft);
+      return new RemoveFileCmd(this, (FileNode) getBufferNodeLeft());
     }
 
     return null;
@@ -218,9 +227,9 @@ public class JMDiffNode
   public AbstractCmd getRemoveRightCmd() throws Exception
   {
     // TODO: This is NOT OO!
-    if (nodeRight instanceof FileNode)
+    if (getBufferNodeRight() instanceof FileNode)
     {
-      return new RemoveFileCmd(this, (FileNode) nodeRight);
+      return new RemoveFileCmd(this, (FileNode) getBufferNodeRight());
     }
 
     return null;
@@ -230,19 +239,19 @@ public class JMDiffNode
   {
     boolean equals;
 
-    if (!nodeLeft.exists() && !nodeRight.exists())
+    if (!getBufferNodeLeft().exists() && !getBufferNodeRight().exists())
     {
       setCompareState(Compare.BothMissing);
       return;
     }
 
-    if (nodeLeft.exists() && !nodeRight.exists())
+    if (getBufferNodeLeft().exists() && !getBufferNodeRight().exists())
     {
       setCompareState(Compare.RightMissing);
       return;
     }
 
-    if (!nodeLeft.exists() && nodeRight.exists())
+    if (!getBufferNodeLeft().exists() && getBufferNodeRight().exists())
     {
       setCompareState(Compare.LeftMissing);
       return;
@@ -254,7 +263,13 @@ public class JMDiffNode
       return;
     }
 
-    equals = CompareUtil.contentEquals(nodeLeft, nodeRight, ignore);
+    if (getBufferNodeLeft().isSameNode(getBufferNodeRight()))
+    {
+      setCompareState(Compare.Equal);
+      return;
+    }
+
+    equals = CompareUtil.contentEquals(getBufferNodeLeft(), getBufferNodeRight(), ignore);
     setCompareState(equals ? Compare.Equal : Compare.NotEqual);
   }
 
@@ -269,20 +284,20 @@ public class JMDiffNode
     documentLeft = null;
     documentRight = null;
 
-    if (nodeLeft != null)
+    if (getBufferNodeLeft() != null)
     {
-      documentLeft = nodeLeft.getDocument();
-      StatusBar.getInstance().setState("Reading left : %s", nodeLeft.getName());
+      documentLeft = getBufferNodeLeft().getDocument();
+      StatusBar.getInstance().setState("Reading left : %s", getBufferNodeLeft().getName());
       if (documentLeft != null)
       {
         documentLeft.read();
       }
     }
 
-    if (nodeRight != null)
+    if (getBufferNodeRight() != null)
     {
-      documentRight = nodeRight.getDocument();
-      StatusBar.getInstance().setState("Reading right: %s", nodeRight.getName());
+      documentRight = getBufferNodeRight().getDocument();
+      StatusBar.getInstance().setState("Reading right: %s", getBufferNodeRight().getName());
       if (documentRight != null)
       {
         documentRight.read();

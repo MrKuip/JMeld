@@ -22,7 +22,7 @@ import org.jmeld.vc.StatusResult;
 import org.jmeld.vc.VersionControlIF;
 
 public class VersionControlBaseNode
-    extends JMeldNode
+  extends JMeldNode
     implements BufferNode
 {
   private VersionControlIF versionControl;
@@ -31,13 +31,9 @@ public class VersionControlBaseNode
   private File file;
   private VersionControlBaseDocument document;
 
-  public VersionControlBaseNode(VersionControlIF versionControl,
-      StatusResult.Entry entry,
-      FileNode fileNode,
-      File file)
+  public VersionControlBaseNode(VersionControlIF versionControl, StatusResult.Entry entry, FileNode fileNode, File file)
   {
-    super(entry.getName(),
-          !file.isDirectory());
+    super(entry.getName(), !file.isDirectory());
 
     this.versionControl = versionControl;
     this.entry = entry;
@@ -71,10 +67,7 @@ public class VersionControlBaseNode
   {
     if (document == null)
     {
-      document = new VersionControlBaseDocument(versionControl,
-                                                entry,
-                                                fileNode,
-                                                file);
+      document = new VersionControlBaseDocument(versionControl, entry, fileNode, file);
     }
 
     return document;
@@ -88,5 +81,11 @@ public class VersionControlBaseNode
 
   private void initialize()
   {
+  }
+
+  @Override
+  public boolean isSameNode(BufferNode nodeRight)
+  {
+    return false;
   }
 }

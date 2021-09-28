@@ -1,12 +1,12 @@
 package org.jmeld.util;
 
+import java.io.File;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.io.File;
 
 public class JsonPersister
 {
@@ -28,8 +28,7 @@ public class JsonPersister
   /**
    * Read a object of type 'clazz' from a file.
    */
-  public <T> T read(File file, Class<T> clazz)
-      throws Exception
+  public <T> T read(File file, Class<T> clazz) throws Exception
   {
     return m_objectMapper.readValue(file, clazz);
   }
@@ -37,8 +36,7 @@ public class JsonPersister
   /**
    * Write a object to a file.
    */
-  public void write(File file, Object object)
-      throws Exception
+  public void write(File file, Object object) throws Exception
   {
     m_objectMapper.writeValue(file, object);
   }

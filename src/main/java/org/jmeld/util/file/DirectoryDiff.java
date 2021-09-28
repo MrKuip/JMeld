@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.jmeld.tools.ant.DirectoryScanner;
-import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.util.StopWatch;
@@ -30,7 +29,7 @@ import org.jmeld.util.node.FileNode;
 import org.jmeld.util.node.JMDiffNode;
 
 public class DirectoryDiff
-    extends FolderDiff
+  extends FolderDiff
 {
   private File rightDirectory;
   private File leftDirectory;
@@ -38,10 +37,7 @@ public class DirectoryDiff
   private Map<String, JMDiffNode> nodes;
   private Filter filter;
 
-  public DirectoryDiff(File leftDirectory,
-      File rightDirectory,
-      Filter filter,
-      Mode mode)
+  public DirectoryDiff(File leftDirectory, File rightDirectory, Filter filter, Mode mode)
   {
     super(mode);
 
@@ -87,8 +83,7 @@ public class DirectoryDiff
     StatusBar.getInstance().start();
     StatusBar.getInstance().setState("Start scanning directories...");
 
-    rootNode = new JMDiffNode("<root>",
-                              false);
+    rootNode = new JMDiffNode("<root>", false);
     nodes = new HashMap<String, JMDiffNode>();
 
     ds = new DirectoryScanner();
@@ -96,13 +91,16 @@ public class DirectoryDiff
     ds.setBasedir(leftDirectory);
     if (filter != null)
     {
-      ds.setIncludes(filter.getIncludes());
-      ds.setExcludes(filter.getExcludes());
+      // ds.setIncludes(filter.getIncludes());
+      // ds.setExcludes(filter.getExcludes());
     }
     ds.setCaseSensitive(true);
-    ds.scan();
 
-    for (FileNode fileNode : ds.getIncludedFilesMap().values())
+    System.out.println("Scan: " + leftDirectory);
+    ds.scan();
+    System.out.println("End Scan in " + stopWatch.getElapsedTime());
+
+    for (FileNode fileNode : ds.getIncludedFiles())
     {
       node = addNode(fileNode.getName());
       node.setBufferNodeLeft(fileNode);
@@ -113,13 +111,13 @@ public class DirectoryDiff
     ds.setBasedir(rightDirectory);
     if (filter != null)
     {
-      ds.setIncludes(filter.getIncludes());
-      ds.setExcludes(filter.getExcludes());
+      // ds.setIncludes(filter.getIncludes());
+      // ds.setExcludes(filter.getExcludes());
     }
     ds.setCaseSensitive(true);
     ds.scan();
 
-    for (FileNode fileNode : ds.getIncludedFilesMap().values())
+    for (FileNode fileNode : ds.getIncludedFiles())
     {
       node = addNode(fileNode.getName());
       node.setBufferNodeRight(fileNode);
@@ -130,7 +128,7 @@ public class DirectoryDiff
     currentNumber = 0;
     for (JMDiffNode n : nodes.values())
     {
-      // Make sure that each node has it's opposite. 
+      // Make sure that each node has it's opposite.
       // This makes the following copying actions possible :
       // - copy 'left' to 'not existing'
       // - copy 'right' to 'not existing'
@@ -139,25 +137,20 @@ public class DirectoryDiff
         if (n.getBufferNodeRight() == null)
         {
           fn = (FileNode) n.getBufferNodeLeft();
-          fn = new FileNode(fn.getName(),
-                            new File(rightDirectory,
-                                     fn.getName()));
+          fn = new FileNode(fn.getName(), new File(rightDirectory, fn.getName()));
           n.setBufferNodeRight(fn);
         }
         else
         {
           fn = (FileNode) n.getBufferNodeRight();
-          fn = new FileNode(fn.getName(),
-                            new File(leftDirectory,
-                                     fn.getName()));
+          fn = new FileNode(fn.getName(), new File(leftDirectory, fn.getName()));
           n.setBufferNodeLeft(fn);
         }
       }
 
       n.compareContents();
 
-      StatusBar.getInstance().setProgress(++currentNumber,
-                                          numberOfNodes);
+      StatusBar.getInstance().setProgress(++currentNumber, numberOfNodes);
     }
 
     StatusBar.getInstance()
@@ -172,8 +165,7 @@ public class DirectoryDiff
     node = nodes.get(name);
     if (node == null)
     {
-      node = addNode(new JMDiffNode(name,
-                                    true));
+      node = addNode(new JMDiffNode(name, true));
     }
 
     return node;
@@ -185,8 +177,7 @@ public class DirectoryDiff
     JMDiffNode parent;
     File file;
 
-    nodes.put(node.getName(),
-              node);
+    nodes.put(node.getName(), node);
 
     parentName = node.getParentName();
     if (StringUtil.isEmpty(parentName))
@@ -198,14 +189,9 @@ public class DirectoryDiff
       parent = nodes.get(parentName);
       if (parent == null)
       {
-        parent = addNode(new JMDiffNode(parentName,
-                                        false));
-        parent.setBufferNodeRight(new FileNode(parentName,
-                                               new File(rightDirectory,
-                                                        parentName)));
-        parent.setBufferNodeLeft(new FileNode(parentName,
-                                              new File(leftDirectory,
-                                                       parentName)));
+        parent = addNode(new JMDiffNode(parentName, false));
+        parent.setBufferNodeRight(new FileNode(parentName, new File(rightDirectory, parentName)));
+        parent.setBufferNodeLeft(new FileNode(parentName, new File(leftDirectory, parentName)));
       }
     }
 
@@ -218,19 +204,37 @@ public class DirectoryDiff
     rootNode.print("");
   }
 
+  public static void test()
+  {
+    DirectoryDiff dd;
+
+    dd = new DirectoryDiff(new File("/media/kees/CubeBackup/backup/snapshot_001_2021_06_16__18_00_01/projecten/"),
+        new File("/media/kees/CubeBackup/backup/snapshot_008_2021_06_11__12_00_01/projecten/"), null, Mode.TWO_WAY);
+    dd.diff();
+  }
+
+  public static void test2()
+  {
+    DirectoryScanner ds;
+
+    ds = new DirectoryScanner();
+    ds.setShowStateOn(false);
+    ds.setBasedir("/media/kees/CubeBackup/backup/snapshot_001_2021_06_16__18_00_01/projecten/");
+    ds.setCaseSensitive(true);
+    ds.scan();
+  }
+
   public static void main(String[] args)
   {
-    DirectoryDiff diff;
     StopWatch stopWatch;
 
-    diff = new DirectoryDiff(new File(args[0]),
-                             new File(args[1]),
-                             JMeldSettings.getInstance().getFilter().getFilter("default"),
-                             DirectoryDiff.Mode.TWO_WAY);
     stopWatch = new StopWatch();
     stopWatch.start();
-    diff.diff();
-    System.out.println("diff took " + stopWatch.getElapsedTime() + " msec.");
-    diff.print();
+
+    System.out.println("Start Scan");
+
+    test();
+
+    System.out.println("End Scan in " + stopWatch.getElapsedTime());
   }
 }

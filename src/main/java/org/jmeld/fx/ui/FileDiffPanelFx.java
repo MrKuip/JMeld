@@ -25,7 +25,9 @@ import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.ui.fx.DiffLabel;
+import org.jmeld.ui.fx.RevisionBar;
 import org.jmeld.util.node.JMDiffNode;
+import org.jmeld.util.node.JMDiffNode.Location;
 import org.reactfx.collection.ListModification;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.binding.Bindings;
@@ -39,14 +41,14 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.image.ImageView;
 import net.miginfocom.layout.CC;
 
-public class FileDiffPanel
+public class FileDiffPanelFx
   extends MigPane
 {
   private JMDiffNode m_diffNode;
   private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty();
   private SimpleStringProperty m_fileNameRight = new SimpleStringProperty();
 
-  public FileDiffPanel(JMDiffNode diffNode)
+  public FileDiffPanelFx(JMDiffNode diffNode)
   {
     super("fill", "[p][p][fill, grow]0[p]0[p][fill, grow][p]", "[p][fill, grow][p]");
 
@@ -57,10 +59,10 @@ public class FileDiffPanel
 
   public void setDiffNode(JMDiffNode diffNode)
   {
-    this.m_diffNode = diffNode;
+    m_diffNode = diffNode;
 
-    m_fileNameLeft.set(diffNode.getBufferNodeLeft().getName());
-    m_fileNameRight.set(diffNode.getBufferNodeRight().getName());
+    m_fileNameLeft.set(m_diffNode.getBufferNodeLeft().getName());
+    m_fileNameRight.set(m_diffNode.getBufferNodeRight().getName());
   }
 
   private void init()
@@ -127,11 +129,11 @@ public class FileDiffPanel
     add(fileNameLeftLabel, new CC().spanX(2).grow());
     add(fileNameRightLabel, new CC().skip().spanX(2).grow());
     add(saveRightButton, new CC().wrap());
-    add(new Button("e"), new CC().growX());
+    add(new RevisionBar(Location.LEFT, m_diffNode), new CC().growX());
     add(fileContentLeftScrollPane, new CC().spanX(2).grow());
     add(new Button("g"), new CC());
     add(fileContentRightScrollPane, new CC().spanX(2).grow());
-    add(new Button("i"), new CC().wrap().growX());
+    add(new RevisionBar(Location.RIGHT, m_diffNode), new CC().wrap().growX());
     add(new Button("j"), new CC().skip());
     add(new Button("k"), new CC());
     add(new Button("l"), new CC().skip());

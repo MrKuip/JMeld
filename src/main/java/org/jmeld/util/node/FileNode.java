@@ -17,10 +17,11 @@
 package org.jmeld.util.node;
 
 import java.io.File;
+import java.nio.file.Files;
 import org.jmeld.ui.text.FileDocument;
 
 public class FileNode
-    extends JMeldNode
+  extends JMeldNode
     implements BufferNode
 {
   private File file;
@@ -28,11 +29,9 @@ public class FileNode
   private FileDocument document;
   private boolean exists;
 
-  public FileNode(String name,
-      File file)
+  public FileNode(String name, File file)
   {
-    super(name,
-          !file.isDirectory());
+    super(name, file == null ? false : !file.isDirectory());
     this.file = file;
 
     initialize();
@@ -97,11 +96,28 @@ public class FileNode
 
   private void initialize()
   {
-    exists = file.exists();
+    exists = file == null ? false : file.exists();
   }
 
   public boolean isReadonly()
   {
+    return false;
+  }
+
+  @Override
+  public boolean isSameNode(BufferNode nodeRight)
+  {
+    try
+    {
+      if (nodeRight instanceof FileNode)
+      {
+        return Files.isSameFile(file.toPath(), ((FileNode) nodeRight).file.toPath());
+      }
+    }
+    catch (Exception e)
+    {
+    }
+
     return false;
   }
 }

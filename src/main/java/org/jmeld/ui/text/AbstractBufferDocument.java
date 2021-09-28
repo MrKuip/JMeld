@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -31,9 +31,7 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Element;
 import javax.swing.text.GapContent;
 import javax.swing.text.PlainDocument;
-
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.model.SimpleEditableStyledDocument;
 import org.fxmisc.richtext.model.StyledDocument;
 import org.jmeld.JMeldException;
 import org.jmeld.util.StopWatch;
@@ -109,17 +107,12 @@ public abstract class AbstractBufferDocument
   {
     if (richDocument == null)
     {
-      StringBuilder contentBuilder;
       String content;
       CodeArea ca;
 
       ca = new CodeArea();
 
-      contentBuilder = new StringBuilder();
-
-      Stream.of(lineArray).forEach(line -> contentBuilder.append(line));
-
-      content = contentBuilder.toString();
+      content = Stream.of(lineArray).map(line -> line.toString()).collect(Collectors.joining());
 
       ca.replaceText(content);
 
