@@ -1,2 +1,8 @@
 rootProject.name = 'JMeld'
 
+new File(rootDir, "modules").eachDir { subDir ->
+  if(new File(subDir, "build.gradle").exists()) {
+    include "modules:${subDir.name}"
+  }
+}
+

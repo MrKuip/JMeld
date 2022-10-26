@@ -1,6 +1,6 @@
 
 plugins {
-  id 'java-library'
+  id 'common-conventions'
   id 'eclipse'
   id 'org.openjfx.javafxplugin' version '0.0.10'
   id 'application'
@@ -42,6 +42,7 @@ dependencies {
   implementation 'org.fxmisc.undo:undofx:2.1.0'
   implementation 'org.fxmisc.wellbehaved:wellbehavedfx:0.3.3'
   implementation 'org.reactfx:reactfx:2.0.M5'
+  implementation project(':modules:util')
 
   //implementation 'org.openjfx:javafx:13'
 
@@ -77,7 +78,10 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+mainClassName = 'org.jmeld.fx.JMeldFxMain'
+
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         //attributes 'Main-Class': 'org.jmeld.JMeld'
         attributes 'Main-Class': 'org.jmeld.fx.JMeldFxMain'
