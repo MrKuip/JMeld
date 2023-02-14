@@ -46,8 +46,8 @@ public class JMeld
 
   public JMeld(String[] args)
   {
-	StringHolder filterHolder;
-	ArgParser parser;
+	  StringHolder filterHolder;
+	  ArgParser parser;
 	  
     filterHolder = new StringHolder();
     
@@ -59,9 +59,9 @@ public class JMeld
     if(!StringUtil.isEmpty(filterHolder.getValue()))
     {
       filter = JMeldSettings.getInstance().getFilter().getFilter(filterHolder.getValue());
+      System.out.println("filter=" + filter);
     }
     
-    System.out.println("filter=" + filter.getName());
     fileNameList = new ArrayList<String>();
     for (String arg : args)
     {
