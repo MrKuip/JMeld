@@ -58,11 +58,6 @@ public class JMeld
       filter = JMeldSettings.getInstance().getFilter().getFilter(filterHolder.getValue());
     }
     
-    if(filter == null)
-    {
-      filter = JMeldSettings.getInstance().getFilter().getFilter("default");
-    }
-    
     System.out.println("filter=" + filter.getName());
     fileNameList = new ArrayList<String>();
     for (String arg : args)
