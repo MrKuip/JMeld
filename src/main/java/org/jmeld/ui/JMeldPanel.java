@@ -157,7 +157,7 @@ public class JMeldPanel
     // setTransferHandler(getDragAndDropHandler());
   }
 
-  public void openComparison(List<String> fileNameList)
+  public void openComparison(List<String> fileNameList, Filter filter)
   {
     String fileName1;
     String fileName2;
@@ -193,7 +193,8 @@ public class JMeldPanel
         {
           fileName2 = fileNameList.get(i);
           openComparison(fileName1,
-                         fileName2);
+                         fileName2,
+                         filter);
         }
       }
       else
@@ -208,19 +209,22 @@ public class JMeldPanel
 
           fileName2 = fileNameList.get(i + 1);
           openComparison(fileName1,
-                         fileName2);
+                         fileName2, 
+                         filter);
         }
       }
     }
     else
     {
       openComparison(fileNameList.get(0),
-                     null);
+                     null,
+                     filter);
     }
   }
 
   public void openComparison(String leftName,
-      String rightName)
+      String rightName, 
+      Filter filter)
   {
     File leftFile;
     File rightFile;
@@ -236,7 +240,7 @@ public class JMeldPanel
         {
           openDirectoryComparison(leftFile,
                                   rightFile,
-                                  JMeldSettings.getInstance().getFilter().getFilter("default"));
+                                  filter);
         }
         else
         {

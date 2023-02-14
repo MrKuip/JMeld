@@ -27,20 +27,46 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.jmeld.settings.JMeldSettings;
+import org.jmeld.settings.util.Filter;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.LookAndFeelManager;
+import org.jmeld.util.StringUtil;
 import org.jmeld.util.prefs.WindowPreference;
 
+import argparser.ArgParser;
+import argparser.StringHolder;
 
 public class JMeld
     implements Runnable
 {
+  private Filter filter;
   private List<String> fileNameList;
   private static JMeldPanel jmeldPanel;
 
   public JMeld(String[] args)
   {
+	StringHolder filterHolder;
+	ArgParser parser;
+	  
+    filterHolder = new StringHolder();
+    
+    parser = new ArgParser("java org.jmeld.JMeld");
+    parser.addOption("-f, --filter=%s #name of filter",  filterHolder);
+    
+    args = parser.matchAllArgs(args, 0, ArgParser.EXIT_ON_ERROR);
+    
+    if(!StringUtil.isEmpty(filterHolder.getValue()))
+    {
+      filter = JMeldSettings.getInstance().getFilter().getFilter(filterHolder.getValue());
+    }
+    
+    if(filter == null)
+    {
+      filter = JMeldSettings.getInstance().getFilter().getFilter("default");
+    }
+    
+    System.out.println("filter=" + filter.getName());
     fileNameList = new ArrayList<String>();
     for (String arg : args)
     {
@@ -75,7 +101,7 @@ public class JMeld
     // Just to keep the damned metacity happy
     frame.toFront();
 
-    jmeldPanel.openComparison(fileNameList);
+    jmeldPanel.openComparison(fileNameList, filter);
   }
 
   private void debugKeyboard()
