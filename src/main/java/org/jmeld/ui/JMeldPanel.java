@@ -229,7 +229,7 @@ public class JMeldPanel
     File leftFile;
     File rightFile;
     File file;
-
+    
     if (!StringUtil.isEmpty(leftName) && !StringUtil.isEmpty(rightName))
     {
       leftFile = new File(leftName);
@@ -1188,6 +1188,10 @@ public class JMeldPanel
       this.leftFile = leftFile;
       this.rightFile = rightFile;
       this.filter = filter;
+      if(this.filter == null)
+      {
+        this.filter = JMeldSettings.getInstance().getFilter().getFilter("default");
+      }
     }
 
     @Override

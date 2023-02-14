@@ -282,7 +282,8 @@ public class DragAndDropPanel
         try
         {
           JMeld.getJMeldPanel().openComparison(new File(new URL(leftFileName).toURI()).getAbsolutePath(),
-                                               new File(new URL(rightFileName).toURI()).getAbsolutePath());
+                                               new File(new URL(rightFileName).toURI()).getAbsolutePath(),
+                                               null);
         }
         catch (Exception ex)
         {
