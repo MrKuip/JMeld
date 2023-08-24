@@ -78,16 +78,12 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-mainClassName = 'org.jmeld.fx.JMeldFxMain'
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+task fatJar(type: Jar) {
     manifest {
-        //attributes 'Main-Class': 'org.jmeld.JMeld'
         attributes 'Main-Class': 'org.jmeld.fx.JMeldFxMain'
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    baseName = 'JMeldAll'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
-
