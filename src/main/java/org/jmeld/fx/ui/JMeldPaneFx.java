@@ -153,7 +153,7 @@ public class JMeldPaneFx
     add(tabPane, new CC().height("100%").width("100%"));
   }
 
-  private enum TabId
+  public enum TabId
   {
     NEW("diff", FxIcon.FOLDER),
     SETTINGS("Settings", FxIcon.SETTINGS),
@@ -185,7 +185,7 @@ public class JMeldPaneFx
     showTab(tabId, tabId.getDescription(), nodeSupplier);
   }
 
-  private void showTab(TabId tabId, String description, Supplier<Node> nodeSupplier)
+  public void showTab(TabId tabId, String description, Supplier<Node> nodeSupplier)
   {
     Tab tab;
     String tabKey;
