@@ -264,24 +264,26 @@ public class DragAndDropPanel
     {
       public void mousePressed(MouseEvent me)
       {
-        if (StringUtil.isEmpty(leftFileName) || StringUtil.isEmpty(rightFileName))
-        {
-          return;
-        }
-
-        if (leftFileName.equals(rightFileName))
-        {
-          return;
-        }
-
-        leftDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
-        rightDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
-
         try
         {
-          JMeld.getJMeldPanel().openComparison(new File(new URL(leftFileName).toURI()).getAbsolutePath(),
-                                               new File(new URL(rightFileName).toURI()).getAbsolutePath(),
-                                               null);
+          if (StringUtil.isEmpty(leftFileName))
+          {
+            return;
+          }
+
+          String leftPath = new File(new URL(leftFileName).toURI()).getAbsolutePath();
+          leftDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
+
+          String rightPath = "";
+          if  (!StringUtil.isEmpty(rightFileName)) {
+            if (leftFileName.equals(rightFileName))
+            {
+              return;
+            }
+            rightPath = new File(new URL(rightFileName).toURI()).getAbsolutePath();
+            rightDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
+          }
+          JMeld.getJMeldPanel().openComparison(leftPath, rightPath, null);
         }
         catch (Exception ex)
         {
