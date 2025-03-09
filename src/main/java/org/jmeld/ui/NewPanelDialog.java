@@ -183,7 +183,7 @@ public class NewPanelDialog
                    getFileComparisonPanel());
     tabbedPane.add("Directory Comparison",
                    getDirectoryComparisonPanel());
-    //tabbedPane.add("Version control", getVersionControlPanel());
+    tabbedPane.add("Version control", getVersionControlPanel());
 
     new TabbedPanePreference("NewPanelTabbedPane",
                              tabbedPane);

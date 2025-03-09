@@ -92,7 +92,7 @@ public class VersionControlDiff
                               false);
     nodes = new HashMap<String, JMDiffNode>();
 
-    versionControlList = VersionControlUtil.getVersionControl(directory);
+    versionControlList = getAvailableVersionControlList();
     if (versionControlList.isEmpty())
     {
       return;
@@ -145,6 +145,10 @@ public class VersionControlDiff
     StatusBar.getInstance()
         .setState("Ready comparing directories (took " + (stopWatch.getElapsedTime() / 1000) + " seconds)");
     StatusBar.getInstance().stop();
+  }
+
+  public List<VersionControlIF> getAvailableVersionControlList() {
+    return VersionControlUtil.getVersionControl(directory);
   }
 
   private JMDiffNode addNode(String name,
@@ -213,5 +217,9 @@ public class VersionControlDiff
     diff.diff();
     System.out.println("diff took " + stopWatch.getElapsedTime() + " msec.");
     diff.print();
+  }
+
+  public File getDirectory() {
+    return directory;
   }
 }
