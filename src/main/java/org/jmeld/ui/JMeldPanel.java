@@ -1360,7 +1360,7 @@ public class JMeldPanel
                                             diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab("TODO: Think of title!",
+            tabbedPane.addTab( diff.getAvailableVersionControlList().get(0).getName()+"-"+diff.getDirectory().getAbsolutePath(),
                               Icons.FOLDER.getSmallIcon(),
                               panel);
             tabbedPane.setSelectedComponent(panel);
