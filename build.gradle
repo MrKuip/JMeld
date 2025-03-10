@@ -1,8 +1,8 @@
 
 plugins {
-  id 'common-conventions'
+  id 'java-library'
   id 'eclipse'
-  id 'org.openjfx.javafxplugin' version '0.0.10'
+  id 'org.openjfx.javafxplugin' version '0.1.0'
   id 'application'
 }
 
@@ -12,12 +12,8 @@ repositories {
   mavenCentral()
 }
 
-project.ext {
-  javafxVersion = 17;
-}
-
 javafx {
-  version = "17"
+  version = "22.0.1"
   modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
 }
 
@@ -43,39 +39,15 @@ dependencies {
   implementation 'org.fxmisc.wellbehaved:wellbehavedfx:0.3.3'
   implementation 'org.reactfx:reactfx:2.0.M5'
   implementation project(':modules:util')
-
-  //implementation 'org.openjfx:javafx:13'
-
-  //implementation "org.openjfx:javafx-base:13"
-  //implementation "org.openjfx:javafx-graphics:13"
-  //implementation "org.openjfx:javafx-controls:13"
-
-  //implementation "org.openjfx:javafx-base:13:linux"
-  //implementation "org.openjfx:javafx-graphics:13:linux"
-  //implementation "org.openjfx:javafx-controls:13:linux"
-  //implementation "org.openjfx:javafx-swing:13:linux"
-
-  //implementation "org.openjfx:javafx-graphics:$javafx.version:win"
-  //implementation "org.openjfx:javafx-graphics:$javafx.version:mac"
-  //implementation "org.openjfx:javafx-swing:$javafx.version:win"
-  //implementation "org.openjfx:javafx-swing:$javafx.version:mac"
-
-  //runtimeOnly "org.openjfx:javafx-base:$javafxVersion:win"
-  //runtimeOnly "org.openjfx:javafx-graphics:$javafxVersion:win"
-  //runtimeOnly "org.openjfx:javafx-controls:$javafxVersion:win"
-
-  //runtimeOnly "org.openjfx:javafx-base:$javafxVersion:linux"
-  //runtimeOnly "org.openjfx:javafx-graphics:$javafxVersion:linux"
-  //runtimeOnly "org.openjfx:javafx-controls:$javafxVersion:linux"
-
-  //runtimeOnly "org.openjfx:javafx-base:$javafxVersion:mac"
-  //runtimeOnly "org.openjfx:javafx-graphics:$javafxVersion:mac"
-  //runtimeOnly "org.openjfx:javafx-controls:$javafxVersion:mac"
 }
 
 java {
   sourceCompatibility = JavaVersion.VERSION_1_8
   targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+application {
+  mainClass.set('org.jmeld.fx.JMeldFxMain');
 }
 
 task fatJar(type: Jar) {
