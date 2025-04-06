@@ -35,10 +35,12 @@ import org.jmeld.util.StringUtil;
 public class DragAndDropPanel
     extends JPanel
 {
+  public static Color DND_SELECTED_NOT_USED = ColorUtil.brighter(Color.LIGHT_GRAY);
+
   private JComponent leftDragAndDropArea;
   private JComponent rightDragAndDropArea;
-  private String leftFileName = "";
-  private String rightFileName = "";
+  private String leftFileName;
+  private String rightFileName;
 
   public DragAndDropPanel()
   {
@@ -63,6 +65,14 @@ public class DragAndDropPanel
 
     addHierarchyListener(getHierarchyListener());
     addMouseListener(getMouseListener());
+    cleanFiles();
+  }
+
+  private void cleanFiles() {
+    leftFileName = "";
+    rightFileName = "";
+    leftDragAndDropArea.setBackground(DND_SELECTED_NOT_USED);
+    rightDragAndDropArea.setBackground(DND_SELECTED_NOT_USED);
   }
 
   private HierarchyListener getHierarchyListener()
@@ -251,7 +261,7 @@ public class DragAndDropPanel
     p = new JPanel();
     p.setOpaque(true);
     p.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-    p.setBackground(ColorUtil.brighter(Color.LIGHT_GRAY));
+    p.setBackground(DND_SELECTED_NOT_USED);
     p.setPreferredSize(new Dimension(20,
                                      0));
 
@@ -264,24 +274,27 @@ public class DragAndDropPanel
     {
       public void mousePressed(MouseEvent me)
       {
-        if (StringUtil.isEmpty(leftFileName) || StringUtil.isEmpty(rightFileName))
-        {
-          return;
-        }
-
-        if (leftFileName.equals(rightFileName))
-        {
-          return;
-        }
-
-        leftDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
-        rightDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
-
         try
         {
-          JMeld.getJMeldPanel().openComparison(new File(new URL(leftFileName).toURI()).getAbsolutePath(),
-                                               new File(new URL(rightFileName).toURI()).getAbsolutePath(),
-                                               null);
+          if (StringUtil.isEmpty(leftFileName))
+          {
+            return;
+          }
+
+          String leftPath = new File(new URL(leftFileName).toURI()).getAbsolutePath();
+          leftDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
+
+          String rightPath = "";
+          if  (!StringUtil.isEmpty(rightFileName)) {
+            if (leftFileName.equals(rightFileName))
+            {
+              return;
+            }
+            rightPath = new File(new URL(rightFileName).toURI()).getAbsolutePath();
+            rightDragAndDropArea.setBackground(Colors.DND_SELECTED_USED);
+          }
+          cleanFiles();
+          JMeld.getJMeldPanel().openComparison(leftPath, rightPath, null);
         }
         catch (Exception ex)
         {
