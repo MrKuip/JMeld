@@ -1,7 +1,0 @@
-
-plugins {
-  id 'common-conventions'
-  id 'java-library'
-}
-
-
