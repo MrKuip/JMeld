@@ -10,12 +10,19 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.AbstractContentPanel;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.ui.util.Icons;
@@ -23,17 +30,23 @@ import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.conf.ConfigurationListenerIF;
 import org.jmeld.util.conf.ConfigurationManager;
 import org.jmeld.util.prefs.FileChooserPreference;
+import net.miginfocom.layout.CC;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author kees
  */
 public class SettingsPanel
-    extends SettingsPanelForm
+  extends AbstractContentPanel
     implements ConfigurationListenerIF
 {
   private DefaultListModel<Settings> listModel;
   private JMeldPanel mainPanel;
+  private JLabel fileLabel;
+  private JList<Settings> settingItems;
+  private JPanel settingsPanel;
+  private JButton saveButton;
 
   public SettingsPanel(JMeldPanel mainPanel)
   {
@@ -47,26 +60,34 @@ public class SettingsPanel
 
   private void init()
   {
+    JToolBar toolBarPanel;
+    JScrollPane jScrollPane1;
+    JButton reloadButton;
+    JButton saveAsButton;
+
+    setLayout(new MigLayout());
+
+    saveButton = new JButton();
+    saveAsButton = new JButton();
+    reloadButton = new JButton();
+    fileLabel = new JLabel();
+    jScrollPane1 = new JScrollPane();
+    settingItems = new JList<>();
+    settingsPanel = new JPanel();
+
     settingsPanel.setLayout(new CardLayout());
     for (Settings setting : Settings.values())
     {
-      settingsPanel.add(setting.getPanel(),
-                        setting.getName());
+      settingsPanel.add(setting.getPanel(), setting.getName());
     }
 
-    initButton(saveButton,
-               Icons.SAVE,
-               "Save settings");
+    initButton(saveButton, Icons.SAVE, "Save settings");
     saveButton.addActionListener(this::doSaveAction);
 
-    initButton(saveAsButton,
-               Icons.SAVE_AS,
-               "Save settings to a different file");
+    initButton(saveAsButton, Icons.SAVE_AS, "Save settings to a different file");
     saveAsButton.addActionListener(this::doSaveAsAction);
 
-    initButton(reloadButton,
-               Icons.RELOAD,
-               "Reload settings from a different file");
+    initButton(reloadButton, Icons.RELOAD, "Reload settings from a different file");
     reloadButton.addActionListener(this::doReloadAction);
 
     fileLabel.setText("");
@@ -80,18 +101,24 @@ public class SettingsPanel
     settingItems.setCellRenderer(new SettingCellRenderer());
     settingItems.setSelectedIndex(0);
     settingItems.addListSelectionListener(this::doSettingItemsAction);
+    jScrollPane1.setViewportView(settingItems);
+
+    toolBarPanel = new JToolBar();
+    toolBarPanel.add(saveButton);
+    toolBarPanel.add(Box.createHorizontalGlue());
+    toolBarPanel.add(saveAsButton);
+    toolBarPanel.add(reloadButton);
+
+    add(toolBarPanel, new CC().dockNorth());
+    add(jScrollPane1, new CC().dockWest().wrap().gapTop("20").gapLeft("10").width("pref!").height("100%"));
+    add(settingsPanel, new CC().gapTop("20").gapLeft("20").height("100%").width("100%"));
   }
 
-  private void initButton(JButton button,
-      Icons icon,
-      String toolTipText)
+  private void initButton(JButton button, Icons icon, String toolTipText)
   {
     button.setText("");
     button.setToolTipText(toolTipText);
-    button.setBorder(BorderFactory.createEmptyBorder(2,
-                                                     2,
-                                                     2,
-                                                     2));
+    button.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     button.setContentAreaFilled(false);
     button.setIcon(icon.getSmallIcon());
     button.setDisabledIcon(ImageUtil.createTransparentIcon(icon.getSmallIcon()));
@@ -116,8 +143,7 @@ public class SettingsPanel
     chooser = new JFileChooser();
     chooser.setApproveButtonText("Save");
     chooser.setDialogTitle("Save settings");
-    pref = new FileChooserPreference("SettingsSave",
-                                     chooser);
+    pref = new FileChooserPreference("SettingsSave", chooser);
 
     ancestor = SwingUtilities.getWindowAncestor((Component) ae.getSource());
     result = chooser.showOpenDialog(ancestor);
@@ -142,8 +168,7 @@ public class SettingsPanel
     chooser = new JFileChooser();
     chooser.setApproveButtonText("Reload");
     chooser.setDialogTitle("Reload settings");
-    pref = new FileChooserPreference("SettingsSave",
-                                     chooser);
+    pref = new FileChooserPreference("SettingsSave", chooser);
 
     ancestor = SwingUtilities.getWindowAncestor((Component) e.getSource());
     result = chooser.showOpenDialog(ancestor);
@@ -151,8 +176,7 @@ public class SettingsPanel
     {
       pref.save();
       file = chooser.getSelectedFile();
-      if (!ConfigurationManager.getInstance().reload(file,
-                                                     getConfiguration().getClass()))
+      if (!ConfigurationManager.getInstance().reload(file, getConfiguration().getClass()))
       {
         StatusBar.getInstance().setAlarm("Failed to reload from " + file);
       }
@@ -164,10 +188,9 @@ public class SettingsPanel
     CardLayout layout;
     Settings settings;
 
-    settings = (Settings) settingItems.getSelectedValue();
+    settings = settingItems.getSelectedValue();
     layout = (CardLayout) settingsPanel.getLayout();
-    layout.show(settingsPanel,
-                settings.getName());
+    layout.show(settingsPanel, settings.getName());
   }
 
   @Override

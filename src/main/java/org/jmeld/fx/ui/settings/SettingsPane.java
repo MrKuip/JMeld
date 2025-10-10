@@ -1,5 +1,9 @@
 package org.jmeld.fx.ui.settings;
 
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.fx.util.FxUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,17 +16,12 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.fx.util.FxUtils;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class SettingsPane
-    extends MigPane
+  extends MigPane
 {
 
   public SettingsPane()
@@ -47,14 +46,11 @@ public class SettingsPane
 
     listPanel = new ListView<>();
     panel = new FilterSettingsPane();
-    listPanel.getItems().add(new ListItem(contentPanel,
-                                          panel));
+    listPanel.getItems().add(new ListItem(contentPanel, panel));
     panel = new EditorSettingsPane();
-    listPanel.getItems().add(new ListItem(contentPanel,
-                                          panel));
+    listPanel.getItems().add(new ListItem(contentPanel, panel));
     panel = new FolderSettingsPane();
-    listPanel.getItems().add(new ListItem(contentPanel,
-                                          panel));
+    listPanel.getItems().add(new ListItem(contentPanel, panel));
     listPanel.getSelectionModel().selectedItemProperty().addListener(this::listSelectionChanged);
 
     listPanel.setCellFactory((l) -> new SettingsCell());
@@ -84,7 +80,6 @@ public class SettingsPane
         saveAsButton, reloadButton);
 
     add(toolbarPanel, new CC().dockNorth());
-    add(new Region(), new CC().dockSouth().wrap().gapTop("20"));
     add(listPanel, new CC().dockWest().wrap().gapTop("20").gapLeft("10").width("pref!").height("100%"));
     add(contentPanel, new CC().gapTop("20").gapLeft("20").height("100%").width("100%"));
   }
@@ -108,8 +103,7 @@ public class SettingsPane
     private Image image;
     private Node content;
 
-    public ListItem(StackPane stackPane,
-        SettingsPaneIF panel)
+    public ListItem(StackPane stackPane, SettingsPaneIF panel)
     {
       this.text = panel.getText();
       this.content = panel.getContent();
@@ -136,7 +130,7 @@ public class SettingsPane
   }
 
   static class SettingsCell
-      extends ListCell<ListItem>
+    extends ListCell<ListItem>
   {
     @Override
     public void updateItem(ListItem item, boolean empty)

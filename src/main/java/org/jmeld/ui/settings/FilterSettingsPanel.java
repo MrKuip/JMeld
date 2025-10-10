@@ -26,7 +26,7 @@ import org.jmeld.util.conf.ConfigurationListenerIF;
  * @author kees
  */
 public class FilterSettingsPanel
-    extends FilterSettingsForm
+  extends FilterSettingsForm
     implements ConfigurationListenerIF
 {
   JMTableModel filterTableModel;
@@ -53,14 +53,10 @@ public class FilterSettingsPanel
 
     filterRuleTableModel = getFilterRuleTableModel(0);
     filterRuleTable.setModel(filterRuleTableModel);
-    filterRuleTable.setDefaultEditor(Filter.class,
-                                     new JMComboBoxEditor(getFilters()));
-    filterRuleTable.setDefaultRenderer(Filter.class,
-                                       new JMComboBoxRenderer(getFilters()));
-    filterRuleTable.setDefaultEditor(FilterRule.Rule.class,
-                                     new JMComboBoxEditor(FilterRule.Rule.values()));
-    filterRuleTable.setDefaultRenderer(FilterRule.Rule.class,
-                                       new JMComboBoxRenderer(FilterRule.Rule.values()));
+    filterRuleTable.setDefaultEditor(Filter.class, new JMComboBoxEditor(getFilters()));
+    filterRuleTable.setDefaultRenderer(Filter.class, new JMComboBoxRenderer(getFilters()));
+    filterRuleTable.setDefaultEditor(FilterRule.Rule.class, new JMComboBoxEditor(FilterRule.Rule.values()));
+    filterRuleTable.setDefaultRenderer(FilterRule.Rule.class, new JMComboBoxRenderer(FilterRule.Rule.values()));
     filterRuleTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
     newFilterButton.addActionListener(getNewFilterAction());
@@ -70,9 +66,7 @@ public class FilterSettingsPanel
 
     if (filterTable.getRowCount() > 0)
     {
-      filterTable.addRowSelectionInterval(0,
-                                          0);
-      ;
+      filterTable.addRowSelectionInterval(0, 0);
     }
   }
 
@@ -102,8 +96,7 @@ public class FilterSettingsPanel
         }
 
         rowIndex = filterTable.getSelectedRow();
-        value = filterTableModel.getValueAt(rowIndex,
-                                            0);
+        value = filterTableModel.getValueAt(rowIndex, 0);
 
         filterNameLabel.setText(value.toString());
         filterRuleTableModel = getFilterRuleTableModel(rowIndex);
@@ -115,8 +108,7 @@ public class FilterSettingsPanel
 
   private ActionListener getNewFilterAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getFilterSettings().addFilter(new Filter("Untitled"));
       filterTableModel.fireTableDataChanged();
     };
@@ -124,8 +116,7 @@ public class FilterSettingsPanel
 
   private ActionListener getDeleteFilterAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       getFilterSettings().removeFilter(getSelectedFilter());
       filterTableModel.fireTableDataChanged();
     };
@@ -133,8 +124,7 @@ public class FilterSettingsPanel
 
   private ActionListener getNewFilterRuleAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Filter filter;
       FilterRule newRule;
       FilterRule selectedFilterRule;
@@ -145,18 +135,14 @@ public class FilterSettingsPanel
         return;
       }
 
-      newRule = new FilterRule("Untitled",
-                               FilterRule.Rule.excludes,
-                               "",
-                               true);
+      newRule = new FilterRule("Untitled", FilterRule.Rule.excludes, "", true);
 
       selectedFilterRule = getSelectedFilterRule();
       if (selectedFilterRule != null)
       {
         newRule.setDescription(selectedFilterRule.getDescription());
         newRule.setRule(selectedFilterRule.getRule());
-        filter.insertRule(selectedFilterRule,
-                          newRule);
+        filter.insertRule(selectedFilterRule, newRule);
       }
       else
       {
@@ -169,8 +155,7 @@ public class FilterSettingsPanel
 
   private ActionListener getDeleteFilterRuleAction()
   {
-    return (e) ->
-    {
+    return (e) -> {
       Filter filter;
       FilterRule rule;
 
@@ -202,18 +187,13 @@ public class FilterSettingsPanel
   }
 
   private class FilterTableModel
-      extends JMTableModel
+    extends JMTableModel
   {
     Column nameColumn;
 
     FilterTableModel()
     {
-      nameColumn = addColumn("name",
-                             null,
-                             "Name",
-                             String.class,
-                             -1,
-                             true);
+      nameColumn = addColumn("name", null, "Name", String.class, -1, true);
     }
 
     @Override
@@ -223,9 +203,7 @@ public class FilterSettingsPanel
     }
 
     @Override
-    public void setValueAt(Object value,
-        int rowIndex,
-        Column column)
+    public void setValueAt(Object value, int rowIndex, Column column)
     {
       Filter filter;
 
@@ -240,8 +218,7 @@ public class FilterSettingsPanel
     }
 
     @Override
-    public Object getValueAt(int rowIndex,
-        Column column)
+    public Object getValueAt(int rowIndex, Column column)
     {
       Filter filter;
 
@@ -264,7 +241,7 @@ public class FilterSettingsPanel
   }
 
   private class FilterRuleTableModel
-      extends JMTableModel
+    extends JMTableModel
   {
     private int filterIndex;
     private Column activeColumn;
@@ -281,30 +258,10 @@ public class FilterSettingsPanel
 
     private void init()
     {
-      activeColumn = addColumn("active",
-                               null,
-                               "Active",
-                               Boolean.class,
-                               5,
-                               true);
-      descriptionColumn = addColumn("description",
-                                    null,
-                                    "Description",
-                                    String.class,
-                                    15,
-                                    true);
-      ruleColumn = addColumn("rule",
-                             null,
-                             "Rule",
-                             FilterRule.Rule.class,
-                             10,
-                             true);
-      patternColumn = addColumn("pattern",
-                                null,
-                                "Pattern",
-                                String.class,
-                                -1,
-                                true);
+      activeColumn = addColumn("active", null, "Active", Boolean.class, 5, true);
+      descriptionColumn = addColumn("description", null, "Description", String.class, 15, true);
+      ruleColumn = addColumn("rule", null, "Rule", FilterRule.Rule.class, 10, true);
+      patternColumn = addColumn("pattern", null, "Pattern", String.class, -1, true);
     }
 
     @Override
@@ -314,9 +271,7 @@ public class FilterSettingsPanel
     }
 
     @Override
-    public void setValueAt(Object value,
-        int rowIndex,
-        Column column)
+    public void setValueAt(Object value, int rowIndex, Column column)
     {
       FilterRule rule;
 
@@ -336,8 +291,7 @@ public class FilterSettingsPanel
         if (column == ruleColumn)
         {
           rule.setRule((FilterRule.Rule) value);
-          fireTableCellUpdated(rowIndex,
-                               column.getColumnIndex());
+          fireTableCellUpdated(rowIndex, column.getColumnIndex());
         }
 
         if (column == patternColumn)
@@ -353,8 +307,7 @@ public class FilterSettingsPanel
     }
 
     @Override
-    public Object getValueAt(int rowIndex,
-        Column column)
+    public Object getValueAt(int rowIndex, Column column)
     {
       FilterRule rule;
 
@@ -391,8 +344,7 @@ public class FilterSettingsPanel
     }
 
     @Override
-    public Class getColumnClass(int rowIndex,
-        Column column)
+    public Class getColumnClass(int rowIndex, Column column)
     {
       FilterRule rule;
 

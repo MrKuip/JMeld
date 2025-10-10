@@ -5,21 +5,37 @@
  */
 package org.jmeld.ui.settings;
 
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
 import org.jmeld.settings.FolderSettings;
 import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.swing.GradientLabel;
 import org.jmeld.ui.util.Icons;
 import org.jmeld.util.conf.ConfigurationListenerIF;
+import net.miginfocom.layout.CC;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author kees
  */
 public class FolderSettingsPanel
-    extends FolderSettingsForm
+  extends JPanel
     implements ConfigurationListenerIF
 {
+  private JComboBox<FolderSettings.FolderView> hierarchyComboBox;
+  private JToggleButton onlyLeftButton;
+  private JToggleButton leftRightChangedButton;
+  private JToggleButton onlyRightButton;
+  private JToggleButton leftRightUnChangedButton;
+
   public FolderSettingsPanel()
   {
     init();
@@ -30,10 +46,23 @@ public class FolderSettingsPanel
   private void init()
   {
     FolderSettings settings;
+    String gap1;
+    String gap2;
+
+    gap1 = "30";
+    gap2 = "10";
+
+    setLayout(new MigLayout("", "[pref][pref][grow,fill]"));
 
     settings = getSettings();
 
-    hierarchyComboBox.setModel(new DefaultComboBoxModel(FolderSettings.FolderView.values()));
+    hierarchyComboBox = new JComboBox<>();
+    onlyLeftButton = new JToggleButton();
+    leftRightChangedButton = new JToggleButton();
+    onlyRightButton = new JToggleButton();
+    leftRightUnChangedButton = new JToggleButton();
+
+    hierarchyComboBox.setModel(new DefaultComboBoxModel<>(FolderSettings.FolderView.values()));
     hierarchyComboBox.setSelectedItem(getSettings().getView());
     hierarchyComboBox.setFocusable(false);
     hierarchyComboBox.addActionListener(getHierarchyAction());
@@ -61,12 +90,49 @@ public class FolderSettingsPanel
     leftRightUnChangedButton.setFocusable(false);
     leftRightUnChangedButton.setSelected(settings.getLeftRightUnChanged());
     leftRightUnChangedButton.addActionListener(getLeftRightUnChangedAction());
+
+    add(gradientHeader("Folder settings"), new CC().dockNorth().wrap().span(3).gapLeft("10"));
+    add(header(new JLabel("File filter")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
+    add(new JSeparator(), new CC().wrap().gapLeft(gap2).span(2).grow());
+    add(onlyLeftButton, new CC().gapLeft(gap1).split(2));
+    add(new JLabel("Show files that only exist on the left site"), new CC().wrap());
+    add(leftRightChangedButton, new CC().gapLeft(gap1).split(2));
+    add(new JLabel("Show files that are different"), new CC().wrap());
+    add(onlyRightButton, new CC().gapLeft(gap1).split(2));
+    add(new JLabel("Show files that only exist on the right site"), new CC().wrap());
+    add(leftRightUnChangedButton, new CC().gapLeft(gap1).split(2));
+    add(new JLabel("Show files that are equal"), new CC().wrap());
+    add(header(new JLabel("Miscellaneous")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
+    add(new JSeparator(), new CC().wrap().gapLeft(gap2).span(2).grow());
+    add(new JLabel("Default hierarchy"), new CC().gapLeft(gap1).split(2));
+    add(hierarchyComboBox, new CC().wrap());
+
+  }
+
+  private JComponent gradientHeader(String text)
+  {
+    GradientLabel label;
+
+    label = new GradientLabel();
+    label.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+    label.setText("Folder settings");
+    label.setFont(new java.awt.Font("Dialog", 1, 18));
+
+    return label;
+  }
+
+  private JComponent header(JLabel label)
+  {
+    label.setFont(label.getFont().deriveFont(Font.BOLD));
+
+    return label;
   }
 
   private ActionListener getHierarchyAction()
   {
     return new java.awt.event.ActionListener()
     {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         getSettings().setView((FolderSettings.FolderView) hierarchyComboBox.getSelectedItem());
@@ -78,6 +144,7 @@ public class FolderSettingsPanel
   {
     return new java.awt.event.ActionListener()
     {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         getSettings().setOnlyLeft(onlyLeftButton.isSelected());
@@ -89,6 +156,7 @@ public class FolderSettingsPanel
   {
     return new java.awt.event.ActionListener()
     {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         getSettings().setLeftRightChanged(leftRightChangedButton.isSelected());
@@ -100,6 +168,7 @@ public class FolderSettingsPanel
   {
     return new java.awt.event.ActionListener()
     {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         getSettings().setOnlyRight(onlyRightButton.isSelected());
@@ -111,6 +180,7 @@ public class FolderSettingsPanel
   {
     return new java.awt.event.ActionListener()
     {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         getSettings().setLeftRightUnChanged(leftRightUnChangedButton.isSelected());
@@ -118,6 +188,7 @@ public class FolderSettingsPanel
     };
   }
 
+  @Override
   public void configurationChanged()
   {
     //initConfiguration();
