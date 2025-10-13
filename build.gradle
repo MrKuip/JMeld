@@ -18,7 +18,7 @@ javafx {
 }
 
 dependencies {
-  implementation 'org.swinglabs:swing-layout:1.0.3'
+  //implementation 'org.swinglabs:swing-layout:1.0.3'
   implementation 'org.swinglabs:swingx:0.9.4'
   implementation 'com.jgoodies:forms:1.0.7'
   implementation 'com.ibm.icu:icu4j:4.0.1'
@@ -47,7 +47,8 @@ java {
 }
 
 application {
-  mainClass.set('org.jmeld.fx.JMeldFxMain');
+  mainClass.set('org.jmeld.Main');
+  //mainClass.set('org.jmeld.fx.JMeldFxMain');
 }
 
 task fatJar(type: Jar) {
