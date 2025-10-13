@@ -5,18 +5,15 @@
  */
 package org.jmeld.ui.settings;
 
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 import org.jmeld.settings.FolderSettings;
 import org.jmeld.settings.JMeldSettings;
-import org.jmeld.ui.swing.GradientLabel;
 import org.jmeld.ui.util.Icons;
 import org.jmeld.util.conf.ConfigurationListenerIF;
 import net.miginfocom.layout.CC;
@@ -91,8 +88,8 @@ public class FolderSettingsPanel
     leftRightUnChangedButton.setSelected(settings.getLeftRightUnChanged());
     leftRightUnChangedButton.addActionListener(getLeftRightUnChangedAction());
 
-    add(gradientHeader("Folder settings"), new CC().dockNorth().wrap().span(3).gapLeft("10"));
-    add(header(new JLabel("File filter")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
+    add(SettingsPanel.header1("Folder settings"), new CC().dockNorth().wrap().span(3).gapLeft("10"));
+    add(SettingsPanel.header2(new JLabel("File filter")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
     add(new JSeparator(), new CC().wrap().gapLeft(gap2).span(2).grow());
     add(onlyLeftButton, new CC().gapLeft(gap1).split(2));
     add(new JLabel("Show files that only exist on the left site"), new CC().wrap());
@@ -102,30 +99,11 @@ public class FolderSettingsPanel
     add(new JLabel("Show files that only exist on the right site"), new CC().wrap());
     add(leftRightUnChangedButton, new CC().gapLeft(gap1).split(2));
     add(new JLabel("Show files that are equal"), new CC().wrap());
-    add(header(new JLabel("Miscellaneous")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
+    add(SettingsPanel.header2(new JLabel("Miscellaneous")), new CC().wrap().gapLeft(gap2).gapTop("20").span(2));
     add(new JSeparator(), new CC().wrap().gapLeft(gap2).span(2).grow());
     add(new JLabel("Default hierarchy"), new CC().gapLeft(gap1).split(2));
     add(hierarchyComboBox, new CC().wrap());
 
-  }
-
-  private JComponent gradientHeader(String text)
-  {
-    GradientLabel label;
-
-    label = new GradientLabel();
-    label.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-    label.setText("Folder settings");
-    label.setFont(new java.awt.Font("Dialog", 1, 18));
-
-    return label;
-  }
-
-  private JComponent header(JLabel label)
-  {
-    label.setFont(label.getFont().deriveFont(Font.BOLD));
-
-    return label;
   }
 
   private ActionListener getHierarchyAction()

@@ -6,6 +6,7 @@ package org.jmeld.ui.settings;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -13,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -25,6 +27,7 @@ import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.AbstractContentPanel;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.StatusBar;
+import org.jmeld.ui.swing.GradientLabel;
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.util.conf.ConfigurationListenerIF;
@@ -225,6 +228,24 @@ public class SettingsPanel
     }
 
     return true;
+  }
+
+  static JComponent header1(String text)
+  {
+    GradientLabel label;
+
+    label = new GradientLabel();
+    label.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+    label.setText(text);
+    label.setFont(new java.awt.Font("Dialog", 1, 18));
+
+    return label;
+  }
+
+  static JComponent header2(JLabel label)
+  {
+    label.setFont(label.getFont().deriveFont(Font.BOLD));
+    return label;
   }
 
   private JMeldSettings getConfiguration()

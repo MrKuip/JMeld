@@ -72,7 +72,7 @@ public class EditorSettingsPane
     CheckBox leftSideReadonlyCheckbox;
     CheckBox antiAliasCheckbox;
     RadioButton fileEncodingDefaultButton;
-    RadioButton fileEncodingCustomButton;
+    RadioButton fileEncodingDetectButton;
     RadioButton fileEncodingSpecificButton;
     ComboBox<String> fileEncodingSpecificComboBox;
     ComboBox<ToolbarButtonIcon> toolBarIconInButtonComboBox;
@@ -186,7 +186,7 @@ public class EditorSettingsPane
     ignoreBlankLinesCheckBox = new CheckBox("Ignore blank lines");
     ignoreCaseCheckBox = new CheckBox("Ignore case");
     fileEncodingDefaultButton = new RadioButton("Default encoding on this computer (UTF-8)");
-    fileEncodingCustomButton = new RadioButton("Try to detect encoding");
+    fileEncodingDetectButton = new RadioButton("Try to detect encoding");
     fileEncodingSpecificButton = new RadioButton("Use encoding:");
     fileEncodingSpecificComboBox = new ComboBox<>();
     toolBarIconInButtonComboBox = new ComboBox<>();
@@ -207,7 +207,7 @@ public class EditorSettingsPane
     panel.add(header2(new Label("File encoding")), new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
     panel.add(new Separator(), new CC().wrap().gapLeft(gap2).span(2).grow());
     panel.add(fileEncodingDefaultButton, new CC().gapLeft(gap1).split(2).wrap());
-    panel.add(fileEncodingCustomButton, new CC().gapLeft(gap1).split(2).wrap());
+    panel.add(fileEncodingDetectButton, new CC().gapLeft(gap1).split(2).wrap());
     panel.add(fileEncodingSpecificButton, new CC().gapLeft(gap1).split(2));
     panel.add(fileEncodingSpecificComboBox, new CC().wrap());
     panel.add(header2(new Label("Toolbar appearance")), new CC().wrap().gapLeft(gap2).gapTop("10").span(2));
@@ -222,7 +222,7 @@ public class EditorSettingsPane
     toggleGroup = new ToggleGroup();
     fileEncodingDefaultButton.setToggleGroup(toggleGroup);
     fileEncodingSpecificButton.setToggleGroup(toggleGroup);
-    fileEncodingCustomButton.setToggleGroup(toggleGroup);
+    fileEncodingDetectButton.setToggleGroup(toggleGroup);
 
     // Binding
     ignoreWhitespaceAtBeginCheckBox.selectedProperty().bindBidirectional(
@@ -234,7 +234,7 @@ public class EditorSettingsPane
     ignoreBlankLinesCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreBlankLines);
     ignoreCaseCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreCase);
     fileEncodingDefaultButton.selectedProperty().bindBidirectional(getSettings().defaultFileEncodingEnabledProperty);
-    fileEncodingCustomButton.selectedProperty().bindBidirectional(getSettings().detectFileEncodingEnabledProperty);
+    fileEncodingDetectButton.selectedProperty().bindBidirectional(getSettings().detectFileEncodingEnabledProperty);
     fileEncodingSpecificButton.selectedProperty().bindBidirectional(getSettings().specificFileEncodingEnabledProperty);
     fileEncodingSpecificComboBox.valueProperty().bindBidirectional(getSettings().specificFileEncodingNameProperty);
     toolBarIconInButtonComboBox.valueProperty().bindBidirectional(getSettings().toolbarButtonIconProperty);

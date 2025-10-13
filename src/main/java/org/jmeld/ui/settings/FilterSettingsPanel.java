@@ -5,9 +5,14 @@
  */
 package org.jmeld.ui.settings;
 
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -16,24 +21,38 @@ import org.jmeld.settings.FilterSettings;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
+import org.jmeld.ui.swing.table.JMTable;
 import org.jmeld.ui.swing.table.JMTableModel;
 import org.jmeld.ui.swing.table.util.JMComboBoxEditor;
 import org.jmeld.ui.swing.table.util.JMComboBoxRenderer;
 import org.jmeld.util.conf.ConfigurationListenerIF;
+import net.miginfocom.layout.AC;
+import net.miginfocom.layout.CC;
+import net.miginfocom.layout.LC;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author kees
  */
 public class FilterSettingsPanel
-  extends FilterSettingsForm
+  extends JPanel
     implements ConfigurationListenerIF
 {
-  JMTableModel filterTableModel;
-  JMTableModel filterRuleTableModel;
+  private JMTableModel filterTableModel;
+  private JMTableModel filterRuleTableModel;
+  private JMTable filterTable;
+  private JMTable filterRuleTable;
+  private JLabel filterNameLabel;
+  private JButton filterNewButton;
+  private JButton filterDeleteButton;
+  private JButton filterRuleNewButton;
+  private JButton filterRuleDeleteButton;
 
   public FilterSettingsPanel()
   {
+    setLayout(new MigLayout(new LC().fill(), new AC().fill().grow(), new AC().fill().grow()));
+
     initConfiguration();
     init();
 
@@ -43,6 +62,37 @@ public class FilterSettingsPanel
   private void init()
   {
     ListSelectionModel selectionModel;
+    JPanel panel;
+    String gap2;
+
+    gap2 = "10";
+
+    filterTable = new JMTable();
+    filterRuleTable = new JMTable();
+    filterNameLabel = new JLabel();
+    filterNameLabel.setFont(filterNameLabel.getFont().deriveFont(Font.BOLD));
+    filterNewButton = new JButton("New");
+    filterDeleteButton = new JButton("Delete");
+    filterRuleNewButton = new JButton("New");
+    filterRuleDeleteButton = new JButton("Delete");
+
+    panel = new JPanel(new MigLayout(new LC(), new AC().index(0).grow().fill().index(1).fill()));
+
+    add(SettingsPanel.header1("Filter settings"), new CC().dockNorth().wrap().span().gapLeft("10"));
+    add(panel, new CC().grow());
+
+    panel.add(SettingsPanel.header2(new JLabel("Filters:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(new JScrollPane(filterTable), new CC().gapLeft(gap2).spanY(3).grow());
+    panel.add(filterNewButton, new CC().wrap());
+    panel.add(filterDeleteButton, new CC().wrap());
+    panel.add(new JPanel(), new CC().wrap());
+
+    panel.add(filterNameLabel, new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    panel.add(new JScrollPane(filterRuleTable), new CC().gapLeft(gap2).spanY(3).grow());
+    panel.add(filterRuleNewButton, new CC().wrap());
+    panel.add(filterRuleDeleteButton, new CC().wrap());
+    // Do not wrap last component! otherwise a gap is added
+    panel.add(new JPanel(), new CC());
 
     filterTableModel = getFilterTableModel();
     filterTable.setModel(filterTableModel);
@@ -59,10 +109,10 @@ public class FilterSettingsPanel
     filterRuleTable.setDefaultRenderer(FilterRule.Rule.class, new JMComboBoxRenderer(FilterRule.Rule.values()));
     filterRuleTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-    newFilterButton.addActionListener(getNewFilterAction());
-    deleteFilterButton.addActionListener(getDeleteFilterAction());
-    newFilterRuleButton.addActionListener(getNewFilterRuleAction());
-    deleteFilterRuleButton.addActionListener(getDeleteFilterRuleAction());
+    filterNewButton.addActionListener(getNewFilterAction());
+    filterDeleteButton.addActionListener(getDeleteFilterAction());
+    filterRuleNewButton.addActionListener(getNewFilterRuleAction());
+    filterRuleDeleteButton.addActionListener(getDeleteFilterRuleAction());
 
     if (filterTable.getRowCount() > 0)
     {
@@ -98,7 +148,7 @@ public class FilterSettingsPanel
         rowIndex = filterTable.getSelectedRow();
         value = filterTableModel.getValueAt(rowIndex, 0);
 
-        filterNameLabel.setText(value.toString());
+        filterNameLabel.setText("Filterrules for: " + value.toString());
         filterRuleTableModel = getFilterRuleTableModel(rowIndex);
         filterRuleTable.setModel(filterRuleTableModel);
         filterRuleTable.doLayout();

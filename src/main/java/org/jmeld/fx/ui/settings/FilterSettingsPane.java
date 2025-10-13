@@ -2,7 +2,12 @@ package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
-
+import org.jmeld.fx.settings.FilterSettingsFx;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.util.Filter;
+import org.jmeld.settings.util.FilterRule;
+import org.tbee.javafx.scene.layout.MigPane;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,22 +22,14 @@ import javafx.scene.text.Text;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
-import org.jmeld.fx.settings.FilterSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.settings.util.Filter;
-import org.jmeld.settings.util.FilterRule;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class FilterSettingsPane
-    extends MigPane
+  extends MigPane
     implements SettingsPaneIF
 {
   public FilterSettingsPane()
   {
-    super(new LC().fill(),
-          new AC().fill().grow(),
-          new AC().fill().grow());
+    super(new LC().fill(), new AC().fill().grow(), new AC().fill().grow());
 
     init();
   }
@@ -58,7 +55,6 @@ public class FilterSettingsPane
     Button filterDeleteButton;
     Button filterRuleNewButton;
     Button filterRuleDeleteButton;
-    String gap1;
     String gap2;
     TableColumn<Filter, String> nameColumn;
     TableColumn<FilterRule, Boolean> activeColumn;
@@ -66,11 +62,9 @@ public class FilterSettingsPane
     TableColumn<FilterRule, FilterRule.Rule> ruleColumn;
     TableColumn<FilterRule, String> patternColumn;
 
-    gap1 = "30";
     gap2 = "10";
 
-    panel = new MigPane(new LC(),
-                        new AC().index(0).grow().fill().index(1).fill());
+    panel = new MigPane(new LC(), new AC().index(0).grow().fill().index(1).fill());
 
     add(header1(new Text("Filter settings")), new CC().dockNorth().wrap().span().gapLeft("10"));
     add(panel, new CC().grow());
@@ -99,8 +93,8 @@ public class FilterSettingsPane
     filterTable.getColumns().add(nameColumn);
 
     filterNewButton.setOnAction((ae) -> filterTable.itemsProperty().get().add(new Filter("haha")));
-    filterDeleteButton.setOnAction((ae) -> filterTable.itemsProperty().get().remove(
-        filterTable.getSelectionModel().selectedItemProperty().get()));
+    filterDeleteButton.setOnAction(
+        (ae) -> filterTable.itemsProperty().get().remove(filterTable.getSelectionModel().selectedItemProperty().get()));
 
     filterRuleTable.setEditable(true);
 
@@ -127,8 +121,8 @@ public class FilterSettingsPane
     filterRuleTable.getColumns().add(patternColumn);
 
     filterRuleNewButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get().add(new FilterRule()));
-    filterRuleDeleteButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get().remove(
-        filterRuleTable.getSelectionModel().selectedItemProperty().get()));
+    filterRuleDeleteButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get()
+        .remove(filterRuleTable.getSelectionModel().selectedItemProperty().get()));
 
     // Layout:
     panel.add(header2(new Label("Filters:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
@@ -137,7 +131,12 @@ public class FilterSettingsPane
     panel.add(filterDeleteButton, new CC().wrap());
     panel.add(new Region(), new CC().wrap());
 
-    panel.add(header2(new Label("Filterrules for:")), new CC().wrap().gapLeft(gap2).gapTop("10").span());
+    Label label = header2(new Label("Filterrules for:"));
+    filterTable.getSelectionModel().selectedItemProperty().addListener((a) -> {
+      label.setText("Filter rules for: " + filterTable.getSelectionModel().getSelectedItem().getName());
+    });
+
+    panel.add(label, new CC().wrap().gapLeft(gap2).gapTop("10").span());
     panel.add(filterRuleTable, new CC().gapLeft(gap2).spanY(3).grow());
     panel.add(filterRuleNewButton, new CC().wrap());
     panel.add(filterRuleDeleteButton, new CC().wrap());
@@ -146,13 +145,13 @@ public class FilterSettingsPane
 
     // Binding:
     filterTable.itemsProperty().bind(getSettings().filters);
-
     filterTable.getSelectionModel().selectedItemProperty().addListener((obs, deselectedFilter, selectedFilter) -> {
       if (selectedFilter != null)
       {
         filterRuleTable.itemsProperty().bind(selectedFilter.rules);
       }
     });
+    filterTable.getSelectionModel().selectFirst();
 
   }
 

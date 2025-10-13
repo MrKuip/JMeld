@@ -24,6 +24,7 @@ import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -57,7 +58,7 @@ public class Filter
 
   public boolean isDefault()
   {
-    return "default".equals(name);
+    return "default".equals(name.get());
   }
 
   public void setName(String name)
@@ -69,6 +70,11 @@ public class Filter
   public String getName()
   {
     return name.get();
+  }
+
+  public StringProperty nameProperty()
+  {
+    return name;
   }
 
   public void insertRule(FilterRule ruleToInsertAfter, FilterRule rule)
