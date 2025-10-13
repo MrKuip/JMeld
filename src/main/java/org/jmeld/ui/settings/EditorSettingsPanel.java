@@ -23,13 +23,13 @@ import org.jmeld.JMeld;
 import org.jmeld.fx.settings.EditorSettingsFx.ToolbarButtonIcon;
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
+import org.jmeld.ui.JFontChooser;
 import org.jmeld.ui.util.EmptyIcon;
 import org.jmeld.ui.util.FontUtil;
 import org.jmeld.ui.util.LookAndFeelManager;
 import org.jmeld.util.CharsetDetector;
 import org.jmeld.util.Ignore;
 import org.jmeld.util.conf.ConfigurationListenerIF;
-import com.l2fprod.common.swing.JFontChooser;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
@@ -533,7 +533,7 @@ public class EditorSettingsPanel
     fontChooser = new JFontChooser();
     fontChooser.setSelectedFont(initialFont);
 
-    return fontChooser.showFontDialog(this, "");
+    return fontChooser.showFontDialog(this);
   }
 
   private ComboBoxModel<String> getLookAndFeelModel()
