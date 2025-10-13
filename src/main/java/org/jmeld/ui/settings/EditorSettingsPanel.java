@@ -70,7 +70,7 @@ public class EditorSettingsPanel
 
   public EditorSettingsPanel()
   {
-    setLayout(new MigLayout(new LC().noGrid()));
+    setLayout(new MigLayout(new LC().noGrid().fillX()));
     originalAntiAlias = getEditorSettings().isAntialiasEnabled();
 
     initLayout();
@@ -85,14 +85,13 @@ public class EditorSettingsPanel
     JPanel panel;
     String gap1;
     String gap2;
-    ButtonGroup buttonGroup;
 
     gap1 = "30";
     gap2 = "10";
 
-    panel = new JPanel(new MigLayout("", "[pref][pref][grow,fill]"));
+    add(SettingsPanel.header1("Editor settings"), new CC().dockNorth().wrap().grow().gapLeft("10"));
 
-    add(SettingsPanel.header1("Editor settings"), new CC().dockNorth().wrap().span(3).gapLeft("10"));
+    panel = new JPanel(new MigLayout("", "[pref][pref][grow,fill]"));
     add(panel, "west");
 
     // Creation:
