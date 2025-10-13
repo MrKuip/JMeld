@@ -59,5 +59,6 @@ public class JsonPersister
     m_objectMapper.setDefaultMergeable(true);
 
     m_objectMapper.registerModule(new JsonFxModule());
+    m_objectMapper.registerModule(new JsonSwingModule());
   }
 }

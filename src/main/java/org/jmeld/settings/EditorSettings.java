@@ -25,18 +25,18 @@ import org.jmeld.util.conf.AbstractConfiguration;
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
 public class EditorSettings
-    extends AbstractConfigurationElement
+  extends AbstractConfigurationElement
 {
   private boolean showLineNumbers;
   private int tabSize = 4;
   private Ignore ignore = new Ignore();
   private boolean leftsideReadonly;
   private boolean rightsideReadonly;
-  private ColorSetting addedColor;
-  private ColorSetting changedColor;
-  private ColorSetting deletedColor;
+  private Color addedColor;
+  private Color changedColor;
+  private Color deletedColor;
   private boolean customFont;
-  private FontSetting font;
+  private Font font;
   private boolean antialias;
   private boolean defaultFileEncodingEnabled = true;
   private boolean detectFileEncodingEnabled;
@@ -93,7 +93,7 @@ public class EditorSettings
   public void setIgnoreWhitespaceAtBegin(boolean ignoreWhitespaceAtBegin)
   {
     ignore.setIgnoreWhitespaceAtBegin(ignoreWhitespaceAtBegin);
-    //fireChanged();
+    fireChanged();
   }
 
   public void setIgnoreWhitespaceInBetween(boolean ignoreWhitespaceInBetween)
@@ -232,7 +232,7 @@ public class EditorSettings
 
   public void setAddedColor(Color color)
   {
-    addedColor = new ColorSetting(color);
+    addedColor = color;
     fireChanged();
   }
 
@@ -243,7 +243,7 @@ public class EditorSettings
 
   public void setChangedColor(Color color)
   {
-    changedColor = new ColorSetting(color);
+    changedColor = color;
     fireChanged();
   }
 
@@ -254,7 +254,7 @@ public class EditorSettings
 
   public void setDeletedColor(Color color)
   {
-    deletedColor = new ColorSetting(color);
+    deletedColor = color;
     fireChanged();
   }
 
@@ -347,33 +347,20 @@ public class EditorSettings
     return antialias;
   }
 
-  public void setFont(Font f)
+  public void setFont(Font font)
   {
-    font = new FontSetting(f);
+    this.font = font;
     fireChanged();
   }
 
   public Font getFont()
   {
-    return font == null ? null : font.getFont();
+    return font == null ? null : font;
   }
 
-  private Color getColor(ColorSetting cc, Color defaultColor)
+  private Color getColor(Color cc, Color defaultColor)
   {
-    Color c;
-
-    c = null;
-    if (cc != null)
-    {
-      c = cc.getColor();
-    }
-
-    if (c == null)
-    {
-      c = defaultColor;
-    }
-
-    return c;
+    return cc != null ? cc : defaultColor;
   }
 
   public enum ToolbarButtonIcon
