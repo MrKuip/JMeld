@@ -2,10 +2,16 @@ package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.jmeld.fx.settings.EditorSettingsFx;
+import org.jmeld.fx.settings.EditorSettingsFx.ToolbarButtonIcon;
+import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.ui.FxFontChooser;
+import org.jmeld.fx.util.FxIcon;
+import org.jmeld.util.CharsetDetector;
+import org.tbee.javafx.scene.layout.MigPane;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -23,16 +29,9 @@ import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
-import org.controlsfx.dialog.FontSelectorDialog;
-import org.jmeld.fx.settings.EditorSettingsFx;
-import org.jmeld.fx.settings.EditorSettingsFx.ToolbarButtonIcon;
-import org.jmeld.fx.settings.JMeldSettingsFx;
-import org.jmeld.fx.util.FxIcon;
-import org.jmeld.util.CharsetDetector;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class EditorSettingsPane
-    extends MigPane
+  extends MigPane
     implements SettingsPaneIF
 {
   public EditorSettingsPane()
@@ -90,8 +89,7 @@ public class EditorSettingsPane
     gap1 = "30";
     gap2 = "10";
 
-    panel = new MigPane("",
-                        "[pref][pref][grow,fill]");
+    panel = new MigPane("", "[pref][pref][grow,fill]");
 
     add(header1(new Text("Editor settings")), new CC().dockNorth().wrap().span(3).gapLeft("10"));
     add(panel, "west");
@@ -143,10 +141,10 @@ public class EditorSettingsPane
     customFontButton.setToggleGroup(toggleGroup);
 
     fontChooserButton.setOnAction((ae) -> {
-      FontSelectorDialog dialog;
+      FxFontChooser dialog;
       Optional<Font> font;
 
-      dialog = new FontSelectorDialog(null);
+      dialog = new FxFontChooser(new Text().getFont());
       font = dialog.showAndWait();
       if (font.isPresent())
       {
@@ -174,8 +172,7 @@ public class EditorSettingsPane
     colorDeletedColorPicker.valueProperty().bindBidirectional(getSettings().deletedColorProperty);
     colorChangedColorPicker.valueProperty().bindBidirectional(getSettings().changedColorProperty);
 
-    panel = new MigPane(null,
-                        "[pref][pref][grow,fill]");
+    panel = new MigPane(null, "[pref][pref][grow,fill]");
     add(panel, "west");
 
     // Creation
@@ -225,10 +222,10 @@ public class EditorSettingsPane
     fileEncodingDetectButton.setToggleGroup(toggleGroup);
 
     // Binding
-    ignoreWhitespaceAtBeginCheckBox.selectedProperty().bindBidirectional(
-        getSettings().getIgnore().ignoreWhitespaceAtBegin);
-    ignoreWhitespaceInBetweenCheckBox.selectedProperty().bindBidirectional(
-        getSettings().getIgnore().ignoreWhitespaceInBetween);
+    ignoreWhitespaceAtBeginCheckBox.selectedProperty()
+        .bindBidirectional(getSettings().getIgnore().ignoreWhitespaceAtBegin);
+    ignoreWhitespaceInBetweenCheckBox.selectedProperty()
+        .bindBidirectional(getSettings().getIgnore().ignoreWhitespaceInBetween);
     ignoreWhitespaceAtEndCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreWhitespaceAtEnd);
     ignoreEOLCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreEOL);
     ignoreBlankLinesCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreBlankLines);
