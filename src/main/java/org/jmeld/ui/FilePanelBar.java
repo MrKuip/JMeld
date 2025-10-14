@@ -22,10 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
-import org.jmeld.ui.util.ToolBarBuilder;
+import org.jmeld.ui.util.ToolBarSeparator;
+import net.miginfocom.swing.MigLayout;
 
 public class FilePanelBar
-    extends JPanel
+  extends JPanel
 {
   private FilePanel filePanel;
   private JLabel selected;
@@ -43,18 +44,15 @@ public class FilePanelBar
 
   private void init()
   {
-    ToolBarBuilder builder;
-
     selected = new JLabel();
     lineNumber = new JLabel();
     columnNumber = new JLabel();
 
-    builder = new ToolBarBuilder(this);
-    builder.addComponent(selected);
-    builder.addSpring();
-    builder.addComponent(lineNumber);
-    builder.addSeparator();
-    builder.addComponent(columnNumber);
+    setLayout(new MigLayout("insets 0"));
+    add(selected, "push");
+    add(lineNumber);
+    add(new ToolBarSeparator());
+    add(columnNumber);
 
     iconSelected = Icons.PANEL_SELECTED.getSmallerIcon();
     iconNotSelected = ImageUtil.createTransparentIcon(iconSelected);
@@ -97,13 +95,10 @@ public class FilePanelBar
       column = -1;
     }
 
-    text = String.format("Line: %05d/%05d",
-                         line + 1,
-                         editor.getLineCount());
+    text = String.format("Line: %05d/%05d", line + 1, editor.getLineCount());
     lineNumber.setText(text);
 
-    text = String.format("Column: %03d",
-                         column);
+    text = String.format("Column: %03d", column);
     columnNumber.setText(text);
   }
 }

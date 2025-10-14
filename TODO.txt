@@ -68,7 +68,7 @@ Release 2.1:
 Release 2.2:
 -        Inner diff sometimes doesn't work
 - [done] L&F preference
-- [done] Remove jgoodies FormLayout in favour of Matisse groupLayout.
+- [done] Remove jgoodies FormLayout in favour of MigLayout.
 - [done] BUG[STA] Adjust search in FolderDiffPanel
 - [done] BUG[WEB] Search doesn't behave after editing.
 - [NO  ] Exclude patterns in diff (Text Filters in meld). [WONT IMPLEMENT!]

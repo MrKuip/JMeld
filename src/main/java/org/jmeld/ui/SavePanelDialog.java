@@ -16,8 +16,6 @@
  */
 package org.jmeld.ui;
 
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +28,7 @@ import javax.swing.JPanel;
 import org.jmeld.JMeldException;
 import org.jmeld.ui.text.BufferDocumentIF;
 import org.jmeld.util.ObjectUtil;
+import net.miginfocom.swing.MigLayout;
 
 public class SavePanelDialog
 {
@@ -56,19 +55,16 @@ public class SavePanelDialog
     JOptionPane pane;
     JDialog dialog;
 
-    pane = new JOptionPane(getSavePanel(),
-                           JOptionPane.WARNING_MESSAGE);
+    pane = new JOptionPane(getSavePanel(), JOptionPane.WARNING_MESSAGE);
     pane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
 
-    dialog = pane.createDialog(meldPanel,
-                               "Save files");
+    dialog = pane.createDialog(meldPanel, "Save files");
     dialog.setResizable(true);
     try
     {
       dialog.show();
 
-      if (ObjectUtil.equals(pane.getValue(),
-                            JOptionPane.OK_OPTION))
+      if (ObjectUtil.equals(pane.getValue(), JOptionPane.OK_OPTION))
       {
         ok = true;
       }
@@ -114,10 +110,8 @@ public class SavePanelDialog
       catch (JMeldException ex)
       {
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(meldPanel,
-                                      "Can't write file" + document.getName(),
-                                      "Problem writing file",
-                                      JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(meldPanel, "Can't write file" + document.getName(), "Problem writing file",
+            JOptionPane.ERROR_MESSAGE);
       }
     }
   }
@@ -125,42 +119,22 @@ public class SavePanelDialog
   private JComponent getSavePanel()
   {
     JPanel panel;
-    String columns;
-    String rows;
-    FormLayout layout;
-    CellConstraints cc;
     JLabel label;
     JCheckBox checkBox;
     BufferDocumentIF document;
     Font font;
 
-    columns = "10px, fill:pref, 10px";
-    rows = "10px, fill:pref, 5px, fill:pref, 10px,";
-    for (int i = 0; i < documents.size(); i++)
-    {
-      rows += " fill:pref, ";
-    }
-
-    rows += " 10px";
-
-    layout = new FormLayout(columns,
-                            rows);
-    cc = new CellConstraints();
-
-    panel = new JPanel(layout);
+    panel = new JPanel(new MigLayout());
     label = new JLabel("Some files have been changed");
     font = label.getFont().deriveFont(Font.BOLD);
     label.setFont(font);
     label.setHorizontalAlignment(JLabel.LEFT);
-    panel.add(label,
-              cc.xy(2,
-                    2));
+    panel.add(label, "wrap");
+
     label = new JLabel("Which ones would you like to save?");
     label.setFont(font);
     label.setHorizontalAlignment(JLabel.LEFT);
-    panel.add(label,
-              cc.xy(2,
-                    4));
+    panel.add(label, "wrap, gapbottom 10");
 
     checkBoxes = new JCheckBox[documents.size()];
     for (int i = 0; i < documents.size(); i++)
@@ -182,9 +156,7 @@ public class SavePanelDialog
         checkBox.setSelected(true);
       }
 
-      panel.add(checkBox,
-                cc.xy(2,
-                      6 + i));
+      panel.add(checkBox, "wrap");
     }
 
     return panel;

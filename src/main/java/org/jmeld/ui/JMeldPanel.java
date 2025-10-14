@@ -16,9 +16,6 @@
  */
 package org.jmeld.ui;
 
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jidesoft.swing.JideTabbedPane;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -33,6 +30,7 @@ import javax.help.HelpSet;
 import javax.help.JHelpContentViewer;
 import javax.help.JHelpNavigator;
 import javax.help.NavigatorView;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -62,7 +60,7 @@ import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.SwingUtil;
 import org.jmeld.ui.util.TabIcon;
-import org.jmeld.ui.util.ToolBarBuilder;
+import org.jmeld.ui.util.ToolBarSeparator;
 import org.jmeld.ui.util.WidgetFactory;
 import org.jmeld.util.ObjectUtil;
 import org.jmeld.util.StringUtil;
@@ -72,9 +70,11 @@ import org.jmeld.util.file.VersionControlDiff;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
 import org.jmeld.vc.VersionControlUtil;
+import com.jidesoft.swing.JideTabbedPane;
+import net.miginfocom.swing.MigLayout;
 
 public class JMeldPanel
-    extends JPanel
+  extends JPanel
     implements ConfigurationListenerIF
 {
   // class variables:
@@ -142,10 +142,8 @@ public class JMeldPanel
 
     setLayout(new BorderLayout());
     addToolBar();
-    add(tabbedPane,
-        BorderLayout.CENTER);
-    add(getBar(),
-        BorderLayout.PAGE_END);
+    add(tabbedPane, BorderLayout.CENTER);
+    add(getBar(), BorderLayout.PAGE_END);
 
     tabbedPane.getModel().addChangeListener(getChangeListener());
 
@@ -189,9 +187,7 @@ public class JMeldPanel
         for (int i = 1; i < fileNameList.size(); i++)
         {
           fileName2 = fileNameList.get(i);
-          openComparison(fileName1,
-                         fileName2,
-                         filter);
+          openComparison(fileName1, fileName2, filter);
         }
       }
       else
@@ -205,28 +201,22 @@ public class JMeldPanel
           }
 
           fileName2 = fileNameList.get(i + 1);
-          openComparison(fileName1,
-                         fileName2, 
-                         filter);
+          openComparison(fileName1, fileName2, filter);
         }
       }
     }
     else
     {
-      openComparison(fileNameList.get(0),
-                     null,
-                     filter);
+      openComparison(fileNameList.get(0), null, filter);
     }
   }
 
-  public void openComparison(String leftName,
-      String rightName, 
-      Filter filter)
+  public void openComparison(String leftName, String rightName, Filter filter)
   {
     File leftFile;
     File rightFile;
     File file;
-    
+
     if (!StringUtil.isEmpty(leftName) && !StringUtil.isEmpty(rightName))
     {
       leftFile = new File(leftName);
@@ -235,23 +225,16 @@ public class JMeldPanel
       {
         if (rightFile.isDirectory())
         {
-          openDirectoryComparison(leftFile,
-                                  rightFile,
-                                  filter);
+          openDirectoryComparison(leftFile, rightFile, filter);
         }
         else
         {
-          openFileComparison(new File(leftFile,
-                                      rightName),
-                             rightFile,
-                             false);
+          openFileComparison(new File(leftFile, rightName), rightFile, false);
         }
       }
       else
       {
-        openFileComparison(leftFile,
-                           rightFile,
-                           false);
+        openFileComparison(leftFile, rightFile, false);
       }
     }
     else
@@ -267,29 +250,19 @@ public class JMeldPanel
     }
   }
 
-  public void openFileComparison(File leftFile,
-      File rightFile,
-      boolean openInBackground)
+  public void openFileComparison(File leftFile, File rightFile, boolean openInBackground)
   {
-    new NewFileComparisonPanel(leftFile,
-                               rightFile,
-                               openInBackground).execute();
+    new NewFileComparisonPanel(leftFile, rightFile, openInBackground).execute();
   }
 
-  public void openFileComparison(JMDiffNode diffNode,
-      boolean openInBackground)
+  public void openFileComparison(JMDiffNode diffNode, boolean openInBackground)
   {
-    new NewFileComparisonPanel(diffNode,
-                               openInBackground).execute();
+    new NewFileComparisonPanel(diffNode, openInBackground).execute();
   }
 
-  public void openDirectoryComparison(File leftFile,
-      File rightFile,
-      Filter filter)
+  public void openDirectoryComparison(File leftFile, File rightFile, Filter filter)
   {
-    new NewDirectoryComparisonPanel(leftFile,
-                                    rightFile,
-                                    filter).execute();
+    new NewDirectoryComparisonPanel(leftFile, rightFile, filter).execute();
   }
 
   public void openVersionControlComparison(File file)
@@ -312,8 +285,7 @@ public class JMeldPanel
       }
 
       toolBar = getToolBar();
-      add(toolBar,
-          BorderLayout.PAGE_START);
+      add(toolBar, BorderLayout.PAGE_START);
 
       revalidate();
     }
@@ -321,58 +293,33 @@ public class JMeldPanel
 
   private JComponent getToolBar()
   {
-    JButton button;
     JToolBar tb;
-    ToolBarBuilder builder;
 
     tb = new JToolBar();
     tb.setFloatable(false);
     tb.setRollover(true);
 
-    builder = new ToolBarBuilder(tb);
-
-    button = WidgetFactory.getToolBarButton(getAction(actions.NEW));
-    builder.addButton(button);
-    button = WidgetFactory.getToolBarButton(getAction(actions.SAVE));
-    builder.addButton(button);
-
-    builder.addSeparator();
-
-    button = WidgetFactory.getToolBarButton(getAction(actions.UNDO));
-    builder.addButton(button);
-    button = WidgetFactory.getToolBarButton(getAction(actions.REDO));
-    builder.addButton(button);
-
-    builder.addSpring();
-
-    button = WidgetFactory.getToolBarButton(getAction(actions.SETTINGS));
-    builder.addButton(button);
-
-    button = WidgetFactory.getToolBarButton(getAction(actions.HELP));
-    builder.addButton(button);
-
-    button = WidgetFactory.getToolBarButton(getAction(actions.ABOUT));
-    builder.addButton(button);
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.NEW)));
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.SAVE)));
+    tb.add(new ToolBarSeparator());
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.UNDO)));
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.REDO)));
+    tb.add(Box.createHorizontalGlue());
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.SETTINGS)));
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.HELP)));
+    tb.add(WidgetFactory.getToolBarButton(getAction(actions.ABOUT)));
 
     return tb;
   }
 
   private JComponent getBar()
   {
-    CellConstraints cc;
+    barContainer = new JPanel(new MigLayout("fill, insets 0, gap 0"));
 
-    cc = new CellConstraints();
-
-    barContainer = new JPanel(new FormLayout("0:grow",
-                                             "pref, pref, pref"));
-    barContainer.add(new JSeparator(),
-                     cc.xy(1,
-                           2));
+    barContainer.add(new JSeparator(), "growx, wrap");
     if (SHOW_STATUSBAR_OPTION.isEnabled())
     {
-      barContainer.add(StatusBar.getInstance(),
-                       cc.xy(1,
-                             3));
+      barContainer.add(StatusBar.getInstance(), "growx, wrap");
     }
 
     return barContainer;
@@ -394,166 +341,104 @@ public class JMeldPanel
 
     actionHandler = new ActionHandler();
 
-    action = actionHandler.createAction(actions.NEW,
-                                        this::doNew);
+    action = actionHandler.createAction(actions.NEW, this::doNew);
     action.setIcon(Icons.NEW);
     action.setToolTip("Merge 2 new files");
 
-    action = actionHandler.createAction(actions.SAVE,
-                                        this::doSave,
-                                        this::isSaveEnabled);
+    action = actionHandler.createAction(actions.SAVE, this::doSave, this::isSaveEnabled);
     action.setIcon(Icons.SAVE);
     action.setToolTip("Save the changed files");
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
-      installKey("ctrl S",
-                 action);
+      installKey("ctrl S", action);
     }
 
-    action = actionHandler.createAction(actions.UNDO,
-                                        this::doUndo,
-                                        this::isUndoEnabled);
+    action = actionHandler.createAction(actions.UNDO, this::doUndo, this::isUndoEnabled);
     action.setIcon(Icons.UNDO);
     action.setToolTip("Undo the latest change");
-    installKey("control Z",
-               action);
-    installKey("control Y",
-               action);
+    installKey("control Z", action);
+    installKey("control Y", action);
 
-    action = actionHandler.createAction(actions.REDO,
-                                        this::doRedo,
-                                        this::isRedoEnabled);
+    action = actionHandler.createAction(actions.REDO, this::doRedo, this::isRedoEnabled);
     action.setIcon(Icons.REDO);
     action.setToolTip("Redo the latest change");
-    installKey("control R",
-               action);
+    installKey("control R", action);
 
-    action = actionHandler.createAction(actions.LEFT,
-                                        this::doLeft);
-    installKey("LEFT",
-               action);
-    installKey("alt LEFT",
-               action);
-    installKey("alt KP_LEFT",
-               action);
+    action = actionHandler.createAction(actions.LEFT, this::doLeft);
+    installKey("LEFT", action);
+    installKey("alt LEFT", action);
+    installKey("alt KP_LEFT", action);
 
-    action = actionHandler.createAction(actions.RIGHT,
-                                        this::doRight);
-    installKey("RIGHT",
-               action);
-    installKey("alt RIGHT",
-               action);
-    installKey("alt KP_RIGHT",
-               action);
+    action = actionHandler.createAction(actions.RIGHT, this::doRight);
+    installKey("RIGHT", action);
+    installKey("alt RIGHT", action);
+    installKey("alt KP_RIGHT", action);
 
-    action = actionHandler.createAction(actions.UP,
-                                        this::doUp);
-    installKey("UP",
-               action);
-    installKey("alt UP",
-               action);
-    installKey("alt KP_UP",
-               action);
-    installKey("F7",
-               action);
+    action = actionHandler.createAction(actions.UP, this::doUp);
+    installKey("UP", action);
+    installKey("alt UP", action);
+    installKey("alt KP_UP", action);
+    installKey("F7", action);
 
-    action = actionHandler.createAction(actions.DOWN,
-                                        this::doDown);
-    installKey("DOWN",
-               action);
-    installKey("alt DOWN",
-               action);
-    installKey("alt KP_DOWN",
-               action);
-    installKey("F8",
-               action);
+    action = actionHandler.createAction(actions.DOWN, this::doDown);
+    installKey("DOWN", action);
+    installKey("alt DOWN", action);
+    installKey("alt KP_DOWN", action);
+    installKey("F8", action);
 
-    action = actionHandler.createAction(actions.ZOOM_PLUS,
-                                        this::doZoomPlus);
-    installKey("alt EQUALS",
-               action);
-    installKey("shift alt EQUALS",
-               action);
-    installKey("alt ADD",
-               action);
+    action = actionHandler.createAction(actions.ZOOM_PLUS, this::doZoomPlus);
+    installKey("alt EQUALS", action);
+    installKey("shift alt EQUALS", action);
+    installKey("alt ADD", action);
 
-    action = actionHandler.createAction(actions.ZOOM_MIN,
-                                        this::doZoomMin);
-    installKey("alt MINUS",
-               action);
-    installKey("shift alt MINUS",
-               action);
-    installKey("alt SUBTRACT",
-               action);
+    action = actionHandler.createAction(actions.ZOOM_MIN, this::doZoomMin);
+    installKey("alt MINUS", action);
+    installKey("shift alt MINUS", action);
+    installKey("alt SUBTRACT", action);
 
-    action = actionHandler.createAction(actions.GOTO_SELECTED,
-                                        this::doGoToSelected);
-    installKey("alt ENTER",
-               action);
+    action = actionHandler.createAction(actions.GOTO_SELECTED, this::doGoToSelected);
+    installKey("alt ENTER", action);
 
-    action = actionHandler.createAction(actions.GOTO_FIRST,
-                                        this::doGoToLast);
-    installKey("alt HOME",
-               action);
+    action = actionHandler.createAction(actions.GOTO_FIRST, this::doGoToLast);
+    installKey("alt HOME", action);
 
-    action = actionHandler.createAction(actions.GOTO_LAST,
-                                        this::doGoToLast);
-    installKey("alt END",
-               action);
+    action = actionHandler.createAction(actions.GOTO_LAST, this::doGoToLast);
+    installKey("alt END", action);
 
-    action = actionHandler.createAction(actions.GOTO_LINE,
-                                        this::doGoToLine);
-    installKey("ctrl L",
-               action);
+    action = actionHandler.createAction(actions.GOTO_LINE, this::doGoToLine);
+    installKey("ctrl L", action);
 
-    action = actionHandler.createAction(actions.START_SEARCH,
-                                        this::doStartSearch);
-    installKey("ctrl F",
-               action);
+    action = actionHandler.createAction(actions.START_SEARCH, this::doStartSearch);
+    installKey("ctrl F", action);
 
-    action = actionHandler.createAction(actions.NEXT_SEARCH,
-                                        this::doNextSearch);
-    installKey("F3",
-               action);
-    installKey("ctrl G",
-               action);
+    action = actionHandler.createAction(actions.NEXT_SEARCH, this::doNextSearch);
+    installKey("F3", action);
+    installKey("ctrl G", action);
 
-    action = actionHandler.createAction(actions.PREVIOUS_SEARCH,
-                                        this::doPreviousSearch);
-    installKey("shift F3",
-               action);
+    action = actionHandler.createAction(actions.PREVIOUS_SEARCH, this::doPreviousSearch);
+    installKey("shift F3", action);
 
-    action = actionHandler.createAction(actions.REFRESH,
-                                        this::doRefresh);
-    installKey("F5",
-               action);
+    action = actionHandler.createAction(actions.REFRESH, this::doRefresh);
+    installKey("F5", action);
 
-    action = actionHandler.createAction(actions.MERGEMODE,
-                                        this::doMergeMode);
-    installKey("F9",
-               action);
+    action = actionHandler.createAction(actions.MERGEMODE, this::doMergeMode);
+    installKey("F9", action);
 
     if (!STANDALONE_INSTALLKEY_OPTION.isEnabled())
     {
-      action = actionHandler.createAction(actions.HELP,
-                                          this::doHelp);
+      action = actionHandler.createAction(actions.HELP, this::doHelp);
       action.setIcon(Icons.HELP);
-      installKey("F1",
-                 action);
+      installKey("F1", action);
 
-      action = actionHandler.createAction(actions.ABOUT,
-                                          this::doAbout);
+      action = actionHandler.createAction(actions.ABOUT, this::doAbout);
       action.setIcon(Icons.ABOUT);
 
-      action = actionHandler.createAction(actions.SETTINGS,
-                                          this::doSettings);
+      action = actionHandler.createAction(actions.SETTINGS, this::doSettings);
       action.setIcon(Icons.SETTINGS);
       action.setToolTip("Settings");
 
-      action = actionHandler.createAction(actions.EXIT,
-                                          this::doExit);
-      installKey("ESCAPE",
-                 action);
+      action = actionHandler.createAction(actions.EXIT, this::doExit);
+      installKey("ESCAPE", action);
     }
   }
 
@@ -579,15 +464,12 @@ public class JMeldPanel
 
     if (dialog.getFunction() == NewPanelDialog.Function.FILE_COMPARISON)
     {
-      openFileComparison(new File(dialog.getLeftFileName()),
-                         new File(dialog.getRightFileName()),
-                         false);
+      openFileComparison(new File(dialog.getLeftFileName()), new File(dialog.getRightFileName()), false);
     }
     else if (dialog.getFunction() == NewPanelDialog.Function.DIRECTORY_COMPARISON)
     {
-      openDirectoryComparison(new File(dialog.getLeftDirectoryName()),
-                              new File(dialog.getRightDirectoryName()),
-                              dialog.getFilter());
+      openDirectoryComparison(new File(dialog.getLeftDirectoryName()), new File(dialog.getRightDirectoryName()),
+          dialog.getFilter());
     }
     else if (dialog.getFunction() == NewPanelDialog.Function.VERSION_CONTROL)
     {
@@ -787,24 +669,16 @@ public class JMeldPanel
     mergeMode = !mergeMode;
 
     action = getAction(actions.LEFT);
-    installKey(mergeMode,
-               "LEFT",
-               action);
+    installKey(mergeMode, "LEFT", action);
 
     action = getAction(actions.RIGHT);
-    installKey(mergeMode,
-               "RIGHT",
-               action);
+    installKey(mergeMode, "RIGHT", action);
 
     action = getAction(actions.UP);
-    installKey(mergeMode,
-               "UP",
-               action);
+    installKey(mergeMode, "UP", action);
 
     action = getAction(actions.DOWN);
-    installKey(mergeMode,
-               "DOWN",
-               action);
+    installKey(mergeMode, "DOWN", action);
 
     getCurrentContentPanel().doMergeMode(mergeMode);
     requestFocus();
@@ -812,7 +686,7 @@ public class JMeldPanel
     if (mergeMode)
     {
       StatusBar.getInstance().setNotification(actions.MERGEMODE.getName(),
-                                              ImageUtil.getSmallIcon("jmeld_mergemode-on"));
+          ImageUtil.getSmallIcon("jmeld_mergemode-on"));
     }
     else
     {
@@ -839,10 +713,8 @@ public class JMeldPanel
         return;
       }
 
-      url = HelpSet.findHelpSet(getClass().getClassLoader(),
-                                "help/jmeld/jmeld.hs");
-      helpSet = new HelpSet(getClass().getClassLoader(),
-                            url);
+      url = HelpSet.findHelpSet(getClass().getClassLoader(), "help/jmeld/jmeld.hs");
+      helpSet = new HelpSet(getClass().getClassLoader(), url);
       viewer = new JHelpContentViewer(helpSet);
       navigatorView = helpSet.getNavigatorView("TOC");
       navigator = (JHelpNavigator) navigatorView.createNavigator(viewer.getModel());
@@ -852,15 +724,12 @@ public class JMeldPanel
       content = new AbstractContentPanel();
       content.setId(contentId);
       content.setLayout(new BorderLayout());
-      content.add(splitPane,
-                  BorderLayout.CENTER);
+      content.add(splitPane, BorderLayout.CENTER);
 
       /*
        * content = new HelpPanel(this);
        */
-      tabbedPane.addTab("Help",
-                        Icons.HELP.getSmallIcon(),
-                        content);
+      tabbedPane.addTab("Help", Icons.HELP.getSmallIcon(), content);
       tabbedPane.setSelectedComponent(content);
     }
     catch (Exception ex)
@@ -883,12 +752,9 @@ public class JMeldPanel
     content = new AbstractContentPanel();
     content.setId(contentId);
     content.setLayout(new BorderLayout());
-    content.add(new JButton("JMeld version: " + Version.getVersion()),
-                BorderLayout.CENTER);
+    content.add(new JButton("JMeld version: " + Version.getVersion()), BorderLayout.CENTER);
 
-    tabbedPane.addTab("About",
-                      Icons.ABOUT.getSmallIcon(),
-                      content);
+    tabbedPane.addTab("About", Icons.ABOUT.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -925,7 +791,7 @@ public class JMeldPanel
     }
 
     // Exit a tab!
-    doExitTab((Component) getCurrentContentPanel());
+    doExitTab(getCurrentContentPanel());
   }
 
   public void doSettings(ActionEvent ae)
@@ -941,9 +807,7 @@ public class JMeldPanel
 
     content = new SettingsPanel(this);
     content.setId(contentId);
-    tabbedPane.addTab("Settings",
-                      Icons.SETTINGS.getSmallIcon(),
-                      content);
+    tabbedPane.addTab("Settings", Icons.SETTINGS.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -965,8 +829,7 @@ public class JMeldPanel
   {
     for (AbstractContentPanel contentPanel : getContentPanelList())
     {
-      if (ObjectUtil.equals(contentPanel.getId(),
-                            contentId))
+      if (ObjectUtil.equals(contentPanel.getId(), contentId))
       {
         System.out.println("already open: " + contentId);
         return contentPanel;
@@ -1031,7 +894,7 @@ public class JMeldPanel
   }
 
   class NewFileComparisonPanel
-      extends SwingWorker<String, Object>
+    extends SwingWorker<String, Object>
   {
     private JMDiffNode diffNode;
     private File leftFile;
@@ -1041,16 +904,13 @@ public class JMeldPanel
     private AbstractContentPanel contentPanel;
     private String contentId;
 
-    NewFileComparisonPanel(JMDiffNode diffNode,
-        boolean openInBackground)
+    NewFileComparisonPanel(JMDiffNode diffNode, boolean openInBackground)
     {
       this.diffNode = diffNode;
       this.openInBackground = openInBackground;
     }
 
-    NewFileComparisonPanel(File leftFile,
-        File rightFile,
-        boolean openInBackground)
+    NewFileComparisonPanel(File leftFile, File rightFile, boolean openInBackground)
     {
       this.leftFile = leftFile;
       this.rightFile = rightFile;
@@ -1084,10 +944,7 @@ public class JMeldPanel
             return "right filename(" + rightFile.getAbsolutePath() + ") doesn't exist";
           }
 
-          diffNode = JMDiffNodeFactory.create(leftFile.getName(),
-                                              leftFile,
-                                              rightFile.getName(),
-                                              rightFile);
+          diffNode = JMDiffNodeFactory.create(leftFile.getName(), leftFile, rightFile.getName(), rightFile);
         }
 
         contentId = "BufferDiffPanel:" + diffNode.getId();
@@ -1118,10 +975,7 @@ public class JMeldPanel
 
         if (result != null)
         {
-          JOptionPane.showMessageDialog(JMeldPanel.this,
-                                        result,
-                                        "Error opening file",
-                                        JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(JMeldPanel.this, result, "Error opening file", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
@@ -1135,9 +989,7 @@ public class JMeldPanel
             panel = new BufferDiffPanel(JMeldPanel.this);
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
-            tabbedPane.addTab(panel.getTitle(),
-                              Icons.NEW.getSmallIcon(),
-                              panel);
+            tabbedPane.addTab(panel.getTitle(), Icons.NEW.getSmallIcon(), panel);
             if (!openInBackground)
             {
               tabbedPane.setSelectedComponent(panel);
@@ -1173,7 +1025,7 @@ public class JMeldPanel
   }
 
   class NewDirectoryComparisonPanel
-      extends SwingWorker<String, Object>
+    extends SwingWorker<String, Object>
   {
     private File leftFile;
     private File rightFile;
@@ -1182,14 +1034,12 @@ public class JMeldPanel
     private AbstractContentPanel contentPanel;
     private String contentId;
 
-    NewDirectoryComparisonPanel(File leftFile,
-        File rightFile,
-        Filter filter)
+    NewDirectoryComparisonPanel(File leftFile, File rightFile, Filter filter)
     {
       this.leftFile = leftFile;
       this.rightFile = rightFile;
       this.filter = filter;
-      if(this.filter == null)
+      if (this.filter == null)
       {
         this.filter = JMeldSettings.getInstance().getFilter().getFilter("default");
       }
@@ -1232,10 +1082,7 @@ public class JMeldPanel
       contentPanel = getAlreadyOpen(contentId);
       if (contentPanel == null)
       {
-        diff = new DirectoryDiff(leftFile,
-                                 rightFile,
-                                 filter,
-                                 DirectoryDiff.Mode.TWO_WAY);
+        diff = new DirectoryDiff(leftFile, rightFile, filter, DirectoryDiff.Mode.TWO_WAY);
         diff.diff();
       }
 
@@ -1254,10 +1101,7 @@ public class JMeldPanel
 
         if (result != null)
         {
-          JOptionPane.showMessageDialog(JMeldPanel.this,
-                                        result,
-                                        "Error opening file",
-                                        JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(JMeldPanel.this, result, "Error opening file", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
@@ -1268,13 +1112,10 @@ public class JMeldPanel
           }
           else
           {
-            panel = new FolderDiffPanel(JMeldPanel.this,
-                                        diff);
+            panel = new FolderDiffPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab(panel.getTitle(),
-                              Icons.FOLDER.getSmallIcon(),
-                              panel);
+            tabbedPane.addTab(panel.getTitle(), Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
@@ -1287,7 +1128,7 @@ public class JMeldPanel
   }
 
   class NewVersionControlComparisonPanel
-      extends SwingWorker<String, Object>
+    extends SwingWorker<String, Object>
   {
     private File file;
     private VersionControlDiff diff;
@@ -1321,8 +1162,7 @@ public class JMeldPanel
       contentPanel = getAlreadyOpen(contentId);
       if (contentPanel == null)
       {
-        diff = new VersionControlDiff(file,
-                                      DirectoryDiff.Mode.TWO_WAY);
+        diff = new VersionControlDiff(file, DirectoryDiff.Mode.TWO_WAY);
         diff.diff();
       }
 
@@ -1341,10 +1181,7 @@ public class JMeldPanel
 
         if (result != null)
         {
-          JOptionPane.showMessageDialog(JMeldPanel.this,
-                                        result,
-                                        "Error opening file",
-                                        JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(JMeldPanel.this, result, "Error opening file", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
@@ -1356,13 +1193,10 @@ public class JMeldPanel
           else
           {
             // panel = new FolderDiffPanel(JMeldPanel.this, diff);
-            panel = new VersionControlPanel(JMeldPanel.this,
-                                            diff);
+            panel = new VersionControlPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab("TODO: Think of title!",
-                              Icons.FOLDER.getSmallIcon(),
-                              panel);
+            tabbedPane.addTab("TODO: Think of title!", Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
@@ -1374,36 +1208,26 @@ public class JMeldPanel
     }
   }
 
-  private void installKey(boolean enabled,
-      String key,
-      MeldAction action)
+  private void installKey(boolean enabled, String key, MeldAction action)
   {
     if (!enabled)
     {
-      deInstallKey(key,
-                   action);
+      deInstallKey(key, action);
     }
     else
     {
-      installKey(key,
-                 action);
+      installKey(key, action);
     }
   }
 
-  private void installKey(String key,
-      MeldAction action)
+  private void installKey(String key, MeldAction action)
   {
-    SwingUtil.installKey(this,
-                         key,
-                         action);
+    SwingUtil.installKey(this, key, action);
   }
 
-  private void deInstallKey(String key,
-      MeldAction action)
+  private void deInstallKey(String key, MeldAction action)
   {
-    SwingUtil.deInstallKey(this,
-                           key,
-                           action);
+    SwingUtil.deInstallKey(this, key, action);
   }
 
   /*
@@ -1454,14 +1278,9 @@ public class JMeldPanel
 
   public void activateBarDialog(AbstractBarDialog bar)
   {
-    CellConstraints cc;
-
     deactivateBarDialog();
 
-    cc = new CellConstraints();
-    barContainer.add(bar,
-                     cc.xy(1,
-                           1));
+    barContainer.add(bar, "north, growx");
     bar.activate();
     currentBarDialog = bar;
     barContainer.revalidate();
