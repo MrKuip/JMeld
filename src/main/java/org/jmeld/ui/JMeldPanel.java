@@ -53,7 +53,6 @@ import org.jmeld.ui.settings.SettingsPanel;
 import org.jmeld.ui.util.Icons;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.SwingUtil;
-import org.jmeld.ui.util.TabIcon;
 import org.jmeld.ui.util.ToolBarSeparator;
 import org.jmeld.ui.util.WidgetFactory;
 import org.jmeld.util.ObjectUtil;
@@ -1213,15 +1212,6 @@ public class JMeldPanel
     SwingUtil.deInstallKey(this, key, action);
   }
 
-  /*
-   * private TabIcon getTabIcon( String iconName, String text) { TabIcon icon;
-   * icon = new TabIcon( ImageUtil.getSmallImageIcon(iconName), text);
-   * icon.addExitListener(getTabExitListener()); return icon; } private
-   * TabExitListenerIF getTabExitListener() { return new TabExitListenerIF() {
-   * public boolean doExit(TabExitEvent te) { int tabIndex; tabIndex =
-   * te.getTabIndex(); if (tabIndex == -1) { return false; } return
-   * doExitTab(tabbedPane.getComponentAt(tabIndex)); } }; }
-   */
   private boolean doExitTab(Component component)
   {
     AbstractContentPanel content;
@@ -1246,12 +1236,6 @@ public class JMeldPanel
       {
         return false;
       }
-    }
-
-    icon = tabbedPane.getIconAt(index);
-    if (icon != null && icon instanceof TabIcon)
-    {
-      ((TabIcon) icon).exit();
     }
 
     tabbedPane.remove(component);
