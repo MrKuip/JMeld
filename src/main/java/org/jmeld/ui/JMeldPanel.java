@@ -23,13 +23,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.help.HelpSet;
-import javax.help.JHelpContentViewer;
-import javax.help.JHelpNavigator;
-import javax.help.NavigatorView;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -37,7 +32,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.AncestorEvent;
@@ -343,7 +337,7 @@ public class JMeldPanel
 
     action = actionHandler.createAction(actions.NEW, this::doNew);
     action.setIcon(Icons.NEW);
-    action.setToolTip("Merge 2 new files");
+    action.setToolTip("Diff 2 files");
 
     action = actionHandler.createAction(actions.SAVE, this::doSave, this::isSaveEnabled);
     action.setIcon(Icons.SAVE);
@@ -699,12 +693,6 @@ public class JMeldPanel
     try
     {
       AbstractContentPanel content;
-      URL url;
-      HelpSet helpSet;
-      JHelpContentViewer viewer;
-      JHelpNavigator navigator;
-      NavigatorView navigatorView;
-      JSplitPane splitPane;
       String contentId;
 
       contentId = "HelpPanel";
@@ -713,22 +701,17 @@ public class JMeldPanel
         return;
       }
 
-      url = HelpSet.findHelpSet(getClass().getClassLoader(), "help/jmeld/jmeld.hs");
-      helpSet = new HelpSet(getClass().getClassLoader(), url);
-      viewer = new JHelpContentViewer(helpSet);
-      navigatorView = helpSet.getNavigatorView("TOC");
-      navigator = (JHelpNavigator) navigatorView.createNavigator(viewer.getModel());
-      splitPane = new JSplitPane();
-      splitPane.setLeftComponent(navigator);
-      splitPane.setRightComponent(viewer);
+      HelpViewer helpViewer;
+
+      helpViewer = new HelpViewer();
+      helpViewer.showTOC("help/TOC.html");
+      helpViewer.showContent("help/Keys.html");
+
       content = new AbstractContentPanel();
       content.setId(contentId);
       content.setLayout(new BorderLayout());
-      content.add(splitPane, BorderLayout.CENTER);
+      content.add(helpViewer, BorderLayout.CENTER);
 
-      /*
-       * content = new HelpPanel(this);
-       */
       tabbedPane.addTab("Help", Icons.HELP.getSmallIcon(), content);
       tabbedPane.setSelectedComponent(content);
     }

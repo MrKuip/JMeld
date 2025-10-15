@@ -16,8 +16,12 @@
  */
 package org.jmeld.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class ResourceLoader
 {
@@ -26,6 +30,21 @@ public class ResourceLoader
   private ClassLoader getClassLoader()
   {
     return this.getClass().getClassLoader();
+  }
+
+  public static String getResourceAsString(String resourceName) throws IOException
+  {
+    StringBuilder stringBuilder = new StringBuilder();
+    try (BufferedReader reader = new BufferedReader(
+        new InputStreamReader(getResourceAsStream(resourceName), StandardCharsets.UTF_8)))
+    {
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+        stringBuilder.append(line).append("\n");
+      }
+    }
+    return stringBuilder.toString();
   }
 
   public static synchronized InputStream getResourceAsStream(String resourceName)

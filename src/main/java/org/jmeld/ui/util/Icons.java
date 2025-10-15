@@ -55,7 +55,10 @@ public enum Icons
   FILE_EXIST_NOTEQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.LIGHT_BLUE_FILL),
   FILE_EXIST_EQUAL("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE),
   FILE_NOT_EXIST("F08A4", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.WHITE),
-  PANEL_SELECTED("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.YELLOW);
+  PANEL_SELECTED("F08A1", IconColor.DEFAULT_OUTLINE, "F0764", IconColor.YELLOW),
+  BACK("F004D"),
+  FORWARD("F0054"),
+  HOME("F02DC");
 
   static private Map<String, Icon> m_iconImageMap = new HashMap<>();
   static final public Icon ONLY_RIGHT;
@@ -107,13 +110,9 @@ public enum Icons
 
   public enum IconColor
   {
-    DEFAULT_OUTLINE(new Color(0,
-                              74,
-                              131)),
+    DEFAULT_OUTLINE(new Color(0, 74, 131)),
     DEFAULT_FILL(Color.WHITE),
-    LIGHT_BLUE_FILL(new Color(160,
-                              200,
-                              255)),
+    LIGHT_BLUE_FILL(new Color(160, 200, 255)),
     WHITE(Color.WHITE),
     BLACK(Color.BLACK),
     RED(Color.RED),
@@ -140,25 +139,15 @@ public enum Icons
 
   Icons(String outlineCodepoint)
   {
-    this(outlineCodepoint,
-         IconColor.DEFAULT_OUTLINE,
-         null,
-         null);
+    this(outlineCodepoint, IconColor.DEFAULT_OUTLINE, null, null);
   }
 
-  Icons(String outlineCodepoint,
-      String fillCodepoint)
+  Icons(String outlineCodepoint, String fillCodepoint)
   {
-    this(outlineCodepoint,
-         IconColor.DEFAULT_OUTLINE,
-         fillCodepoint,
-         IconColor.DEFAULT_FILL);
+    this(outlineCodepoint, IconColor.DEFAULT_OUTLINE, fillCodepoint, IconColor.DEFAULT_FILL);
   }
 
-  Icons(String outlineCodepoint,
-      IconColor outlineColor,
-      String fillCodepoint,
-      IconColor fillColor)
+  Icons(String outlineCodepoint, IconColor outlineColor, String fillCodepoint, IconColor fillColor)
   {
     m_outlineCodepoint = outlineCodepoint;
     m_outlineColor = outlineColor;
@@ -215,9 +204,7 @@ public enum Icons
       return icon;
     }
 
-    icon = ImageUtil.createImageIcon(new MyIcon(codepointString,
-                                                iconColor,
-                                                iconSize));
+    icon = ImageUtil.createImageIcon(new MyIcon(codepointString, iconColor, iconSize));
 
     m_iconImageMap.put(key, icon);
     return icon;
@@ -230,9 +217,7 @@ public enum Icons
     private IconColor mii_iconColor;
     private IconSize mii_iconSize;
 
-    public MyIcon(String codepointString,
-        IconColor iconColor,
-        IconSize iconSize)
+    public MyIcon(String codepointString, IconColor iconColor, IconSize iconSize)
     {
       mii_codepointString = codepointString;
       mii_iconColor = iconColor;
