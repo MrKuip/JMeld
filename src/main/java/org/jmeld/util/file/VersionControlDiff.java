@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.jmeld.tools.ant.DirectoryScanner;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.util.StopWatch;
 import org.jmeld.util.StringUtil;
@@ -33,14 +32,13 @@ import org.jmeld.vc.VersionControlIF;
 import org.jmeld.vc.VersionControlUtil;
 
 public class VersionControlDiff
-    extends FolderDiff
+  extends FolderDiff
 {
   private File directory;
   private JMDiffNode rootNode;
   private Map<String, JMDiffNode> nodes;
 
-  public VersionControlDiff(File directory,
-      Mode mode)
+  public VersionControlDiff(File directory, Mode mode)
   {
     super(mode);
 
@@ -59,19 +57,21 @@ public class VersionControlDiff
     }
   }
 
+  @Override
   public JMDiffNode getRootNode()
   {
     return rootNode;
   }
 
+  @Override
   public Collection<JMDiffNode> getNodes()
   {
     return nodes.values();
   }
 
+  @Override
   public void diff()
   {
-    DirectoryScanner ds;
     JMDiffNode node;
     StopWatch stopWatch;
     int numberOfNodes;
@@ -88,8 +88,7 @@ public class VersionControlDiff
     StatusBar.getInstance().start();
     StatusBar.getInstance().setState("Start scanning directories...");
 
-    rootNode = new JMDiffNode("<root>",
-                              false);
+    rootNode = new JMDiffNode("<root>", false);
     nodes = new HashMap<String, JMDiffNode>();
 
     versionControlList = VersionControlUtil.getVersionControl(directory);
@@ -109,15 +108,10 @@ public class VersionControlDiff
       //file = new File(statusResult.getPath(), entry.getName());
       file = new File(entry.getName());
 
-      node = addNode(entry.getName(),
-                     !file.isDirectory());
+      node = addNode(entry.getName(), !file.isDirectory());
 
-      fileNode = new FileNode(entry.getName(),
-                              file);
-      node.setBufferNodeLeft(new VersionControlBaseNode(versionControl,
-                                                        entry,
-                                                        fileNode,
-                                                        file));
+      fileNode = new FileNode(entry.getName(), file);
+      node.setBufferNodeLeft(new VersionControlBaseNode(versionControl, entry, fileNode, file));
       node.setBufferNodeRight(fileNode);
 
       switch (entry.getStatus())
@@ -147,16 +141,14 @@ public class VersionControlDiff
     StatusBar.getInstance().stop();
   }
 
-  private JMDiffNode addNode(String name,
-      boolean leaf)
+  private JMDiffNode addNode(String name, boolean leaf)
   {
     JMDiffNode node;
 
     node = nodes.get(name);
     if (node == null)
     {
-      node = addNode(new JMDiffNode(name,
-                                    leaf));
+      node = addNode(new JMDiffNode(name, leaf));
     }
 
     return node;
@@ -169,8 +161,7 @@ public class VersionControlDiff
     File file;
     FileNode fn;
 
-    nodes.put(node.getName(),
-              node);
+    nodes.put(node.getName(), node);
 
     parentName = node.getParentName();
     if (StringUtil.isEmpty(parentName))
@@ -182,11 +173,8 @@ public class VersionControlDiff
       parent = nodes.get(parentName);
       if (parent == null)
       {
-        parent = addNode(new JMDiffNode(parentName,
-                                        false));
-        fn = new FileNode(parentName,
-                          new File(directory,
-                                   parentName));
+        parent = addNode(new JMDiffNode(parentName, false));
+        fn = new FileNode(parentName, new File(directory, parentName));
         parent.setBufferNodeRight(fn);
         parent.setBufferNodeLeft(fn);
       }
@@ -206,8 +194,7 @@ public class VersionControlDiff
     VersionControlDiff diff;
     StopWatch stopWatch;
 
-    diff = new VersionControlDiff(new File(args[0]),
-                                  VersionControlDiff.Mode.TWO_WAY);
+    diff = new VersionControlDiff(new File(args[0]), VersionControlDiff.Mode.TWO_WAY);
     stopWatch = new StopWatch();
     stopWatch.start();
     diff.diff();

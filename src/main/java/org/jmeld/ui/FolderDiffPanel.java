@@ -175,7 +175,7 @@ public class FolderDiffPanel
     folderTreeTable.setTerminateEditOnFocusLost(false);
     folderTreeTable.setRowSelectionAllowed(true);
     folderTreeTable.addMouseListener(getMouseListener());
-    folderTreeTable.expandAll();
+    //folderTreeTable.expandAll();
 
     folderTreeTable.addHighlighter(new ColorHighlighter(HighlightPredicate.EVEN, Color.white, Color.black));
     folderTreeTable.addHighlighter(
