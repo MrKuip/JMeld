@@ -34,7 +34,7 @@ import org.jmeld.ui.dnd.DragAndDropPanel;
 import org.jmeld.ui.swing.BusyLabel;
 
 public class StatusBar
-    extends JPanel
+  extends JPanel
 {
   // Class variables:
   private static StatusBar instance = new StatusBar();
@@ -65,47 +65,29 @@ public class StatusBar
     JPanel panel;
 
     statusLabel = new JLabel(" ");
-    statusLabel.setBorder(new EmptyBorder(4,
-                                          2,
-                                          4,
-                                          2));
+    statusLabel.setBorder(new EmptyBorder(4, 2, 4, 2));
     progressBar = new JProgressBar();
-    progressBar.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(2,
-                                                                             5,
-                                                                             2,
-                                                                             5),
-                                             progressBar.getBorder()));
+    progressBar.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5), progressBar.getBorder()));
     progressBar.setStringPainted(true);
     busy = new BusyLabel();
     dragAndDrop = new DragAndDropPanel();
 
     panel = new JPanel(new BorderLayout());
-    add(dragAndDrop,
-        BorderLayout.WEST);
-    add(statusLabel,
-        BorderLayout.CENTER);
-    add(panel,
-        BorderLayout.EAST);
+    add(dragAndDrop, BorderLayout.WEST);
+    add(statusLabel, BorderLayout.CENTER);
+    add(panel, BorderLayout.EAST);
 
-    notificationArea = new JPanel(new GridLayout(1,
-                                                 0));
-    progressArea = new JPanel(new GridLayout(1,
-                                             0));
-    panel.add(progressArea,
-              BorderLayout.WEST);
-    panel.add(notificationArea,
-              BorderLayout.CENTER);
-    panel.add(busy,
-              BorderLayout.EAST);
+    notificationArea = new JPanel(new GridLayout(1, 0));
+    progressArea = new JPanel(new GridLayout(1, 0));
+    panel.add(progressArea, BorderLayout.WEST);
+    panel.add(notificationArea, BorderLayout.CENTER);
+    panel.add(busy, BorderLayout.EAST);
 
-    timer = new Timer(3000,
-                      clearText());
+    timer = new Timer(3000, clearText());
     timer.setRepeats(false);
 
-    setMinimumSize(new Dimension(25,
-                                 25));
-    setPreferredSize(new Dimension(25,
-                                   25));
+    setMinimumSize(new Dimension(25, 25));
+    setPreferredSize(new Dimension(25, 25));
   }
 
   public void start()
@@ -113,35 +95,29 @@ public class StatusBar
     busy.start();
   }
 
-  public void setState(String format,
-      Object... args)
+  public void setState(String format, Object... args)
   {
     String text;
 
-    text = String.format(format,
-                         args);
+    text = String.format(format, args);
+
     statusLabel.setText(text);
   }
 
-  public void setText(String format,
-      Object... args)
+  public void setText(String format, Object... args)
   {
-    setState(format,
-             args);
+    setState(format, args);
     stop();
   }
 
-  public void setAlarm(String format,
-      Object... args)
+  public void setAlarm(String format, Object... args)
   {
     statusLabel.setForeground(Color.red);
-    setState(format,
-             args);
+    setState(format, args);
     stop();
   }
 
-  public void setProgress(int value,
-      int maximum)
+  public void setProgress(int value, int maximum)
   {
     if (progressArea.getComponentCount() == 0)
     {
@@ -173,30 +149,22 @@ public class StatusBar
     revalidate();
   }
 
-  public void setNotification(String id,
-      Icon icon)
+  public void setNotification(String id, Icon icon)
   {
     JLabel label;
 
     label = new JLabel(icon);
-    label.setBorder(BorderFactory.createEmptyBorder(0,
-                                                    5,
-                                                    0,
-                                                    5));
+    label.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-    setNotification(id,
-                    label);
+    setNotification(id, label);
   }
 
-  public void setNotification(String id,
-      JComponent component)
+  public void setNotification(String id, JComponent component)
   {
-    _setNotification(id,
-                     component);
+    _setNotification(id, component);
   }
 
-  private void _setNotification(String id,
-      JComponent component)
+  private void _setNotification(String id, JComponent component)
   {
     id = getNotificationId(id);
 
@@ -207,8 +175,7 @@ public class StatusBar
     }
 
     notificationArea.add(component);
-    notificationArea.putClientProperty(id,
-                                       component);
+    notificationArea.putClientProperty(id, component);
 
     revalidate();
   }
@@ -231,8 +198,7 @@ public class StatusBar
     }
 
     notificationArea.remove(component);
-    notificationArea.putClientProperty(id,
-                                       null);
+    notificationArea.putClientProperty(id, null);
 
     revalidate();
   }
@@ -244,8 +210,7 @@ public class StatusBar
 
   private ActionListener clearText()
   {
-    return (e) ->
-    {
+    return (e) -> {
       clear();
     };
   }

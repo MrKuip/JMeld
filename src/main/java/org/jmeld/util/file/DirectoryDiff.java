@@ -17,10 +17,11 @@
 package org.jmeld.util.file;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import org.apache.jmeld.tools.ant.DirectoryScanner;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.util.StopWatch;
@@ -58,16 +59,19 @@ public class DirectoryDiff
     }
   }
 
+  @Override
   public JMDiffNode getRootNode()
   {
     return rootNode;
   }
 
+  @Override
   public Collection<JMDiffNode> getNodes()
   {
     return nodes.values();
   }
 
+  @Override
   public void diff()
   {
     DirectoryScanner ds;
@@ -76,6 +80,8 @@ public class DirectoryDiff
     int numberOfNodes;
     int currentNumber;
     FileNode fn;
+    Path basePath;
+    List<Path> pathList;
 
     stopWatch = new StopWatch();
     stopWatch.start();
@@ -86,41 +92,48 @@ public class DirectoryDiff
     rootNode = new JMDiffNode("<root>", false);
     nodes = new HashMap<String, JMDiffNode>();
 
-    ds = new DirectoryScanner();
-    ds.setShowStateOn(true);
-    ds.setBasedir(leftDirectory);
+    basePath = leftDirectory.toPath();
+    ds = new DirectoryScanner(basePath);
     if (filter != null)
     {
-      // ds.setIncludes(filter.getIncludes());
-      // ds.setExcludes(filter.getExcludes());
+      ds.setIncludes(filter.getIncludes());
+      ds.setExcludes(filter.getExcludes());
     }
-    ds.setCaseSensitive(true);
 
     System.out.println("Scan: " + leftDirectory);
-    ds.scan();
+    stopWatch.start();
+    pathList = ds.scan();
     System.out.println("End Scan in " + stopWatch.getElapsedTime());
 
-    for (FileNode fileNode : ds.getIncludedFiles())
+    for (Path path : pathList)
     {
-      node = addNode(fileNode.getName());
-      node.setBufferNodeLeft(fileNode);
+      String fileName;
+
+      fileName = basePath.relativize(path).toString();
+      node = addNode(fileName);
+      node.setBufferNodeLeft(new FileNode(fileName, path.toFile()));
     }
 
-    ds = new DirectoryScanner();
-    ds.setShowStateOn(true);
-    ds.setBasedir(rightDirectory);
+    basePath = rightDirectory.toPath();
+    ds = new DirectoryScanner(basePath);
     if (filter != null)
     {
-      // ds.setIncludes(filter.getIncludes());
-      // ds.setExcludes(filter.getExcludes());
+      ds.setIncludes(filter.getIncludes());
+      ds.setExcludes(filter.getExcludes());
     }
-    ds.setCaseSensitive(true);
-    ds.scan();
 
-    for (FileNode fileNode : ds.getIncludedFiles())
+    System.out.println("Scan: " + rightDirectory);
+    stopWatch.start();
+    pathList = ds.scan();
+    System.out.println("End Scan in " + stopWatch.getElapsedTime());
+
+    for (Path path : pathList)
     {
-      node = addNode(fileNode.getName());
-      node.setBufferNodeRight(fileNode);
+      String fileName;
+
+      fileName = basePath.relativize(path).toString();
+      node = addNode(fileName);
+      node.setBufferNodeRight(new FileNode(fileName, path.toFile()));
     }
 
     StatusBar.getInstance().setState("Comparing nodes...");
@@ -175,7 +188,6 @@ public class DirectoryDiff
   {
     String parentName;
     JMDiffNode parent;
-    File file;
 
     nodes.put(node.getName(), node);
 
@@ -202,39 +214,5 @@ public class DirectoryDiff
   public void print()
   {
     rootNode.print("");
-  }
-
-  public static void test()
-  {
-    DirectoryDiff dd;
-
-    dd = new DirectoryDiff(new File("/media/kees/CubeBackup/backup/snapshot_001_2021_06_16__18_00_01/projecten/"),
-        new File("/media/kees/CubeBackup/backup/snapshot_008_2021_06_11__12_00_01/projecten/"), null, Mode.TWO_WAY);
-    dd.diff();
-  }
-
-  public static void test2()
-  {
-    DirectoryScanner ds;
-
-    ds = new DirectoryScanner();
-    ds.setShowStateOn(false);
-    ds.setBasedir("/media/kees/CubeBackup/backup/snapshot_001_2021_06_16__18_00_01/projecten/");
-    ds.setCaseSensitive(true);
-    ds.scan();
-  }
-
-  public static void main(String[] args)
-  {
-    StopWatch stopWatch;
-
-    stopWatch = new StopWatch();
-    stopWatch.start();
-
-    System.out.println("Start Scan");
-
-    test();
-
-    System.out.println("End Scan in " + stopWatch.getElapsedTime());
   }
 }

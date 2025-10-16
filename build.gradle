@@ -8,6 +8,17 @@ plugins {
 
 defaultTasks 'jar'
 
+test
+{
+  useJUnitPlatform()
+  testLogging {
+    showStandardStreams = true 
+    afterTest { descriptor , result -> 
+      logger.lifecycle("Test: " + descriptor.getClassName() + " " + descriptor.getName() + " -> " + result)
+    }
+  }
+}
+
 repositories {
   mavenCentral()
 }
@@ -32,6 +43,9 @@ dependencies {
   implementation 'org.fxmisc.undo:undofx:2.1.0'
   implementation 'org.fxmisc.wellbehaved:wellbehavedfx:0.3.3'
   implementation 'org.reactfx:reactfx:2.0.M5'
+
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.13.2'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 java {

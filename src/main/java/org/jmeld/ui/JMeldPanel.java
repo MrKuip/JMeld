@@ -26,7 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -1215,7 +1214,6 @@ public class JMeldPanel
   private boolean doExitTab(Component component)
   {
     AbstractContentPanel content;
-    Icon icon;
     int index;
 
     if (component == null)
