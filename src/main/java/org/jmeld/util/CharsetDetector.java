@@ -5,8 +5,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.jmeld.fx.settings.EditorSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
 import com.ibm.icu.text.CharsetMatch;
 
 public class CharsetDetector
@@ -31,9 +31,9 @@ public class CharsetDetector
   public Charset getCharset(BufferedInputStream bis)
   {
     Charset charset;
-    EditorSettingsFx settings;
+    EditorSettings settings;
 
-    settings = JMeldSettingsFx.getInstance().getEditor();
+    settings = JMeldSettings.getInstance().getEditor();
 
     charset = null;
     if (settings.getDefaultFileEncodingEnabled())

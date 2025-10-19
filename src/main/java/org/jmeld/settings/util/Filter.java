@@ -178,7 +178,7 @@ public class Filter
         // Rule 'importFilter' will add it's own rules to the result.
         if (rule.getRule() == FilterRule.Rule.importFilter)
         {
-          nextFilter = JMeldSettingsFx.getInstance().getFilter().getFilter(rule.getPattern());
+          nextFilter = JMeldSettings.getInstance().getFilter().getFilter(rule.getPattern());
 
           // Don't evaluate a filter twice! (otherwise there will be a never
           // ending recursive loop)

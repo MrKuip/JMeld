@@ -2,9 +2,9 @@ package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
-import org.jmeld.fx.settings.FilterSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.FilterSettings;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -155,8 +155,8 @@ public class FilterSettingsPane
 
   }
 
-  private FilterSettingsFx getSettings()
+  private FilterSettings getSettings()
   {
-    return JMeldSettingsFx.getInstance().getFilter();
+    return JMeldSettings.getInstance().getFilter();
   }
 }

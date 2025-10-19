@@ -20,8 +20,8 @@ import java.io.File;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.StringUtil;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
@@ -246,6 +246,7 @@ public class NewPanelDialogFx
       return null;
     }
 
+    @Override
     public String getShortDescription()
     {
       return getLeftFile().getName() + "-" + getRightFile().getName();
@@ -292,7 +293,7 @@ public class NewPanelDialogFx
       new ComboBoxPreference("RightDirectory", rightDirectoryComboBox);
 
       filterComboBox = new ComboBox<>();
-      filterComboBox.getItems().addAll(JMeldSettingsFx.getInstance().getFilter().getFilters().stream()
+      filterComboBox.getItems().addAll(JMeldSettings.getInstance().getFilter().getFilters().stream()
           .map(filter -> filter.getName()).collect(Collectors.toList()));
       new ComboBoxSelectionPreference("Filter", filterComboBox);
 
@@ -347,6 +348,7 @@ public class NewPanelDialogFx
       return new File(rightDirectoryComboBox.getSelectionModel().getSelectedItem());
     }
 
+    @Override
     public String getShortDescription()
     {
       return getLeftDirectory().getName() + "-" + getRightDirectory().getName();

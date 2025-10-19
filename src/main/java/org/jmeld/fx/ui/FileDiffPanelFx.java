@@ -21,9 +21,9 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
 import org.jmeld.diff.JMRevision;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.ui.fx.DiffScrollComponentFx;
 import org.jmeld.ui.fx.RevisionBarFx;
@@ -97,9 +97,9 @@ public class FileDiffPanelFx
     // fileContentLeftScrollPane.onScrollProperty().addListener(new
     // MyScrollListener());
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
-        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+        .bind(Bindings.when(JMeldSettings.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
-    fileContentLeftCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
+    fileContentLeftCodeArea.styleProperty().bind(JMeldSettings.getInstance().getEditor().styleProperty);
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
@@ -113,9 +113,9 @@ public class FileDiffPanelFx
     fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
     fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
     fileContentRightCodeArea.paragraphGraphicFactoryProperty()
-        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+        .bind(Bindings.when(JMeldSettings.getInstance().getEditor().showLineNumbersProperty)
             .then(new LineNumberFactory(fileContentRightCodeArea)).otherwise((LineNumberFactory) null));
-    fileContentRightCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
+    fileContentRightCodeArea.styleProperty().bind(JMeldSettings.getInstance().getEditor().styleProperty);
 
     fileContentLeftScrollPane.estimatedScrollXProperty()
         .addListener((a, b, c) -> fileContentRightScrollPane.scrollXToPixel(c));
@@ -331,8 +331,7 @@ public class FileDiffPanelFx
     private double getMinSize(Label label, int size)
     {
       return m_minSizeByLength.computeIfAbsent(size, (s) -> {
-        return (double) FxFontUtil.getFontMetrics(label.getFont()).computeStringWidth("" + size)
-            + label.getPadding().getRight();
+        return FxFontUtil.getFontMetrics(label.getFont()).computeStringWidth("" + size) + label.getPadding().getRight();
       });
     }
   }

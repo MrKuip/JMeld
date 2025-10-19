@@ -1,8 +1,8 @@
 package org.jmeld.fx.ui.settings;
 
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
+import org.jmeld.settings.JMeldSettings;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -63,10 +63,10 @@ public class SettingsPane
     saveButton = new Button();
     saveButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
     saveButton.setTooltip(new Tooltip("Save settings"));
-    saveButton.setOnAction((ae) -> JMeldSettingsFx.getInstance().save());
+    saveButton.setOnAction((ae) -> JMeldSettings.getInstance().save());
 
     settingsLocationLabel = new Label("");
-    settingsLocationLabel.setText(JMeldSettingsFx.getInstance().getConfigurationFileName());
+    settingsLocationLabel.setText(JMeldSettings.getInstance().getConfigurationFileName());
 
     saveAsButton = new Button();
     saveAsButton.setGraphic(new ImageView(FxIcon.SAVE_AS.getSmallImage()));

@@ -1,15 +1,17 @@
 package org.jmeld.fx.ui.settings;
 
+import static org.jmeld.fx.util.FxAwtUtil.property;
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.jmeld.fx.settings.EditorSettingsFx;
-import org.jmeld.fx.settings.EditorSettingsFx.ToolbarButtonIcon;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.FxFontChooser;
+import org.jmeld.fx.util.FxAwtUtil;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.EditorSettings.ToolbarButtonIcon;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.CharsetDetector;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.application.Application;
@@ -56,6 +58,7 @@ public class EditorSettingsPane
   private void init()
   {
     MigPane panel;
+    EditorSettings settings;
     CheckBox ignoreWhitespaceAtBeginCheckBox;
     CheckBox ignoreWhitespaceInBetweenCheckBox;
     CheckBox ignoreWhitespaceAtEndCheckBox;
@@ -83,6 +86,7 @@ public class EditorSettingsPane
     ColorPicker colorDeletedColorPicker;
     ColorPicker colorChangedColorPicker;
     Button colorRestoreButton;
+    TextFormatter formatter;
     String gap1;
     String gap2;
 
@@ -90,6 +94,7 @@ public class EditorSettingsPane
     gap2 = "10";
 
     panel = new MigPane("", "[pref][pref][grow,fill]");
+    settings = getSettings();
 
     add(header1(new Text("Editor settings")), new CC().dockNorth().wrap().span(3).gapLeft("10"));
     add(panel, "west");
@@ -148,14 +153,13 @@ public class EditorSettingsPane
       font = dialog.showAndWait();
       if (font.isPresent())
       {
-        getSettings().setFont(font.get());
+        getSettings().setFont(FxAwtUtil.toAwtFont(font.get()));
       }
     });
     colorRestoreButton.setOnAction((ae) -> getSettings().restoreColors());
     lookAndFeelComboBox.getItems().setAll(getLookAndFeelList());
 
     // Binding
-    TextFormatter formatter;
 
     defaultFontButton.selectedProperty().bindBidirectional(getSettings().defaultFontProperty);
     customFontButton.selectedProperty().bindBidirectional(getSettings().customFontProperty);
@@ -230,13 +234,21 @@ public class EditorSettingsPane
     ignoreEOLCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreEOL);
     ignoreBlankLinesCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreBlankLines);
     ignoreCaseCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreCase);
-    fileEncodingDefaultButton.selectedProperty().bindBidirectional(getSettings().defaultFileEncodingEnabledProperty);
-    fileEncodingDetectButton.selectedProperty().bindBidirectional(getSettings().detectFileEncodingEnabledProperty);
-    fileEncodingSpecificButton.selectedProperty().bindBidirectional(getSettings().specificFileEncodingEnabledProperty);
-    fileEncodingSpecificComboBox.valueProperty().bindBidirectional(getSettings().specificFileEncodingNameProperty);
-    toolBarIconInButtonComboBox.valueProperty().bindBidirectional(getSettings().toolbarButtonIconProperty);
-    toolbarIconInButtonCheckBox.selectedProperty().bindBidirectional(getSettings().toolbarButtonIconEnabledProperty);
-    toolbarTextInButtonCheckBox.selectedProperty().bindBidirectional(getSettings().toolbarButtonTextEnabledProperty);
+
+    fileEncodingDefaultButton.selectedProperty()
+        .bindBidirectional(property(settings::getDefaultFileEncodingEnabled, settings::setDefaultFileEncodingEnabled));
+    fileEncodingDetectButton.selectedProperty()
+        .bindBidirectional(property(settings::getDetectFileEncodingEnabled, settings::setDetectFileEncodingEnabled));
+    fileEncodingSpecificButton.selectedProperty().bindBidirectional(
+        property(settings::getSpecificFileEncodingEnabled, settings::setSpecificFileEncodingEnabled));
+    fileEncodingSpecificComboBox.valueProperty()
+        .bindBidirectional(property(settings::getSpecificFileEncodingName, settings::setSpecificFileEncodingName));
+    toolBarIconInButtonComboBox.valueProperty()
+        .bindBidirectional(property(settings::getToolbarButtonIcon, settings::setToolbarButtonIcon));
+    toolbarIconInButtonCheckBox.selectedProperty()
+        .bindBidirectional(property(settings::isToolbarButtonTextEnabled, settings::setToolbarButtonTextEnabled));
+    toolbarTextInButtonCheckBox.selectedProperty()
+        .bindBidirectional(property(settings::isToolbarButtonTextEnabled, settings::setToolbarButtonTextEnabled));
   }
 
   private List<String> getLookAndFeelList()
@@ -244,8 +256,8 @@ public class EditorSettingsPane
     return Arrays.asList(Application.STYLESHEET_CASPIAN, Application.STYLESHEET_MODENA);
   }
 
-  private EditorSettingsFx getSettings()
+  private EditorSettings getSettings()
   {
-    return JMeldSettingsFx.getInstance().getEditor();
+    return JMeldSettings.getInstance().getEditor();
   }
 }

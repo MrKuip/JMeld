@@ -25,11 +25,11 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.NewPanelDialogFx.NewPanelIF;
 import org.jmeld.fx.ui.settings.SettingsPane;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
+import org.jmeld.settings.JMeldSettings;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -114,7 +114,7 @@ public class JMeldPaneFx
     saveButton.setContentDisplay(ContentDisplay.TOP);
     saveButton.setAlignment(Pos.CENTER);
     saveButton.setGraphic(new ImageView(FxIcon.SAVE.getLargeImage()));
-    saveButton.setOnAction((ae) -> JMeldSettingsFx.getInstance().save());
+    saveButton.setOnAction((ae) -> JMeldSettings.getInstance().save());
 
     undoButton = new Button("Undo");
     undoButton.setContentDisplay(ContentDisplay.TOP);
