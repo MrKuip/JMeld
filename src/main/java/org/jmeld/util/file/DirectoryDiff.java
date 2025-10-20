@@ -110,7 +110,7 @@ public class DirectoryDiff
       String fileName;
 
       fileName = basePath.relativize(path).toString();
-      node = addNode(path.toString());
+      node = addNode(fileName);
       node.setBufferNodeLeft(new FileNode(fileName, path.toFile()));
     }
 

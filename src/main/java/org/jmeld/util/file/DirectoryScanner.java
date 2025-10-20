@@ -16,7 +16,8 @@ public class DirectoryScanner
   private final Path m_baseDir;
   private final List<Pattern> m_includeList = new ArrayList<>();
   private final List<Pattern> m_excludeList = new ArrayList<>();
-  private final List<Path> m_files = new ArrayList<>();
+  private final List<Path> m_fileList = new ArrayList<>();
+  private final List<Path> m_directoryList = new ArrayList<>();
 
   public DirectoryScanner(Path baseDir)
   {
@@ -31,7 +32,7 @@ public class DirectoryScanner
 
   public void addInclude(String include)
   {
-    m_includeList.add(Pattern.compile(include));
+    m_includeList.add(Pattern.compile(globToRegex(include)));
   }
 
   public void setExcludes(List<String> excludeList)
@@ -42,8 +43,7 @@ public class DirectoryScanner
 
   public void addExclude(String exclude)
   {
-    System.out.println("addExclude: " + exclude);
-    m_excludeList.add(Pattern.compile(exclude));
+    m_excludeList.add(Pattern.compile(globToRegex(exclude)));
   }
 
   public List<Path> scan()
@@ -53,23 +53,24 @@ public class DirectoryScanner
       Files.walkFileTree(m_baseDir, new SimpleFileVisitor<Path>()
       {
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+        public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)
         {
-          if (isIncluded(toString(file)))
+          if (isIncluded(toString(path)))
           {
-            m_files.add(file);
+            m_fileList.add(path);
           }
           return FileVisitResult.CONTINUE;
         }
 
         @Override
-        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+        public FileVisitResult preVisitDirectory(Path directory, BasicFileAttributes attrs)
         {
-          if (isExcluded(toString(dir)))
+          if (isExcluded(toString(directory)))
           {
             return FileVisitResult.SKIP_SUBTREE;
           }
-          setState("Scan directory: %s", dir);
+          m_directoryList.add(directory);
+          setState("Scan directory: %s", directory);
           return FileVisitResult.CONTINUE;
         }
 
@@ -124,12 +125,67 @@ public class DirectoryScanner
       e.printStackTrace();
     }
 
-    return m_files;
+    return getFileList();
+  }
+
+  public List<Path> getFileList()
+  {
+    return m_fileList;
+  }
+
+  public List<Path> getDirectoryList()
+  {
+    return m_directoryList;
   }
 
   private void setState(String format, Object... args)
   {
     StatusBar.getInstance().setState(format, args);
+  }
+
+  private String globToRegex(String glob)
+  {
+    StringBuilder regex;
+    char[] chars;
+    int i;
+    
+    regex = new StringBuilder("^");
+    chars = glob.replace("\\", "/").toCharArray();
+    i = 0;
+    while (i < chars.length)
+    {
+      char c;
+      
+      c = chars[i];
+      switch (c)
+      {
+        case '*':
+          if (i + 1 < chars.length && chars[i + 1] == '*')
+          {
+            regex.append(".*");
+            i++;
+          }
+          else
+          {
+            regex.append("[^/]*");
+          }
+          break;
+        case '?':
+          regex.append("[^/]");
+          break;
+        case '.':
+          regex.append("\\.");
+          break;
+        case '/':
+          regex.append("/");
+          break;
+        default:
+          regex.append(Pattern.quote(String.valueOf(c)));
+      }
+      i++;
+    }
+    regex.append("$");
+    return regex.toString();
   }
 
   public static void main(String[] args)
