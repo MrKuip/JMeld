@@ -1,8 +1,5 @@
 package org.jmeld.ui.util;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jidesoft.plaf.LookAndFeelFactory;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +9,8 @@ import javax.swing.UIManager;
 import org.jmeld.JMeld;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.ObjectUtil;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 
 public class LookAndFeelManager
 {
@@ -33,11 +32,9 @@ public class LookAndFeelManager
     try
     {
       PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
-      System.setProperty(PlasticLookAndFeel.DEFAULT_THEME_KEY,
-                         "MySkyBluer");
+      System.setProperty(PlasticLookAndFeel.DEFAULT_THEME_KEY, "MySkyBluer");
 
-      UIManager.installLookAndFeel("JGoodies Plastic 3D",
-                                   "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+      UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
     }
     catch (Exception e)
     {
@@ -61,8 +58,7 @@ public class LookAndFeelManager
       lookAndFeelName = JMeldSettings.getInstance().getEditor().getLookAndFeelName();
       for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
       {
-        if (ObjectUtil.equals(info.getName(),
-                              lookAndFeelName))
+        if (ObjectUtil.equals(info.getName(), lookAndFeelName))
         {
           lookAndFeelClassName = info.getClassName();
           break;
@@ -70,7 +66,7 @@ public class LookAndFeelManager
       }
 
       UIManager.setLookAndFeel(lookAndFeelClassName);
-      LookAndFeelFactory.installJideExtension();
+      //LookAndFeelFactory.installJideExtension();
 
       root = SwingUtilities.getRoot(JMeld.getJMeldPanel());
       if (root != null)
@@ -95,8 +91,7 @@ public class LookAndFeelManager
 
     for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
     {
-      if (ObjectUtil.equals(info.getClassName(),
-                            lf.getClass().getName()))
+      if (ObjectUtil.equals(info.getClassName(), lf.getClass().getName()))
       {
         return info.getName();
       }

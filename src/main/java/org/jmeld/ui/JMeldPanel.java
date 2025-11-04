@@ -26,11 +26,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -62,7 +64,7 @@ import org.jmeld.util.file.VersionControlDiff;
 import org.jmeld.util.node.JMDiffNode;
 import org.jmeld.util.node.JMDiffNodeFactory;
 import org.jmeld.vc.VersionControlUtil;
-import com.jidesoft.swing.JideTabbedPane;
+//import com.jidesoft.swing.JideTabbedPane;
 import net.miginfocom.swing.MigLayout;
 
 public class JMeldPanel
@@ -83,7 +85,7 @@ public class JMeldPanel
 
   // instance variables:
   private ActionHandler actionHandler;
-  private JideTabbedPane tabbedPane;
+  private JTabbedPane tabbedPane;
   private JPanel barContainer;
   private AbstractBarDialog currentBarDialog;
   private SearchBarDialog searchBarDialog;
@@ -107,19 +109,19 @@ public class JMeldPanel
 
     started = true;
 
-    tabbedPane = new JideTabbedPane();
+    tabbedPane = new JTabbedPane();
     tabbedPane.setFocusable(false);
-    tabbedPane.setShowCloseButtonOnTab(true);
-    tabbedPane.setShowCloseButtonOnSelectedTab(true);
+    //tabbedPane.setShowCloseButtonOnTab(true);
+    //tabbedPane.setShowCloseButtonOnSelectedTab(true);
 
     if (!SHOW_TABBEDPANE_OPTION.isEnabled())
     {
-      tabbedPane.setShowTabArea(false);
+      //tabbedPane.setShowTabArea(false);
     }
 
     // Pin the tabshape because the defaults do not look good
     // on lookandfeels other than JGoodies Plastic.
-    tabbedPane.setTabShape(JideTabbedPane.SHAPE_OFFICE2003);
+    //tabbedPane.setTabShape(JideTabbedPane.SHAPE_OFFICE2003);
 
     // Watch out: initActions uses 'tabbedPane' so this statement should be
     // after the instantiation of tabbedPane.
@@ -129,7 +131,7 @@ public class JMeldPanel
     {
       // Watch out: actionHandler gets initialized in 'initActions' so this
       // statement should be AFTER initActions();
-      tabbedPane.setCloseAction(getAction(actions.EXIT));
+      //tabbedPane.setCloseAction(getAction(actions.EXIT));
     }
 
     setLayout(new BorderLayout());
@@ -710,13 +712,19 @@ public class JMeldPanel
       content.setLayout(new BorderLayout());
       content.add(helpViewer, BorderLayout.CENTER);
 
-      tabbedPane.addTab("Help", Icons.HELP.getSmallIcon(), content);
+      addTab("Help", Icons.HELP.getSmallIcon(), content);
       tabbedPane.setSelectedComponent(content);
     }
     catch (Exception ex)
     {
       ex.printStackTrace();
     }
+  }
+
+  public void addTab(String title, Icon icon, Component component)
+  {
+    tabbedPane.addTab(title, icon, component);
+    tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, new ButtonTabComponent(tabbedPane, title, icon));
   }
 
   public void doAbout(ActionEvent ae)
@@ -735,7 +743,7 @@ public class JMeldPanel
     content.setLayout(new BorderLayout());
     content.add(new JButton("JMeld version: " + Version.getVersion()), BorderLayout.CENTER);
 
-    tabbedPane.addTab("About", Icons.ABOUT.getSmallIcon(), content);
+    addTab("About", Icons.ABOUT.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -788,7 +796,7 @@ public class JMeldPanel
 
     content = new SettingsPanel(this);
     content.setId(contentId);
-    tabbedPane.addTab("Settings", Icons.SETTINGS.getSmallIcon(), content);
+    addTab("Settings", Icons.SETTINGS.getSmallIcon(), content);
     tabbedPane.setSelectedComponent(content);
   }
 
@@ -970,7 +978,7 @@ public class JMeldPanel
             panel = new BufferDiffPanel(JMeldPanel.this);
             panel.setId(contentId);
             panel.setDiffNode(diffNode);
-            tabbedPane.addTab(panel.getTitle(), Icons.NEW.getSmallIcon(), panel);
+            addTab(panel.getTitle(), Icons.NEW.getSmallIcon(), panel);
             if (!openInBackground)
             {
               tabbedPane.setSelectedComponent(panel);
@@ -1096,7 +1104,7 @@ public class JMeldPanel
             panel = new FolderDiffPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab(panel.getTitle(), Icons.FOLDER.getSmallIcon(), panel);
+            addTab(panel.getTitle(), Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
@@ -1177,7 +1185,7 @@ public class JMeldPanel
             panel = new VersionControlPanel(JMeldPanel.this, diff);
             panel.setId(contentId);
 
-            tabbedPane.addTab("TODO: Think of title!", Icons.FOLDER.getSmallIcon(), panel);
+            addTab("TODO: Think of title!", Icons.FOLDER.getSmallIcon(), panel);
             tabbedPane.setSelectedComponent(panel);
           }
         }
