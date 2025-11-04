@@ -253,19 +253,19 @@ public class BufferDiffPanel
 
   private void init()
   {
-    setLayout(new MigLayout("fill", "[p][p][fill, grow, sg doc]0[p]0[p][fill, grow, sg doc][p]", "[p][fill, grow][p]"));
+    setLayout(new MigLayout("fill", "[p][p][fill, grow]0[p]0[p][fill, grow][p]", "[p][fill, grow][p]"));
 
     filePanels[LEFT] = new FilePanel(this, BufferDocumentIF.ORIGINAL, LEFT);
     filePanels[RIGHT] = new FilePanel(this, BufferDocumentIF.REVISED, RIGHT);
 
     add(filePanels[LEFT].getSaveButton(), new CC());
-    add(filePanels[LEFT].getFileLabel(), new CC().spanX(2).alignY("center"));
-    add(filePanels[RIGHT].getFileLabel(), new CC().skip().spanX(2));
+    add(filePanels[LEFT].getFileLabel(), new CC().spanX(2).alignY("center").growY());
+    add(filePanels[RIGHT].getFileLabel(), new CC().skip().spanX(2).alignY("center").growY());
     add(filePanels[RIGHT].getSaveButton(), new CC().wrap());
     add(new RevisionBar(this, filePanels[LEFT], true), new CC().growX());
-    add(filePanels[LEFT].getScrollPane(), new CC().spanX(2).grow());
+    add(filePanels[LEFT].getScrollPane(), new CC().spanX(2).grow().sizeGroup("filePanel"));
     add(new DiffScrollComponent(this, LEFT, RIGHT), new CC().minWidth("60px"));
-    add(filePanels[RIGHT].getScrollPane(), new CC().spanX(2).grow());
+    add(filePanels[RIGHT].getScrollPane(), new CC().spanX(2).grow().sizeGroup("filePanel"));
     add(new RevisionBar(this, filePanels[RIGHT], true), new CC().wrap().growX());
     add(filePanels[LEFT].getFilePanelBar(), new CC().skip().spanX(2));
     add(filePanels[RIGHT].getFilePanelBar(), new CC().skip().spanX(2));
