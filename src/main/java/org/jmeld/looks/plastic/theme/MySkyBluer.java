@@ -1,6 +1,7 @@
-package com.jgoodies.looks.plastic.theme;
+package org.jmeld.looks.plastic.theme;
 
 import javax.swing.plaf.ColorUIResource;
+import com.jgoodies.looks.plastic.theme.SkyBluer;
 
 public class MySkyBluer
     extends SkyBluer
