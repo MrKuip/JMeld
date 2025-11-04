@@ -20,6 +20,7 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 import org.jmeld.JMeldException;
 import org.jmeld.ui.text.AbstractBufferDocument;
 import org.jmeld.util.Ignore;
@@ -34,41 +35,52 @@ public class JMDiff
   static final private CharBuffer inputLine = CharBuffer.allocate(10000);
   static final private CharBuffer outputLine = CharBuffer.allocate(10000);
   // Instance variables:
-  private List<JMDiffAlgorithmIF> algorithms;
+
+  private enum DiffAlgorithm
+  {
+    MYERS(() -> {
+      MyersDiff diff;
+
+      diff = new MyersDiff();
+      diff.checkMaxTime(true);
+
+      return diff;
+    }),
+    GNUDIFF(() -> {
+      return new GNUDiff();
+    }),
+    ECLIPSE(() -> {
+      return new Eclipse2Diff();
+    });
+
+    private Supplier<JMDiffAlgorithmIF> mi_supplier;
+    private static List<JMDiffAlgorithmIF> mi_defaultAlgorithmList;
+
+    DiffAlgorithm(Supplier<JMDiffAlgorithmIF> supplier)
+    {
+      mi_supplier = supplier;
+    }
+
+    public JMDiffAlgorithmIF getAlgorithm()
+    {
+      return mi_supplier.get();
+    }
+
+    static List<JMDiffAlgorithmIF> getDefaultAlgorithms()
+    {
+      if (mi_defaultAlgorithmList == null)
+      {
+        mi_defaultAlgorithmList = new ArrayList<>();
+        mi_defaultAlgorithmList.add(MYERS.getAlgorithm());
+        mi_defaultAlgorithmList.add(ECLIPSE.getAlgorithm());
+      }
+
+      return mi_defaultAlgorithmList;
+    }
+  }
 
   public JMDiff()
   {
-    MyersDiff myersDiff;
-
-    // Timing/Memory (msec/Mb):
-    // Myers Eclipse GNU Hunt
-    // ================================================================================
-    // 2 Totally different files (116448 lines) 31317 1510 340 195
-    // 2 Totally different files (232896 lines) 170673 212 788 354
-    // 2 Medium different files (1778583 lines) 41 55 140 24679
-    // 2 Medium different files (10673406 lines) 216 922 632 >300000
-    // 2 Equal files (1778583 lines) 32 55 133 24632
-    // 2 Equal files (10673406 lines) 121 227 581 >60000
-    myersDiff = new MyersDiff();
-    myersDiff.checkMaxTime(true);
-
-    // MyersDiff is the fastest but can be very slow when 2 files
-    // are very different.
-    algorithms = new ArrayList<JMDiffAlgorithmIF>();
-    // algorithms.add(myersDiff);
-
-    // GNUDiff is a little bit slower than Myersdiff but performs way
-    // better if the files are very different.
-    // Don't use it for now because of GPL
-    // algorithms.add(new GNUDiff());
-
-    // EclipseDiff looks like Myersdiff but is slower.
-    // It performs much better if the files are totally different
-    // algorithms.add(new EclipseDiff());
-    algorithms.add(new Eclipse2Diff());
-
-    // HuntDiff (from netbeans) is very, very slow
-    // algorithms.add(new HuntDiff());
   }
 
   public JMRevision diff(List<String> a, List<String> b, Ignore ignore) throws JMeldException
@@ -120,7 +132,7 @@ public class JMDiff
 
     filteredTime = sp.getElapsedTime();
 
-    for (JMDiffAlgorithmIF algorithm : algorithms)
+    for (JMDiffAlgorithmIF algorithm : DiffAlgorithm.getDefaultAlgorithms())
     {
       try
       {
