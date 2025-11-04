@@ -2,12 +2,15 @@ package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
-import org.jmeld.fx.settings.FilterSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.FilterSettings;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.settings.util.FilterRule;
 import org.tbee.javafx.scene.layout.MigPane;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -89,7 +92,7 @@ public class FilterSettingsPane
 
     nameColumn = new TableColumn<>("Name");
     nameColumn.setMinWidth(200);
-    nameColumn.setCellValueFactory(field -> field.getValue().name);
+    nameColumn.setCellValueFactory(f -> new SimpleStringProperty(f.getValue().name));
     filterTable.getColumns().add(nameColumn);
 
     filterNewButton.setOnAction((ae) -> filterTable.itemsProperty().get().add(new Filter("haha")));
@@ -99,25 +102,25 @@ public class FilterSettingsPane
     filterRuleTable.setEditable(true);
 
     activeColumn = new TableColumn<>("Active");
-    activeColumn.setCellValueFactory(f -> f.getValue().active);
+    activeColumn.setCellValueFactory(f -> new SimpleBooleanProperty(f.getValue().isActive()));
     activeColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
     filterRuleTable.getColumns().add(activeColumn);
 
     descriptionColumn = new TableColumn<>("Description");
-    descriptionColumn.setCellValueFactory(f -> f.getValue().description);
+    descriptionColumn.setCellValueFactory(f -> new SimpleStringProperty(f.getValue().getDescription()));
     descriptionColumn.setMinWidth(200);
     filterRuleTable.getColumns().add(descriptionColumn);
     descriptionColumn = new TableColumn<>("Rule");
 
     ruleColumn = new TableColumn<>("Rule");
     ruleColumn.setMinWidth(150);
-    ruleColumn.setCellValueFactory(f -> f.getValue().rule);
+    ruleColumn.setCellValueFactory(f -> new SimpleObjectProperty<>(f.getValue().rule));
     ruleColumn.setCellFactory(tc -> new ComboBoxTableCell<>(FilterRule.Rule.values()));
     filterRuleTable.getColumns().add(ruleColumn);
 
     patternColumn = new TableColumn<>("Pattern");
     patternColumn.setMinWidth(200);
-    descriptionColumn.setCellValueFactory(f -> f.getValue().pattern);
+    descriptionColumn.setCellValueFactory(f -> new SimpleStringProperty(f.getValue().getPattern()));
     filterRuleTable.getColumns().add(patternColumn);
 
     filterRuleNewButton.setOnAction((ae) -> filterRuleTable.itemsProperty().get().add(new FilterRule()));
@@ -144,19 +147,19 @@ public class FilterSettingsPane
     panel.add(new Region(), new CC());
 
     // Binding:
-    filterTable.itemsProperty().bind(getSettings().filters);
+    filterTable.getItems().addAll(getSettings().getFilters());
     filterTable.getSelectionModel().selectedItemProperty().addListener((obs, deselectedFilter, selectedFilter) -> {
       if (selectedFilter != null)
       {
-        filterRuleTable.itemsProperty().bind(selectedFilter.rules);
+        filterRuleTable.getItems().addAll(selectedFilter.getRules());
       }
     });
     filterTable.getSelectionModel().selectFirst();
 
   }
 
-  private FilterSettingsFx getSettings()
+  private FilterSettings getSettings()
   {
-    return JMeldSettingsFx.getInstance().getFilter();
+    return JMeldSettings.getInstance().getFilter();
   }
 }

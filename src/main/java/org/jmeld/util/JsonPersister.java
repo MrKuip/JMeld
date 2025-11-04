@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper.Builder;
 
 public class JsonPersister
 {
@@ -43,22 +45,25 @@ public class JsonPersister
 
   private void init()
   {
-    m_objectMapper = new ObjectMapper();
-    m_objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-    m_objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    m_objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-    m_objectMapper.enable(MapperFeature.AUTO_DETECT_GETTERS);
-    m_objectMapper.enable(MapperFeature.AUTO_DETECT_SETTERS);
-    m_objectMapper.enable(MapperFeature.AUTO_DETECT_IS_GETTERS);
-    m_objectMapper.disable(MapperFeature.AUTO_DETECT_FIELDS);
-    m_objectMapper.disable(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS);
-    m_objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NONE);
-    m_objectMapper.setVisibility(PropertyAccessor.GETTER, Visibility.ANY);
-    m_objectMapper.setVisibility(PropertyAccessor.SETTER, Visibility.ANY);
-    m_objectMapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.ANY);
-    m_objectMapper.setDefaultMergeable(true);
+    Builder builder;
 
-    m_objectMapper.registerModule(new JsonFxModule());
-    m_objectMapper.registerModule(new JsonSwingModule());
+    builder = JsonMapper.builder();
+    builder.enable(SerializationFeature.INDENT_OUTPUT);
+    builder.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+    builder.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    builder.enable(MapperFeature.AUTO_DETECT_GETTERS);
+    builder.enable(MapperFeature.AUTO_DETECT_SETTERS);
+    builder.enable(MapperFeature.AUTO_DETECT_IS_GETTERS);
+    builder.disable(MapperFeature.AUTO_DETECT_FIELDS);
+    builder.disable(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS);
+    builder.visibility(PropertyAccessor.FIELD, Visibility.NONE);
+    builder.visibility(PropertyAccessor.GETTER, Visibility.ANY);
+    builder.visibility(PropertyAccessor.SETTER, Visibility.ANY);
+    builder.visibility(PropertyAccessor.IS_GETTER, Visibility.ANY);
+    builder.defaultMergeable(true);
+    builder.addModule(new JsonFxModule());
+    builder.addModule(new JsonSwingModule());
+
+    m_objectMapper = builder.build();
   }
 }

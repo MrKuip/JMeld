@@ -19,9 +19,9 @@ package org.jmeld.ui.fx;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jmeld.diff.JMRevision;
-import org.jmeld.fx.settings.EditorSettingsFx;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.scene.ComponentFx;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.node.JMDiffNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -48,14 +48,15 @@ public class DiffScrollComponentFx
 
   private void initSettings()
   {
-    EditorSettingsFx settings;
+    EditorSettings settings;
 
-    settings = JMeldSettingsFx.getInstance().getEditor();
+    settings = JMeldSettings.getInstance().getEditor();
 
     leftsideReadonly = settings.getLeftsideReadonly();
     rightsideReadonly = settings.getRightsideReadonly();
   }
 
+  @Override
   protected void paintComponent(GraphicsContext gc)
   {
     double middle;

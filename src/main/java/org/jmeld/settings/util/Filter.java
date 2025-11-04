@@ -19,22 +19,15 @@ package org.jmeld.settings.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.conf.AbstractConfigurationElement;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Filter
   extends AbstractConfigurationElement
 {
-  private Boolean includeDefault;
-  public SimpleStringProperty name = new SimpleStringProperty();
-  public final SimpleObjectProperty<ObservableList<FilterRule>> rules = new SimpleObjectProperty<>(
-      FXCollections.observableArrayList());
+  public String name;
+  public final List<FilterRule> rules = new ArrayList<>();
 
   public Filter(String name)
   {
@@ -56,23 +49,19 @@ public class Filter
     }
   }
 
+  @JsonIgnore
   public boolean isDefault()
   {
-    return "default".equals(name.get());
+    return "default".equals(getName());
   }
 
   public void setName(String name)
   {
-    this.name.set(name);
+    this.name = name;
     fireChanged();
   }
 
   public String getName()
-  {
-    return name.get();
-  }
-
-  public StringProperty nameProperty()
   {
     return name;
   }
@@ -111,19 +100,22 @@ public class Filter
 
   public List<FilterRule> getRules()
   {
-    return rules.get();
+    return rules;
   }
 
+  @JsonIgnore
   public List<String> getExcludes()
   {
     return getPatterns(FilterRule.Rule.excludes);
   }
 
+  @JsonIgnore
   public List<String> getIncludes()
   {
     return getPatterns(FilterRule.Rule.includes);
   }
 
+  @JsonIgnore
   private List<String> getPatterns(FilterRule.Rule r)
   {
     List<String> result;
@@ -178,7 +170,7 @@ public class Filter
         // Rule 'importFilter' will add it's own rules to the result.
         if (rule.getRule() == FilterRule.Rule.importFilter)
         {
-          nextFilter = JMeldSettingsFx.getInstance().getFilter().getFilter(rule.getPattern());
+          nextFilter = JMeldSettings.getInstance().getFilter().getFilter(rule.getPattern());
 
           // Don't evaluate a filter twice! (otherwise there will be a never
           // ending recursive loop)

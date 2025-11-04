@@ -1,10 +1,12 @@
 package org.jmeld.fx.ui;
 
+import static org.jmeld.fx.util.FxBindings.booleanProperty;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -21,9 +23,11 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jmeld.diff.JMChunk;
 import org.jmeld.diff.JMDelta;
 import org.jmeld.diff.JMRevision;
-import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.fx.util.FxBindings;
 import org.jmeld.fx.util.FxFontUtil;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.EditorSettings;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.fx.DiffLabel;
 import org.jmeld.ui.fx.DiffScrollComponentFx;
 import org.jmeld.ui.fx.RevisionBarFx;
@@ -40,11 +44,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import net.miginfocom.layout.CC;
 
 public class FileDiffPanelFx
   extends MigPane
 {
+  private static CssStyle m_cssStyle;
+
   private JMDiffNode m_diffNode;
   private SimpleStringProperty m_fileNameLeft = new SimpleStringProperty();
   private SimpleStringProperty m_fileNameRight = new SimpleStringProperty();
@@ -78,6 +86,9 @@ public class FileDiffPanelFx
     VirtualizedScrollPane<CodeArea> fileContentRightScrollPane;
     String leftText;
     String rightText;
+    EditorSettings editorSettings;
+
+    editorSettings = JMeldSettings.getInstance().getEditor();
 
     leftText = m_diffNode.getBufferNodeLeft().getName();
     rightText = m_diffNode.getBufferNodeRight().getName();
@@ -97,9 +108,9 @@ public class FileDiffPanelFx
     // fileContentLeftScrollPane.onScrollProperty().addListener(new
     // MyScrollListener());
     fileContentLeftCodeArea.paragraphGraphicFactoryProperty()
-        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+        .bind(Bindings.when(booleanProperty(editorSettings::getShowLineNumbers, editorSettings::setShowLineNumbers))
             .then(new LineNumberFactory(fileContentLeftCodeArea)).otherwise((LineNumberFactory) null));
-    fileContentLeftCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
+    fileContentLeftCodeArea.styleProperty().bind(getCssStyle().styleProperty);
 
     saveRightButton = new Button();
     saveRightButton.setGraphic(new ImageView(FxIcon.SAVE.getSmallImage()));
@@ -113,9 +124,9 @@ public class FileDiffPanelFx
     fileContentRightCodeArea.replace(m_diffNode.getBufferNodeRight().getDocument().getRichDocument());
     fileContentRightScrollPane = new VirtualizedScrollPane<>(fileContentRightCodeArea);
     fileContentRightCodeArea.paragraphGraphicFactoryProperty()
-        .bind(Bindings.when(JMeldSettingsFx.getInstance().getEditor().showLineNumbersProperty)
+        .bind(Bindings.when(booleanProperty(editorSettings::getShowLineNumbers, editorSettings::setShowLineNumbers))
             .then(new LineNumberFactory(fileContentRightCodeArea)).otherwise((LineNumberFactory) null));
-    fileContentRightCodeArea.styleProperty().bind(JMeldSettingsFx.getInstance().getEditor().styleProperty);
+    fileContentRightCodeArea.styleProperty().bind(getCssStyle().styleProperty);
 
     fileContentLeftScrollPane.estimatedScrollXProperty()
         .addListener((a, b, c) -> fileContentRightScrollPane.scrollXToPixel(c));
@@ -331,9 +342,59 @@ public class FileDiffPanelFx
     private double getMinSize(Label label, int size)
     {
       return m_minSizeByLength.computeIfAbsent(size, (s) -> {
-        return (double) FxFontUtil.getFontMetrics(label.getFont()).computeStringWidth("" + size)
-            + label.getPadding().getRight();
+        return FxFontUtil.getFontMetrics(label.getFont()).computeStringWidth("" + size) + label.getPadding().getRight();
       });
+    }
+  }
+
+  private static CssStyle getCssStyle()
+  {
+    if (m_cssStyle == null)
+    {
+      m_cssStyle = new CssStyle();
+    }
+
+    return m_cssStyle;
+  }
+
+  private static class CssStyle
+  {
+    public final SimpleStringProperty styleProperty = new SimpleStringProperty();
+
+    private CssStyle()
+    {
+      JMeldSettings.getInstance().addConfigurationListener(this::initStyleProperty);
+      initStyleProperty();
+    }
+
+    private void initStyleProperty()
+    {
+      Font font;
+      StringBuilder style;
+      EditorSettings editorSettings;
+
+      style = new StringBuilder();
+      editorSettings = JMeldSettings.getInstance().getEditor();
+
+      font = FxBindings.toFxFont(editorSettings.getFont());
+
+      style.append("-delta-add-color-bg:" + cssColor(FxBindings.toFxColor(editorSettings.getAddedColor())) + ";");
+      style.append("-delta-delete-color-bg:" + cssColor(FxBindings.toFxColor(editorSettings.getDeletedColor())) + ";");
+      style.append("-delta-change-color-bg:" + cssColor(FxBindings.toFxColor(editorSettings.getChangedColor())) + ";");
+      style.append("-delta-add-color-fg:black;");
+      style.append("-delta-delete-color-fg:black;");
+      style.append("-delta-change-color-fg:black;");
+      style.append("-fx-font-size:" + font.getSize() + ";");
+      style.append("-fx-font-style:" + font.getStyle() + ";");
+      style.append("-fx-font-family:" + font.getFamily() + ";");
+
+      styleProperty.set(style.toString());
+    }
+
+    public String cssColor(Color value)
+    {
+      return String.format((Locale) null, "#%02x%02x%02x", Math.round(value.getRed() * 255),
+          Math.round(value.getGreen() * 255), Math.round(value.getBlue() * 255));
     }
   }
 }

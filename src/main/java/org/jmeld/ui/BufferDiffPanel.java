@@ -253,7 +253,7 @@ public class BufferDiffPanel
 
   private void init()
   {
-    setLayout(new MigLayout("fill", "[p][p][fill, grow]0[p]0[p][fill, grow][p]", "[p][fill, grow][p]"));
+    setLayout(new MigLayout("fill", "[p][p][fill, grow, sg doc]0[p]0[p][fill, grow, sg doc][p]", "[p][fill, grow][p]"));
 
     filePanels[LEFT] = new FilePanel(this, BufferDocumentIF.ORIGINAL, LEFT);
     filePanels[RIGHT] = new FilePanel(this, BufferDocumentIF.REVISED, RIGHT);

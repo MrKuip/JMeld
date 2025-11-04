@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import org.jmeld.JMeldException;
 import org.jmeld.diff.JMDiff;
 import org.jmeld.diff.JMRevision;
-import org.jmeld.fx.settings.JMeldSettingsFx;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.ui.StatusBar;
 import org.jmeld.ui.text.BufferDocumentIF;
 import org.jmeld.util.Ignore;
@@ -57,7 +57,7 @@ public class JMDiffNode
     this.shortName = name;
     this.leaf = leaf;
 
-    ignore = JMeldSettingsFx.getInstance().getEditor().getIgnore();
+    ignore = JMeldSettings.getInstance().getEditor().getIgnore();
 
     children = new ArrayList<>();
     calculateNames();

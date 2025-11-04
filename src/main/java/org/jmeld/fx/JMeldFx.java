@@ -18,9 +18,9 @@ package org.jmeld.fx;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jmeld.fx.settings.JMeldSettingsFx;
 import org.jmeld.fx.ui.JMeldPaneFx;
 import org.jmeld.fx.util.FxIcon;
+import org.jmeld.settings.JMeldSettings;
 import org.jmeld.util.ResourceLoader;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.application.Application;
@@ -48,7 +48,7 @@ public class JMeldFx
   {
     Scene scene;
 
-    setUserAgentStylesheet(JMeldSettingsFx.getInstance().getEditor().getLookAndFeelName());
+    setUserAgentStylesheet(JMeldSettings.getInstance().getEditor().getLookAndFeelName());
 
     scene = new Scene(getNode(), 300, 300);
     scene.getStylesheets().add(ResourceLoader.getResource("jmeld.css").toExternalForm());

@@ -93,20 +93,11 @@ public class JMDiff
     Object[] rev;
     long filteredTime;
 
+    a = a == null ? new Object[0] : a;
+    b = b == null ? new Object[0] : b;
+
     org = a;
     rev = b;
-
-    if (org == null)
-    {
-      org = new Object[]
-      {};
-    }
-
-    if (rev == null)
-    {
-      rev = new Object[]
-      {};
-    }
 
     if (ignore != Ignore.NULL_IGNORE
         || (org instanceof AbstractBufferDocument.Line[] && rev instanceof AbstractBufferDocument.Line[]))
