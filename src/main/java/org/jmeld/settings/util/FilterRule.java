@@ -18,12 +18,8 @@ package org.jmeld.settings.util;
 
 import org.jmeld.util.conf.AbstractConfigurationElement;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class FilterRule
-    extends AbstractConfigurationElement
+  extends AbstractConfigurationElement
 {
   public enum Rule
   {
@@ -45,15 +41,13 @@ public class FilterRule
       return text;
     }
   }
-  public SimpleBooleanProperty active = new SimpleBooleanProperty(false);
-  public SimpleStringProperty pattern = new SimpleStringProperty();
-  public SimpleObjectProperty<Rule> rule = new SimpleObjectProperty<>();
-  public SimpleStringProperty description = new SimpleStringProperty();
 
-  public FilterRule(String description,
-      Rule rule,
-      String pattern,
-      boolean active)
+  public boolean active = false;
+  public String pattern;
+  public Rule rule;
+  public String description;
+
+  public FilterRule(String description, Rule rule, String pattern, boolean active)
   {
     setDescription(description);
     setRule(rule);
@@ -67,45 +61,45 @@ public class FilterRule
 
   public void setDescription(String description)
   {
-    this.description.set(description);
+    this.description = description;
     fireChanged();
   }
 
   public String getDescription()
   {
-    return description.get();
+    return description;
   }
 
   public void setRule(Rule rule)
   {
-    this.rule.set(rule);
+    this.rule = rule;
     fireChanged();
   }
 
   public Rule getRule()
   {
-    return rule.get();
+    return rule;
   }
 
   public void setPattern(String pattern)
   {
-    this.pattern.set(pattern);
+    this.pattern = pattern;
     fireChanged();
   }
 
   public String getPattern()
   {
-    return pattern.get();
+    return pattern;
   }
 
   public void setActive(boolean active)
   {
-    this.active.set(active);
+    this.active = active;
     fireChanged();
   }
 
   public boolean isActive()
   {
-    return active.get();
+    return active;
   }
 }

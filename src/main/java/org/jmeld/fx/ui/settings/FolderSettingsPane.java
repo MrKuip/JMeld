@@ -2,11 +2,11 @@ package org.jmeld.fx.ui.settings;
 
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
-import org.jmeld.fx.settings.FolderSettingsFx;
-import org.jmeld.fx.settings.FolderSettingsFx.FolderView;
+import org.jmeld.fx.util.FxBindings;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.fx.util.FxUtils;
 import org.jmeld.settings.FolderSettings;
+import org.jmeld.settings.FolderSettings.FolderView;
 import org.jmeld.settings.JMeldSettings;
 import org.tbee.javafx.scene.layout.MigPane;
 import javafx.scene.control.ComboBox;
@@ -45,6 +45,7 @@ public class FolderSettingsPane
 
   private void init()
   {
+    FolderSettings settings;
     ToggleButton onlyLeftButton;
     ToggleButton leftRightChangedButton;
     ToggleButton onlyRightButton;
@@ -55,6 +56,8 @@ public class FolderSettingsPane
 
     gap1 = "30";
     gap2 = "10";
+
+    settings = JMeldSettings.getInstance().getFolder();
 
     // Creation
     onlyLeftButton = new ToggleButton();
@@ -89,14 +92,16 @@ public class FolderSettingsPane
         FxUtils.createImageNode(FxIcon.FILE_NOT_EXIST.getSmallImage(), FxIcon.FILE_EXIST_NOTEQUAL.getSmallImage()));
     leftRightUnChangedButton.setGraphic(
         FxUtils.createImageNode(FxIcon.FILE_EXIST_EQUAL.getSmallImage(), FxIcon.FILE_EXIST_EQUAL.getSmallImage()));
-    viewComboBox.getItems().addAll(FolderSettingsFx.FolderView.values());
+    viewComboBox.getItems().addAll(FolderSettings.FolderView.values());
 
     // Binding
-    onlyLeftButton.selectedProperty().bindBidirectional(getSettings().onlyLeftProperty);
-    leftRightChangedButton.selectedProperty().bindBidirectional(getSettings().leftRightChangedProperty);
-    onlyRightButton.selectedProperty().bindBidirectional(getSettings().onlyRightProperty);
-    leftRightUnChangedButton.selectedProperty().bindBidirectional(getSettings().leftRightUnChangedProperty);
-    viewComboBox.valueProperty().bindBidirectional(getSettings().viewProperty);
+    FxBindings.bindBidirectional(onlyLeftButton.selectedProperty(), settings::getOnlyLeft, settings::setOnlyLeft);
+    FxBindings.bindBidirectional(leftRightChangedButton.selectedProperty(), settings::getLeftRightChanged,
+        settings::setLeftRightChanged);
+    FxBindings.bindBidirectional(onlyRightButton.selectedProperty(), settings::getOnlyRight, settings::setOnlyRight);
+    FxBindings.bindBidirectional(leftRightUnChangedButton.selectedProperty(), settings::getLeftRightUnChanged,
+        settings::setLeftRightUnChanged);
+    FxBindings.bindBidirectional(viewComboBox.valueProperty(), settings::getView, settings::setView);
   }
 
   private void initConfiguration()
@@ -106,10 +111,5 @@ public class FolderSettingsPane
   public void configurationChanged()
   {
     initConfiguration();
-  }
-
-  private FolderSettings getSettings()
-  {
-    return JMeldSettings.getInstance().getFolder();
   }
 }

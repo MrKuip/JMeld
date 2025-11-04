@@ -1,13 +1,12 @@
 package org.jmeld.fx.ui.settings;
 
-import static org.jmeld.fx.util.FxAwtUtil.property;
 import static org.jmeld.fx.util.FxCss.header1;
 import static org.jmeld.fx.util.FxCss.header2;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.jmeld.fx.ui.FxFontChooser;
-import org.jmeld.fx.util.FxAwtUtil;
+import org.jmeld.fx.util.FxBindings;
 import org.jmeld.fx.util.FxIcon;
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.EditorSettings.ToolbarButtonIcon;
@@ -86,7 +85,7 @@ public class EditorSettingsPane
     ColorPicker colorDeletedColorPicker;
     ColorPicker colorChangedColorPicker;
     Button colorRestoreButton;
-    TextFormatter formatter;
+    TextFormatter<Number> formatter;
     String gap1;
     String gap2;
 
@@ -153,28 +152,38 @@ public class EditorSettingsPane
       font = dialog.showAndWait();
       if (font.isPresent())
       {
-        getSettings().setFont(FxAwtUtil.toAwtFont(font.get()));
+        fontChooserButton.setFont(font.get());
+        getSettings().setFont(FxBindings.toAwtFont(font.get()));
       }
     });
     colorRestoreButton.setOnAction((ae) -> getSettings().restoreColors());
     lookAndFeelComboBox.getItems().setAll(getLookAndFeelList());
 
     // Binding
-
-    defaultFontButton.selectedProperty().bindBidirectional(getSettings().defaultFontProperty);
-    customFontButton.selectedProperty().bindBidirectional(getSettings().customFontProperty);
-    fontChooserButton.fontProperty().bindBidirectional(getSettings().fontProperty);
-    lookAndFeelComboBox.valueProperty().bindBidirectional(getSettings().lookAndFeelNameProperty);
-    showLineNumbersCheckbox.selectedProperty().bindBidirectional(getSettings().showLineNumbersProperty);
-    rightSideReadonlyCheckbox.selectedProperty().bindBidirectional(getSettings().rightsideReadonlyProperty);
-    leftSideReadonlyCheckbox.selectedProperty().bindBidirectional(getSettings().leftsideReadonlyProperty);
-    antiAliasCheckbox.selectedProperty().bindBidirectional(getSettings().antialiasProperty);
+    FxBindings.bindBidirectional(defaultFontButton.selectedProperty(), settings::isDefaultFontEnabled,
+        settings::setDefaultFontEnabled);
+    FxBindings.bindBidirectional(customFontButton.selectedProperty(), settings::isCustomFontEnabled,
+        settings::setCustomFontEnabled);
+    FxBindings.bindBidirectional(lookAndFeelComboBox.valueProperty(), settings::getLookAndFeelName,
+        settings::setLookAndFeelName);
+    FxBindings.bindBidirectional(showLineNumbersCheckbox.selectedProperty(), settings::getShowLineNumbers,
+        settings::setShowLineNumbers);
+    FxBindings.bindBidirectional(rightSideReadonlyCheckbox.selectedProperty(), settings::getRightsideReadonly,
+        settings::setRightsideReadonly);
+    FxBindings.bindBidirectional(leftSideReadonlyCheckbox.selectedProperty(), settings::getLeftsideReadonly,
+        settings::setLeftsideReadonly);
+    FxBindings.bindBidirectional(antiAliasCheckbox.selectedProperty(), settings::isAntialiasEnabled,
+        settings::setAntialiasEnabled);
     formatter = new TextFormatter<>(new NumberStringConverter("#,###"));
-    formatter.valueProperty().bindBidirectional(getSettings().tabSizeProperty);
+    FxBindings.bindBidirectional(formatter.valueProperty(), settings::getTabSize,
+        (Number n) -> settings.setTabSize(n.intValue()));
     tabSizeTextField.setTextFormatter(formatter);
-    colorAddedColorPicker.valueProperty().bindBidirectional(getSettings().addedColorProperty);
-    colorDeletedColorPicker.valueProperty().bindBidirectional(getSettings().deletedColorProperty);
-    colorChangedColorPicker.valueProperty().bindBidirectional(getSettings().changedColorProperty);
+    FxBindings.bindBidirectional(colorAddedColorPicker.valueProperty(), settings::getAddedColor,
+        settings::setAddedColor, FxBindings::toAwtColor, FxBindings::toFxColor);
+    FxBindings.bindBidirectional(colorDeletedColorPicker.valueProperty(), settings::getDeletedColor,
+        settings::setDeletedColor, FxBindings::toAwtColor, FxBindings::toFxColor);
+    FxBindings.bindBidirectional(colorChangedColorPicker.valueProperty(), settings::getChangedColor,
+        settings::setChangedColor, FxBindings::toAwtColor, FxBindings::toFxColor);
 
     panel = new MigPane(null, "[pref][pref][grow,fill]");
     add(panel, "west");
@@ -235,20 +244,20 @@ public class EditorSettingsPane
     ignoreBlankLinesCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreBlankLines);
     ignoreCaseCheckBox.selectedProperty().bindBidirectional(getSettings().getIgnore().ignoreCase);
 
-    fileEncodingDefaultButton.selectedProperty()
-        .bindBidirectional(property(settings::getDefaultFileEncodingEnabled, settings::setDefaultFileEncodingEnabled));
-    fileEncodingDetectButton.selectedProperty()
-        .bindBidirectional(property(settings::getDetectFileEncodingEnabled, settings::setDetectFileEncodingEnabled));
-    fileEncodingSpecificButton.selectedProperty().bindBidirectional(
-        property(settings::getSpecificFileEncodingEnabled, settings::setSpecificFileEncodingEnabled));
-    fileEncodingSpecificComboBox.valueProperty()
-        .bindBidirectional(property(settings::getSpecificFileEncodingName, settings::setSpecificFileEncodingName));
-    toolBarIconInButtonComboBox.valueProperty()
-        .bindBidirectional(property(settings::getToolbarButtonIcon, settings::setToolbarButtonIcon));
-    toolbarIconInButtonCheckBox.selectedProperty()
-        .bindBidirectional(property(settings::isToolbarButtonTextEnabled, settings::setToolbarButtonTextEnabled));
-    toolbarTextInButtonCheckBox.selectedProperty()
-        .bindBidirectional(property(settings::isToolbarButtonTextEnabled, settings::setToolbarButtonTextEnabled));
+    FxBindings.bindBidirectional(fileEncodingDefaultButton.selectedProperty(), settings::getDefaultFileEncodingEnabled,
+        settings::setDefaultFileEncodingEnabled);
+    FxBindings.bindBidirectional(fileEncodingDetectButton.selectedProperty(), settings::getDetectFileEncodingEnabled,
+        settings::setDetectFileEncodingEnabled);
+    FxBindings.bindBidirectional(fileEncodingSpecificButton.selectedProperty(),
+        settings::getSpecificFileEncodingEnabled, settings::setSpecificFileEncodingEnabled);
+    FxBindings.bindBidirectional(fileEncodingSpecificComboBox.valueProperty(), settings::getSpecificFileEncodingName,
+        settings::setSpecificFileEncodingName);
+    FxBindings.bindBidirectional(toolBarIconInButtonComboBox.valueProperty(), settings::getToolbarButtonIcon,
+        settings::setToolbarButtonIcon);
+    FxBindings.bindBidirectional(toolbarIconInButtonCheckBox.selectedProperty(), settings::isToolbarButtonTextEnabled,
+        settings::setToolbarButtonTextEnabled);
+    FxBindings.bindBidirectional(toolbarTextInButtonCheckBox.selectedProperty(), settings::isToolbarButtonTextEnabled,
+        settings::setToolbarButtonTextEnabled);
   }
 
   private List<String> getLookAndFeelList()
@@ -259,5 +268,15 @@ public class EditorSettingsPane
   private EditorSettings getSettings()
   {
     return JMeldSettings.getInstance().getEditor();
+  }
+
+  private void setFont(Font font)
+  {
+    getSettings().setFont(FxBindings.toAwtFont(font));
+  }
+
+  private Font getFont()
+  {
+    return FxBindings.toFxFont(getSettings().getFont());
   }
 }

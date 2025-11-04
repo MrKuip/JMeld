@@ -413,7 +413,7 @@ public class EditorSettingsPanel
   private ActionListener getAntialiasAction()
   {
     return (e) -> {
-      getEditorSettings().enableAntialias(antiAliasCheckBox.isSelected());
+      getEditorSettings().setAntialiasEnabled(antiAliasCheckBox.isSelected());
     };
   }
 
@@ -486,14 +486,14 @@ public class EditorSettingsPanel
   private ActionListener getDefaultFontAction()
   {
     return (e) -> {
-      getEditorSettings().enableCustomFont(!defaultFontButton.isSelected());
+      getEditorSettings().setCustomFontEnabled(!defaultFontButton.isSelected());
     };
   }
 
   private ActionListener getCustomFontAction()
   {
     return (e) -> {
-      getEditorSettings().enableCustomFont(customFontButton.isSelected());
+      getEditorSettings().setCustomFontEnabled(customFontButton.isSelected());
     };
   }
 

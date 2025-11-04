@@ -1,9 +1,10 @@
 package org.jmeld.util.conf;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import java.io.File;
 import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(use = Id.CLASS)
 public abstract class AbstractConfiguration
@@ -19,6 +20,7 @@ public abstract class AbstractConfiguration
 
   public abstract void init();
 
+  @JsonIgnore
   public String getConfigurationFileName()
   {
     try
@@ -36,6 +38,7 @@ public abstract class AbstractConfiguration
     preference.setFile(file);
   }
 
+  @JsonIgnore
   public boolean isChanged()
   {
     return changed;
@@ -45,8 +48,7 @@ public abstract class AbstractConfiguration
   {
     try
     {
-      ConfigurationPersister.getInstance().write(this,
-                                                preference.getFile());
+      ConfigurationPersister.getInstance().write(this, preference.getFile());
       changed = false;
       fireChanged(changed);
     }
@@ -58,14 +60,12 @@ public abstract class AbstractConfiguration
 
   public void addConfigurationListener(ConfigurationListenerIF listener)
   {
-    getManager().addConfigurationListener(getClass(),
-                                          listener);
+    getManager().addConfigurationListener(getClass(), listener);
   }
 
   public void removeConfigurationListener(ConfigurationListenerIF listener)
   {
-    getManager().removeConfigurationListener(getClass(),
-                                             listener);
+    getManager().removeConfigurationListener(getClass(), listener);
   }
 
   void disableFireChanged(boolean disableFireChanged)
@@ -89,6 +89,7 @@ public abstract class AbstractConfiguration
     getManager().fireChanged(getClass());
   }
 
+  @JsonIgnore
   private ConfigurationManager getManager()
   {
     return ConfigurationManager.getInstance();

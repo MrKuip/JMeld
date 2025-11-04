@@ -69,12 +69,12 @@ public class EditorSettings
     fireChanged();
   }
 
-  public int getTabSize()
+  public Integer getTabSize()
   {
     return tabSize;
   }
 
-  public void setTabSize(int tabSize)
+  public void setTabSize(Integer tabSize)
   {
     if (tabSize == this.tabSize)
     {
@@ -325,7 +325,17 @@ public class EditorSettings
     return toolbarButtonTextEnabled;
   }
 
-  public void enableCustomFont(boolean customFont)
+  public void setDefaultFontEnabled(boolean defaultFontEnabled)
+  {
+    setCustomFontEnabled(!defaultFontEnabled);
+  }
+
+  public boolean isDefaultFontEnabled()
+  {
+    return !isCustomFontEnabled();
+  }
+
+  public void setCustomFontEnabled(boolean customFont)
   {
     this.customFont = customFont;
     fireChanged();
@@ -336,7 +346,7 @@ public class EditorSettings
     return customFont;
   }
 
-  public void enableAntialias(boolean antialias)
+  public void setAntialiasEnabled(boolean antialias)
   {
     this.antialias = antialias;
     fireChanged();

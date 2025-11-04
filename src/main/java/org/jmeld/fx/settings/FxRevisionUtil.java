@@ -19,7 +19,7 @@ package org.jmeld.fx.settings;
 import java.util.HashMap;
 import java.util.Map;
 import org.jmeld.diff.JMDelta;
-import org.jmeld.fx.util.FxAwtUtil;
+import org.jmeld.fx.util.FxBindings;
 import org.jmeld.settings.EditorSettings;
 import org.jmeld.settings.JMeldSettings;
 import javafx.scene.paint.Color;
@@ -32,15 +32,15 @@ public class FxRevisionUtil
   {
     if (delta.isDelete())
     {
-      return FxAwtUtil.toFxColor(getSettings().getDeletedColor());
+      return FxBindings.toFxColor(getSettings().getDeletedColor());
     }
 
     if (delta.isChange())
     {
-      return FxAwtUtil.toFxColor(getSettings().getChangedColor());
+      return FxBindings.toFxColor(getSettings().getChangedColor());
     }
 
-    return FxAwtUtil.toFxColor(getSettings().getAddedColor());
+    return FxBindings.toFxColor(getSettings().getAddedColor());
   }
 
   public static Color getDarkerColor(JMDelta delta)
