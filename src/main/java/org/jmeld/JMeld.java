@@ -24,15 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.jmeld.settings.JMeldSettings;
 import org.jmeld.settings.util.Filter;
 import org.jmeld.ui.JMeldPanel;
 import org.jmeld.ui.util.ImageUtil;
 import org.jmeld.ui.util.LookAndFeelManager;
-import org.jmeld.util.StringUtil;
 import org.jmeld.util.prefs.WindowPreference;
-import argparser.ArgParser;
-import argparser.StringHolder;
 
 public class JMeld
     implements Runnable
@@ -43,26 +45,32 @@ public class JMeld
 
   public JMeld(String[] args)
   {
-	  StringHolder filterHolder;
-	  ArgParser parser;
-	  
-    filterHolder = new StringHolder();
-    
-    parser = new ArgParser("java org.jmeld.JMeld");
-    parser.addOption("-f, --filter=%s #name of filter",  filterHolder);
-    
-    args = parser.matchAllArgs(args, 0, ArgParser.EXIT_ON_ERROR);
-    
-    if(!StringUtil.isEmpty(filterHolder.getValue()))
+    CommandLineParser parser;
+    Options options;
+    String filterOption;
+
+    filterOption = "f";
+
+    parser = new DefaultParser();
+    options = new Options();
+    options.addOption(filterOption, "filter", true, "Name of filter");
+    try
     {
-      filter = JMeldSettings.getInstance().getFilter().getFilter(filterHolder.getValue());
-      System.out.println("filter=" + filter);
+      CommandLine cmdLine;
+
+      cmdLine = parser.parse(options, args);
+      if (cmdLine.hasOption(filterOption))
+      {
+        filter = JMeldSettings.getInstance().getFilter().getFilter(cmdLine.getOptionValue(filterOption));
+        System.out.println("filter=" + filter);
+      }
+
+      fileNameList = new ArrayList<String>(cmdLine.getArgList());
     }
-    
-    fileNameList = new ArrayList<String>();
-    for (String arg : args)
+    catch (ParseException e)
     {
-      fileNameList.add(arg);
+      e.printStackTrace();
+      System.exit(-1);
     }
   }
 
@@ -71,6 +79,7 @@ public class JMeld
     return jmeldPanel;
   }
 
+  @Override
   public void run()
   {
     JFrame frame;
