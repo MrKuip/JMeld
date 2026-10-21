@@ -11,13 +11,14 @@ defaultTasks 'jar'
 test
 {
   useJUnitPlatform()
+  outputs.upToDateWhen { false }
   testLogging {
-    showStandardStreams = true 
-    afterTest { descriptor , result -> 
-      logger.lifecycle("Test: " + descriptor.getClassName() + " " + descriptor.getName() + " -> " + result)
-    }
+    showStandardStreams = true
+    events "passed", "skipped", "failed"
+    exceptionFormat = "full"
   }
 }
+
 
 repositories {
   mavenCentral()
