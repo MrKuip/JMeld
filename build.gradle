@@ -2,7 +2,6 @@
 plugins {
   id 'java-library'
   id 'eclipse'
-  id 'org.openjfx.javafxplugin' version '0.1.0'
   id 'application'
 }
 
@@ -24,12 +23,24 @@ repositories {
   mavenCentral()
 }
 
-javafx {
-  version = "22.0.1"
-  modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
-}
+def osName = System.getProperty("os.name").toLowerCase()
+def osArch = System.getProperty("os.arch").toLowerCase()
+def isArm  = osArch.contains("aarch64") || osArch.contains("arm")
+
+def fxClassifier =
+    osName.contains("win") ? "win" :
+    osName.contains("mac") ? (isArm ? "mac-aarch64" : "mac") :
+                             (isArm ? "linux-aarch64" : "linux")
+
+def fxVersion = "22.0.1"
+
 
 dependencies {
+  ['javafx-base', 'javafx-graphics', 'javafx-controls', 'javafx-swing'].each { m ->
+    implementation "org.openjfx:$m:$fxVersion"
+    implementation "org.openjfx:$m:$fxVersion:$fxClassifier"
+  }
+
   implementation 'commons-cli:commons-cli:1.10.0'
   implementation 'org.swinglabs:swingx:0.9.4'
   implementation 'com.ibm.icu:icu4j:4.0.1'
