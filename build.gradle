@@ -41,7 +41,7 @@ dependencies {
     implementation "org.openjfx:$m:$fxVersion:$fxClassifier"
   }
 
-  implementation 'commons-cli:commons-cli:1.10.0'
+  implementation 'commons-cli:commons-cli:1.11.0'
   implementation 'org.swinglabs:swingx:0.9.4'
   implementation 'com.ibm.icu:icu4j:4.0.1'
   implementation 'com.jgoodies:looks:2.2.1'
